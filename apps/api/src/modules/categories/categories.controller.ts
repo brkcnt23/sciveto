@@ -1,3 +1,4 @@
+// apps/api/src/modules/categories/categories.controller.ts
 import {
   Controller,
   Get,
@@ -20,20 +21,35 @@ export class CategoriesController {
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createCategoryDto: CreateCategoryDto, @Request() req) {
+    console.log('Categories POST - User org:', req.user.organizationId);
     return this.categoriesService.create(createCategoryDto, req.user.organizationId);
   }
 
-  // Public endpoint - no auth required
+  // For testing, let's make this require auth temporarily to ensure we get the right org
+  @UseGuards(JwtAuthGuard)
   @Get()
-  findAll(@Request() req) {
-    const organizationId = req.user?.organizationId || 'default-org-id';
-    return this.categoriesService.findAll(organizationId);
+  async findAll(@Request() req) {
+    try {
+      console.log('Categories GET - Full user object:', req.user);
+      const organizationId = req.user.organizationId;
+      console.log('Categories GET - Looking for org:', organizationId);
+      
+      const categories = await this.categoriesService.findAll(organizationId);
+      console.log('Categories GET - Found categories:', categories.length);
+      
+      return categories;
+    } catch (error) {
+      console.error('Categories GET - Error:', error);
+      
+      // Return empty array as fallback
+      return [];
+    }
   }
 
-  // Public endpoint - no auth required
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string, @Request() req) {
-    const organizationId = req.user?.organizationId || 'default-org-id';
+    const organizationId = req.user.organizationId;
     return this.categoriesService.findOne(id, organizationId);
   }
 

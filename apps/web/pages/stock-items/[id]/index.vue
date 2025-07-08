@@ -55,7 +55,7 @@
         <div class="space-y-4">
           <div class="aspect-w-1 aspect-h-1">
             <img 
-              :src="stockItem.imageUrl || '/placeholder-product.jpg'"
+              :src="stockItem.imageUrl || '/placeholder-stock-item.jpg'"
               :alt="stockItem.name"
               class="w-full h-96 object-cover rounded-lg bg-gray-100 border"
             />
@@ -108,7 +108,7 @@
 
           <!-- Stok Item Details -->
           <div class="space-y-4">
-            <h3 class="text-lg font-semibold text-gray-900">Stok Item Details</h3>
+            <h3 class="text-lg font-semibold text-gray-900">Stock Item Details</h3>
             
             <div class="grid grid-cols-1 gap-4">
               <div v-if="stockItem.sku" class="flex justify-between py-2 border-b">

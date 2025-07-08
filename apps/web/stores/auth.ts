@@ -1,22 +1,36 @@
+// apps/web/stores/auth.ts
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<any>(null)
   const token = ref<string | null>(null)
-  const isAuthenticated = computed(() => !!token.value)
+  const isAuthenticated = computed(() => !!token.value && !!user.value)
+  const isInitialized = ref(false)
 
   // Initialize auth state from localStorage on client side
   const initializeAuth = () => {
-    if (process.client) {
-      const savedToken = localStorage.getItem('auth_token')
-      const savedUser = localStorage.getItem('auth_user')
-      
-      if (savedToken && savedUser) {
-        token.value = savedToken
-        user.value = JSON.parse(savedUser)
+    if (process.client && !isInitialized.value) {
+      try {
+        const savedToken = localStorage.getItem('auth_token')
+        const savedUser = localStorage.getItem('auth_user')
+        
+        console.log('Initializing auth:', { hasToken: !!savedToken, hasUser: !!savedUser })
+        
+        if (savedToken && savedUser) {
+          token.value = savedToken
+          user.value = JSON.parse(savedUser)
+          console.log('Auth initialized successfully:', { userId: user.value?.id, tokenLength: token.value?.length })
+        }
+      } catch (error) {
+        console.error('Error initializing auth:', error)
+        clearAuth()
+      } finally {
+        isInitialized.value = true
       }
     }
   }
 
   const setAuth = (authData: { user: any; access_token: string }) => {
+    console.log('Setting auth data:', { userId: authData.user?.id, tokenLength: authData.access_token?.length })
+    
     user.value = authData.user
     token.value = authData.access_token
     
@@ -27,6 +41,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const clearAuth = () => {
+    console.log('Clearing auth')
     user.value = null
     token.value = null
     
@@ -47,6 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
       await navigateTo('/dashboard')
       return data
     } catch (error) {
+      console.error('Login error:', error)
       throw error
     }
   }
@@ -62,6 +78,7 @@ export const useAuthStore = defineStore('auth', () => {
       await navigateTo('/dashboard')
       return data
     } catch (error) {
+      console.error('Register error:', error)
       throw error
     }
   }
@@ -86,7 +103,12 @@ export const useAuthStore = defineStore('auth', () => {
 
   const fetchProfile = async () => {
     try {
-      if (!token.value) return null
+      if (!token.value) {
+        console.log('No token available for profile fetch')
+        return null
+      }
+      
+      console.log('Fetching profile with token:', token.value.substring(0, 10) + '...')
       
       const data = await $fetch<any>('http://localhost:3001/api/auth/profile', {
         headers: {
@@ -100,8 +122,20 @@ export const useAuthStore = defineStore('auth', () => {
       }
       return data
     } catch (error) {
+      console.error('Profile fetch error:', error)
       clearAuth()
       throw error
+    }
+  }
+
+  // Helper function to get auth headers
+  const getAuthHeaders = () => {
+    if (!token.value) {
+      console.warn('No token available for auth headers')
+      return {}
+    }
+    return {
+      Authorization: `Bearer ${token.value}`
     }
   }
 
@@ -109,11 +143,13 @@ export const useAuthStore = defineStore('auth', () => {
     user: readonly(user),
     token: readonly(token),
     isAuthenticated,
+    isInitialized: readonly(isInitialized),
     initializeAuth,
     login,
     register,
     logout,
     fetchProfile,
-    clearAuth
+    clearAuth,
+    getAuthHeaders
   }
 })

@@ -29,10 +29,11 @@ export class StockItemsController {
   }
 
   // Public endpoint - no auth required
+   @UseGuards(JwtAuthGuard)
   @Get()
   findAll(@Query() queryDto: StockItemQueryDto, @Request() req) {
-    const organizationId = req.user?.organizationId || 'default-org-id';
-    return this.stockItemsService.findAll(queryDto, organizationId);
+    console.log('Stock Items GET - User org:', req.user.organizationId);
+    return this.stockItemsService.findAll(queryDto, req.user.organizationId);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -56,11 +57,11 @@ export class StockItemsController {
     return this.stockItemsService.findByCategory(categoryId, queryDto, organizationId);
   }
 
-  // Public endpoint - no auth required  
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string, @Request() req) {
-    const organizationId = req.user?.organizationId || 'default-org-id';
-    return this.stockItemsService.findOne(id, organizationId);
+    console.log('Stock Item GET by ID - User org:', req.user.organizationId);
+    return this.stockItemsService.findOne(id, req.user.organizationId);
   }
 
   @UseGuards(JwtAuthGuard)

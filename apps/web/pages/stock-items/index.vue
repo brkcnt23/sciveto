@@ -243,6 +243,11 @@ const statusOptions = [
 const fetchStockItems = async () => {
   loading.value = true
   try {
+    if (!authStore.token) {
+      console.log('No auth token for stock items')
+      return
+    }
+    
     const params = new URLSearchParams({
       page: currentPage.value.toString(),
       limit: '12',
@@ -252,15 +257,21 @@ const fetchStockItems = async () => {
     })
 
     const data = await $fetch(`http://localhost:3001/api/stock-items?${params}`, {
-      headers: {
-        Authorization: `Bearer ${authStore.token}`
-      }
+      headers: authStore.getAuthHeaders()
     })
     
-    stockItems.value = data.data
-    meta.value = data.meta
+    stockItems.value = data.data || []
+    meta.value = data.meta || { total: 0, page: 1, limit: 12, totalPages: 1 }
+    
+    console.log('Stock items loaded:', stockItems.value.length)
   } catch (error) {
     console.error('Error loading stock items:', error)
+    
+    if (error.status === 401 || error.statusCode === 401) {
+      console.log('Auth failed while loading stock items')
+      authStore.clearAuth()
+      router.push('/login')
+    }
   } finally {
     loading.value = false
   }
@@ -268,9 +279,24 @@ const fetchStockItems = async () => {
 
 const fetchCategories = async () => {
   try {
-    categories.value = await $fetch('http://localhost:3001/api/categories')
+    if (!authStore.token) {
+      console.log('No auth token for categories, skipping...')
+      return
+    }
+    
+    categories.value = await $fetch('http://localhost:3001/api/categories', {
+      headers: authStore.getAuthHeaders()
+    })
+    
+    console.log('Categories loaded in stock items list:', categories.value.length)
   } catch (error) {
     console.error('Error loading categories:', error)
+    
+    if (error.status === 401 || error.statusCode === 401) {
+      console.log('Auth failed while loading categories')
+      authStore.clearAuth()
+      await navigateTo('/login')
+    }
   }
 }
 
