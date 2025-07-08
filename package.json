@@ -6,21 +6,21 @@
   "main": "index.ts",
   "types": "index.ts",
   "scripts": {
-    "build": "nest build",
     "dev": "turbo run dev",
-    "start": "nest start",
-    "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push",
-    "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio"
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "db:generate": "cd apps/api && pnpm exec prisma generate",
+    "db:push": "cd apps/api && pnpm exec prisma db push",
+    "db:migrate": "cd apps/api && pnpm exec prisma migrate dev",
+    "db:studio": "cd apps/api && pnpm exec prisma studio",
+    "clean": "turbo run clean",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "turbo": "^2.5.4"
+    "turbo": "^2.5.4",
+    "prettier": "^3.0.0"
   },
-  "dependencies": {
-    "better-sqlite3": "^12.2.0"
-  }
+  "dependencies": {}
 }

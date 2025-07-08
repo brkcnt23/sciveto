@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,11 +10,242 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Organization {
+  id          String   @id @default(cuid())
+  name        String
+  subdomain   String   @unique
+  domain      String?
+  settings    Json?    // Custom organization settings
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  users       User[]
+  categories  Category[]
+  items       StockItem[]
+  projects    Project[]
+}
+
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  role      String   @default("user")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String   @id @default(cuid())
+  email          String   @unique
+  password       String
+  firstName      String?
+  lastName       String?
+  role           UserRole @default(USER)
+  organizationId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  // Relations
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  stockItems     StockItem[]
+  projects       Project[]
+  allocations    ProjectAllocation[]
+  
+  @@index([organizationId])
+}
+
+model Category {
+  id             String   @id @default(cuid())
+  name           String
+  description    String?
+  color          String   @default("#3B82F6")
+  organizationId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  // Relations
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  stockItems     StockItem[]
+  
+  @@unique([name, organizationId]) // Each org can have unique category names
+  @@index([organizationId])
+}
+
+model StockItem {
+  id             String    @id @default(cuid())
+  name           String
+  description    String?
+  sku            String?
+  unit           String    @default("pcs") // pcs, kg, m, m2, m3, etc.
+  
+  // Stock Information
+  currentStock   Float     @default(0)
+  reservedStock  Float     @default(0) // Reserved for projects
+  availableStock Float     @default(0) // currentStock - reservedStock
+  minStockLevel  Float     @default(0) // Alert threshold
+  maxStockLevel  Float?    // Maximum capacity
+  
+  // Cost Information
+  lastPurchasePrice  Float?
+  averageCost        Float?
+  totalValue         Float     @default(0) // currentStock * averageCost
+  
+  // Organization & Category
+  organizationId String
+  categoryId     String?
+  userId         String    // Who added this item
+  
+  // Status & Metadata
+  status         StockStatus @default(ACTIVE)
+  location       String?     // Storage location
+  supplier       String?     // Main supplier
+  notes          String?
+  
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // Relations
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  category       Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  user           User         @relation(fields: [userId], references: [id])
+  allocations    ProjectAllocation[]
+  transactions   StockTransaction[]
+  
+  @@index([organizationId])
+  @@index([categoryId])
+  @@index([status])
+}
+
+model Project {
+  id             String    @id @default(cuid())
+  name           String
+  description    String?
+  projectCode    String?   // Custom project identifier
+  
+  // Project Information
+  clientName     String?
+  location       String?
+  startDate      DateTime?
+  endDate        DateTime?
+  estimatedBudget Float?
+  actualCost     Float     @default(0)
+  
+  // Organization
+  organizationId String
+  managerId      String    // Project manager
+  
+  // Status
+  status         ProjectStatus @default(PLANNING)
+  priority       ProjectPriority @default(MEDIUM)
+  
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // Relations
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  manager        User         @relation(fields: [managerId], references: [id])
+  allocations    ProjectAllocation[]
+  
+  @@index([organizationId])
+  @@index([status])
+}
+
+model ProjectAllocation {
+  id             String    @id @default(cuid())
+  
+  // Project & Item
+  projectId      String
+  stockItemId    String
+  userId         String    // Who made the allocation
+  
+  // Allocation Details
+  allocatedQuantity  Float
+  usedQuantity       Float     @default(0)
+  allocatedPrice     Float     // Price at time of allocation
+  totalAllocatedCost Float     // allocatedQuantity * allocatedPrice
+  
+  // Status & Metadata
+  status         AllocationStatus @default(RESERVED)
+  notes          String?
+  allocationDate DateTime         @default(now())
+  usageDate      DateTime?
+  
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // Relations
+  project        Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  stockItem      StockItem @relation(fields: [stockItemId], references: [id], onDelete: Cascade)
+  user           User      @relation(fields: [userId], references: [id])
+  
+  @@index([projectId])
+  @@index([stockItemId])
+  @@index([status])
+}
+
+model StockTransaction {
+  id             String    @id @default(cuid())
+  
+  // Transaction Details
+  stockItemId    String
+  type           TransactionType
+  quantity       Float
+  unitPrice      Float?
+  totalCost      Float?
+  
+  // Reference Information
+  referenceType  String?   // "purchase", "project", "adjustment", "return"
+  referenceId    String?   // Reference to purchase order, project, etc.
+  
+  // Metadata
+  description    String?
+  performedBy    String?   // User who performed transaction
+  supplier       String?   // For purchase transactions
+  
+  createdAt      DateTime  @default(now())
+  
+  // Relations
+  stockItem      StockItem @relation(fields: [stockItemId], references: [id], onDelete: Cascade)
+  
+  @@index([stockItemId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+// Enums
+enum UserRole {
+  SUPER_ADMIN
+  ORG_ADMIN
+  MANAGER
+  USER
+}
+
+enum StockStatus {
+  ACTIVE
+  INACTIVE
+  DISCONTINUED
+  ARCHIVED
+}
+
+enum ProjectStatus {
+  PLANNING
+  IN_PROGRESS
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+enum ProjectPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum AllocationStatus {
+  RESERVED
+  PARTIALLY_USED
+  FULLY_USED
+  CANCELLED
+}
+
+enum TransactionType {
+  PURCHASE
+  SALE
+  ALLOCATION
+  RETURN
+  ADJUSTMENT
+  TRANSFER
 }
