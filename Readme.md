@@ -1,108 +1,130 @@
-📁 Monorepo Yapısı
-Proje pnpm + turbo ile yönetilen bir monorepo yapısındadır.
-İki ana uygulamadan oluşur:
+# 📦 Sciveto – Yapay Zekâ Destekli Üretim ve Proje Yönetim Sistemi
 
-apps/web → Nuxt 3 frontend (Vue tabanlı)
+Sciveto, üretim ve tedarik süreçlerini uçtan uca yönetmek için geliştirilmiş bir monorepo yapılı sistemdir.\
+Bu proje; teklif yönetimi, proje takibi, stok kontrolü, üretim planlama, sevkiyat ve raporlama süreçlerini kapsar.\
+Vue (Nuxt 3), NestJS, Prisma ve PostgreSQL ile geliştirilmiştir.
 
-apps/api → NestJS backend (PostgreSQL + Prisma ile)
+---
 
-✅ Gereksinimler
-Node.js (v18+ önerilir) → https://nodejs.org
+## 🔀 Teknolojiler
 
-pnpm → npm install -g pnpm
+- 🌐 **Frontend:** Nuxt 3 (Vue 3, Tailwind, Pinia)
+- ⚙️ **Backend:** NestJS + Prisma
+- 🧠 **Yapay Zeka:** OpenAI (GPT) – Entegrasyon hazır
+- 📂 **Veritabanı:** PostgreSQL
+- 📦 **Paket Yönetimi:** pnpm
+- 🧪 **Monorepo:** Turbo
 
-PostgreSQL (local ya da Docker üzerinden)
+---
 
-🔐 1. Ortam Değişkenlerini Ayarla (.env)
-apps/api/.env dosyasını oluştur ve aşağıdaki gibi yapılandır:
+## ⚙️ Gereksinimler
 
-env
-Kopyala
-Düzenle
+- Node.js (18+)
+- pnpm → `npm install -g pnpm`
+- PostgreSQL (veya Docker)
+- Git
+
+---
+
+## 🚀 Kurulum Adımları (Yeni Bir Bilgisayarda)
+
+### 1. Reposu klonla
+
+```
+git clone https://github.com/kullaniciadi/sciveto.git
+cd sciveto
+```
+
+### 2. Ortam değişkenlerini ayarla
+
+`apps/api/.env` dosyasını oluştur ve şuna benzer yap:
+
+```
 DATABASE_URL=postgresql://postgres:yourpassword@localhost:5432/sciveto_db
 JWT_SECRET=your-super-secret-key
 PORT=3001
-yourpassword kısmı kendi PostgreSQL şifrenle değiştirilmeli
+```
 
-PostgreSQL kurulu değilse, aşağıdaki Docker komutu ile çalıştırabilirsin:
+PostgreSQL yoksa Docker ile hızlıca başlatabilirsin:
 
-bash
-Kopyala
-Düzenle
+```
 docker run --name sciveto-db -e POSTGRES_PASSWORD=yourpassword -p 5432:5432 -d postgres
-📦 2. Tüm Bağımlılıkları Kur
-Projeyi klonladıktan sonra kök dizinde:
+```
 
-bash
-Kopyala
-Düzenle
+### 3. Bağımlılıkları yükle
+
+```
 pnpm install
-Bu işlem:
+```
 
-apps/web ve apps/api dâhil tüm paketlerin bağımlılıklarını kurar.
+> Bu komut tüm monorepo paketlerini (`apps/web`, `apps/api` vb.) otomatik olarak kurar.
 
-node_modules klasörlerini her dizine otomatik bağlar.
+### 4. Veritabanı tablolarını oluştur
 
-Ayrı ayrı pnpm install yapmana gerek yoktur.
-
-🧱 3. Veritabanı Yapısını Oluştur (Prisma)
-Eğer veritabanı boşsa veya tablo yoksa, otomatik oluşturmak için:
-
-bash
-Kopyala
-Düzenle
+```
 pnpm db:push
-Bu komut:
+```
 
-prisma/schema.prisma dosyasına göre tabloları oluşturur
+> Bu komut `prisma/schema.prisma` dosyasına göre veritabanında gerekli tabloları oluşturur.\
+> Veritabanı boş olsa bile uygulama çalışır.
 
-Eğer veri yoksa bile sistem çalışır
+### 5. Geliştirme ortamını başlat
 
-Alternatif: pnpm db:migrate komutu ile migration da uygulanabilir.
-
-🚀 4. Geliştirme Ortamını Başlat
-Kök dizinden çalıştır:
-
-bash
-Kopyala
-Düzenle
+```
 pnpm dev
-Bu komut turbo sayesinde:
+```
 
-apps/web içinde Nuxt frontend’i başlatır
+Frontend (Nuxt): [http://localhost:3000](http://localhost:3000)\
+Backend (NestJS): [http://localhost:3001](http://localhost:3001)
 
-apps/api içinde NestJS backend’i başlatır
+---
 
-Portlar:
+## 📊 Ekstra Komutlar
 
-Frontend → http://localhost:3000
+- Prisma Studio (veritabanı arayüzü):
 
-Backend → http://localhost:3001
+  ```
+  pnpm db:studio
+  ```
 
-📊 Ek Komutlar
-Prisma Studio (veritabanını görsel düzenlemek için):
+- Testleri çalıştır:
 
-bash
-Kopyala
-Düzenle
-pnpm db:studio
-Tüm testleri çalıştırmak için:
+  ```
+  pnpm test
+  ```
 
-bash
-Kopyala
-Düzenle
-pnpm test
-🧠 Önerilen Geliştirme Araçları
-VSCode + Prisma / Tailwind / ESLint eklentileri
+- Lint ve format:
 
-Docker Desktop (PostgreSQL için)
+  ```
+  pnpm lint
+  pnpm format
+  ```
 
-Git + GitHub CLI
+---
 
-💬 SSS
-Q: PostgreSQL yüklü değil, yine de çalışabilir mi?
-🅰 Evet. docker run ile hızlıca kurabilirsin veya ileride SQLite fallback desteği ekleyebilirsin.
+## 🧠 AI Entegrasyonu (Opsiyonel)
 
-Q: AI özellikleri nasıl çalışır?
-🅰 GPT tabanlı sistemler için OpenAI API key entegrasyonu yapılmalı (örn: OPENAI_API_KEY .env içine). Şu an mock/test düzeyindedir.
+- `.env` içine `OPENAI_API_KEY=...` gibi bir değer eklenebilir.
+- Her modülde `AI Insight` kartları, otomatik öneriler ve risk analizleri planlanmıştır.
+- API maliyetini azaltmak için GPT-3.5 kullanımı önerilir.
+
+---
+
+## 📝 Notlar
+
+- Bu proje henüz erken geliştirme aşamasındadır.
+- Proje yönetimi, üretim takibi, stok & teklif sistemleri AI-first UX anlayışıyla geliştirilmektedir.
+- Her modül kendi içinde AI öneri kartları ve içgörülerle desteklenmektedir.
+
+---
+
+## 👨‍💼 Katkıda Bulunmak
+
+Pull Request göndermeden önce lütfen `dev` branch’i üzerinden çatallayınız.
+
+---
+
+## 📄 Lisans
+
+Bu proje özel lisanslıdır. Detaylı bilgi için proje sahibine ulaşınız.
 
