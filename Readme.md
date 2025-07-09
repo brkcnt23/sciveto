@@ -1,3 +1,134 @@
+# 📦 Sciveto – AI-Powered Production & Project Management System
+
+Sciveto is a monorepo-based system designed to manage production and supply chain processes end-to-end.  
+It covers offer management, project tracking, stock control, production planning, logistics, and reporting.  
+Built with Vue (Nuxt 3), NestJS, Prisma, and PostgreSQL.
+
+---
+
+## 🔀 Technologies
+
+- 🌐 **Frontend:** Nuxt 3 (Vue 3, Tailwind, Pinia)
+- ⚙️ **Backend:** NestJS + Prisma
+- 🧠 **AI:** OpenAI (GPT) – Integration ready
+- 📂 **Database:** PostgreSQL
+- 📦 **Package Manager:** pnpm
+- 🧪 **Monorepo:** Turbo
+
+---
+
+## ⚙️ Requirements
+
+- Node.js (18+)
+- pnpm → `npm install -g pnpm`
+- PostgreSQL (or Docker)
+- Git
+
+---
+
+## 🚀 Setup Steps (On a New Machine)
+
+### 1. Clone the repository
+
+```
+git clone https://github.com/yourusername/sciveto.git
+cd sciveto
+```
+
+### 2. Configure environment variables
+
+Create `apps/api/.env` file with the following content:
+
+```
+DATABASE_URL=postgresql://postgres:yourpassword@localhost:5432/sciveto_db
+JWT_SECRET=your-super-secret-key
+PORT=3001
+```
+
+If PostgreSQL is not installed, you can run it via Docker:
+
+```
+docker run --name sciveto-db -e POSTGRES_PASSWORD=yourpassword -p 5432:5432 -d postgres
+```
+
+### 3. Install dependencies
+
+```
+pnpm install
+```
+
+> This will automatically install dependencies for all monorepo packages (`apps/web`, `apps/api`, etc.).
+
+### 4. Push database schema (create tables)
+
+```
+pnpm db:push
+```
+
+> This command creates required tables based on `prisma/schema.prisma`.  
+> The app will work even if the database is empty.
+
+### 5. Start development environment
+
+```
+pnpm dev
+```
+
+Frontend (Nuxt): [http://localhost:3000](http://localhost:3000)  
+Backend (NestJS): [http://localhost:3001](http://localhost:3001)
+
+---
+
+## 📊 Additional Commands
+
+- Prisma Studio (database GUI):
+
+  ```
+  pnpm db:studio
+  ```
+
+- Run tests:
+
+  ```
+  pnpm test
+  ```
+
+- Lint & Format:
+
+  ```
+  pnpm lint
+  pnpm format
+  ```
+
+---
+
+## 🧠 AI Integration (Optional)
+
+- You can add `OPENAI_API_KEY=...` to your `.env` file.
+- Each module is planned with AI Insight cards, smart suggestions, and risk predictions.
+- GPT-3.5 is recommended to minimize API cost.
+
+---
+
+## 📝 Notes
+
+- This project is under active development.
+- Modules like project tracking, production, stock, and offer management are designed with AI-first UX.
+- Each module includes AI insight cards and dynamic guidance features.
+
+---
+
+## 👨‍💼 Contributing
+
+Please fork from the `dev` branch before submitting a Pull Request.
+
+---
+
+## 📄 License
+
+This project is licensed privately. Contact the project owner for details.
+
+--------------------------------------------------------------------------
 # 📦 Sciveto – Yapay Zekâ Destekli Üretim ve Proje Yönetim Sistemi
 
 Sciveto, üretim ve tedarik süreçlerini uçtan uca yönetmek için geliştirilmiş bir monorepo yapılı sistemdir.\
