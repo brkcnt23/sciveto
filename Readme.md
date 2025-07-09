@@ -40,7 +40,7 @@ cd sciveto
 Create `apps/api/.env` file with the following content:
 
 ```
-DATABASE_URL=postgresql://postgres:yourpassword@localhost:5432/sciveto_db
+DATABASE_URL=postgresql://postgres:yourpassword@localhost:5432/sciveto_db?schema=public
 JWT_SECRET=your-super-secret-key
 PORT=3001
 ```
@@ -171,7 +171,7 @@ cd sciveto
 `apps/api/.env` dosyasını oluştur ve şuna benzer yap:
 
 ```
-DATABASE_URL=postgresql://postgres:yourpassword@localhost:5432/sciveto_db
+DATABASE_URL=postgresql://postgres:yourpassword@localhost:5432/sciveto_db?schema=public
 JWT_SECRET=your-super-secret-key
 PORT=3001
 ```

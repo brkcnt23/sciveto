@@ -1,4 +1,112 @@
-<!-- apps/web/pages/dashboard.vue -->
+const sampleStockItems = ref([
+  {
+    id: '1',
+    name: 'MacBook Pro 16" M3',
+    sku: 'MBP-16-M3-001',
+    description: 'High-performance laptop for development and design work. Features M3 chip with 16GB RAM and 512GB SSD.',
+    price: 2499.99,
+    stock: 8,
+    unit: 'units',
+    status: 'ACTIVE',
+    category: { name: 'Electronics' },
+    location: 'Tech Warehouse A',
+    supplier: { name: 'Apple Inc.', contact: 'sales@apple.com' },
+    updatedAt: '2024-12-10T10:30:00Z',
+    imageUrl: null
+  },
+  {
+    id: '2', 
+    name: 'Cordless Drill Set',
+    sku: 'DRILL-SET-001',
+    description: 'Professional cordless drill set with multiple bits and carrying case. 18V lithium battery included.',
+    price: 149.99,
+    stock: 25,
+    unit: 'sets',
+    status: 'ACTIVE',
+    category: { name: 'Tools' },
+    location: 'Tool Storage B',
+    supplier: { name: 'DeWalt Tools', contact: 'orders@dewalt.com' },
+    updatedAt: '2024-12-09T14:15:00Z',
+    imageUrl: null
+  },
+  {
+    id: '3',
+    name: 'Safety Helmets',
+    sku: 'HELMET-SF-100',
+    description: 'Industrial safety helmets meeting OSHA standards. Adjustable fit with chin strap.',
+    price: 24.99,
+    stock: 3,
+    unit: 'pieces',
+    status: 'ACTIVE',
+    category: { name: 'Safety' },
+    location: 'Safety Equipment',
+    supplier: { name: 'SafetyFirst Corp', contact: 'info@safetyfirst.com' },
+    updatedAt: '2024-12-08T09:45:00Z',
+    imageUrl: null
+  }
+])
+
+const sampleCategories = ref([
+  {
+    id: '1',
+    name: 'Electronics',
+    code: 'ELEC',
+    description: 'Electronic devices, computers, and digital equipment for modern workplaces.',
+    status: 'Active',
+    itemCount: 45,
+    totalValue: 125000,
+    lowStockItems: 3,
+    activeProjects: 12,
+    popularItems: [
+      { id: '1', name: 'MacBook Pro', price: 2499.99 },
+      { id: '2', name: 'iPad Pro', price: 1099.99 },
+      { id: '3', name: 'iPhone 15', price: 999.99 }
+    ],
+    lastActivity: '2024-12-10T15:20:00Z',
+    lastActivityDescription: 'MacBook Pro added to inventory'
+  },
+  {
+    id: '2',
+    name: 'Tools',
+    code: 'TOOL',
+    description: 'Hand tools, power tools, and equipment for construction and maintenance work.',
+    status: 'Active',
+    itemCount: 78,
+    totalValue: 35000,
+    lowStockItems: 5,
+    activeProjects: 8,
+    popularItems: [
+      { id: '4', name: 'Cordless Drill', price: 149.99 },
+      { id: '5', name: 'Hammer Set', price: 89.99 },
+      { id: '6', name: 'Screwdriver Kit', price: 45.99 }
+    ],
+    subcategories: [
+      { id: '21', name: 'Power Tools' },
+      { id: '22', name: 'Hand Tools' }
+    ],
+    lastActivity: '2024-12-09T11:30:00Z',
+    lastActivityDescription: 'New drill set received'
+  },
+  {
+    id: '3',
+    name: 'Safety',
+    code: 'SAFE',
+    description: 'Personal protective equipment and safety gear for workplace protection.',
+    status: 'Active',
+    itemCount: 32,
+    totalValue: 8500,
+    lowStockItems: 8,
+    activeProjects: 15,
+    popularItems: [
+      { id: '7', name: 'Safety Helmet', price: 24.99 },
+      { id: '8', name: 'Safety Vest', price: 19.99 },
+      { id: '9', name: 'Safety Gloves', price: 12.99 }
+    ],
+    parentCategory: { name: 'Equipment' },
+    lastActivity: '2024-12-07T16:45:00Z',
+    lastActivityDescription: 'Safety helmets low stock alert'
+  }
+])<!-- apps/web/pages/dashboard.vue -->
 <template>
   <div class="min-h-screen bg-gradient-to-br from-sky-200 via-slate-100 to-emerald-200">
     <!-- Header Component -->
@@ -656,6 +764,246 @@
         </Modal>
       </UCard>
 
+      <!-- Form Components Extended Showcase -->
+      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+        <template #header>
+          <h3 class="text-xl font-bold text-slate-800">📋 Extended Form Components</h3>
+        </template>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Form Select -->
+          <div class="space-y-4">
+            <h4 class="font-semibold text-slate-700">Form Select</h4>
+            
+            <FormSelect
+              v-model="formData.priority"
+              label="Priority Level"
+              placeholder="Select priority"
+              leading-icon="i-heroicons-flag"
+              :options="priorityOptions"
+              help-text="Choose the priority level for this task"
+            />
+            
+            <FormSelect
+              v-model="formData.category"
+              label="Category"
+              placeholder="Select category"
+              :options="categoryOptions"
+              :option-groups="categoryGroups"
+              show-selected-value
+            />
+            
+            <FormSelect
+              v-model="formData.status"
+              label="Status"
+              :options="statusOptions"
+              :loading="selectLoading"
+              disabled
+            />
+          </div>
+
+          <!-- Date Picker -->
+          <div class="space-y-4">
+            <h4 class="font-semibold text-slate-700">Date Picker</h4>
+            
+            <DatePicker
+              v-model="formData.startDate"
+              label="Start Date"
+              placeholder="Select start date"
+              leading-icon="i-heroicons-calendar-days"
+              help-text="Choose the project start date"
+            />
+            
+            <DatePicker
+              v-model="formData.endDate"
+              label="End Date"
+              placeholder="Select end date"
+              :min-date="formData.startDate"
+              type="datetime-local"
+            />
+            
+            <DatePicker
+              v-model="formData.time"
+              label="Meeting Time"
+              type="time"
+              placeholder="Select time"
+            />
+          </div>
+        </div>
+      </UCard>
+
+      <!-- File Upload Showcase -->
+      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+        <template #header>
+          <h3 class="text-xl font-bold text-slate-800">📎 File Upload Component</h3>
+        </template>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Single File Upload -->
+          <div>
+            <h4 class="font-semibold text-slate-700 mb-4">Single File Upload</h4>
+            <FileUpload
+              v-model="uploadedFiles.single"
+              label="Profile Picture"
+              accept="image/*"
+              :max-size="2 * 1024 * 1024"
+              help-text="Upload a profile picture (max 2MB)"
+              @upload-success="handleUploadSuccess"
+              @upload-error="handleUploadError"
+            />
+          </div>
+          
+          <!-- Multiple File Upload -->
+          <div>
+            <h4 class="font-semibold text-slate-700 mb-4">Multiple File Upload</h4>
+            <FileUpload
+              v-model="uploadedFiles.multiple"
+              label="Project Documents"
+              accept=".pdf,.doc,.docx,.jpg,.png"
+              :multiple="true"
+              :max-files="5"
+              :max-size="10 * 1024 * 1024"
+              help-text="Upload project documents (max 5 files, 10MB each)"
+              auto-upload
+              @upload-success="handleUploadSuccess"
+              @upload-error="handleUploadError"
+            />
+          </div>
+        </div>
+      </UCard>
+
+      <!-- Pagination Showcase -->
+      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+        <template #header>
+          <h3 class="text-xl font-bold text-slate-800">📄 Pagination Component</h3>
+        </template>
+        
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-blue-50 p-4 rounded-lg">
+              <h5 class="font-semibold text-blue-800">Total Items</h5>
+              <p class="text-2xl font-bold text-blue-600">{{ paginationData.total }}</p>
+            </div>
+            <div class="bg-green-50 p-4 rounded-lg">
+              <h5 class="font-semibold text-green-800">Current Page</h5>
+              <p class="text-2xl font-bold text-green-600">{{ paginationData.currentPage }}</p>
+            </div>
+            <div class="bg-purple-50 p-4 rounded-lg">
+              <h5 class="font-semibold text-purple-800">Per Page</h5>
+              <p class="text-2xl font-bold text-purple-600">{{ paginationData.perPage }}</p>
+            </div>
+          </div>
+          
+          <Pagination
+            :current-page="paginationData.currentPage"
+            :total-pages="paginationData.totalPages"
+            :total="paginationData.total"
+            :per-page="paginationData.perPage"
+            @page-change="handlePageChange"
+          />
+        </div>
+      </UCard>
+
+      <!-- Tooltip Showcase -->
+      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+        <template #header>
+          <h3 class="text-xl font-bold text-slate-800">💬 Tooltip Component</h3>
+        </template>
+        
+        <div class="space-y-8">
+          <!-- Tooltip Placements -->
+          <div>
+            <h4 class="font-semibold text-slate-700 mb-4">Tooltip Placements</h4>
+            <div class="grid grid-cols-3 gap-4 place-items-center">
+              <!-- Top row -->
+              <Tooltip content="Top start tooltip" placement="top-start">
+                <UButton variant="outline" size="sm">Top Start</UButton>
+              </Tooltip>
+              
+              <Tooltip content="Top center tooltip" placement="top">
+                <UButton variant="outline" size="sm">Top</UButton>
+              </Tooltip>
+              
+              <Tooltip content="Top end tooltip" placement="top-end">
+                <UButton variant="outline" size="sm">Top End</UButton>
+              </Tooltip>
+              
+              <!-- Middle row -->
+              <Tooltip content="Left tooltip with more content" placement="left">
+                <UButton variant="outline" size="sm">Left</UButton>
+              </Tooltip>
+              
+              <div class="text-center">
+                <Tooltip content="Click me tooltip" trigger="click">
+                  <UButton color="blue" size="sm">Click Me</UButton>
+                </Tooltip>
+              </div>
+              
+              <Tooltip content="Right tooltip" placement="right">
+                <UButton variant="outline" size="sm">Right</UButton>
+              </Tooltip>
+              
+              <!-- Bottom row -->
+              <Tooltip content="Bottom start tooltip" placement="bottom-start">
+                <UButton variant="outline" size="sm">Bottom Start</UButton>
+              </Tooltip>
+              
+              <Tooltip content="Bottom center tooltip" placement="bottom">
+                <UButton variant="outline" size="sm">Bottom</UButton>
+              </Tooltip>
+              
+              <Tooltip content="Bottom end tooltip" placement="bottom-end">
+                <UButton variant="outline" size="sm">Bottom End</UButton>
+              </Tooltip>
+            </div>
+          </div>
+
+          <!-- Tooltip Themes -->
+          <div>
+            <h4 class="font-semibold text-slate-700 mb-4">Tooltip Themes</h4>
+            <div class="flex flex-wrap gap-3">
+              <Tooltip content="Dark theme (default)" theme="dark">
+                <UButton variant="outline" color="gray">Dark</UButton>
+              </Tooltip>
+              
+              <Tooltip content="Light theme tooltip" theme="light">
+                <UButton variant="outline" color="gray">Light</UButton>
+              </Tooltip>
+              
+              <Tooltip content="Error theme tooltip" theme="error">
+                <UButton variant="outline" color="red">Error</UButton>
+              </Tooltip>
+              
+              <Tooltip content="Warning theme tooltip" theme="warning">
+                <UButton variant="outline" color="amber">Warning</UButton>
+              </Tooltip>
+              
+              <Tooltip content="Success theme tooltip" theme="success">
+                <UButton variant="outline" color="green">Success</UButton>
+              </Tooltip>
+            </div>
+          </div>
+
+          <!-- Advanced Tooltips -->
+          <div>
+            <h4 class="font-semibold text-slate-700 mb-4">Advanced Features</h4>
+            <div class="flex flex-wrap gap-3">
+              <Tooltip content="Tooltip with delay" :delay="500">
+                <UButton variant="outline">Delayed</UButton>
+              </Tooltip>
+              
+              <Tooltip content="Large tooltip text" size="lg" max-width="300px">
+                <UButton variant="outline">Large</UButton>
+              </Tooltip>
+              
+              <Tooltip disabled>
+                <UButton variant="outline" disabled>Disabled</UButton>
+              </Tooltip>
+            </div>
+          </div>
+        </div>
+      </UCard>
+
       <!-- Toast Notification Showcase -->
       <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
         <template #header>
@@ -735,6 +1083,51 @@
             >
               Clear All
             </UButton>
+          </div>
+        </div>
+      </UCard>
+
+      <!-- Business Components Showcase -->
+      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+        <template #header>
+          <h3 class="text-xl font-bold text-slate-800">🏢 Business Components</h3>
+        </template>
+        
+        <div class="space-y-8">
+          <!-- Stock Item Cards -->
+          <div>
+            <h4 class="font-semibold text-slate-700 mb-4">Stock Item Cards</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <StockItemCard 
+                v-for="stockItem in sampleStockItems" 
+                :key="stockItem.id"
+                :stock-item="stockItem"
+                @click="handleStockItemClick(stockItem.id)"
+                @view="handleStockItemView"
+                @edit="handleStockItemEdit"
+                @delete="handleStockItemDelete"
+                @adjust-stock="handleStockAdjust"
+                @add-to-project="handleAddToProject"
+              />
+            </div>
+          </div>
+
+          <!-- Category Cards -->
+          <div>
+            <h4 class="font-semibold text-slate-700 mb-4">Category Cards</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <CategoryCard 
+                v-for="category in sampleCategories" 
+                :key="category.id"
+                :category="category"
+                @click="handleCategoryClick(category.id)"
+                @view="handleCategoryView"
+                @edit="handleCategoryEdit"
+                @delete="handleCategoryDelete"
+                @add-item="handleCategoryAddItem"
+                @view-items="handleCategoryViewItems"
+              />
+            </div>
           </div>
         </div>
       </UCard>
@@ -828,6 +1221,8 @@
               <li>✅ EmptyState</li>
               <li>✅ Toast</li>
               <li>✅ Tabs</li>
+              <li>✅ Pagination</li>
+              <li>✅ Tooltip</li>
             </ul>
           </div>
           
@@ -836,8 +1231,8 @@
             <ul class="text-sm text-violet-700 space-y-1">
               <li>✅ ProjectCard</li>
               <li>✅ ProjectTable</li>
-              <li>⏳ StockItemCard</li>
-              <li>⏳ CategoryCard</li>
+              <li>✅ StockItemCard</li>
+              <li>✅ CategoryCard</li>
               <li>⏳ UserCard</li>
             </ul>
           </div>
@@ -847,9 +1242,9 @@
             <ul class="text-sm text-orange-700 space-y-1">
               <li>✅ SearchBox</li>
               <li>✅ FormInput</li>
-              <li>✅ ErrorMessage</li>
-              <li>⏳ FormSelect</li>
-              <li>⏳ DatePicker</li>
+              <li>✅ FormSelect</li>
+              <li>✅ DatePicker</li>
+              <li>✅ FileUpload</li>
             </ul>
           </div>
         </div>
@@ -893,8 +1288,67 @@ const formData = ref({
   loading: 'Loading example...',
   disabled: 'This is disabled',
   readonly: 'This is readonly',
-  search: ''
+  search: '',
+  priority: 'HIGH',
+  category: 'web',
+  status: 'active',
+  startDate: '',
+  endDate: '',
+  time: ''
 })
+
+const uploadedFiles = ref({
+  single: [],
+  multiple: []
+})
+
+const paginationData = ref({
+  currentPage: 1,
+  totalPages: 15,
+  total: 150,
+  perPage: 10
+})
+
+const selectLoading = ref(false)
+
+const priorityOptions = ref([
+  { value: 'LOW', label: 'Low Priority', description: 'Non-urgent tasks' },
+  { value: 'MEDIUM', label: 'Medium Priority', description: 'Standard tasks' },
+  { value: 'HIGH', label: 'High Priority', description: 'Important tasks' },
+  { value: 'URGENT', label: 'Urgent Priority', description: 'Critical tasks' }
+])
+
+const categoryOptions = ref([
+  { value: 'web', label: 'Web Development' },
+  { value: 'mobile', label: 'Mobile Development' },
+  { value: 'design', label: 'Design' }
+])
+
+const categoryGroups = ref([
+  {
+    label: 'Development',
+    options: [
+      { value: 'frontend', label: 'Frontend Development' },
+      { value: 'backend', label: 'Backend Development' },
+      { value: 'fullstack', label: 'Full Stack Development' }
+    ]
+  },
+  {
+    label: 'Design',
+    options: [
+      { value: 'ui', label: 'UI Design' },
+      { value: 'ux', label: 'UX Design' },
+      { value: 'graphic', label: 'Graphic Design' }
+    ]
+  }
+])
+
+const statusOptions = ref([
+  'Active',
+  'Inactive',
+  'Pending',
+  'Completed'
+])
 
 const formErrors = ref({
   email: 'Please enter a valid email address'
@@ -1188,6 +1642,97 @@ const handleCreateProject = () => {
   success('Redirecting to project creation...', {
     title: 'Navigation'
   })
+}
+
+const handleUploadSuccess = ({ file }) => {
+  success(`File "${file.name}" uploaded successfully!`)
+}
+
+const handleUploadError = ({ file, error }) => {
+  error(`Failed to upload "${file.name}": ${error.message || error}`)
+}
+
+const handlePageChange = (page) => {
+  paginationData.value.currentPage = page
+  info(`Navigated to page ${page}`)
+}
+
+// Stock item handlers
+const handleStockItemClick = (stockItemId) => {
+  console.log('Stock item clicked:', stockItemId)
+  info(`Viewing stock item: ${stockItemId}`)
+}
+
+const handleStockItemView = (stockItemId) => {
+  console.log('View stock item:', stockItemId)
+  success(`Opening stock item details: ${stockItemId}`)
+}
+
+const handleStockItemEdit = (stockItemId) => {
+  console.log('Edit stock item:', stockItemId)
+  info(`Editing stock item: ${stockItemId}`)
+}
+
+const handleStockItemDelete = (stockItemId) => {
+  console.log('Delete stock item:', stockItemId)
+  warning(`Are you sure you want to delete stock item: ${stockItemId}?`, {
+    autoClose: false,
+    action: {
+      text: 'Confirm Delete',
+      handler: () => {
+        success('Stock item deleted successfully!')
+      }
+    }
+  })
+}
+
+const handleStockAdjust = (stockItemId) => {
+  console.log('Adjust stock:', stockItemId)
+  info(`Opening stock adjustment for: ${stockItemId}`)
+}
+
+const handleAddToProject = (stockItemId) => {
+  console.log('Add to project:', stockItemId)
+  success(`Added stock item ${stockItemId} to project`)
+}
+
+// Category handlers
+const handleCategoryClick = (categoryId) => {
+  console.log('Category clicked:', categoryId)
+  info(`Viewing category: ${categoryId}`)
+}
+
+const handleCategoryView = (categoryId) => {
+  console.log('View category:', categoryId)
+  success(`Opening category details: ${categoryId}`)
+}
+
+const handleCategoryEdit = (categoryId) => {
+  console.log('Edit category:', categoryId)
+  info(`Editing category: ${categoryId}`)
+}
+
+const handleCategoryDelete = (categoryId) => {
+  console.log('Delete category:', categoryId)
+  warning(`Are you sure you want to delete category: ${categoryId}?`, {
+    autoClose: false,
+    action: {
+      text: 'Confirm Delete',
+      handler: () => {
+        success('Category deleted successfully!')
+      }
+    }
+  })
+}
+
+const handleCategoryAddItem = (categoryId) => {
+  console.log('Add item to category:', categoryId)
+  success(`Adding new item to category: ${categoryId}`)
+}
+
+const handleCategoryViewItems = (categoryId) => {
+  console.log('View category items:', categoryId)
+  info(`Viewing items in category: ${categoryId}`)
 }
 
 const handleAddStock = () => {
