@@ -33,12 +33,13 @@
             >
               Stock Items
             </NuxtLink>
-            <NuxtLink 
+            <!-- Categories link temporarily removed to avoid router errors -->
+            <!-- <NuxtLink 
               to="/categories" 
               class="text-slate-600 hover:text-sky-600 font-medium transition-colors px-3 py-2 rounded-lg hover:bg-sky-50"
             >
               Categories
-            </NuxtLink>
+            </NuxtLink> -->
           </nav>
         </div>
 

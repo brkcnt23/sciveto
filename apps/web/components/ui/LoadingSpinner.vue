@@ -2,28 +2,29 @@
 <template>
   <div class="flex items-center justify-center" :class="containerClass">
     <div class="relative">
-      <!-- Spinner Animation -->
+      <!-- Main Spinner -->
       <div 
-        class="animate-spin rounded-full border-4 border-transparent"
-        :class="[sizeClass, colorClass]"
-      >
-        <div class="absolute inset-0 rounded-full border-4 border-transparent border-t-current opacity-75"></div>
-      </div>
+        class="animate-spin rounded-full border-4"
+        :class="[sizeClass, spinnerColorClass]"
+      ></div>
       
-      <!-- Center dot -->
+      <!-- Inner dot (optional) -->
       <div 
         v-if="showDot"
         class="absolute inset-0 flex items-center justify-center"
       >
-        <div class="w-2 h-2 rounded-full bg-current opacity-60"></div>
+        <div 
+          class="rounded-full"
+          :class="dotClass"
+        ></div>
       </div>
     </div>
     
     <!-- Loading Text -->
     <span 
       v-if="text" 
-      class="ml-3 font-medium animate-pulse"
-      :class="textClass"
+      class="ml-3 font-medium"
+      :class="textColorClass"
     >
       {{ text }}
     </span>
@@ -31,15 +32,18 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+
 const props = defineProps({
   size: {
     type: String,
     default: 'md',
-    validator: value => ['xs', 'sm', 'md', 'lg', 'xl'].includes(value)
+    validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl'].includes(value)
   },
   color: {
     type: String,
-    default: 'sky'
+    default: 'sky',
+    validator: (value) => ['sky', 'emerald', 'violet', 'orange', 'rose', 'amber', 'slate'].includes(value)
   },
   text: String,
   showDot: {
@@ -55,41 +59,55 @@ const props = defineProps({
 const sizeClass = computed(() => {
   const sizes = {
     xs: 'w-4 h-4',
-    sm: 'w-6 h-6', 
+    sm: 'w-6 h-6',
     md: 'w-8 h-8',
-    lg: 'w-12 h-12',
-    xl: 'w-16 h-16'
+    lg: 'w-10 h-10',
+    xl: 'w-12 h-12'
   }
   return sizes[props.size]
 })
 
-const colorClass = computed(() => {
-  const colors = {
-    sky: 'border-sky-200 border-t-sky-600',
-    emerald: 'border-emerald-200 border-t-emerald-600',
-    violet: 'border-violet-200 border-t-violet-600',
-    orange: 'border-orange-200 border-t-orange-600',
-    rose: 'border-rose-200 border-t-rose-600',
-    slate: 'border-slate-200 border-t-slate-600'
+const dotClass = computed(() => {
+  const sizes = {
+    xs: 'w-1 h-1',
+    sm: 'w-1.5 h-1.5',
+    md: 'w-2 h-2',
+    lg: 'w-2.5 h-2.5',
+    xl: 'w-3 h-3'
   }
-  return colors[props.color] || colors.sky
+  return `${sizes[props.size]} ${spinnerColorClass.value.replace('border-', 'bg-').split(' ')[0]}`
 })
 
-const textClass = computed(() => {
+const spinnerColorClass = computed(() => {
+  const colors = {
+    sky: 'border-slate-200 border-t-sky-500',
+    emerald: 'border-slate-200 border-t-emerald-500',
+    violet: 'border-slate-200 border-t-violet-500',
+    orange: 'border-slate-200 border-t-orange-500',
+    rose: 'border-slate-200 border-t-rose-500',
+    amber: 'border-slate-200 border-t-amber-500',
+    slate: 'border-slate-200 border-t-slate-500'
+  }
+  return colors[props.color]
+})
+
+const textColorClass = computed(() => {
   const colors = {
     sky: 'text-sky-600',
     emerald: 'text-emerald-600',
-    violet: 'text-violet-600', 
+    violet: 'text-violet-600',
     orange: 'text-orange-600',
     rose: 'text-rose-600',
+    amber: 'text-amber-600',
     slate: 'text-slate-600'
   }
-  return colors[props.color] || colors.sky
+  return colors[props.color]
 })
 
 const containerClass = computed(() => {
-  return props.fullScreen 
-    ? 'fixed inset-0 bg-white/80 backdrop-blur-sm z-50' 
-    : 'py-4'
+  if (props.fullScreen) {
+    return 'fixed inset-0 bg-white/80 backdrop-blur-sm z-50'
+  }
+  return 'py-2'
 })
 </script>
