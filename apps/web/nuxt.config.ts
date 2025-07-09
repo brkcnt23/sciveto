@@ -3,10 +3,19 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
   ssr: false, // For better auth handling
-
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false,
+    },
+    {
+      path: '~/components/ui',
+      prefix: '', // Prefix'i kaldır
+    }
+  ],
   modules: [
     '@nuxt/eslint',
-    '@nuxt/icon', 
+    '@nuxt/icon',
     '@nuxt/ui',
     '@pinia/nuxt',
     '@vueuse/nuxt'

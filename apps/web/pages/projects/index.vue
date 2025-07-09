@@ -1,21 +1,27 @@
 <!-- apps/web/pages/projects/index.vue -->
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gradient-to-br from-sky-200 via-slate-100 to-emerald-200">
     <!-- Header -->
-    <div class="bg-white shadow">
+    <div class="bg-white/95 backdrop-blur-md shadow-lg border-b border-sky-200">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="flex h-16 justify-between items-center">
           <div class="flex items-center space-x-4">
-            <NuxtLink to="/dashboard" class="text-gray-500 hover:text-gray-700">
+            <NuxtLink to="/dashboard" class="text-slate-500 hover:text-sky-600 transition-colors">
               <Icon name="i-heroicons-arrow-left" class="h-5 w-5" />
             </NuxtLink>
-            <h1 class="text-xl font-semibold text-gray-900">Projects</h1>
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 bg-gradient-to-br from-sky-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                <Icon name="i-heroicons-briefcase" class="h-5 w-5 text-white" />
+              </div>
+              <h1 class="text-xl font-bold text-slate-800">Projects</h1>
+            </div>
           </div>
           
           <UButton 
             to="/projects/create"
             icon="i-heroicons-plus"
             size="sm"
+            class="bg-gradient-to-r from-sky-500 to-emerald-500 hover:from-sky-600 hover:to-emerald-600 shadow-lg text-white"
           >
             New Project
           </UButton>
@@ -26,48 +32,50 @@
     <!-- Main Content -->
     <div class="mx-auto max-w-7xl px-6 lg:px-8 py-8">
       <!-- Search & Filters -->
-      <div class="mb-6">
-        <UCard>
-          <div class="p-4">
+      <div class="mb-8">
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <div class="p-6">
             <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
               <UInput
                 v-model="filters.search"
                 placeholder="Search projects..."
                 icon="i-heroicons-magnifying-glass"
                 @input="debouncedSearch"
+                class="bg-white"
               />
               
               <select 
                 v-model="filters.status"
-                class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                class="px-4 py-3 border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
                 @change="fetchProjects"
               >
                 <option value="">All Status</option>
-                <option value="planning">Planning</option>
-                <option value="reserving">Reserving</option>
-                <option value="offering">Offering</option>
-                <option value="designing">Designing</option>
-                <option value="manufacturing">Manufacturing</option>
-                <option value="collecting">Collecting</option>
-                <option value="completed">Completed</option>
+                <option value="planning">🔵 Planning</option>
+                <option value="reserving">🟡 Reserving</option>
+                <option value="offering">🟣 Offering</option>
+                <option value="designing">🔵 Designing</option>
+                <option value="manufacturing">🟠 Manufacturing</option>
+                <option value="collecting">🟢 Collecting</option>
+                <option value="completed">✅ Completed</option>
               </select>
               
               <select 
                 v-model="filters.priority"
-                class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                class="px-4 py-3 border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
                 @change="fetchProjects"
               >
                 <option value="">All Priority</option>
-                <option value="LOW">Low</option>
-                <option value="MEDIUM">Medium</option>
-                <option value="HIGH">High</option>
-                <option value="URGENT">Urgent</option>
+                <option value="LOW">🟢 Low</option>
+                <option value="MEDIUM">🟡 Medium</option>
+                <option value="HIGH">🟠 High</option>
+                <option value="URGENT">🔴 Urgent</option>
               </select>
               
               <UButton
                 variant="outline"
                 icon="i-heroicons-arrow-path"
                 @click="resetFilters"
+                class="border-gray-200 hover:bg-gray-50"
               >
                 Reset
               </UButton>
@@ -76,8 +84,9 @@
                 variant="outline"
                 icon="i-heroicons-view-columns"
                 @click="toggleView"
+                class="border-gray-200 hover:bg-gray-50"
               >
-                {{ viewMode === 'cards' ? 'Table' : 'Cards' }}
+                {{ viewMode === 'cards' ? '📊 Table' : '🎴 Cards' }}
               </UButton>
             </div>
           </div>
@@ -89,13 +98,21 @@
         <USkeleton v-for="n in 6" :key="n" class="h-80" />
       </div>
 
-      <div v-else-if="projects.length === 0" class="text-center py-12">
-        <Icon name="i-heroicons-briefcase" class="h-12 w-12 text-gray-400 mx-auto mb-4" />
-        <h3 class="text-lg font-medium text-gray-900 mb-2">No projects found</h3>
-        <p class="text-gray-500 mb-4">Get started by creating your first project.</p>
-        <UButton to="/projects/create" icon="i-heroicons-plus">
-          New Project
-        </UButton>
+      <div v-else-if="projects.length === 0" class="text-center py-16">
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-12 max-w-md mx-auto">
+          <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Icon name="i-heroicons-briefcase" class="h-10 w-10 text-white" />
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">No projects found</h3>
+          <p class="text-gray-600 mb-6">Get started by creating your first project.</p>
+          <UButton 
+            to="/projects/create" 
+            icon="i-heroicons-plus"
+            class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg"
+          >
+            New Project
+          </UButton>
+        </div>
       </div>
 
       <!-- Cards View -->
