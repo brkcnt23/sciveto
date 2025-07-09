@@ -1,15 +1,8 @@
-// Status colors - DOĞADAN İLHAM 🌿
-const getStatusColor = (status) => {
-  const colors = {
-    planning: 'sky',        // Gökyüzü mavisi ☁️
-    reserving: 'amber',     // Bal rengi 🍯
-    offering: 'violet',     // Menekşe 💜
-    designing: 'indigo',    // İndigo çiçeği 🌸
-    manufacturing: 'orange', // Turuncu çiçek 🌻
-    collecting: 'emerald',  // Zümr<!-- apps/web/components/ProjectCard.vue -->
+<!-- apps/web/components/business/ProjectCard.vue -->
 <template>
   <UCard class="hover:shadow-xl transition-all duration-300 cursor-pointer group border-l-4 overflow-hidden relative"
-         :class="getCardBorderColor(project.status)">
+         :class="getCardBorderColor(project.status)"
+         @click="$emit('click')">
     <!-- Status Gradient Background -->
     <div class="absolute top-0 right-0 w-32 h-32 opacity-5 transform rotate-12 translate-x-8 -translate-y-8"
          :class="getStatusGradient(project.status)">
@@ -33,13 +26,8 @@ const getStatusColor = (status) => {
             </h3>
             <div class="flex items-center space-x-2 mt-1">
               <span class="text-sm text-gray-500 font-mono">{{ project.projectCode }}</span>
-              <UBadge 
-                :color="getPriorityColor(project.priority)"
-                size="xs"
-                class="uppercase font-bold"
-              >
-                {{ project.priority }}
-              </UBadge>
+              <!-- Use custom PriorityBadge -->
+              <PriorityBadge :priority="project.priority" size="xs" />
             </div>
           </div>
         </div>
@@ -101,72 +89,70 @@ const getStatusColor = (status) => {
           <div>
             <div class="flex items-center space-x-2 mb-2">
               <Icon name="i-heroicons-currency-dollar" class="h-4 w-4 text-indigo-600" />
-              <span class="text-xs text-indigo-600 font-medium uppercase tracking-wide">Budget</span>
+              <span class="text-xs text-indigo-600 font-medium uppercase">Budget</span>
             </div>
-            <div class="text-right">
-              <div class="text-lg font-bold text-indigo-900">${{ formatCurrency(project.estimatedCost) }}</div>
-              <div class="text-xs text-indigo-600">
-                Spent: ${{ formatCurrency(project.actualCost) }}
-              </div>
+            <div class="text-sm font-bold text-indigo-900">
+              ${{ formatCurrency(project.estimatedCost) }}
+            </div>
+            <div class="text-xs text-indigo-600">
+              Spent: ${{ formatCurrency(project.actualCost) }}
             </div>
           </div>
-          
           <div>
             <div class="flex items-center space-x-2 mb-2">
               <Icon name="i-heroicons-calendar" class="h-4 w-4 text-purple-600" />
-              <span class="text-xs text-purple-600 font-medium uppercase tracking-wide">Deadline</span>
+              <span class="text-xs text-purple-600 font-medium uppercase">Deadline</span>
             </div>
-            <div class="text-right">
-              <div class="text-sm font-bold" :class="getDeadlineColor()">
-                {{ formatDate(project.deadline) }}
-              </div>
-              <div class="text-xs text-purple-600">
-                {{ getDaysText() }}
-              </div>
+            <div class="text-sm font-bold" :class="getDeadlineColor()">
+              {{ formatDate(project.deadline) }}
+            </div>
+            <div class="text-xs text-purple-600">
+              {{ getDaysText() }}
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Materials & Actions -->
-      <div class="flex items-center justify-between pt-2 border-t border-gray-200">
-        <div class="flex items-center space-x-3">
-          <div class="flex items-center space-x-2 text-sm bg-orange-50 text-orange-700 px-3 py-1 rounded-full">
-            <Icon name="i-heroicons-cube" class="h-4 w-4" />
-            <span class="font-medium">{{ project.materialCount }} materials</span>
-          </div>
-        </div>
-        
-        <!-- Quick Actions -->
-        <div class="flex space-x-1 opacity-0 group-hover:opacity-100 transition-all duration-200">
-          <UButton
-            size="xs"
-            variant="soft"
-            color="blue"
+      <!-- Action Buttons -->
+      <div class="flex items-center justify-between pt-2 border-t border-stone-200">
+        <div class="flex space-x-2">
+          <UButton 
+            size="xs" 
+            variant="soft" 
+            color="sky"
             icon="i-heroicons-eye"
             @click.stop="$emit('view', project.id)"
-          />
-          <UButton
-            size="xs"
-            variant="soft"
-            color="green"
+          >
+            View
+          </UButton>
+          <UButton 
+            size="xs" 
+            variant="soft" 
+            color="emerald"
             icon="i-heroicons-pencil"
             @click.stop="$emit('edit', project.id)"
-          />
-          <UButton
-            size="xs"
-            variant="soft"
-            color="red"
-            icon="i-heroicons-trash"
-            @click.stop="$emit('delete', project)"
-          />
+          >
+            Edit
+          </UButton>
         </div>
+        
+        <UButton 
+          size="xs" 
+          variant="soft" 
+          color="red"
+          icon="i-heroicons-trash"
+          @click.stop="$emit('delete', project.id)"
+        >
+          Delete
+        </UButton>
       </div>
     </div>
   </UCard>
 </template>
 
 <script setup>
+import { computed } from 'vue'
+
 const props = defineProps({
   project: {
     type: Object,
@@ -174,7 +160,7 @@ const props = defineProps({
   }
 })
 
-defineEmits(['view', 'edit', 'delete'])
+defineEmits(['click', 'view', 'edit', 'delete'])
 
 // Status colors - DOĞADAN İLHAM 🌿
 const getStatusColor = (status) => {
@@ -220,22 +206,11 @@ const getStatusGradient = (status) => {
 
 // Project icon based on name
 const getProjectIcon = (name) => {
-  if (name.includes('Conveyor')) return '🏭'
-  if (name.includes('Machine')) return '⚙️'
-  if (name.includes('Steel') || name.includes('Frame')) return '🏗️'
-  if (name.includes('Hydraulic')) return '🔧'
+  if (name.includes('Website') || name.includes('Web')) return '🌐'
+  if (name.includes('Mobile') || name.includes('App')) return '📱'
+  if (name.includes('E-commerce') || name.includes('Shop')) return '🛒'
+  if (name.includes('API') || name.includes('Backend')) return '⚙️'
   return '📋'
-}
-
-// Priority colors - Doğal çiçek renkleri
-const getPriorityColor = (priority) => {
-  const colors = {
-    LOW: 'emerald',     // Yeşil yaprak 🍃
-    MEDIUM: 'amber',    // Sarı çiçek 🌼
-    HIGH: 'orange',     // Turuncu çiçek 🌻
-    URGENT: 'rose'      // Pembe çiçek 🌹
-  }
-  return colors[priority] || 'stone'
 }
 
 // Progress colors - Doğal tonlar
