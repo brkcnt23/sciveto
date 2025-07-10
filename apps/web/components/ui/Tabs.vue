@@ -44,35 +44,29 @@
 
     <!-- Tab Content -->
     <div class="relative">
-      <TransitionGroup
-        name="tab"
-        tag="div"
-        class="relative"
+      <div
+        v-for="(tab, index) in tabs"
+        v-show="activeTabIndex === index"
+        :key="tab.key || index"
+        class="tab-content opacity-100 transform translate-y-0 transition-all duration-200"
       >
-        <div
-          v-for="(tab, index) in tabs"
-          v-show="activeTabIndex === index"
-          :key="tab.key || index"
-          class="tab-content"
+        <!-- Named slot for each tab -->
+        <slot
+          :name="tab.key || `tab-${index}`"
+          :tab="tab"
+          :index="index"
+          :isActive="activeTabIndex === index"
         >
-          <!-- Named slot for each tab -->
-          <slot
-            :name="tab.key || `tab-${index}`"
-            :tab="tab"
-            :index="index"
-            :isActive="activeTabIndex === index"
-          >
-            <!-- Default content -->
-            <div v-if="tab.content" v-html="tab.content"></div>
-          </slot>
-        </div>
-      </TransitionGroup>
+          <!-- Default content -->
+          <div v-if="tab.content" v-html="tab.content"></div>
+        </slot>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 
 const props = defineProps({
   modelValue: {
@@ -177,21 +171,6 @@ defineExpose({
 </script>
 
 <style scoped>
-.tab-enter-active,
-.tab-leave-active {
-  transition: all 0.2s ease;
-}
-
-.tab-enter-from {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.tab-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
 .tab-content {
   min-height: 200px; /* Prevent layout shift */
 }

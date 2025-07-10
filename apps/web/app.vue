@@ -6,10 +6,17 @@
 </template>
 
 <script setup>
-// Initialize auth store on app start
+
 const authStore = useAuthStore()
+
+useHead({
+  htmlAttrs: {
+    lang: 'en'
+  }
+})
 
 onMounted(() => {
   authStore.initializeAuth()
 })
+
 </script>

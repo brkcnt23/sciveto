@@ -1,67 +1,65 @@
 <!-- apps/web/components/ui/Toast.vue -->
 <template>
-  <Teleport to="body">
-    <div 
-      v-if="visible"
-      class="fixed top-4 right-4 z-50 min-w-80 max-w-md animate-in slide-in-from-right duration-300"
-      :class="toastClasses"
-    >
-      <div class="bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden">
-        <!-- Header with icon and close -->
-        <div class="flex items-start p-4">
-          <div class="flex-shrink-0">
-            <div 
-              class="w-8 h-8 rounded-full flex items-center justify-center"
-              :class="iconBgClass"
-            >
-              <Icon :name="typeIcon" class="w-4 h-4" :class="iconClass" />
-            </div>
-          </div>
-          
-          <div class="ml-3 flex-1">
-            <h3 v-if="title" class="text-sm font-medium text-gray-900">
-              {{ title }}
-            </h3>
-            <p class="text-sm text-gray-600" :class="{ 'mt-1': title }">
-              {{ message }}
-            </p>
-            
-            <!-- Action button -->
-            <div v-if="action" class="mt-3">
-              <UButton
-                size="xs"
-                :color="actionColor"
-                variant="outline"
-                @click="handleAction"
-              >
-                {{ action.text }}
-              </UButton>
-            </div>
-          </div>
-          
-          <!-- Close button -->
-          <button
-            @click="close"
-            class="ml-4 flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors"
+  <div 
+    v-if="visible"
+    class="min-w-80 max-w-md"
+    :class="toastClasses"
+  >
+    <div class="bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden">
+      <!-- Header with icon and close -->
+      <div class="flex items-start p-4">
+        <div class="flex-shrink-0">
+          <div 
+            class="w-8 h-8 rounded-full flex items-center justify-center"
+            :class="iconBgClass"
           >
-            <Icon name="i-heroicons-x-mark" class="w-5 h-5" />
-          </button>
+            <Icon :name="typeIcon" class="w-4 h-4" :class="iconClass" />
+          </div>
         </div>
         
-        <!-- Progress bar for auto-dismiss -->
-        <div 
-          v-if="autoClose && progress > 0"
-          class="h-1 bg-gray-100"
-        >
-          <div 
-            class="h-full transition-all duration-100 ease-linear"
-            :class="progressBarClass"
-            :style="{ width: `${progress}%` }"
-          ></div>
+        <div class="ml-3 flex-1">
+          <h3 v-if="title" class="text-sm font-medium text-gray-900">
+            {{ title }}
+          </h3>
+          <p class="text-sm text-gray-600" :class="{ 'mt-1': title }">
+            {{ message }}
+          </p>
+          
+          <!-- Action button -->
+          <div v-if="action" class="mt-3">
+            <UButton
+              size="xs"
+              :color="actionColor"
+              variant="outline"
+              @click="handleAction"
+            >
+              {{ action.text }}
+            </UButton>
+          </div>
         </div>
+        
+        <!-- Close button -->
+        <button
+          @click="close"
+          class="ml-4 flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <Icon name="i-heroicons-x-mark" class="w-5 h-5" />
+        </button>
+      </div>
+      
+      <!-- Progress bar for auto-dismiss -->
+      <div 
+        v-if="autoClose && progress > 0"
+        class="h-1 bg-gray-100"
+      >
+        <div 
+          class="h-full transition-all duration-100 ease-linear"
+          :class="progressBarClass"
+          :style="{ width: `${progress}%` }"
+        ></div>
       </div>
     </div>
-  </Teleport>
+  </div>
 </template>
 
 <script setup>

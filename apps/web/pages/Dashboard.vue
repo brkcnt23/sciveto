@@ -1,112 +1,4 @@
-const sampleStockItems = ref([
-  {
-    id: '1',
-    name: 'MacBook Pro 16" M3',
-    sku: 'MBP-16-M3-001',
-    description: 'High-performance laptop for development and design work. Features M3 chip with 16GB RAM and 512GB SSD.',
-    price: 2499.99,
-    stock: 8,
-    unit: 'units',
-    status: 'ACTIVE',
-    category: { name: 'Electronics' },
-    location: 'Tech Warehouse A',
-    supplier: { name: 'Apple Inc.', contact: 'sales@apple.com' },
-    updatedAt: '2024-12-10T10:30:00Z',
-    imageUrl: null
-  },
-  {
-    id: '2', 
-    name: 'Cordless Drill Set',
-    sku: 'DRILL-SET-001',
-    description: 'Professional cordless drill set with multiple bits and carrying case. 18V lithium battery included.',
-    price: 149.99,
-    stock: 25,
-    unit: 'sets',
-    status: 'ACTIVE',
-    category: { name: 'Tools' },
-    location: 'Tool Storage B',
-    supplier: { name: 'DeWalt Tools', contact: 'orders@dewalt.com' },
-    updatedAt: '2024-12-09T14:15:00Z',
-    imageUrl: null
-  },
-  {
-    id: '3',
-    name: 'Safety Helmets',
-    sku: 'HELMET-SF-100',
-    description: 'Industrial safety helmets meeting OSHA standards. Adjustable fit with chin strap.',
-    price: 24.99,
-    stock: 3,
-    unit: 'pieces',
-    status: 'ACTIVE',
-    category: { name: 'Safety' },
-    location: 'Safety Equipment',
-    supplier: { name: 'SafetyFirst Corp', contact: 'info@safetyfirst.com' },
-    updatedAt: '2024-12-08T09:45:00Z',
-    imageUrl: null
-  }
-])
-
-const sampleCategories = ref([
-  {
-    id: '1',
-    name: 'Electronics',
-    code: 'ELEC',
-    description: 'Electronic devices, computers, and digital equipment for modern workplaces.',
-    status: 'Active',
-    itemCount: 45,
-    totalValue: 125000,
-    lowStockItems: 3,
-    activeProjects: 12,
-    popularItems: [
-      { id: '1', name: 'MacBook Pro', price: 2499.99 },
-      { id: '2', name: 'iPad Pro', price: 1099.99 },
-      { id: '3', name: 'iPhone 15', price: 999.99 }
-    ],
-    lastActivity: '2024-12-10T15:20:00Z',
-    lastActivityDescription: 'MacBook Pro added to inventory'
-  },
-  {
-    id: '2',
-    name: 'Tools',
-    code: 'TOOL',
-    description: 'Hand tools, power tools, and equipment for construction and maintenance work.',
-    status: 'Active',
-    itemCount: 78,
-    totalValue: 35000,
-    lowStockItems: 5,
-    activeProjects: 8,
-    popularItems: [
-      { id: '4', name: 'Cordless Drill', price: 149.99 },
-      { id: '5', name: 'Hammer Set', price: 89.99 },
-      { id: '6', name: 'Screwdriver Kit', price: 45.99 }
-    ],
-    subcategories: [
-      { id: '21', name: 'Power Tools' },
-      { id: '22', name: 'Hand Tools' }
-    ],
-    lastActivity: '2024-12-09T11:30:00Z',
-    lastActivityDescription: 'New drill set received'
-  },
-  {
-    id: '3',
-    name: 'Safety',
-    code: 'SAFE',
-    description: 'Personal protective equipment and safety gear for workplace protection.',
-    status: 'Active',
-    itemCount: 32,
-    totalValue: 8500,
-    lowStockItems: 8,
-    activeProjects: 15,
-    popularItems: [
-      { id: '7', name: 'Safety Helmet', price: 24.99 },
-      { id: '8', name: 'Safety Vest', price: 19.99 },
-      { id: '9', name: 'Safety Gloves', price: 12.99 }
-    ],
-    parentCategory: { name: 'Equipment' },
-    lastActivity: '2024-12-07T16:45:00Z',
-    lastActivityDescription: 'Safety helmets low stock alert'
-  }
-])<!-- apps/web/pages/dashboard.vue -->
+<!-- apps/web/pages/dashboard.vue -->
 <template>
   <div class="min-h-screen bg-gradient-to-br from-sky-200 via-slate-100 to-emerald-200">
     <!-- Header Component -->
@@ -118,12 +10,12 @@ const sampleCategories = ref([
         <template #header>
           <h2 class="text-2xl font-bold text-slate-800">🚀 Component Showcase Dashboard</h2>
         </template>
-        
+
         <p class="text-slate-600 mb-6">
-          Bu sayfada projemizde kullanacağımız tüm base component'leri görebilirsiniz. 
+          Bu sayfada projemizde kullanacağımız tüm base component'leri görebilirsiniz.
           Her component doğal renkler ve modern tasarım prensipleri ile oluşturulmuştur.
         </p>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="bg-sky-50 p-4 rounded-lg border border-sky-200">
             <h4 class="font-semibold text-sky-800">🎨 Layout Components</h4>
@@ -145,7 +37,7 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">🏷️ Priority Badge Component</h3>
         </template>
-        
+
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
           <div class="text-center space-y-3">
             <h4 class="font-semibold text-slate-700">LOW Priority</h4>
@@ -191,13 +83,13 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">📊 Progress Bar Component</h3>
         </template>
-        
+
         <div class="space-y-6">
           <ProgressBar :value="15" label="Planning Phase" estimated="5 days remaining" show-status />
           <ProgressBar :value="45" label="Development Phase" estimated="3 days remaining" show-status />
           <ProgressBar :value="75" label="Testing Phase" estimated="1 day remaining" show-status />
           <ProgressBar :value="100" label="Completed Project" estimated="Complete" show-status />
-          
+
           <!-- Custom Colors -->
           <div class="mt-8 pt-6 border-t border-gray-200">
             <h4 class="font-semibold text-slate-700 mb-4">Custom Colors</h4>
@@ -216,7 +108,7 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">👤 Avatar Component</h3>
         </template>
-        
+
         <div class="space-y-8">
           <!-- Size variations -->
           <div>
@@ -278,7 +170,7 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">⏳ Loading Components</h3>
         </template>
-        
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <!-- Skeleton Loading -->
           <div class="space-y-4">
@@ -287,7 +179,7 @@ const sampleCategories = ref([
             <SkeletonLoader type="list" />
             <SkeletonLoader type="text" :lines="4" />
           </div>
-          
+
           <!-- Spinner Loading -->
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Spinner Loading</h4>
@@ -305,30 +197,20 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">📭 Empty State Component</h3>
         </template>
-        
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">No Projects</h4>
-            <EmptyState
-              icon="i-heroicons-briefcase"
-              title="No Projects Found"
+            <EmptyState icon="i-heroicons-briefcase" title="No Projects Found"
               description="You haven't created any projects yet. Get started by creating your first project."
-              action-text="Create Project"
-              action-icon="i-heroicons-plus"
-              @action="handleCreateProject"
-            />
+              action-text="Create Project" action-icon="i-heroicons-plus" @action="handleCreateProject" />
           </div>
-          
+
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">No Stock Items</h4>
-            <EmptyState
-              icon="i-heroicons-cube"
-              title="No Stock Items"
-              description="Your inventory is empty. Add some stock items to get started."
-              action-text="Add Stock Item"
-              action-color="emerald"
-              @action="handleAddStock"
-            />
+            <EmptyState icon="i-heroicons-cube" title="No Stock Items"
+              description="Your inventory is empty. Add some stock items to get started." action-text="Add Stock Item"
+              action-color="emerald" @action="handleAddStock" />
           </div>
         </div>
       </UCard>
@@ -338,12 +220,8 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">📑 Tabs Component</h3>
         </template>
-        
-        <Tabs
-          v-model="activeTab"
-          :tabs="sampleTabs"
-          @change="handleTabChange"
-        >
+
+        <Tabs v-model="activeTab" :tabs="sampleTabs" @change="handleTabChange">
           <template #overview>
             <div class="space-y-4">
               <h4 class="font-semibold text-slate-700">Project Overview</h4>
@@ -368,7 +246,8 @@ const sampleCategories = ref([
             <div class="space-y-4">
               <h4 class="font-semibold text-slate-700">Project Details</h4>
               <div class="bg-gray-50 p-4 rounded-lg">
-                <p class="text-gray-600">Detailed project information, timelines, and specifications would be displayed here.</p>
+                <p class="text-gray-600">Detailed project information, timelines, and specifications would be displayed
+                  here.</p>
                 <ul class="mt-2 space-y-1 text-sm text-gray-500">
                   <li>• Project specifications</li>
                   <li>• Timeline and milestones</li>
@@ -383,7 +262,8 @@ const sampleCategories = ref([
             <div class="space-y-4">
               <h4 class="font-semibold text-slate-700">Team Members</h4>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div v-for="user in sampleUsers" :key="user.id" class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                <div v-for="user in sampleUsers" :key="user.id"
+                  class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
                   <Avatar :user="user" size="md" show-online-status />
                   <div>
                     <p class="font-medium text-gray-900">{{ user.name }}</p>
@@ -398,18 +278,10 @@ const sampleCategories = ref([
             <div class="space-y-4">
               <h4 class="font-semibold text-slate-700">Project Settings</h4>
               <div class="space-y-4">
-                <FormInput
-                  v-model="settingsForm.name"
-                  label="Project Name"
-                  placeholder="Enter project name"
-                  leading-icon="i-heroicons-folder"
-                />
-                <FormInput
-                  v-model="settingsForm.description"
-                  label="Description"
-                  placeholder="Project description"
-                  leading-icon="i-heroicons-document-text"
-                />
+                <FormInput v-model="settingsForm.name" label="Project Name" placeholder="Enter project name"
+                  leading-icon="i-heroicons-folder" />
+                <FormInput v-model="settingsForm.description" label="Description" placeholder="Project description"
+                  leading-icon="i-heroicons-document-text" />
                 <div class="flex space-x-2">
                   <UButton color="blue" @click="saveSettings">Save Changes</UButton>
                   <UButton color="gray" variant="outline" @click="resetSettings">Reset</UButton>
@@ -425,74 +297,38 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">⚠️ Error Message Component</h3>
         </template>
-        
+
         <div class="space-y-6">
           <!-- Error Types -->
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Error Types</h4>
             <div class="space-y-4">
-              <ErrorMessage
-                v-if="showErrorExample"
-                type="error"
-                title="Validation Error"
-                :error="sampleErrors.validation"
-                :show-retry="true"
-                @retry="handleRetryError"
-                dismissible
-                @dismiss="showErrorExample = false"
-              />
-              
-              <ErrorMessage
-                v-if="showWarningExample"
-                type="warning"
-                title="Warning"
-                error="This action cannot be undone. Please proceed with caution."
-                dismissible
-                @dismiss="showWarningExample = false"
-              />
-              
-              <ErrorMessage
-                v-if="showInfoExample"
-                type="info"
-                title="Information"
-                error="Your session will expire in 5 minutes. Save your work to avoid losing changes."
-                dismissible
-                @dismiss="showInfoExample = false"
-              />
+              <ErrorMessage v-if="showErrorExample" type="error" title="Validation Error"
+                :error="sampleErrors.validation" :show-retry="true" @retry="handleRetryError" dismissible
+                @dismiss="showErrorExample = false" />
+
+              <ErrorMessage v-if="showWarningExample" type="warning" title="Warning"
+                error="This action cannot be undone. Please proceed with caution." dismissible
+                @dismiss="showWarningExample = false" />
+
+              <ErrorMessage v-if="showInfoExample" type="info" title="Information"
+                error="Your session will expire in 5 minutes. Save your work to avoid losing changes." dismissible
+                @dismiss="showInfoExample = false" />
             </div>
           </div>
 
           <!-- Control Buttons -->
           <div class="flex flex-wrap gap-2">
-            <UButton 
-              v-if="!showErrorExample"
-              color="red" 
-              variant="outline" 
-              @click="showErrorExample = true"
-            >
+            <UButton v-if="!showErrorExample" color="red" variant="outline" @click="showErrorExample = true">
               Show Error
             </UButton>
-            <UButton 
-              v-if="!showWarningExample"
-              color="amber" 
-              variant="outline" 
-              @click="showWarningExample = true"
-            >
+            <UButton v-if="!showWarningExample" color="amber" variant="outline" @click="showWarningExample = true">
               Show Warning
             </UButton>
-            <UButton 
-              v-if="!showInfoExample"
-              color="blue" 
-              variant="outline" 
-              @click="showInfoExample = true"
-            >
+            <UButton v-if="!showInfoExample" color="blue" variant="outline" @click="showInfoExample = true">
               Show Info
             </UButton>
-            <UButton 
-              color="gray" 
-              variant="soft" 
-              @click="showAllErrors"
-            >
+            <UButton color="gray" variant="soft" @click="showAllErrors">
               Show All
             </UButton>
           </div>
@@ -504,91 +340,42 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">📝 Form Input Component</h3>
         </template>
-        
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <!-- Input Examples -->
           <div class="space-y-6">
             <h4 class="font-semibold text-slate-700">Input Examples</h4>
-            
-            <FormInput
-              v-model="formData.name"
-              label="Full Name"
-              placeholder="Enter your full name"
-              leading-icon="i-heroicons-user"
-              help-text="This will be displayed on your profile"
-              required
-            />
-            
-            <FormInput
-              v-model="formData.email"
-              type="email"
-              label="Email Address"
-              placeholder="you@example.com"
-              leading-icon="i-heroicons-envelope"
-              :error="formErrors.email"
-            />
-            
-            <FormInput
-              v-model="formData.password"
-              type="password"
-              label="Password"
-              placeholder="Enter password"
-              leading-icon="i-heroicons-lock-closed"
-              trailing-icon="i-heroicons-eye"
-              :max-length="50"
-              show-char-count
-              @trailing-click="togglePasswordVisibility"
-            />
-            
-            <FormInput
-              v-model="formData.budget"
-              type="number"
-              label="Project Budget"
-              placeholder="0.00"
-              leading-icon="i-heroicons-currency-dollar"
-              min="0"
-              step="0.01"
-            />
+
+            <FormInput v-model="formData.name" label="Full Name" placeholder="Enter your full name"
+              leading-icon="i-heroicons-user" help-text="This will be displayed on your profile" required />
+
+            <FormInput v-model="formData.email" type="email" label="Email Address" placeholder="you@example.com"
+              leading-icon="i-heroicons-envelope" :error="formErrors.email" />
+
+            <FormInput v-model="formData.password" type="password" label="Password" placeholder="Enter password"
+              leading-icon="i-heroicons-lock-closed" trailing-icon="i-heroicons-eye" :max-length="50" show-char-count
+              @trailing-click="togglePasswordVisibility" />
+
+            <FormInput v-model="formData.budget" type="number" label="Project Budget" placeholder="0.00"
+              leading-icon="i-heroicons-currency-dollar" min="0" step="0.01" />
           </div>
 
           <!-- Input States -->
           <div class="space-y-6">
             <h4 class="font-semibold text-slate-700">Input States</h4>
-            
-            <FormInput
-              v-model="formData.loading"
-              label="Loading State"
-              placeholder="Processing..."
-              leading-icon="i-heroicons-clock"
-              :loading="true"
-              disabled
-            />
-            
-            <FormInput
-              v-model="formData.disabled"
-              label="Disabled Input"
-              placeholder="This field is disabled"
-              leading-icon="i-heroicons-x-circle"
-              disabled
-            />
-            
-            <FormInput
-              v-model="formData.readonly"
-              label="Readonly Input"
-              placeholder="This field is readonly"
-              leading-icon="i-heroicons-lock-closed"
-              readonly
-            />
-            
-            <FormInput
-              v-model="formData.search"
-              type="search"
-              label="Search"
-              placeholder="Search anything..."
-              leading-icon="i-heroicons-magnifying-glass"
-              trailing-icon="i-heroicons-x-mark"
-              @trailing-click="clearSearch"
-            />
+
+            <FormInput v-model="formData.loading" label="Loading State" placeholder="Processing..."
+              leading-icon="i-heroicons-clock" :loading="true" disabled />
+
+            <FormInput v-model="formData.disabled" label="Disabled Input" placeholder="This field is disabled"
+              leading-icon="i-heroicons-x-circle" disabled />
+
+            <FormInput v-model="formData.readonly" label="Readonly Input" placeholder="This field is readonly"
+              leading-icon="i-heroicons-lock-closed" readonly />
+
+            <FormInput v-model="formData.search" type="search" label="Search" placeholder="Search anything..."
+              leading-icon="i-heroicons-magnifying-glass" trailing-icon="i-heroicons-x-mark"
+              @trailing-click="clearSearch" />
           </div>
         </div>
       </UCard>
@@ -598,7 +385,7 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">🔍 Status Indicator Component</h3>
         </template>
-        
+
         <div class="space-y-8">
           <!-- User Status -->
           <div>
@@ -664,104 +451,143 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">🪟 Modal Component</h3>
         </template>
-        
+
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <UButton
-            color="blue"
-            @click="showModal = true"
-          >
+          <UButton color="blue" @click="showModal = true">
             Basic Modal
           </UButton>
-          
-          <UButton
-            color="red"
-            @click="showDeleteModal = true"
-          >
+
+          <UButton color="red" @click="showDeleteModal = true">
             Delete Modal
           </UButton>
-          
-          <UButton
-            color="green"
-            @click="showFormModal = true"
-          >
+
+          <UButton color="green" @click="showFormModal = true">
             Form Modal
           </UButton>
-          
-          <UButton
-            color="purple"
-            @click="showInfoModal = true"
-          >
+
+          <UButton color="purple" @click="showInfoModal = true">
             Info Modal
           </UButton>
         </div>
 
-        <!-- Modals -->
-        <Modal
-          v-model="showModal"
-          title="Basic Modal"
-          subtitle="This is a basic modal example"
-          description="You can use this modal for general purposes like displaying information or simple confirmations."
-          icon="i-heroicons-information-circle"
-          @confirm="handleModalConfirm"
-          @cancel="showModal = false"
-        >
-          <p>This is the modal content area. You can put any content here.</p>
-        </Modal>
+        <!-- Basic Modal -->
+        <UModal v-model="showModal">
+          <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+            <template #header>
+              <div class="flex items-center justify-between">
+                <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                  Basic Modal
+                </h3>
+                <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
+                  @click="showModal = false" />
+              </div>
+            </template>
 
-        <Modal
-          v-model="showDeleteModal"
-          title="Delete Project"
-          description="Are you sure you want to delete this project? This action cannot be undone."
-          icon="i-heroicons-trash"
-          type="danger"
-          confirm-text="Delete"
-          @confirm="handleDeleteConfirm"
-          @cancel="showDeleteModal = false"
-        />
-
-        <Modal
-          v-model="showFormModal"
-          title="Create New Project"
-          subtitle="Fill in the details below"
-          icon="i-heroicons-plus"
-          type="success"
-          confirm-text="Create"
-          size="lg"
-          @confirm="handleFormSubmit"
-          @cancel="showFormModal = false"
-        >
-          <template #form>
             <div class="space-y-4">
-              <FormInput
-                v-model="modalForm.name"
-                label="Project Name"
-                placeholder="Enter project name"
-                required
-              />
-              <FormInput
-                v-model="modalForm.description"
-                label="Description"
-                placeholder="Project description"
-              />
+              <p>This is the modal content area. You can put any content here.</p>
+              <p>Click the buttons below to interact with the modal.</p>
             </div>
-          </template>
-        </Modal>
 
-        <Modal
-          v-model="showInfoModal"
-          title="System Information"
-          icon="i-heroicons-cpu-chip"
-          type="info"
-          :show-cancel="false"
-          confirm-text="Got it"
-          @confirm="showInfoModal = false"
-        >
-          <div class="space-y-2">
-            <p><strong>Version:</strong> 1.0.0</p>
-            <p><strong>Environment:</strong> Development</p>
-            <p><strong>Last Updated:</strong> {{ new Date().toLocaleDateString() }}</p>
-          </div>
-        </Modal>
+            <template #footer>
+              <div class="flex justify-end space-x-3">
+                <UButton variant="outline" @click="showModal = false">Cancel</UButton>
+                <UButton @click="handleModalConfirm">Confirm</UButton>
+              </div>
+            </template>
+          </UCard>
+        </UModal>
+
+        <!-- Delete Modal -->
+        <UModal v-model="showDeleteModal">
+          <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+            <template #header>
+              <div class="flex items-center justify-between">
+                <h3 class="text-base font-semibold leading-6 text-red-600">
+                  Delete Project
+                </h3>
+                <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
+                  @click="showDeleteModal = false" />
+              </div>
+            </template>
+
+            <div class="space-y-4">
+              <p>Are you sure you want to delete this project? This action cannot be undone.</p>
+              <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                <p class="text-red-800 font-medium">Warning: This action is permanent</p>
+                <p class="text-red-600 text-sm mt-1">All project data, files, and associated records will be permanently
+                  deleted.</p>
+              </div>
+            </div>
+
+            <template #footer>
+              <div class="flex justify-end space-x-3">
+                <UButton variant="outline" @click="showDeleteModal = false">Cancel</UButton>
+                <UButton color="red" @click="handleDeleteConfirm">Delete</UButton>
+              </div>
+            </template>
+          </UCard>
+        </UModal>
+
+        <!-- Form Modal -->
+        <UModal v-model="showFormModal">
+          <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+            <template #header>
+              <div class="flex items-center justify-between">
+                <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                  Create New Project
+                </h3>
+                <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
+                  @click="showFormModal = false" />
+              </div>
+            </template>
+
+            <div class="space-y-4">
+              <p class="text-sm text-gray-600">Fill in the details below</p>
+              <div class="space-y-4">
+                <FormInput v-model="modalForm.name" label="Project Name" placeholder="Enter project name" required />
+                <FormInput v-model="modalForm.description" label="Description" placeholder="Project description" />
+              </div>
+            </div>
+
+            <template #footer>
+              <div class="flex justify-end space-x-3">
+                <UButton variant="outline" @click="showFormModal = false">Cancel</UButton>
+                <UButton color="green" @click="handleFormSubmit">Create</UButton>
+              </div>
+            </template>
+          </UCard>
+        </UModal>
+
+        <!-- Info Modal -->
+        <UModal v-model="showInfoModal">
+          <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+            <template #header>
+              <div class="flex items-center justify-between">
+                <h3 class="text-base font-semibold leading-6 text-blue-600">
+                  System Information
+                </h3>
+                <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
+                  @click="showInfoModal = false" />
+              </div>
+            </template>
+
+            <div class="space-y-4">
+              <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div class="space-y-2">
+                  <p><strong>Version:</strong> 1.0.0</p>
+                  <p><strong>Environment:</strong> Development</p>
+                  <p><strong>Last Updated:</strong> {{ new Date().toLocaleDateString() }}</p>
+                </div>
+              </div>
+            </div>
+
+            <template #footer>
+              <div class="flex justify-end">
+                <UButton @click="showInfoModal = false">Got it</UButton>
+              </div>
+            </template>
+          </UCard>
+        </UModal>
       </UCard>
 
       <!-- Form Components Extended Showcase -->
@@ -769,65 +595,34 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">📋 Extended Form Components</h3>
         </template>
-        
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <!-- Form Select -->
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Form Select</h4>
-            
-            <FormSelect
-              v-model="formData.priority"
-              label="Priority Level"
-              placeholder="Select priority"
-              leading-icon="i-heroicons-flag"
-              :options="priorityOptions"
-              help-text="Choose the priority level for this task"
-            />
-            
-            <FormSelect
-              v-model="formData.category"
-              label="Category"
-              placeholder="Select category"
-              :options="categoryOptions"
-              :option-groups="categoryGroups"
-              show-selected-value
-            />
-            
-            <FormSelect
-              v-model="formData.status"
-              label="Status"
-              :options="statusOptions"
-              :loading="selectLoading"
-              disabled
-            />
+
+            <FormSelect v-model="formData.priority" label="Priority Level" placeholder="Select priority"
+              leading-icon="i-heroicons-flag" :options="priorityOptions"
+              help-text="Choose the priority level for this task" />
+
+            <FormSelect v-model="formData.category" label="Category" placeholder="Select category"
+              :options="categoryOptions" :option-groups="categoryGroups" show-selected-value />
+
+            <FormSelect v-model="formData.status" label="Status" :options="statusOptions" :loading="selectLoading"
+              disabled />
           </div>
 
           <!-- Date Picker -->
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Date Picker</h4>
-            
-            <DatePicker
-              v-model="formData.startDate"
-              label="Start Date"
-              placeholder="Select start date"
-              leading-icon="i-heroicons-calendar-days"
-              help-text="Choose the project start date"
-            />
-            
-            <DatePicker
-              v-model="formData.endDate"
-              label="End Date"
-              placeholder="Select end date"
-              :min-date="formData.startDate"
-              type="datetime-local"
-            />
-            
-            <DatePicker
-              v-model="formData.time"
-              label="Meeting Time"
-              type="time"
-              placeholder="Select time"
-            />
+
+            <DatePicker v-model="formData.startDate" label="Start Date" placeholder="Select start date"
+              leading-icon="i-heroicons-calendar-days" help-text="Choose the project start date" />
+
+            <DatePicker v-model="formData.endDate" label="End Date" placeholder="Select end date"
+              :min-date="formData.startDate" type="datetime-local" />
+
+            <DatePicker v-model="formData.time" label="Meeting Time" type="time" placeholder="Select time" />
           </div>
         </div>
       </UCard>
@@ -837,37 +632,23 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">📎 File Upload Component</h3>
         </template>
-        
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <!-- Single File Upload -->
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Single File Upload</h4>
-            <FileUpload
-              v-model="uploadedFiles.single"
-              label="Profile Picture"
-              accept="image/*"
-              :max-size="2 * 1024 * 1024"
-              help-text="Upload a profile picture (max 2MB)"
-              @upload-success="handleUploadSuccess"
-              @upload-error="handleUploadError"
-            />
+            <FileUpload v-model="uploadedFiles.single" label="Profile Picture" accept="image/*"
+              :max-size="2 * 1024 * 1024" help-text="Upload a profile picture (max 2MB)"
+              @upload-success="handleUploadSuccess" @upload-error="handleUploadError" />
           </div>
-          
+
           <!-- Multiple File Upload -->
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Multiple File Upload</h4>
-            <FileUpload
-              v-model="uploadedFiles.multiple"
-              label="Project Documents"
-              accept=".pdf,.doc,.docx,.jpg,.png"
-              :multiple="true"
-              :max-files="5"
-              :max-size="10 * 1024 * 1024"
-              help-text="Upload project documents (max 5 files, 10MB each)"
-              auto-upload
-              @upload-success="handleUploadSuccess"
-              @upload-error="handleUploadError"
-            />
+            <FileUpload v-model="uploadedFiles.multiple" label="Project Documents" accept=".pdf,.doc,.docx,.jpg,.png"
+              :multiple="true" :max-files="5" :max-size="10 * 1024 * 1024"
+              help-text="Upload project documents (max 5 files, 10MB each)" auto-upload
+              @upload-success="handleUploadSuccess" @upload-error="handleUploadError" />
           </div>
         </div>
       </UCard>
@@ -877,7 +658,7 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">📄 Pagination Component</h3>
         </template>
-        
+
         <div class="space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div class="bg-blue-50 p-4 rounded-lg">
@@ -893,14 +674,9 @@ const sampleCategories = ref([
               <p class="text-2xl font-bold text-purple-600">{{ paginationData.perPage }}</p>
             </div>
           </div>
-          
-          <Pagination
-            :current-page="paginationData.currentPage"
-            :total-pages="paginationData.totalPages"
-            :total="paginationData.total"
-            :per-page="paginationData.perPage"
-            @page-change="handlePageChange"
-          />
+
+          <Pagination :current-page="paginationData.currentPage" :total-pages="paginationData.totalPages"
+            :total="paginationData.total" :per-page="paginationData.perPage" @page-change="handlePageChange" />
         </div>
       </UCard>
 
@@ -909,7 +685,7 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">💬 Tooltip Component</h3>
         </template>
-        
+
         <div class="space-y-8">
           <!-- Tooltip Placements -->
           <div>
@@ -919,39 +695,39 @@ const sampleCategories = ref([
               <Tooltip content="Top start tooltip" placement="top-start">
                 <UButton variant="outline" size="sm">Top Start</UButton>
               </Tooltip>
-              
+
               <Tooltip content="Top center tooltip" placement="top">
                 <UButton variant="outline" size="sm">Top</UButton>
               </Tooltip>
-              
+
               <Tooltip content="Top end tooltip" placement="top-end">
                 <UButton variant="outline" size="sm">Top End</UButton>
               </Tooltip>
-              
+
               <!-- Middle row -->
               <Tooltip content="Left tooltip with more content" placement="left">
                 <UButton variant="outline" size="sm">Left</UButton>
               </Tooltip>
-              
+
               <div class="text-center">
                 <Tooltip content="Click me tooltip" trigger="click">
                   <UButton color="blue" size="sm">Click Me</UButton>
                 </Tooltip>
               </div>
-              
+
               <Tooltip content="Right tooltip" placement="right">
                 <UButton variant="outline" size="sm">Right</UButton>
               </Tooltip>
-              
+
               <!-- Bottom row -->
               <Tooltip content="Bottom start tooltip" placement="bottom-start">
                 <UButton variant="outline" size="sm">Bottom Start</UButton>
               </Tooltip>
-              
+
               <Tooltip content="Bottom center tooltip" placement="bottom">
                 <UButton variant="outline" size="sm">Bottom</UButton>
               </Tooltip>
-              
+
               <Tooltip content="Bottom end tooltip" placement="bottom-end">
                 <UButton variant="outline" size="sm">Bottom End</UButton>
               </Tooltip>
@@ -965,19 +741,19 @@ const sampleCategories = ref([
               <Tooltip content="Dark theme (default)" theme="dark">
                 <UButton variant="outline" color="gray">Dark</UButton>
               </Tooltip>
-              
+
               <Tooltip content="Light theme tooltip" theme="light">
                 <UButton variant="outline" color="gray">Light</UButton>
               </Tooltip>
-              
+
               <Tooltip content="Error theme tooltip" theme="error">
                 <UButton variant="outline" color="red">Error</UButton>
               </Tooltip>
-              
+
               <Tooltip content="Warning theme tooltip" theme="warning">
                 <UButton variant="outline" color="amber">Warning</UButton>
               </Tooltip>
-              
+
               <Tooltip content="Success theme tooltip" theme="success">
                 <UButton variant="outline" color="green">Success</UButton>
               </Tooltip>
@@ -991,11 +767,11 @@ const sampleCategories = ref([
               <Tooltip content="Tooltip with delay" :delay="500">
                 <UButton variant="outline">Delayed</UButton>
               </Tooltip>
-              
+
               <Tooltip content="Large tooltip text" size="lg" max-width="300px">
                 <UButton variant="outline">Large</UButton>
               </Tooltip>
-              
+
               <Tooltip disabled>
                 <UButton variant="outline" disabled>Disabled</UButton>
               </Tooltip>
@@ -1009,78 +785,42 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">🔔 Toast Notifications & WebSocket</h3>
         </template>
-        
+
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <UButton 
-            color="green" 
-            variant="solid" 
-            icon="i-heroicons-check-circle"
-            @click="showSuccessToast"
-            class="w-full"
-          >
+          <UButton color="green" variant="solid" icon="i-heroicons-check-circle" @click="showSuccessToast"
+            class="w-full">
             Success Toast
           </UButton>
-          
-          <UButton 
-            color="red" 
-            variant="solid" 
-            icon="i-heroicons-x-circle"
-            @click="showErrorToast"
-            class="w-full"
-          >
+
+          <UButton color="red" variant="solid" icon="i-heroicons-x-circle" @click="showErrorToast" class="w-full">
             Error Toast
           </UButton>
-          
-          <UButton 
-            color="amber" 
-            variant="solid" 
-            icon="i-heroicons-exclamation-triangle"
-            @click="showWarningToast"
-            class="w-full"
-          >
+
+          <UButton color="amber" variant="solid" icon="i-heroicons-exclamation-triangle" @click="showWarningToast"
+            class="w-full">
             Warning Toast
           </UButton>
-          
-          <UButton 
-            color="blue" 
-            variant="solid" 
-            icon="i-heroicons-information-circle"
-            @click="showInfoToast"
-            class="w-full"
-          >
+
+          <UButton color="blue" variant="solid" icon="i-heroicons-information-circle" @click="showInfoToast"
+            class="w-full">
             Info Toast
           </UButton>
         </div>
-        
+
         <div class="mt-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border border-purple-200">
           <h4 class="font-semibold text-purple-800 mb-3">🚀 WebSocket Simulation</h4>
           <p class="text-sm text-purple-700 mb-4">
             Test real-time notifications that would come from your backend via WebSocket connections.
           </p>
           <div class="flex space-x-3">
-            <UButton 
-              color="violet" 
-              variant="solid" 
-              icon="i-heroicons-bolt"
-              @click="simulateWebSocketMessage"
-            >
+            <UButton color="violet" variant="solid" icon="i-heroicons-bolt" @click="simulateWebSocketMessage">
               Simulate WebSocket
             </UButton>
-            <UButton 
-              color="purple" 
-              variant="outline" 
-              icon="i-heroicons-arrow-path"
-              @click="startWebSocketSimulation"
-              :loading="isSimulating"
-            >
+            <UButton color="purple" variant="outline" icon="i-heroicons-arrow-path" @click="startWebSocketSimulation"
+              :loading="isSimulating">
               {{ isSimulating ? 'Simulating...' : 'Auto Simulation' }}
             </UButton>
-            <UButton 
-              color="gray" 
-              variant="soft" 
-              icon="i-heroicons-trash"
-              @click="clearAllToasts"
-            >
+            <UButton color="gray" variant="soft" icon="i-heroicons-trash" @click="clearAllToasts">
               Clear All
             </UButton>
           </div>
@@ -1092,23 +832,16 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">🏢 Business Components</h3>
         </template>
-        
+
         <div class="space-y-8">
           <!-- Stock Item Cards -->
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Stock Item Cards</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <StockItemCard 
-                v-for="stockItem in sampleStockItems" 
-                :key="stockItem.id"
-                :stock-item="stockItem"
-                @click="handleStockItemClick(stockItem.id)"
-                @view="handleStockItemView"
-                @edit="handleStockItemEdit"
-                @delete="handleStockItemDelete"
-                @adjust-stock="handleStockAdjust"
-                @add-to-project="handleAddToProject"
-              />
+              <StockItemCard v-for="stockItem in sampleStockItems" :key="stockItem.id" :stock-item="stockItem"
+                @click="handleStockItemClick(stockItem.id)" @view="handleStockItemView" @edit="handleStockItemEdit"
+                @delete="handleStockItemDelete" @adjust-stock="handleStockAdjust"
+                @add-to-project="handleAddToProject" />
             </div>
           </div>
 
@@ -1116,17 +849,10 @@ const sampleCategories = ref([
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Category Cards</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <CategoryCard 
-                v-for="category in sampleCategories" 
-                :key="category.id"
-                :category="category"
-                @click="handleCategoryClick(category.id)"
-                @view="handleCategoryView"
-                @edit="handleCategoryEdit"
-                @delete="handleCategoryDelete"
-                @add-item="handleCategoryAddItem"
-                @view-items="handleCategoryViewItems"
-              />
+              <CategoryCard v-for="category in sampleCategories" :key="category.id" :category="category"
+                @click="handleCategoryClick(category.id)" @view="handleCategoryView" @edit="handleCategoryEdit"
+                @delete="handleCategoryDelete" @add-item="handleCategoryAddItem"
+                @view-items="handleCategoryViewItems" />
             </div>
           </div>
         </div>
@@ -1137,30 +863,21 @@ const sampleCategories = ref([
         <template #header>
           <div class="flex items-center justify-between">
             <h3 class="text-xl font-bold text-slate-800">🎴 Project Cards</h3>
-            <UButton 
-              variant="outline" 
-              size="sm"
-              @click="toggleProjectsLoading"
-              :loading="projectsLoading"
-            >
+            <UButton variant="outline" size="sm" @click="toggleProjectsLoading" :loading="projectsLoading">
               {{ projectsLoading ? 'Loading...' : 'Toggle Loading' }}
             </UButton>
           </div>
         </template>
-        
+
         <!-- Loading State -->
         <div v-if="projectsLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <SkeletonLoader v-for="n in 3" :key="n" type="card" />
         </div>
-        
+
         <!-- Loaded State -->
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <ProjectCard 
-            v-for="project in sampleProjects" 
-            :key="project.id"
-            :project="project"
-            @click="handleProjectClick(project.id)"
-          />
+          <ProjectCard v-for="project in sampleProjects" :key="project.id" :project="project"
+            @click="handleProjectClick(project.id)" />
         </div>
       </UCard>
 
@@ -1169,30 +886,20 @@ const sampleCategories = ref([
         <template #header>
           <div class="flex items-center justify-between">
             <h3 class="text-xl font-bold text-slate-800">📊 Project Table</h3>
-            <UButton 
-              variant="outline" 
-              size="sm"
-              @click="toggleTableLoading"
-              :loading="tableLoading"
-            >
+            <UButton variant="outline" size="sm" @click="toggleTableLoading" :loading="tableLoading">
               {{ tableLoading ? 'Loading...' : 'Toggle Loading' }}
             </UButton>
           </div>
         </template>
-        
+
         <!-- Loading State -->
         <div v-if="tableLoading" class="space-y-0 bg-white rounded-lg border overflow-hidden">
           <SkeletonLoader v-for="n in 5" :key="n" type="table-row" />
         </div>
-        
+
         <!-- Loaded State -->
-        <ProjectTable 
-          v-else
-          :projects="sampleProjects"
-          @view="handleProjectView"
-          @edit="handleProjectEdit"
-          @delete="handleProjectDelete"
-        />
+        <ProjectTable v-else :projects="sampleProjects" @view="handleProjectView" @edit="handleProjectEdit"
+          @delete="handleProjectDelete" />
       </UCard>
 
       <!-- Component Library Summary -->
@@ -1200,7 +907,7 @@ const sampleCategories = ref([
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">📚 Component Library</h3>
         </template>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-gradient-to-br from-sky-50 to-sky-100 p-4 rounded-lg border border-sky-200">
             <h4 class="font-bold text-sky-800 mb-2">Base Components</h4>
@@ -1212,7 +919,7 @@ const sampleCategories = ref([
               <li>✅ Modal</li>
             </ul>
           </div>
-          
+
           <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-4 rounded-lg border border-emerald-200">
             <h4 class="font-bold text-emerald-800 mb-2">UI Components</h4>
             <ul class="text-sm text-emerald-700 space-y-1">
@@ -1225,7 +932,7 @@ const sampleCategories = ref([
               <li>✅ Tooltip</li>
             </ul>
           </div>
-          
+
           <div class="bg-gradient-to-br from-violet-50 to-violet-100 p-4 rounded-lg border border-violet-200">
             <h4 class="font-bold text-violet-800 mb-2">Business Components</h4>
             <ul class="text-sm text-violet-700 space-y-1">
@@ -1236,7 +943,7 @@ const sampleCategories = ref([
               <li>⏳ UserCard</li>
             </ul>
           </div>
-          
+
           <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-lg border border-orange-200">
             <h4 class="font-bold text-orange-800 mb-2">Form Components</h4>
             <ul class="text-sm text-orange-700 space-y-1">
@@ -1256,12 +963,18 @@ const sampleCategories = ref([
 <script setup>
 import { ref } from 'vue'
 import { useToast } from '~/composables/useToast'
+import FileUpload from '~/components/forms/FileUpload.vue'
+import Pagination from '~/components/ui/Pagination.vue'
+const toast = useToast()
 
 definePageMeta({
   middleware: 'auth'
 })
 
-const { success, error, warning, info, simulateWebSocket, clear } = useToast()
+const success = (message) => toast.add({ title: 'Success', description: message, color: 'green' })
+const error = (message) => toast.add({ title: 'Error', description: message, color: 'red' })
+const warning = (message) => toast.add({ title: 'Warning', description: message, color: 'yellow' })
+const info = (message) => toast.add({ title: 'Info', description: message, color: 'blue' })
 
 let simulationInterval = null
 
@@ -1279,6 +992,84 @@ const showWarningExample = ref(false)
 const showInfoExample = ref(false)
 
 const activeTab = ref(0)
+
+const sampleStockItems = ref([
+  {
+    id: '1',
+    name: 'Safety Helmet',
+    sku: 'SH-001',
+    category: 'Safety Equipment',
+    currentStock: 45,
+    minStock: 10,
+    maxStock: 100,
+    unitPrice: 24.99,
+    totalValue: 1124.55,
+    supplier: 'SafetyFirst Co.',
+    lastRestocked: '2024-01-15T10:30:00Z',
+    status: 'IN_STOCK',
+    location: 'Warehouse A, Shelf 12',
+    description: 'High-quality construction safety helmet'
+  },
+  {
+    id: '2',
+    name: 'Work Gloves',
+    sku: 'WG-002',
+    category: 'Safety Equipment',
+    currentStock: 8,
+    minStock: 15,
+    maxStock: 50,
+    unitPrice: 12.99,
+    totalValue: 103.92,
+    supplier: 'WorkGear Ltd.',
+    lastRestocked: '2024-01-10T14:20:00Z',
+    status: 'LOW_STOCK',
+    location: 'Warehouse B, Shelf 5',
+    description: 'Durable work gloves for construction'
+  }
+])
+
+const sampleCategories = ref([
+  {
+    id: '1',
+    name: 'Safety Equipment',
+    description: 'Personal protective equipment and safety gear',
+    color: 'blue',
+    icon: 'i-heroicons-shield-check',
+    status: 'Active',
+    itemCount: 32,
+    totalValue: 8500,
+    lowStockItems: 8,
+    activeProjects: 15,
+    popularItems: [
+      { id: '1', name: 'Safety Helmet', price: 24.99 },
+      { id: '2', name: 'Safety Vest', price: 19.99 },
+      { id: '3', name: 'Safety Gloves', price: 12.99 }
+    ],
+    parentCategory: null,
+    lastActivity: '2024-01-15T16:45:00Z',
+    lastActivityDescription: 'Safety helmets restocked'
+  },
+  {
+    id: '2',
+    name: 'Tools',
+    description: 'Construction and maintenance tools',
+    color: 'green',
+    icon: 'i-heroicons-wrench-screwdriver',
+    status: 'Active',
+    itemCount: 45,
+    totalValue: 12750,
+    lowStockItems: 3,
+    activeProjects: 8,
+    popularItems: [
+      { id: '4', name: 'Power Drill', price: 89.99 },
+      { id: '5', name: 'Hammer', price: 25.99 },
+      { id: '6', name: 'Screwdriver Set', price: 34.99 }
+    ],
+    parentCategory: { name: 'Equipment' },
+    lastActivity: '2024-01-12T10:30:00Z',
+    lastActivityDescription: 'New power tools added'
+  }
+])
 
 const formData = ref({
   name: '',

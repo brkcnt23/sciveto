@@ -1,41 +1,35 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+// 1. RENAME COMPOSABLE TO AVOID CONFLICT
+// Rename: apps/web/composables/useToast.ts → apps/web/composables/useCustomToast.ts
+
+// 2. UPDATE nuxt.config.ts - REMOVE DUPLICATE COMPONENT PATHS
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
-  ssr: false, // For better auth handling
+  ssr: false,
   
   components: [
-    // Base components - temel UI bileşenleri
+    // Remove duplicate paths and fix order
     {
       path: '~/components/base',
       pathPrefix: false,
     },
-    // UI helper components - yardımcı bileşenler  
     {
       path: '~/components/ui',
       pathPrefix: false,
     },
-    // Business logic components - iş mantığı bileşenleri
     {
       path: '~/components/business',
       pathPrefix: false,
     },
-    // Form components - form bileşenleri
     {
       path: '~/components/forms',
       pathPrefix: false,
     },
-    // Layout components - sayfa düzeni bileşenleri
     {
       path: '~/components/layout',
       pathPrefix: false,
     },
-    // Plugin & AI components - eklenti ve AI bileşenleri
-    {
-      path: '~/components/plugins',
-      pathPrefix: false,
-    },
-    // Default components folder - genel bileşenler
+    // REMOVE plugins directory since it doesn't exist
     {
       path: '~/components',
       pathPrefix: false,
