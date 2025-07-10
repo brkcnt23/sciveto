@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <UApp>
     <NuxtPage />
     <ToastContainer />
-  </div>
+  </UApp>
 </template>
 
 <script setup>

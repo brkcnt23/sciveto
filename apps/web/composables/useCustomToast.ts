@@ -1,4 +1,4 @@
-// apps/web/composables/useToast.ts
+// apps/web/composables/useCustomToast.ts
 import { ref, nextTick } from 'vue'
 
 interface ToastOptions {
@@ -20,7 +20,7 @@ interface Toast extends ToastOptions {
 
 const toasts = ref<Toast[]>([])
 
-export const useToast = () => {
+export const useCustomToast = () => {
   const add = (options: ToastOptions) => {
     const id = Date.now().toString() + Math.random().toString(36).substr(2, 9)
     

@@ -1,9 +1,43 @@
-<!-- apps/web/pages/dashboard.vue -->
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-sky-200 via-slate-100 to-emerald-200">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
     <!-- Header Component -->
     <Header :user="user" />
+    
+    <div class="max-w-7xl mx-auto space-y-6">
+      <!-- Development Logout Button -->
+      <div class="bg-red-50 border border-red-200 rounded-lg p-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <Icon name="i-heroicons-information-circle" class="w-5 h-5 text-red-500" />
+            <span class="text-sm text-red-700 font-medium">Development Mode</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="text-xs text-red-600">
+              Logged in as: {{ user?.email }}
+            </span>
+            <UButton 
+              color="red" 
+              variant="outline" 
+              size="xs"
+              @click="handleDevLogout"
+              :loading="loggingOut"
+            >
+              <Icon name="i-heroicons-arrow-right-on-rectangle" class="w-3 h-3 mr-1" />
+              Test Logout
+            </UButton>
+          </div>
+        </div>
+      </div>
 
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-slate-800 mb-2 mt-12">🎨 Component Showcase</h1>
+        <p class="text-slate-600 max-w-2xl mx-auto">
+          Explore our beautiful UI components with interactive examples and demonstrations
+        </p>
+      </div>
+    </div>
+    
     <div class="mx-auto max-w-7xl px-6 lg:px-8 py-8 space-y-8">
       <!-- Welcome Section -->
       <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
@@ -772,7 +806,7 @@
                 <UButton variant="outline">Large</UButton>
               </Tooltip>
 
-              <Tooltip disabled>
+              <Tooltip content="This tooltip is disabled" disabled>
                 <UButton variant="outline" disabled>Disabled</UButton>
               </Tooltip>
             </div>
@@ -783,7 +817,7 @@
       <!-- Toast Notification Showcase -->
       <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
         <template #header>
-          <h3 class="text-xl font-bold text-slate-800">🔔 Toast Notifications & WebSocket</h3>
+          <h3 class="text-xl font-bold text-slate-800">🔔 Toast Notifications</h3>
         </template>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -818,10 +852,7 @@
             </UButton>
             <UButton color="purple" variant="outline" icon="i-heroicons-arrow-path" @click="startWebSocketSimulation"
               :loading="isSimulating">
-              {{ isSimulating ? 'Simulating...' : 'Auto Simulation' }}
-            </UButton>
-            <UButton color="gray" variant="soft" icon="i-heroicons-trash" @click="clearAllToasts">
-              Clear All
+              {{ isSimulating ? 'Stop Simulation' : 'Start Auto Simulation' }}
             </UButton>
           </div>
         </div>
@@ -957,24 +988,50 @@
         </div>
       </UCard>
     </div>
+
+    <!-- Toast Container -->
+    <ToastContainer />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { useToast } from '~/composables/useToast'
+import { useCustomToast } from '~/composables/useCustomToast'
+import { useAuthStore } from '~/stores/auth'
 import FileUpload from '~/components/forms/FileUpload.vue'
 import Pagination from '~/components/ui/Pagination.vue'
-const toast = useToast()
+
+const customToast = useCustomToast()
+const authStore = useAuthStore()
+
+// Add logout state
+const loggingOut = ref(false)
 
 definePageMeta({
   middleware: 'auth'
 })
 
-const success = (message) => toast.add({ title: 'Success', description: message, color: 'green' })
-const error = (message) => toast.add({ title: 'Error', description: message, color: 'red' })
-const warning = (message) => toast.add({ title: 'Warning', description: message, color: 'yellow' })
-const info = (message) => toast.add({ title: 'Info', description: message, color: 'blue' })
+// Add logout handler
+const handleDevLogout = async () => {
+  loggingOut.value = true
+  try {
+    await authStore.logout()
+    customToast.success('Logged out successfully!')
+  } catch (error) {
+    console.error('Logout error:', error)
+    customToast.error('Logout failed, redirecting anyway...')
+    // Force redirect even if logout fails
+    await navigateTo('/login')
+  } finally {
+    loggingOut.value = false
+  }
+}
+
+// Fix: Update these functions to use customToast consistently
+const success = (message) => customToast.success(message)
+const error = (message) => customToast.error(message)
+const warning = (message, options) => customToast.warning(message, options)
+const info = (message) => customToast.info(message)
 
 let simulationInterval = null
 
@@ -1250,79 +1307,59 @@ const sampleErrors = ref({
   }
 })
 
+// Toast methods using custom toast - Fixed variable names
 const showSuccessToast = () => {
-  success('Operation completed successfully!', {
+  customToast.success('Operation completed successfully!', {
     title: 'Success',
-    action: {
-      text: 'View Details',
-      handler: () => console.log('Success action clicked')
-    }
+    duration: 4000
   })
 }
 
 const showErrorToast = () => {
-  error('Something went wrong. Please try again.', {
+  customToast.error('Something went wrong. Please try again.', {
     title: 'Error',
     action: {
       text: 'Retry',
       handler: () => {
-        console.log('Retrying...')
-        setTimeout(() => {
-          success('Retry successful!')
-        }, 1000)
+        showSuccessToast()
       }
     }
   })
 }
 
 const showWarningToast = () => {
-  warning('Your session will expire in 5 minutes.', {
+  customToast.warning('Please check your input before proceeding.', {
     title: 'Warning',
-    autoClose: false,
-    action: {
-      text: 'Extend Session',
-      handler: () => {
-        success('Session extended!')
-      }
-    }
+    duration: 6000
   })
 }
 
 const showInfoToast = () => {
-  info('New feature available! Check out the updated dashboard.', {
-    title: 'Info',
-    duration: 7000
+  customToast.info('Here is some useful information for you.', {
+    title: 'Information'
   })
 }
 
+// Fix: Use customToast instead of undefined variable
 const simulateWebSocketMessage = () => {
-  simulateWebSocket()
+  customToast.simulateWebSocket()
 }
 
 const startWebSocketSimulation = () => {
   if (isSimulating.value) {
-    clearInterval(simulationInterval)
-    isSimulating.value = false
-    return
-  }
-
-  isSimulating.value = true
-  simulationInterval = setInterval(() => {
-    simulateWebSocket()
-  }, 3000)
-
-  setTimeout(() => {
-    if (isSimulating.value) {
+    // Stop simulation
+    if (simulationInterval) {
       clearInterval(simulationInterval)
-      isSimulating.value = false
-      info('WebSocket simulation ended')
+      simulationInterval = null
     }
-  }, 30000)
-}
-
-const clearAllToasts = () => {
-  clear()
-  success('All notifications cleared!')
+    isSimulating.value = false
+  } else {
+    // Start simulation
+    isSimulating.value = true
+    simulationInterval = setInterval(() => {
+      customToast.simulateWebSocket()
+    }, 3000) // Send a message every 3 seconds
+  }
 }
 
 const handleTabChange = ({ index, tab }) => {
@@ -1430,9 +1467,7 @@ const handleProjectDelete = (projectId) => {
 
 const handleCreateProject = () => {
   console.log('Create new project')
-  success('Redirecting to project creation...', {
-    title: 'Navigation'
-  })
+  success('Redirecting to project creation...')
 }
 
 const handleUploadSuccess = ({ file }) => {
@@ -1528,11 +1563,15 @@ const handleCategoryViewItems = (categoryId) => {
 
 const handleAddStock = () => {
   console.log('Add new stock item')
-  success('Redirecting to stock item creation...', {
-    title: 'Navigation'
-  })
+  success('Redirecting to stock item creation...')
 }
 
+// Set page title
+useHead({
+  title: 'Component Showcase - Dashboard'
+})
+
+// Clean up interval on unmount
 onUnmounted(() => {
   if (simulationInterval) {
     clearInterval(simulationInterval)

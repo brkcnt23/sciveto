@@ -1,14 +1,9 @@
-// 1. RENAME COMPOSABLE TO AVOID CONFLICT
-// Rename: apps/web/composables/useToast.ts → apps/web/composables/useCustomToast.ts
-
-// 2. UPDATE nuxt.config.ts - REMOVE DUPLICATE COMPONENT PATHS
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
   ssr: false,
   
   components: [
-    // Remove duplicate paths and fix order
     {
       path: '~/components/base',
       pathPrefix: false,
@@ -29,7 +24,6 @@ export default defineNuxtConfig({
       path: '~/components/layout',
       pathPrefix: false,
     },
-    // REMOVE plugins directory since it doesn't exist
     {
       path: '~/components',
       pathPrefix: false,

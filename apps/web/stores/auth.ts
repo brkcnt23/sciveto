@@ -67,7 +67,14 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const register = async (userData: { email: string; password: string }) => {
+  const register = async (userData: { 
+    email: string; 
+    password: string; 
+    firstName?: string; 
+    lastName?: string; 
+    organizationName?: string;
+    marketingEmails?: boolean;
+  }) => {
     try {
       const data = await $fetch<{ user: any; access_token: string }>('http://localhost:3001/api/auth/register', {
         method: 'POST',

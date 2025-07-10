@@ -24,9 +24,9 @@
 </template>
 
 <script setup>
-import { useToast } from '~/composables/useToast'
+import { useCustomToast } from '~/composables/useCustomToast'
 
-const { toasts, remove } = useToast()
+const { toasts, remove } = useCustomToast()
 
 const handleClose = (id) => {
   remove(id)
