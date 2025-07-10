@@ -1,48 +1,67 @@
-<!-- apps/web/pages/stock-items/create.vue - Updated sections -->
 <template>
-  <div class="container mx-auto px-4 py-8">
-    <div class="max-w-2xl mx-auto">
-      <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-900">Create New Stock Item</h1>
-        <p class="text-gray-600 mt-2">Add a new item to your inventory</p>
+  <div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <div class="bg-white shadow">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="flex h-16 justify-between items-center">
+          <div class="flex items-center space-x-4">
+            <NuxtLink to="/stock-items" class="text-gray-500 hover:text-gray-700">
+              <Icon name="i-heroicons-arrow-left" class="h-5 w-5" />
+            </NuxtLink>
+            <h1 class="text-xl font-semibold text-gray-900">Create Stock Item</h1>
+          </div>
+        </div>
       </div>
+    </div>
 
+    <!-- Main Content -->
+    <div class="mx-auto max-w-3xl px-6 lg:px-8 py-8">
       <UCard>
+        <template #header>
+          <h2 class="text-lg font-semibold text-gray-900">Stock Item Information</h2>
+        </template>
+
         <form @submit.prevent="createStockItem" class="space-y-6">
           <!-- Basic Information -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <UFormGroup label="Name" required>
+            <UFormGroup label="Stock Item Name" required>
               <UInput
                 v-model="form.name"
-                placeholder="Enter item name"
+                placeholder="Enter stock item name"
+                :disabled="loading"
                 required
               />
             </UFormGroup>
 
-            <UFormGroup label="SKU">
+            <UFormGroup label="SKU" description="Stock Keeping Unit">
               <UInput
                 v-model="form.sku"
                 placeholder="Enter SKU (optional)"
+                :disabled="loading"
               />
             </UFormGroup>
           </div>
 
+          <!-- Description -->
           <UFormGroup label="Description">
             <UTextarea
               v-model="form.description"
-              placeholder="Enter item description"
-              rows="3"
+              placeholder="Enter stock item description"
+              :disabled="loading"
+              rows="4"
             />
           </UFormGroup>
 
-          <!-- Pricing and Stock -->
+          <!-- Price and Stock -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <UFormGroup label="Price">
+            <UFormGroup label="Price ($)">
               <UInput
                 v-model.number="form.price"
                 type="number"
                 step="0.01"
+                min="0"
                 placeholder="0.00"
+                :disabled="loading"
               />
             </UFormGroup>
 
@@ -52,6 +71,7 @@
                 type="number"
                 min="0"
                 placeholder="0"
+                :disabled="loading"
                 required
               />
             </UFormGroup>
@@ -60,79 +80,69 @@
           <!-- Category and Status -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <UFormGroup label="Category">
-              <div class="space-y-2">
-                <!-- Temporary native select as fallback -->
-                <select 
-                  v-model="form.categoryId"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  :disabled="loadingCategories"
-                >
-                  <option value="">No Category</option>
-                  <option 
-                    v-for="category in categories" 
-                    :key="category.id" 
-                    :value="category.id"
-                  >
-                    {{ category.name }}
-                  </option>
-                </select>
-                
-                <div v-if="categoryError" class="text-red-500 text-sm">
-                  {{ categoryError }}
-                </div>
-                <div v-if="categories.length === 0 && !loadingCategories" class="text-gray-500 text-sm">
-                  No categories available. Categories will be loaded automatically.
-                </div>
+              <USelect
+                v-model="form.categoryId"
+                :options="categoryOptions"
+                placeholder="Select category"
+                :disabled="loading || loadingCategories"
+              />
+              <div v-if="categoryError" class="text-red-500 text-sm mt-1">
+                {{ categoryError }}
               </div>
             </UFormGroup>
 
-            <UFormGroup label="Status" required>
-              <!-- Temporary native select as fallback -->
-              <select 
+            <UFormGroup label="Status">
+              <USelect
                 v-model="form.status"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                required
-              >
-                <option value="ACTIVE">Active</option>
-                <option value="DRAFT">Draft</option>
-                <option value="INACTIVE">Inactive</option>
-                <option value="ARCHIVED">Archived</option>
-              </select>
+                :options="statusOptions"
+                :disabled="loading"
+              />
             </UFormGroup>
           </div>
 
           <!-- Image URL -->
-          <UFormGroup label="Image URL">
+          <UFormGroup label="Image URL" description="Direct link to stock item image">
             <UInput
               v-model="form.imageUrl"
-              placeholder="Enter image URL (optional)"
-              @input="imageError = false"
+              type="url"
+              placeholder="https://example.com/image.jpg"
+              :disabled="loading"
             />
-            <div v-if="form.imageUrl && !imageError" class="mt-2">
-              <img
-                :src="form.imageUrl"
-                alt="Preview"
-                class="w-32 h-32 object-cover rounded-lg border"
-                @error="imageError = true"
-              />
-            </div>
-            <div v-if="imageError" class="mt-2 text-red-500 text-sm">
-              Failed to load image
-            </div>
           </UFormGroup>
 
-          <!-- Actions -->
+          <!-- Image Preview -->
+          <div v-if="form.imageUrl" class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700">Image Preview</label>
+            <div class="w-32 h-32 border-2 border-gray-200 rounded-lg overflow-hidden">
+              <img 
+                :src="form.imageUrl" 
+                :alt="form.name"
+                class="w-full h-full object-cover"
+                @error="imageError = true"
+                @load="imageError = false"
+              />
+            </div>
+            <p v-if="imageError" class="text-red-500 text-sm">
+              Unable to load image from this URL
+            </p>
+          </div>
+
+          <!-- Form Actions -->
           <div class="flex justify-end space-x-3 pt-6 border-t">
             <UButton
               type="button"
               variant="outline"
               @click="$router.push('/stock-items')"
+              :disabled="loading"
             >
               Cancel
             </UButton>
+            
             <UButton
               type="submit"
+              color="green"
               :loading="loading"
+              :disabled="!isFormValid"
             >
               Create Stock Item
             </UButton>
@@ -140,58 +150,66 @@
         </form>
       </UCard>
     </div>
+
+    <!-- Success/Error Notifications -->
+    <div v-if="notification.show" class="fixed top-4 right-4 z-50">
+      <UAlert
+        :color="notification.type"
+        :title="notification.title"
+        :description="notification.message"
+        :close-button="{ icon: 'i-heroicons-x-mark', color: 'gray', variant: 'link' }"
+        @close="notification.show = false"
+      />
+    </div>
   </div>
 </template>
 
 <script setup>
-definePageMeta({
-  middleware: 'auth'
-})
+import { ref, reactive, computed, onMounted } from 'vue'
 
-const authStore = useAuthStore()
-const router = useRouter()
-
-// Reactive data
+// Data
 const loading = ref(false)
 const loadingCategories = ref(false)
-const imageError = ref(false)
 const categories = ref([])
 const categoryError = ref('')
+const imageError = ref(false)
 
 const form = reactive({
   name: '',
-  description: '',
-  price: null,
   sku: '',
+  description: '',
+  price: 0,
   stock: 0,
-  status: 'ACTIVE',
-  imageUrl: '',
-  categoryId: ''
+  categoryId: '',
+  status: 'active',
+  imageUrl: ''
 })
+
+const notification = reactive({
+  show: false,
+  type: 'success',
+  title: '',
+  message: ''
+})
+
+// Options
+const statusOptions = [
+  { label: 'Active', value: 'active' },
+  { label: 'Inactive', value: 'inactive' }
+]
 
 // Computed
 const categoryOptions = computed(() => {
-  const options = [
-    { label: 'No Category', value: '' }
-  ]
-  
-  if (categories.value && Array.isArray(categories.value)) {
-    const categoryItems = categories.value.map(cat => ({
-      label: cat.name || 'Unnamed Category',
-      value: cat.id || cat._id || ''
-    }))
-    options.push(...categoryItems)
-  }
-  
+  const options = [{ label: 'No Category', value: '' }]
+  categories.value.forEach(category => {
+    options.push({ label: category.name, value: category.id })
+  })
   return options
 })
 
-const statusOptions = [
-  { label: 'Active', value: 'ACTIVE' },
-  { label: 'Draft', value: 'DRAFT' },
-  { label: 'Inactive', value: 'INACTIVE' },
-  { label: 'Archived', value: 'ARCHIVED' }
-]
+const isFormValid = computed(() => {
+  return form.name.trim() !== '' && form.stock >= 0
+})
 
 // Methods
 const fetchCategories = async () => {
@@ -199,116 +217,87 @@ const fetchCategories = async () => {
   categoryError.value = ''
   
   try {
-    console.log('Fetching categories with auth...')
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 500))
     
-    if (!authStore.token) {
-      throw new Error('No auth token available')
-    }
-    
-    // Categories now require auth to get the correct organization
-    const response = await $fetch('http://localhost:3001/api/categories', {
-      headers: authStore.getAuthHeaders()
-    })
-    
-    console.log('Categories response:', response)
-    
-    if (Array.isArray(response)) {
-      categories.value = response
-    } else if (response && response.data && Array.isArray(response.data)) {
-      categories.value = response.data
-    } else {
-      console.warn('Unexpected categories response format:', response)
-      categories.value = []
-    }
-    
-    console.log('Categories loaded:', categories.value.length)
-    
+    // Mock categories data
+    categories.value = [
+      { id: 1, name: 'Hardware' },
+      { id: 2, name: 'Software' },
+      { id: 3, name: 'Materials' },
+      { id: 4, name: 'Electronics' }
+    ]
   } catch (error) {
-    console.error('Error loading categories:', error)
-    categoryError.value = `Failed to load categories: ${error.message || 'Unknown error'}`
-    
-    if (error.status === 401 || error.statusCode === 401) {
-      console.log('Auth failed while loading categories')
-      authStore.clearAuth()
-      router.push('/login')
-    }
+    console.error('Error fetching categories:', error)
+    categoryError.value = 'Failed to load categories'
   } finally {
     loadingCategories.value = false
   }
 }
 
 const createStockItem = async () => {
+  if (!isFormValid.value) return
+
   loading.value = true
-  
+
   try {
-    console.log('Creating stock item with auth:', {
-      hasToken: !!authStore.token,
-      hasUser: !!authStore.user,
-      tokenPreview: authStore.token ? authStore.token.substring(0, 10) + '...' : 'none'
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500))
+    
+    // Mock successful creation
+    console.log('Creating stock item:', form)
+    
+    // Show success notification
+    notification.show = true
+    notification.type = 'green'
+    notification.title = 'Success!'
+    notification.message = 'Stock item created successfully'
+    
+    // Reset form
+    Object.assign(form, {
+      name: '',
+      sku: '',
+      description: '',
+      price: 0,
+      stock: 0,
+      categoryId: '',
+      status: 'active',
+      imageUrl: ''
     })
-
-    // Ensure we have authentication
-    if (!authStore.token) {
-      console.error('No authentication token available')
-      throw new Error('Authentication required. Please log in again.')
-    }
-
-    // Clean form data
-    const stockItemData = {
-      ...form,
-      categoryId: form.categoryId || undefined,
-      imageUrl: form.imageUrl || undefined,
-      price: form.price || undefined,
-      sku: form.sku || undefined
-    }
-
-    console.log('Sending stock item data:', stockItemData)
-
-    const response = await $fetch('http://localhost:3001/api/stock-items', {
-      method: 'POST',
-      body: stockItemData,
-      headers: authStore.getAuthHeaders()
-    })
-
-    console.log('Stock Item created successfully:', response)
-    router.push('/stock-items')
+    
+    // Navigate to stock items list after a delay
+    setTimeout(() => {
+      navigateTo('/stock-items')
+    }, 1500)
+    
   } catch (error) {
     console.error('Error creating stock item:', error)
     
-    // Handle specific error cases
-    if (error.status === 401 || error.statusCode === 401) {
-      console.log('Authentication failed, clearing auth and redirecting to login')
-      authStore.clearAuth()
-      router.push('/login')
-    } else {
-      // Show error to user
-      alert(`Error creating stock item: ${error.message || 'Unknown error'}`)
-    }
+    // Show error notification
+    notification.show = true
+    notification.type = 'red'
+    notification.title = 'Error!'
+    notification.message = 'Failed to create stock item. Please try again.'
+    
   } finally {
     loading.value = false
   }
 }
 
-// Lifecycle
-onMounted(async () => {
-  // Ensure auth is initialized
-  if (process.client) {
-    authStore.initializeAuth()
-    await nextTick()
-    
-    console.log('Stock items create - Auth state:', {
-      isAuthenticated: authStore.isAuthenticated,
-      hasToken: !!authStore.token,
-      hasUser: !!authStore.user
-    })
-    
-    if (!authStore.isAuthenticated) {
-      console.log('Not authenticated, redirecting to login')
-      await router.push('/login')
-      return
-    }
-  }
+const showNotification = (type, title, message) => {
+  notification.show = true
+  notification.type = type
+  notification.title = title
+  notification.message = message
   
-  await fetchCategories()
+  // Auto hide after 5 seconds
+  setTimeout(() => {
+    notification.show = false
+  }, 5000)
+}
+
+// Lifecycle
+onMounted(() => {
+  fetchCategories()
 })
 </script>

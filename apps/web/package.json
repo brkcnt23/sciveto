@@ -12,6 +12,8 @@
     "clean": "rm -rf .nuxt .output dist"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.23",
+    "@heroicons/vue": "^2.2.0",
     "@nuxt/eslint": "1.5.2",
     "@nuxt/icon": "1.15.0",
     "@nuxt/ui": "3.2.0",

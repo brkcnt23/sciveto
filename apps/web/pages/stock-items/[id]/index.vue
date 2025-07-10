@@ -5,25 +5,27 @@
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="flex h-16 justify-between items-center">
           <div class="flex items-center space-x-4">
-            <NuxtLink to="/stockItems" class="text-gray-500 hover:text-gray-700">
+            <NuxtLink to="/stock-items" class="text-gray-500 hover:text-gray-700">
               <Icon name="i-heroicons-arrow-left" class="h-5 w-5" />
             </NuxtLink>
             <h1 class="text-xl font-semibold text-gray-900">Stock Item Details</h1>
           </div>
           
-          <div v-if="stockItem && isOwner" class="flex space-x-3">
-            <UButton
-              variant="outline"
+          <div class="flex space-x-3">
+            <UButton 
+              :to="`/stock-items/${route.params.id}/edit`"
               icon="i-heroicons-pencil"
-              :to="`/stock-items/${stockItem.id}/edit`"
+              color="blue"
+              variant="outline"
             >
               Edit
             </UButton>
-            <UButton
-              variant="outline"
+            
+            <UButton 
               icon="i-heroicons-trash"
               color="red"
-              @click="confirmDelete"
+              variant="outline"
+              @click="showDeleteModal = true"
             >
               Delete
             </UButton>
@@ -40,28 +42,25 @@
       </div>
     </div>
 
-    <!-- Stock Item Not Found -->
-    <div v-else-if="!stockItem" class="mx-auto max-w-7xl px-6 lg:px-8 py-16 text-center">
-      <Icon name="i-heroicons-exclamation-triangle" class="h-12 w-12 text-gray-400 mx-auto mb-4" />
-      <h3 class="text-lg font-medium text-gray-900 mb-2">Stock Item not found</h3>
-      <p class="text-gray-500 mb-4">The stock item you're looking for doesn't exist.</p>
-      <UButton to="/stock-items">Back to Stock Items</UButton>
-    </div>
-
     <!-- Main Content -->
-    <div v-else class="mx-auto max-w-7xl px-6 lg:px-8 py-8">
+    <div v-else-if="stockItem" class="mx-auto max-w-7xl px-6 lg:px-8 py-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- Image Section -->
         <div class="space-y-4">
-          <div class="aspect-w-1 aspect-h-1">
+          <!-- Main Image -->
+          <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden bg-gray-100">
             <img 
-              :src="stockItem.imageUrl || '/placeholder-stock-item.jpg'"
+              v-if="stockItem.imageUrl"
+              :src="stockItem.imageUrl" 
               :alt="stockItem.name"
-              class="w-full h-96 object-cover rounded-lg bg-gray-100 border"
+              class="w-full h-96 object-cover"
             />
+            <div v-else class="w-full h-96 bg-gray-100 flex items-center justify-center">
+              <Icon name="i-heroicons-cube" class="w-24 h-24 text-gray-400" />
+            </div>
           </div>
-          
-          <!-- Image Gallery Placeholder -->
+
+          <!-- Additional Images Grid -->
           <div class="grid grid-cols-4 gap-2">
             <div v-for="n in 4" :key="n" class="aspect-w-1 aspect-h-1">
               <div class="w-full h-20 bg-gray-100 rounded border"></div>
@@ -69,7 +68,7 @@
           </div>
         </div>
 
-        <!-- stockITem Info -->
+        <!-- Info Section -->
         <div class="space-y-6">
           <!-- Basic Info -->
           <div>
@@ -89,7 +88,7 @@
           </div>
 
           <!-- Price & Stock -->
-          <div class="bg-gray-50 rounded-lg p-4">
+          <UCard>
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-medium text-gray-500">Price</label>
@@ -104,13 +103,15 @@
                 </p>
               </div>
             </div>
-          </div>
+          </UCard>
 
-          <!-- Stok Item Details -->
-          <div class="space-y-4">
-            <h3 class="text-lg font-semibold text-gray-900">Stock Item Details</h3>
+          <!-- Stock Item Details -->
+          <UCard>
+            <template #header>
+              <h3 class="text-lg font-semibold text-gray-900">Stock Item Details</h3>
+            </template>
             
-            <div class="grid grid-cols-1 gap-4">
+            <div class="space-y-4">
               <div v-if="stockItem.sku" class="flex justify-between py-2 border-b">
                 <span class="font-medium text-gray-500">SKU</span>
                 <span class="text-gray-900">{{ stockItem.sku }}</span>
@@ -126,116 +127,150 @@
                 <span class="text-gray-900">{{ formatDate(stockItem.createdAt) }}</span>
               </div>
               
-              <div class="flex justify-between py-2 border-b">
+              <div class="flex justify-between py-2">
                 <span class="font-medium text-gray-500">Last Updated</span>
                 <span class="text-gray-900">{{ formatDate(stockItem.updatedAt) }}</span>
               </div>
-              
-              <div v-if="stockItem.user" class="flex justify-between py-2">
-                <span class="font-medium text-gray-500">Created by</span>
-                <span class="text-gray-900">{{ stockItem.user.email }}</span>
-              </div>
             </div>
-          </div>
+          </UCard>
 
-          <!-- Actions for non-owners -->
-          <div v-if="!isOwner" class="pt-6 border-t">
-            <p class="text-sm text-gray-500 mb-4">
-              This stockItem is owned by {{ stockItem.user?.email }}
-            </p>
-            <UButton variant="outline" to="/stockItem">
-              Back to stockItem
+          <!-- Actions -->
+          <div class="flex space-x-3">
+            <UButton 
+              :to="`/stock-items/${stockItem.id}/edit`"
+              icon="i-heroicons-pencil"
+              color="blue"
+              block
+            >
+              Edit Stock Item
+            </UButton>
+            
+            <UButton 
+              icon="i-heroicons-arrow-path"
+              color="green"
+              variant="outline"
+              @click="showAdjustModal = true"
+            >
+              Adjust Stock
             </UButton>
           </div>
         </div>
       </div>
 
-      <!-- Additional Sections -->
-      <div class="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Stock Status -->
-        <UCard>
-          <template #header>
-            <h3 class="font-semibold">Stock Status</h3>
-          </template>
-          
-          <div class="space-y-3">
-            <div class="flex items-center justify-between">
-              <span class="text-sm text-gray-500">Current Stock</span>
-              <span class="font-medium">{{ stockItem.stock }} units</span>
+      <!-- Related Items -->
+      <div class="mt-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Related Items</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <UCard 
+            v-for="item in relatedItems" 
+            :key="item.id"
+            class="hover:shadow-lg transition-shadow cursor-pointer"
+            @click="$router.push(`/stock-items/${item.id}`)"
+          >
+            <div class="aspect-w-1 aspect-h-1 mb-4">
+              <img 
+                v-if="item.imageUrl"
+                :src="item.imageUrl" 
+                :alt="item.name"
+                class="w-full h-32 object-cover rounded-lg"
+              />
+              <div v-else class="w-full h-32 bg-gray-100 rounded-lg flex items-center justify-center">
+                <Icon name="i-heroicons-cube" class="w-8 h-8 text-gray-400" />
+              </div>
             </div>
-            <div class="flex items-center justify-between">
-              <span class="text-sm text-gray-500">Status</span>
-              <UBadge :color="stockStatus.color" size="sm">
-                {{ stockStatus.label }}
-              </UBadge>
-            </div>
-          </div>
-        </UCard>
-
-        <!-- Quick Actions -->
-        <UCard v-if="isOwner">
-          <template #header>
-            <h3 class="font-semibold">Quick Actions</h3>
-          </template>
-          
-          <div class="space-y-3">
-            <UButton 
-              variant="outline" 
-              block
-              icon="i-heroicons-pencil"
-              :to="`/stockItems/${stockItem.id}/edit`"
-            >
-              Edit Stock Item
-            </UButton>
-            <UButton 
-              variant="outline" 
-              block
-              icon="i-heroicons-arrow-path"
-              @click="toggleStatus"
-              :loading="updatingStatus"
-            >
-              {{ stockItem.status === 'ACTIVE' ? 'Deactivate' : 'Activate' }}
-            </UButton>
-          </div>
-        </UCard>
-
-        <!-- Analytics Placeholder -->
-        <UCard>
-          <template #header>
-            <h3 class="font-semibold">Analytics</h3>
-          </template>
-          
-          <div class="space-y-3 text-sm text-gray-500">
-            <p>Views: 0</p>
-            <p>Favorites: 0</p>
-            <p>Last viewed: Never</p>
-          </div>
-        </UCard>
+            
+            <h3 class="font-semibold text-gray-900 mb-2">{{ item.name }}</h3>
+            <p class="text-sm text-gray-600">{{ item.price ? `$${item.price.toFixed(2)}` : 'No price' }}</p>
+          </UCard>
+        </div>
       </div>
+    </div>
+
+    <!-- Not Found -->
+    <div v-else class="mx-auto max-w-7xl px-6 lg:px-8 py-8">
+      <EmptyState
+        icon="i-heroicons-exclamation-triangle"
+        title="Stock Item Not Found"
+        description="The stock item you're looking for doesn't exist or has been removed."
+        action-text="Go Back"
+        action-link="/stock-items"
+        action-icon="i-heroicons-arrow-left"
+      />
     </div>
 
     <!-- Delete Confirmation Modal -->
     <UModal v-model="showDeleteModal">
       <UCard>
         <template #header>
-          <h3 class="text-lg font-semibold">Delete Stock Item</h3>
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+              <Icon name="i-heroicons-exclamation-triangle" class="w-5 h-5 text-red-600" />
+            </div>
+            <h3 class="text-lg font-semibold text-red-900">Delete Stock Item</h3>
+          </div>
         </template>
-        
-        <p class="text-gray-600">
-          Are you sure you want to delete "{{ stockItem?.name }}"? This action cannot be undone.
-        </p>
-        
+
+        <div class="space-y-4">
+          <p>Are you sure you want to delete <strong>{{ stockItem?.name }}</strong>? This action cannot be undone.</p>
+          <UAlert
+            color="red"
+            variant="soft"
+            title="Warning"
+            description="All associated data will be permanently removed."
+          />
+        </div>
+
         <template #footer>
           <div class="flex justify-end space-x-3">
             <UButton variant="outline" @click="showDeleteModal = false">
               Cancel
             </UButton>
-            <UButton 
-              color="red" 
-              :loading="deleting"
-              @click="deleteStockItem"
-            >
+            <UButton color="red" :loading="deleting" @click="confirmDelete">
               Delete
+            </UButton>
+          </div>
+        </template>
+      </UCard>
+    </UModal>
+
+    <!-- Stock Adjustment Modal -->
+    <UModal v-model="showAdjustModal">
+      <UCard>
+        <template #header>
+          <h3 class="text-lg font-semibold">Adjust Stock</h3>
+        </template>
+
+        <div class="space-y-4">
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <p class="text-sm text-gray-600">Current Stock</p>
+            <p class="text-2xl font-bold text-gray-900">{{ stockItem?.stock }} units</p>
+          </div>
+          
+          <UFormGroup label="New Stock Quantity" required>
+            <UInput
+              v-model.number="adjustStock.newStock"
+              type="number"
+              min="0"
+              placeholder="Enter new stock quantity"
+            />
+          </UFormGroup>
+          
+          <UFormGroup label="Reason for Adjustment">
+            <UTextarea
+              v-model="adjustStock.reason"
+              placeholder="Enter reason for stock adjustment"
+              rows="3"
+            />
+          </UFormGroup>
+        </div>
+
+        <template #footer>
+          <div class="flex justify-end space-x-3">
+            <UButton variant="outline" @click="showAdjustModal = false">
+              Cancel
+            </UButton>
+            <UButton color="green" :loading="adjusting" @click="confirmAdjustStock">
+              Adjust Stock
             </UButton>
           </div>
         </template>
@@ -245,95 +280,111 @@
 </template>
 
 <script setup>
-definePageMeta({
-  middleware: 'auth'
-})
+import { ref, reactive, computed, onMounted } from 'vue'
 
-const authStore = useAuthStore()
 const route = useRoute()
-const router = useRouter()
 
-// Reactive data
-const stockItem = ref(null)
-const loading = ref(true)
+// Data
+const loading = ref(false)
 const deleting = ref(false)
-const updatingStatus = ref(false)
+const adjusting = ref(false)
 const showDeleteModal = ref(false)
+const showAdjustModal = ref(false)
+const stockItem = ref(null)
+const relatedItems = ref([])
+
+const adjustStock = reactive({
+  newStock: 0,
+  reason: ''
+})
 
 // Computed
-const isOwner = computed(() => {
-  return stockItem.value && authStore.user && stockItem.value.userId === authStore.user.id
-})
-
 const stockColorClass = computed(() => {
-  if (!stockItem.value) return 'text-gray-900'
+  if (!stockItem.value) return ''
   
-  if (stockItem.value.stock === 0) return 'text-red-600'
-  if (stockItem.value.stock < 10) return 'text-yellow-600'
+  const stock = stockItem.value.stock
+  if (stock === 0) return 'text-red-600'
+  if (stock < 10) return 'text-yellow-600'
   return 'text-green-600'
-})
-
-const stockStatus = computed(() => {
-  if (!stockItem.value) return { label: 'Unknown', color: 'gray' }
-  
-  if (stockItem.value.stock === 0) return { label: 'Out of Stock', color: 'red' }
-  if (stockItem.value.stock < 10) return { label: 'Low Stock', color: 'yellow' }
-  return { label: 'In Stock', color: 'green' }
 })
 
 // Methods
 const fetchStockItem = async () => {
   loading.value = true
+
   try {
-    stockItem.value = await $fetch(`http://localhost:3001/api/stock-items/${route.params.id}`, {
-      headers: {
-        Authorization: `Bearer ${authStore.token}`
-      }
-    })
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    
+    // Mock stock item data
+    stockItem.value = {
+      id: parseInt(route.params.id),
+      name: 'Wireless Headphones',
+      sku: 'WH-001',
+      description: 'High-quality wireless headphones with advanced noise cancellation technology. Perfect for work, travel, or leisure listening.',
+      price: 199.99,
+      stock: 25,
+      status: 'active',
+      category: { id: 1, name: 'Electronics' },
+      imageUrl: null,
+      createdAt: new Date('2024-01-15'),
+      updatedAt: new Date('2024-06-20')
+    }
+    
+    // Initialize adjust stock with current value
+    adjustStock.newStock = stockItem.value.stock
+    
+    // Fetch related items
+    await fetchRelatedItems()
+    
   } catch (error) {
-    console.error('Error loading stock item:', error)
-    stockItem.value = null
+    console.error('Error fetching stock item:', error)
   } finally {
     loading.value = false
   }
 }
 
+const fetchRelatedItems = async () => {
+  try {
+    // Mock related items
+    relatedItems.value = [
+      { id: 2, name: 'Wireless Mouse', price: 49.99, imageUrl: null },
+      { id: 3, name: 'USB Cable', price: 24.99, imageUrl: null },
+      { id: 4, name: 'Bluetooth Speaker', price: 79.99, imageUrl: null },
+      { id: 5, name: 'Phone Charger', price: 29.99, imageUrl: null }
+    ]
+  } catch (error) {
+    console.error('Error fetching related items:', error)
+  }
+}
+
 const getStatusColor = (status) => {
   const colors = {
-    ACTIVE: 'green',
-    INACTIVE: 'gray',
-    DRAFT: 'yellow',
-    ARCHIVED: 'red'
+    active: 'green',
+    inactive: 'gray',
+    out_of_stock: 'red'
   }
   return colors[status] || 'gray'
 }
 
-const formatDate = (dateString) => {
-  return new Date(dateString).toLocaleDateString('en-US', {
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
   })
 }
 
-const confirmDelete = () => {
-  showDeleteModal.value = true
-}
-
-const deleteStockItem = async () => {
-  if (!stockItem.value) return
-  
+const confirmDelete = async () => {
   deleting.value = true
+  
   try {
-    await $fetch(`http://localhost:3001/api/stock-items/${stockItem.value.id}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${authStore.token}`
-      }
-    })
-
-    console.log('Stock item deleted successfully')
-    router.push('/stock-items')
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500))
+    
+    // Navigate back to stock items list
+    await navigateTo('/stock-items')
+    
   } catch (error) {
     console.error('Error deleting stock item:', error)
   } finally {
@@ -341,27 +392,24 @@ const deleteStockItem = async () => {
   }
 }
 
-const toggleStatus = async () => {
-  if (!stockItem.value) return
+const confirmAdjustStock = async () => {
+  adjusting.value = true
   
-  updatingStatus.value = true
   try {
-    const newStatus = stockItem.value.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
-
-    const updatedStockItem = await $fetch(`http://localhost:3001/api/stock-items/${stockItem.value.id}/status`, {
-      method: 'PATCH',
-      body: { status: newStatus },
-      headers: {
-        Authorization: `Bearer ${authStore.token}`
-      }
-    })
-
-    stockItem.value.status = updatedStockItem.status
-    console.log('Stock item status updated')
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    
+    // Update local stock value
+    stockItem.value.stock = adjustStock.newStock
+    
+    // Reset form and close modal
+    adjustStock.reason = ''
+    showAdjustModal.value = false
+    
   } catch (error) {
-    console.error('Error updating status:', error)
+    console.error('Error adjusting stock:', error)
   } finally {
-    updatingStatus.value = false
+    adjusting.value = false
   }
 }
 

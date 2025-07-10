@@ -1,14 +1,6 @@
-<!-- apps/web/components/base/Modal.vue -->
 <template>
-  <UModal v-model="isOpen" :ui="modalUI">
-    <UCard 
-      class="relative overflow-hidden"
-      :ui="{
-        base: 'overflow-visible',
-        header: { background: 'bg-white dark:bg-gray-900' },
-        body: { base: 'space-y-4' }
-      }"
-    >
+  <UModal v-model="isOpen">
+    <UCard>
       <!-- Header -->
       <template #header>
         <div class="flex items-center justify-between">
@@ -24,10 +16,10 @@
             
             <!-- Title -->
             <div>
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+              <h3 class="text-lg font-semibold text-gray-900">
                 {{ title }}
               </h3>
-              <p v-if="subtitle" class="text-sm text-gray-500 dark:text-gray-400">
+              <p v-if="subtitle" class="text-sm text-gray-500">
                 {{ subtitle }}
               </p>
             </div>
@@ -37,8 +29,7 @@
           <UButton
             color="gray"
             variant="ghost"
-            icon="i-heroicons-x-mark-20-solid"
-            class="-my-1"
+            icon="i-heroicons-x-mark"
             @click="close"
           />
         </div>
@@ -47,7 +38,7 @@
       <!-- Body -->
       <div class="space-y-4">
         <!-- Description -->
-        <p v-if="description" class="text-gray-600 dark:text-gray-300">
+        <p v-if="description" class="text-gray-600">
           {{ description }}
         </p>
         
@@ -109,11 +100,6 @@ const props = defineProps({
     default: 'default',
     validator: (value) => ['default', 'danger', 'warning', 'success', 'info'].includes(value)
   },
-  size: {
-    type: String,
-    default: 'md',
-    validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'].includes(value)
-  },
   showCancel: {
     type: Boolean,
     default: true
@@ -130,83 +116,44 @@ const props = defineProps({
     type: String,
     default: 'Confirm'
   },
-  loading: {
-    type: Boolean,
-    default: false
+  confirmColor: {
+    type: String,
+    default: 'primary'
   },
-  preventClose: {
+  loading: {
     type: Boolean,
     default: false
   }
 })
 
-const emit = defineEmits(['update:modelValue', 'confirm', 'cancel', 'close'])
+const emit = defineEmits(['update:modelValue', 'cancel', 'confirm'])
 
 const isOpen = computed({
   get: () => props.modelValue,
   set: (value) => emit('update:modelValue', value)
 })
 
-const confirmColor = computed(() => {
-  const colors = {
-    default: 'primary',
-    danger: 'red',
-    warning: 'amber',
-    success: 'green',
-    info: 'blue'
-  }
-  return colors[props.type]
-})
-
 const iconClasses = computed(() => {
-  const classes = {
+  const typeClasses = {
     default: 'bg-gray-100 text-gray-600',
     danger: 'bg-red-100 text-red-600',
-    warning: 'bg-amber-100 text-amber-600',
+    warning: 'bg-yellow-100 text-yellow-600',
     success: 'bg-green-100 text-green-600',
     info: 'bg-blue-100 text-blue-600'
   }
-  return classes[props.type]
+  return typeClasses[props.type] || typeClasses.default
 })
 
-const modalUI = computed(() => {
-  const sizes = {
-    xs: 'sm:max-w-xs',
-    sm: 'sm:max-w-sm',
-    md: 'sm:max-w-md',
-    lg: 'sm:max-w-lg',
-    xl: 'sm:max-w-xl',
-    '2xl': 'sm:max-w-2xl',
-    '3xl': 'sm:max-w-3xl'
-  }
-  
-  return {
-    container: `${sizes[props.size]} mx-auto`,
-    overlay: {
-      background: 'bg-gray-200/50 dark:bg-gray-800/50'
-    }
-  }
-})
-
-const close = () => {
-  if (props.preventClose) return
+const cancel = () => {
+  emit('cancel')
   isOpen.value = false
-  emit('close')
 }
 
 const confirm = () => {
   emit('confirm')
 }
 
-const cancel = () => {
-  close()
-  emit('cancel')
+const close = () => {
+  isOpen.value = false
 }
-
-// Expose methods
-defineExpose({
-  close,
-  confirm,
-  cancel
-})
 </script>

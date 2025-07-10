@@ -244,7 +244,7 @@
             <h4 class="font-semibold text-slate-700 mb-4">No Stock Items</h4>
             <EmptyState icon="i-heroicons-cube" title="No Stock Items"
               description="Your inventory is empty. Add some stock items to get started." action-text="Add Stock Item"
-              action-color="emerald" @action="handleAddStock" />
+              action-icon="i-heroicons-plus" @action="handleAddStock" />
           </div>
         </div>
       </UCard>
