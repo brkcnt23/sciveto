@@ -1,162 +1,234 @@
-<!-- apps/web/components/forms/FormSelect.vue -->
+<!-- components/base/FormSelect.vue -->
 <template>
-  <div class="space-y-2">
-    <!-- Label -->
-    <label
-      v-if="label"
-      :for="selectId"
-      class="block text-sm font-medium"
-      :class="labelClasses"
-    >
-      {{ label }}
-      <span v-if="required" class="text-red-500 ml-1">*</span>
-    </label>
-
-    <!-- Select wrapper -->
-    <div class="relative">
-      <!-- Leading icon -->
-      <div
-        v-if="leadingIcon"
-        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10"
-      >
-        <Icon :name="leadingIcon" class="h-5 w-5" :class="iconClasses" />
-      </div>
-
-      <!-- Select field -->
-      <select
-        :id="selectId"
-        :value="modelValue"
-        :disabled="disabled || loading"
-        :required="required"
-        @change="handleChange"
-        @focus="handleFocus"
-        @blur="handleBlur"
-        :class="[
-          baseClasses,
-          sizeClasses,
-          stateClasses,
-          leadingIcon ? 'pl-10' : '',
-          loading ? 'pr-10' : ''
-        ]"
-        ref="selectRef"
-      >
-        <!-- Placeholder option -->
-        <option
-          v-if="placeholder"
-          value=""
-          disabled
-          :selected="!modelValue"
-        >
-          {{ placeholder }}
-        </option>
-        
-        <!-- Options -->
-        <option
-          v-for="option in normalizedOptions"
-          :key="option.value"
-          :value="option.value"
-          :disabled="option.disabled"
-        >
-          {{ option.label }}
-        </option>
-        
-        <!-- Option Groups -->
-        <optgroup
-          v-for="group in optionGroups"
-          :key="group.label"
-          :label="group.label"
-        >
-          <option
-            v-for="option in group.options"
-            :key="option.value"
-            :value="option.value"
-            :disabled="option.disabled"
-          >
-            {{ option.label }}
-          </option>
-        </optgroup>
-      </select>
-
-      <!-- Loading spinner -->
-      <div
-        v-if="loading"
-        class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
-      >
-        <LoadingSpinner size="sm" class="h-5 w-5" />
-      </div>
-
-      <!-- Custom arrow (if needed) -->
-      <div
-        v-else-if="showCustomArrow"
-        class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
-      >
-        <Icon name="i-heroicons-chevron-down" class="h-5 w-5" :class="iconClasses" />
-      </div>
-    </div>
-
-    <!-- Help text -->
-    <p
-      v-if="helpText && !error"
-      class="text-sm text-gray-500 dark:text-gray-400"
-    >
-      {{ helpText }}
-    </p>
-
-    <!-- Error message -->
-    <ErrorMessage
-      v-if="error"
-      :error="error"
-      type="error"
-      size="sm"
+  <UFormField 
+    :label="label" 
+    :name="name"
+    :description="description"
+    :help="help"
+    :required="required"
+    :size="size"
+    :error="error"
+  >
+    <!-- Basic Select -->
+    <USelect
+      v-if="type === 'basic'"
+      :model-value="modelValue"
+      :options="options"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :loading="loading"
+      :variant="variant"
+      :color="color"
+      :size="size"
+      :class="selectClass"
+      @update:model-value="handleChange"
     />
 
-    <!-- Selected value display (for complex objects) -->
-    <div
-      v-if="showSelectedValue && selectedOption"
-      class="mt-2 p-2 bg-gray-50 rounded text-sm"
+    <!-- Select Menu (Advanced) -->
+    <USelectMenu
+      v-else-if="type === 'menu'"
+      :model-value="modelValue"
+      :options="options"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :multiple="multiple"
+      :searchable="searchable"
+      :variant="variant"
+      :color="color"
+      :size="size"
+      :class="selectClass"
+      @update:model-value="handleChange"
     >
-      <strong>Selected:</strong> {{ selectedOption.label }}
-      <span v-if="selectedOption.description" class="text-gray-600 ml-2">
-        - {{ selectedOption.description }}
-      </span>
+      <!-- Custom option template -->
+      <template v-if="$slots.option" #option="{ option }">
+        <slot name="option" :option="option" />
+      </template>
+      
+      <!-- Custom selected template -->
+      <template v-if="$slots.selected" #selected="{ selected }">
+        <slot name="selected" :selected="selected" />
+      </template>
+    </USelectMenu>
+
+    <!-- Input Menu (Searchable with custom input) -->
+    <UInputMenu
+      v-else-if="type === 'input-menu'"
+      :model-value="modelValue"
+      :options="options"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :multiple="multiple"
+      :variant="variant"
+      :color="color"
+      :size="size"
+      :leading-icon="leadingIcon"
+      :trailing-icon="trailingIcon"
+      :class="selectClass"
+      @update:model-value="handleChange"
+    >
+      <!-- Custom option template -->
+      <template v-if="$slots.option" #option="{ option }">
+        <slot name="option" :option="option" />
+      </template>
+    </UInputMenu>
+
+    <!-- Combobox (Custom implementation) -->
+    <UPopover v-else-if="type === 'combobox'" v-model:open="isOpen">
+      <UButton
+        :variant="variant"
+        :color="color"
+        :size="size"
+        :disabled="disabled"
+        :class="[
+          'w-full justify-between text-left font-normal',
+          !selectedOptions.length && 'text-muted-foreground',
+          selectClass
+        ]"
+        :icon="leadingIcon"
+        :trailing-icon="isOpen ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
+      >
+        <span v-if="selectedOptions.length" class="truncate">
+          {{ displayValue }}
+        </span>
+        <span v-else class="text-gray-500">{{ placeholder }}</span>
+      </UButton>
+
+      <template #content>
+        <div class="p-2 w-64">
+          <!-- Search Input -->
+          <UInput
+            v-if="searchable"
+            v-model="searchQuery"
+            placeholder="Search options..."
+            icon="i-lucide-search"
+            size="sm"
+            class="mb-2"
+          />
+          
+          <!-- Options List -->
+          <div class="max-h-48 overflow-y-auto space-y-1">
+            <UButton
+              v-for="option in filteredOptions"
+              :key="getOptionValue(option)"
+              :variant="isSelected(option) ? 'soft' : 'ghost'"
+              :color="isSelected(option) ? color : 'neutral'"
+              size="sm"
+              class="w-full justify-start"
+              @click="selectOption(option)"
+            >
+              <UCheckbox
+                v-if="multiple"
+                :model-value="isSelected(option)"
+                size="sm"
+                class="mr-2"
+                @click.stop
+              />
+              
+              <span class="truncate">{{ getOptionLabel(option) }}</span>
+              
+              <UIcon
+                v-if="!multiple && isSelected(option)"
+                name="i-lucide-check"
+                class="ml-auto h-4 w-4"
+              />
+            </UButton>
+            
+            <div v-if="filteredOptions.length === 0" class="text-center py-4 text-gray-500 text-sm">
+              No options found
+            </div>
+          </div>
+          
+          <!-- Actions -->
+          <div v-if="multiple && selectedOptions.length > 0" class="flex justify-between items-center mt-2 pt-2 border-t">
+            <span class="text-xs text-gray-500">
+              {{ selectedOptions.length }} selected
+            </span>
+            <UButton
+              variant="ghost"
+              size="xs"
+              @click="clearSelection"
+            >
+              Clear All
+            </UButton>
+          </div>
+        </div>
+      </template>
+    </UPopover>
+
+    <!-- Multi-select Tags Display -->
+    <div v-if="multiple && selectedOptions.length > 0 && showTags" class="flex flex-wrap gap-1 mt-2">
+      <UBadge
+        v-for="option in selectedOptions"
+        :key="getOptionValue(option)"
+        :color="color"
+        variant="soft"
+        size="sm"
+        class="flex items-center gap-1"
+      >
+        {{ getOptionLabel(option) }}
+        <UButton
+          variant="ghost"
+          size="xs"
+          icon="i-lucide-x"
+          class="h-3 w-3 p-0"
+          @click="removeOption(option)"
+        />
+      </UBadge>
     </div>
-  </div>
+  </UFormField>
 </template>
 
 <script setup>
-import { ref, computed, nextTick } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const props = defineProps({
-  modelValue: [String, Number, Boolean],
-  options: {
-    type: Array,
-    default: () => [],
-    validator: (options) => {
-      return options.every(option => 
-        typeof option === 'string' ||
-        typeof option === 'number' ||
-        (typeof option === 'object' && option !== null && 'value' in option)
-      )
-    }
+  // v-model
+  modelValue: {
+    type: [String, Number, Array, Object],
+    default: () => null
   },
-  optionGroups: {
-    type: Array,
-    default: () => []
-  },
-  label: String,
-  placeholder: String,
-  helpText: String,
-  error: [String, Array, Object],
-  size: {
+  
+  // Form field props
+  label: {
     type: String,
-    default: 'md',
-    validator: (value) => ['sm', 'md', 'lg'].includes(value)
+    default: ''
   },
-  disabled: {
+  name: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    default: ''
+  },
+  help: {
+    type: String,
+    default: ''
+  },
+  required: {
     type: Boolean,
     default: false
   },
-  required: {
+  error: {
+    type: [String, Boolean],
+    default: false
+  },
+  
+  // Select props
+  type: {
+    type: String,
+    default: 'menu', // basic, menu, input-menu, combobox
+    validator: (value) => ['basic', 'menu', 'input-menu', 'combobox'].includes(value)
+  },
+  options: {
+    type: Array,
+    default: () => []
+  },
+  placeholder: {
+    type: String,
+    default: 'Select option'
+  },
+  disabled: {
     type: Boolean,
     default: false
   },
@@ -164,154 +236,176 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  leadingIcon: String,
-  showCustomArrow: {
+  multiple: {
     type: Boolean,
     default: false
   },
-  showSelectedValue: {
+  searchable: {
     type: Boolean,
     default: false
+  },
+  
+  // Styling props
+  variant: {
+    type: String,
+    default: 'outline',
+    validator: (value) => ['outline', 'soft', 'subtle', 'ghost'].includes(value)
+  },
+  color: {
+    type: String,
+    default: 'primary',
+    validator: (value) => ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'].includes(value)
+  },
+  size: {
+    type: String,
+    default: 'md',
+    validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl'].includes(value)
+  },
+  
+  // Icon props
+  leadingIcon: String,
+  trailingIcon: String,
+  
+  // Display options
+  showTags: {
+    type: Boolean,
+    default: true
+  },
+  valueKey: {
+    type: String,
+    default: 'value'
+  },
+  labelKey: {
+    type: String,
+    default: 'label'
+  },
+  
+  // Custom classes
+  selectClass: {
+    type: String,
+    default: ''
   }
 })
 
-const emit = defineEmits([
-  'update:modelValue',
-  'change',
-  'focus',
-  'blur'
-])
+const emit = defineEmits(['update:modelValue', 'change', 'search'])
 
-const selectRef = ref(null)
-const isFocused = ref(false)
+// State
+const isOpen = ref(false)
+const searchQuery = ref('')
 
-// Generate unique ID
-const selectId = computed(() => {
-  return `select-${Math.random().toString(36).substr(2, 9)}`
-})
-
-// Normalize options to consistent format
-const normalizedOptions = computed(() => {
-  return props.options.map(option => {
-    if (typeof option === 'string' || typeof option === 'number') {
-      return {
-        label: String(option),
-        value: option,
-        disabled: false
-      }
+// Computed
+const selectedOptions = computed(() => {
+  if (!props.modelValue) return []
+  
+  if (props.multiple) {
+    if (Array.isArray(props.modelValue)) {
+      return props.options.filter(option => {
+        return props.modelValue.includes(getOptionValue(option))
+      })
     }
-    return {
-      label: option.label || String(option.value),
-      value: option.value,
-      disabled: option.disabled || false,
-      description: option.description
+    return []
+  } else {
+    const option = props.options.find(opt => getOptionValue(opt) === props.modelValue)
+    return option ? [option] : []
+  }
+})
+
+const filteredOptions = computed(() => {
+  if (!props.searchable || !searchQuery.value) {
+    return props.options
+  }
+  
+  return props.options.filter(option => {
+    const label = getOptionLabel(option).toLowerCase()
+    return label.includes(searchQuery.value.toLowerCase())
+  })
+})
+
+const displayValue = computed(() => {
+  if (selectedOptions.value.length === 0) return ''
+  
+  if (props.multiple) {
+    if (selectedOptions.value.length === 1) {
+      return getOptionLabel(selectedOptions.value[0])
     }
-  })
-})
-
-// Find selected option
-const selectedOption = computed(() => {
-  return normalizedOptions.value.find(option => option.value === props.modelValue)
-})
-
-// Classes
-const baseClasses = computed(() => {
-  return [
-    'block w-full rounded-lg border transition-all duration-200',
-    'focus:outline-none focus:ring-2 focus:ring-offset-0',
-    'dark:bg-gray-800 dark:border-gray-600 dark:text-white',
-    'disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
-    'dark:disabled:bg-gray-700 dark:disabled:text-gray-400',
-    'appearance-none bg-white'
-  ].join(' ')
-})
-
-const sizeClasses = computed(() => {
-  const sizes = {
-    sm: 'px-3 py-2 text-sm',
-    md: 'px-4 py-3 text-base',
-    lg: 'px-4 py-4 text-lg'
+    return `${selectedOptions.value.length} items selected`
+  } else {
+    return getOptionLabel(selectedOptions.value[0])
   }
-  return sizes[props.size]
 })
-
-const stateClasses = computed(() => {
-  if (props.error) {
-    return 'border-red-300 text-red-900 focus:border-red-500 focus:ring-red-500 dark:border-red-600 dark:focus:border-red-500'
-  }
-  
-  if (isFocused.value) {
-    return 'border-blue-300 focus:border-blue-500 focus:ring-blue-500'
-  }
-  
-  return 'border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-400'
-})
-
-const labelClasses = computed(() => {
-  if (props.error) {
-    return 'text-red-700 dark:text-red-400'
-  }
-  return 'text-gray-700 dark:text-gray-300'
-})
-
-const iconClasses = computed(() => {
-  if (props.error) {
-    return 'text-red-400'
-  }
-  if (props.disabled) {
-    return 'text-gray-400'
-  }
-  return 'text-gray-500 dark:text-gray-400'
-})
-
-// Event handlers
-const handleChange = (event) => {
-  let value = event.target.value
-  
-  // Convert to appropriate type based on original option type
-  const originalOption = props.options.find(opt => {
-    const optValue = typeof opt === 'object' ? opt.value : opt
-    return String(optValue) === value
-  })
-  
-  if (originalOption) {
-    const originalValue = typeof originalOption === 'object' ? originalOption.value : originalOption
-    value = originalValue
-  }
-  
-  emit('update:modelValue', value)
-  emit('change', {
-    value,
-    option: selectedOption.value,
-    event
-  })
-}
-
-const handleFocus = (event) => {
-  isFocused.value = true
-  emit('focus', event)
-}
-
-const handleBlur = (event) => {
-  isFocused.value = false
-  emit('blur', event)
-}
 
 // Methods
-const focus = async () => {
-  await nextTick()
-  selectRef.value?.focus()
+const getOptionValue = (option) => {
+  if (typeof option === 'object' && option !== null) {
+    return option[props.valueKey] ?? option.value ?? option
+  }
+  return option
 }
 
-const blur = () => {
-  selectRef.value?.blur()
+const getOptionLabel = (option) => {
+  if (typeof option === 'object' && option !== null) {
+    return option[props.labelKey] ?? option.label ?? option.name ?? option.value ?? String(option)
+  }
+  return String(option)
 }
 
-// Expose methods
-defineExpose({
-  focus,
-  blur,
-  selectRef,
-  selectedOption
+const isSelected = (option) => {
+  const value = getOptionValue(option)
+  if (props.multiple) {
+    return Array.isArray(props.modelValue) && props.modelValue.includes(value)
+  }
+  return props.modelValue === value
+}
+
+const selectOption = (option) => {
+  const value = getOptionValue(option)
+  
+  if (props.multiple) {
+    const currentValues = Array.isArray(props.modelValue) ? [...props.modelValue] : []
+    const index = currentValues.indexOf(value)
+    
+    if (index > -1) {
+      currentValues.splice(index, 1)
+    } else {
+      currentValues.push(value)
+    }
+    
+    emit('update:modelValue', currentValues)
+  } else {
+    emit('update:modelValue', value)
+    isOpen.value = false
+  }
+}
+
+const removeOption = (option) => {
+  if (!props.multiple) return
+  
+  const value = getOptionValue(option)
+  const currentValues = Array.isArray(props.modelValue) ? [...props.modelValue] : []
+  const index = currentValues.indexOf(value)
+  
+  if (index > -1) {
+    currentValues.splice(index, 1)
+    emit('update:modelValue', currentValues)
+  }
+}
+
+const clearSelection = () => {
+  if (props.multiple) {
+    emit('update:modelValue', [])
+  } else {
+    emit('update:modelValue', null)
+  }
+  isOpen.value = false
+}
+
+const handleChange = (value) => {
+  emit('update:modelValue', value)
+  emit('change', value)
+}
+
+// Watch search query
+watch(searchQuery, (newQuery) => {
+  emit('search', newQuery)
 })
 </script>

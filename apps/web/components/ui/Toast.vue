@@ -1,239 +1,231 @@
-<!-- apps/web/components/ui/Toast.vue -->
+<!-- components/ui/Toast.vue -->
 <template>
-  <div 
-    v-if="visible"
-    class="min-w-80 max-w-md"
-    :class="toastClasses"
+  <UToast
+    :title="title"
+    :description="description"
+    :icon="icon"
+    :avatar="avatar"
+    :color="color"
+    :duration="duration"
+    :actions="actions"
+    :progress="progress"
+    :orientation="orientation"
+    :close="close"
+    :class="[
+      'relative overflow-hidden backdrop-blur-sm',
+      colorClasses[color],
+      sizeClasses[size],
+      customClass
+    ]"
+    v-bind="$attrs"
   >
-    <div class="bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden">
-      <!-- Header with icon and close -->
-      <div class="flex items-start p-4">
-        <div class="flex-shrink-0">
-          <div 
-            class="w-8 h-8 rounded-full flex items-center justify-center"
-            :class="iconBgClass"
-          >
-            <Icon :name="typeIcon" class="w-4 h-4" :class="iconClass" />
-          </div>
-        </div>
-        
-        <div class="ml-3 flex-1">
-          <h3 v-if="title" class="text-sm font-medium text-gray-900">
-            {{ title }}
-          </h3>
-          <p class="text-sm text-gray-600" :class="{ 'mt-1': title }">
-            {{ message }}
-          </p>
-          
-          <!-- Action button -->
-          <div v-if="action" class="mt-3">
-            <UButton
-              size="xs"
-              :color="actionColor"
-              variant="outline"
-              @click="handleAction"
-            >
-              {{ action.text }}
-            </UButton>
-          </div>
-        </div>
-        
-        <!-- Close button -->
-        <button
-          @click="close"
-          class="ml-4 flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors"
-        >
-          <Icon name="i-heroicons-x-mark" class="w-5 h-5" />
-        </button>
-      </div>
-      
-      <!-- Progress bar for auto-dismiss -->
-      <div 
-        v-if="autoClose && progress > 0"
-        class="h-1 bg-gray-100"
-      >
-        <div 
-          class="h-full transition-all duration-100 ease-linear"
-          :class="progressBarClass"
-          :style="{ width: `${progress}%` }"
-        ></div>
-      </div>
-    </div>
-  </div>
+    <!-- Custom slots -->
+    <template v-if="$slots.icon" #icon>
+      <slot name="icon" />
+    </template>
+    
+    <template v-if="$slots.title" #title>
+      <slot name="title" />
+    </template>
+    
+    <template v-if="$slots.description" #description>
+      <slot name="description" />
+    </template>
+    
+    <template v-if="$slots.actions" #actions>
+      <slot name="actions" />
+    </template>
+    
+    <template v-if="$slots.default" #default>
+      <slot />
+    </template>
+  </UToast>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps({
-  id: {
+  // Core props
+  title: {
     type: String,
     required: true
   },
+  description: {
+    type: String,
+    default: ''
+  },
+  
+  // Type and styling
   type: {
     type: String,
     default: 'info',
-    validator: (value) => ['success', 'error', 'warning', 'info'].includes(value)
+    validator: (value) => ['success', 'error', 'warning', 'info', 'neutral'].includes(value)
   },
-  title: String,
-  message: {
+  variant: {
     type: String,
-    required: true
+    default: 'default',
+    validator: (value) => ['default', 'destructive', 'success', 'warning'].includes(value)
   },
-  autoClose: {
-    type: Boolean,
-    default: true
+  size: {
+    type: String,
+    default: 'md',
+    validator: (value) => ['sm', 'md', 'lg'].includes(value)
+  },
+  
+  // Display options
+  icon: {
+    type: String,
+    default: ''
+  },
+  avatar: {
+    type: Object,
+    default: null
   },
   duration: {
     type: Number,
-    default: 5000
+    default: null // Will use smart defaults from useDualToast
   },
-  action: Object // { text: 'Undo', handler: () => {} }
-})
-
-const emit = defineEmits(['close', 'action'])
-
-const visible = ref(false)
-const progress = ref(100)
-
-let progressInterval = null
-let autoCloseTimeout = null
-
-const typeIcon = computed(() => {
-  const icons = {
-    success: 'i-heroicons-check-circle',
-    error: 'i-heroicons-x-circle',
-    warning: 'i-heroicons-exclamation-triangle',
-    info: 'i-heroicons-information-circle'
-  }
-  return icons[props.type]
-})
-
-const iconClass = computed(() => {
-  const classes = {
-    success: 'text-green-600',
-    error: 'text-red-600',
-    warning: 'text-amber-600',
-    info: 'text-blue-600'
-  }
-  return classes[props.type]
-})
-
-const iconBgClass = computed(() => {
-  const classes = {
-    success: 'bg-green-100',
-    error: 'bg-red-100',
-    warning: 'bg-amber-100',
-    info: 'bg-blue-100'
-  }
-  return classes[props.type]
-})
-
-const progressBarClass = computed(() => {
-  const classes = {
-    success: 'bg-green-500',
-    error: 'bg-red-500',
-    warning: 'bg-amber-500',
-    info: 'bg-blue-500'
-  }
-  return classes[props.type]
-})
-
-const actionColor = computed(() => {
-  const colors = {
-    success: 'green',
-    error: 'red',
-    warning: 'amber',
-    info: 'blue'
-  }
-  return colors[props.type]
-})
-
-const toastClasses = computed(() => {
-  return [
-    'transform transition-all duration-300',
-    visible.value ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
-  ]
-})
-
-const show = () => {
-  visible.value = true
+  persistent: {
+    type: Boolean,
+    default: false
+  },
   
-  if (props.autoClose) {
-    startProgress()
-    autoCloseTimeout = setTimeout(() => {
-      close()
-    }, props.duration)
-  }
-}
-
-const close = () => {
-  visible.value = false
-  clearTimers()
-  setTimeout(() => {
-    emit('close', props.id)
-  }, 300)
-}
-
-const handleAction = () => {
-  if (props.action?.handler) {
-    props.action.handler()
-  }
-  emit('action', props.action)
-  close()
-}
-
-const startProgress = () => {
-  const interval = 50 // Update every 50ms
-  const decrement = (interval / props.duration) * 100
+  // Interactive elements
+  actions: {
+    type: Array,
+    default: () => []
+  },
+  progress: {
+    type: [Boolean, Object],
+    default: false
+  },
+  orientation: {
+    type: String,
+    default: 'vertical',
+    validator: (value) => ['horizontal', 'vertical'].includes(value)
+  },
+  close: {
+    type: [Boolean, Object],
+    default: true
+  },
   
-  progressInterval = setInterval(() => {
-    progress.value -= decrement
-    if (progress.value <= 0) {
-      progress.value = 0
-      clearInterval(progressInterval)
-    }
-  }, interval)
-}
-
-const clearTimers = () => {
-  if (progressInterval) {
-    clearInterval(progressInterval)
-    progressInterval = null
+  // Positioning hint for useDualToast
+  position: {
+    type: String,
+    default: 'auto', // auto, top, bottom
+    validator: (value) => ['auto', 'top', 'bottom'].includes(value)
+  },
+  
+  // Custom styling
+  customClass: {
+    type: String,
+    default: ''
   }
-  if (autoCloseTimeout) {
-    clearTimeout(autoCloseTimeout)
-    autoCloseTimeout = null
-  }
-}
-
-const pauseTimer = () => {
-  clearTimers()
-}
-
-const resumeTimer = () => {
-  if (props.autoClose && visible.value) {
-    const remainingTime = (progress.value / 100) * props.duration
-    startProgress()
-    autoCloseTimeout = setTimeout(() => {
-      close()
-    }, remainingTime)
-  }
-}
-
-onMounted(() => {
-  show()
 })
 
-onUnmounted(() => {
-  clearTimers()
+// Compute color from type if not explicitly set
+const color = computed(() => {
+  const typeToColor = {
+    success: 'success',
+    error: 'error', 
+    warning: 'warning',
+    info: 'info',
+    neutral: 'neutral'
+  }
+  return typeToColor[props.type] || 'neutral'
 })
 
-// Expose methods for parent components
+// Enhanced color classes for better visual hierarchy
+const colorClasses = {
+  success: 'border-green-200 bg-green-50/95 text-green-900 shadow-green-100/50',
+  error: 'border-red-200 bg-red-50/95 text-red-900 shadow-red-100/50',
+  warning: 'border-yellow-200 bg-yellow-50/95 text-yellow-900 shadow-yellow-100/50',
+  info: 'border-blue-200 bg-blue-50/95 text-blue-900 shadow-blue-100/50',
+  neutral: 'border-gray-200 bg-white/95 text-gray-900 shadow-gray-100/50',
+  primary: 'border-blue-200 bg-blue-50/95 text-blue-900 shadow-blue-100/50',
+  secondary: 'border-gray-200 bg-gray-50/95 text-gray-900 shadow-gray-100/50'
+}
+
+const sizeClasses = {
+  sm: 'text-sm p-3 max-w-sm',
+  md: 'text-sm p-4 max-w-md', 
+  lg: 'text-base p-5 max-w-lg'
+}
+
+// Default icons based on type
+const defaultIcon = computed(() => {
+  if (props.icon) return props.icon
+  
+  const iconMap = {
+    success: 'i-lucide-check-circle',
+    error: 'i-lucide-x-circle',
+    warning: 'i-lucide-alert-triangle',
+    info: 'i-lucide-info',
+    neutral: 'i-lucide-bell'
+  }
+  return iconMap[props.type] || 'i-lucide-bell'
+})
+
+// Computed duration based on type for smart defaults
+const smartDuration = computed(() => {
+  if (props.duration !== null) return props.duration
+  if (props.persistent) return 0
+  
+  // Smart defaults: alerts longer, notifications shorter
+  const isAlert = props.type === 'error' || props.type === 'warning'
+  return isAlert ? 7000 : 4000
+})
+
+// Expose for parent components
 defineExpose({
-  show,
-  close,
-  pauseTimer,
-  resumeTimer
+  type: props.type,
+  isAlert: computed(() => props.type === 'error' || props.type === 'warning'),
+  isNotification: computed(() => props.type === 'success' || props.type === 'info'),
+  smartDuration
 })
 </script>
+
+<style scoped>
+/* Enhanced backdrop blur and shadow effects */
+.toast-enhanced {
+  backdrop-filter: blur(12px);
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Subtle animations */
+.toast-enhanced {
+  animation: toast-slide-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+/* Type-specific enhancements */
+.toast-enhanced[data-type="error"] {
+  border-left: 4px solid rgb(239 68 68);
+}
+
+.toast-enhanced[data-type="warning"] {
+  border-left: 4px solid rgb(245 158 11);
+}
+
+.toast-enhanced[data-type="success"] {
+  border-left: 4px solid rgb(34 197 94);
+}
+
+.toast-enhanced[data-type="info"] {
+  border-left: 4px solid rgb(59 130 246);
+}
+</style>

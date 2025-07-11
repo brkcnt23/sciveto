@@ -1,135 +1,191 @@
-<!-- apps/web/components/forms/FormInput.vue -->
+<!-- components/base/FormInput.vue -->
 <template>
-  <div class="space-y-2">
-    <!-- Label -->
-    <label
-      v-if="label"
-      :for="inputId"
-      class="block text-sm font-medium"
-      :class="labelClasses"
-    >
-      {{ label }}
-      <span v-if="required" class="text-red-500 ml-1">*</span>
-    </label>
-
-    <!-- Input wrapper -->
-    <div class="relative">
-      <!-- Leading icon -->
-      <div
-        v-if="leadingIcon"
-        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
-      >
-        <Icon :name="leadingIcon" class="h-5 w-5" :class="iconClasses" />
-      </div>
-
-      <!-- Input field -->
-      <input
-        :id="inputId"
-        :type="type"
-        :value="modelValue"
-        :placeholder="placeholder"
-        :disabled="disabled"
-        :readonly="readonly"
-        :required="required"
-        :min="min"
-        :max="max"
-        :step="step"
-        :pattern="pattern"
-        :autocomplete="autocomplete"
-        @input="handleInput"
-        @blur="handleBlur"
-        @focus="handleFocus"
-        @keydown="handleKeydown"
-        :class="[
-          baseClasses,
-          sizeClasses,
-          stateClasses,
-          leadingIcon ? 'pl-10' : '',
-          trailingIcon || loading ? 'pr-10' : ''
-        ]"
-        ref="inputRef"
-      />
-
-      <!-- Trailing icon or loading -->
-      <div
-        v-if="trailingIcon || loading"
-        class="absolute inset-y-0 right-0 pr-3 flex items-center"
-        :class="trailingIcon && !loading ? 'cursor-pointer' : 'pointer-events-none'"
-        @click="trailingIcon && !loading ? $emit('trailing-click') : null"
-      >
-        <!-- Loading spinner -->
-        <LoadingSpinner
-          v-if="loading"
-          size="sm"
-          class="h-5 w-5"
-        />
-        <!-- Trailing icon -->
-        <Icon
-          v-else-if="trailingIcon"
-          :name="trailingIcon"
-          class="h-5 w-5"
-          :class="iconClasses"
-        />
-      </div>
-    </div>
-
-    <!-- Help text -->
-    <p
-      v-if="helpText && !error"
-      class="text-sm text-gray-500 dark:text-gray-400"
-    >
-      {{ helpText }}
-    </p>
-
-    <!-- Error message -->
-    <ErrorMessage
-      v-if="error"
-      :error="error"
-      type="error"
-      size="sm"
+  <UFormField 
+    :label="label" 
+    :name="name"
+    :description="description"
+    :help="help"
+    :required="required"
+    :size="size"
+    :error="error"
+  >
+    <!-- Text Input -->
+    <UInput 
+      v-if="type === 'text' || type === 'email' || type === 'password' || type === 'url' || type === 'number'"
+      :model-value="modelValue"
+      :type="type"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :loading="loading"
+      :icon="icon"
+      :leading-icon="leadingIcon"
+      :trailing-icon="trailingIcon"
+      :variant="variant"
+      :color="color"
+      :size="size"
+      :class="inputClass"
+      @update:model-value="$emit('update:modelValue', $event)"
     />
 
-    <!-- Character count -->
-    <div
-      v-if="showCharCount && maxLength"
-      class="text-xs text-right"
-      :class="charCountClasses"
-    >
-      {{ characterCount }}/{{ maxLength }}
-    </div>
-  </div>
+    <!-- Textarea -->
+    <UTextarea 
+      v-else-if="type === 'textarea'"
+      :model-value="modelValue"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :rows="rows"
+      :variant="variant"
+      :color="color"
+      :size="size"
+      :class="inputClass"
+      @update:model-value="$emit('update:modelValue', $event)"
+    />
+
+    <!-- Select -->
+    <USelect
+      v-else-if="type === 'select'"
+      :model-value="modelValue"
+      :options="options"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :variant="variant"
+      :color="color"
+      :size="size"
+      :class="inputClass"
+      @update:model-value="$emit('update:modelValue', $event)"
+    />
+
+    <!-- Select Menu (Multiple support) -->
+    <USelectMenu
+      v-else-if="type === 'select-menu'"
+      :model-value="modelValue"
+      :options="options"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :multiple="multiple"
+      :variant="variant"
+      :color="color"
+      :size="size"
+      :class="inputClass"
+      @update:model-value="$emit('update:modelValue', $event)"
+    />
+
+    <!-- Input Number -->
+    <UInputNumber
+      v-else-if="type === 'input-number'"
+      :model-value="modelValue"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :min="min"
+      :max="max"
+      :step="step"
+      :variant="variant"
+      :color="color"
+      :size="size"
+      :class="inputClass"
+      @update:model-value="$emit('update:modelValue', $event)"
+    />
+
+    <!-- File Input -->
+    <UInput
+      v-else-if="type === 'file'"
+      :type="type"
+      :disabled="disabled"
+      :accept="accept"
+      :multiple="multiple"
+      :variant="variant"
+      :color="color"
+      :size="size"
+      :class="inputClass"
+      @change="$emit('update:modelValue', $event.target.files)"
+    />
+
+    <!-- Search Input with clear button -->
+    <UInput
+      v-else-if="type === 'search'"
+      :model-value="modelValue"
+      type="text"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :loading="loading"
+      icon="i-lucide-search"
+      :trailing-icon="modelValue ? 'i-lucide-x' : undefined"
+      :variant="variant"
+      :color="color"
+      :size="size"
+      :class="inputClass"
+      @update:model-value="$emit('update:modelValue', $event)"
+      @click:trailing="$emit('update:modelValue', '')"
+    />
+
+    <!-- Default fallback -->
+    <UInput
+      v-else
+      :model-value="modelValue"
+      :type="type"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :loading="loading"
+      :icon="icon"
+      :leading-icon="leadingIcon"
+      :trailing-icon="trailingIcon"
+      :variant="variant"
+      :color="color"
+      :size="size"
+      :class="inputClass"
+      @update:model-value="$emit('update:modelValue', $event)"
+    />
+  </UFormField>
 </template>
 
 <script setup>
-import { ref, computed, nextTick } from 'vue'
-
 const props = defineProps({
-  modelValue: [String, Number],
+  // v-model
+  modelValue: {
+    type: [String, Number, Array, Object, File, FileList],
+    default: ''
+  },
+  
+  // Form field props
+  label: {
+    type: String,
+    default: ''
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    default: ''
+  },
+  help: {
+    type: String,
+    default: ''
+  },
+  required: {
+    type: Boolean,
+    default: false
+  },
+  error: {
+    type: [String, Boolean],
+    default: false
+  },
+  
+  // Input props
   type: {
     type: String,
     default: 'text',
     validator: (value) => [
-      'text', 'email', 'password', 'number', 'tel', 'url', 'search'
+      'text', 'email', 'password', 'number', 'url', 'file', 'search',
+      'textarea', 'select', 'select-menu', 'input-number'
     ].includes(value)
   },
-  label: String,
-  placeholder: String,
-  helpText: String,
-  error: [String, Array, Object],
-  size: {
+  placeholder: {
     type: String,
-    default: 'md',
-    validator: (value) => ['sm', 'md', 'lg'].includes(value)
+    default: ''
   },
   disabled: {
-    type: Boolean,
-    default: false
-  },
-  readonly: {
-    type: Boolean,
-    default: false
-  },
-  required: {
     type: Boolean,
     default: false
   },
@@ -137,142 +193,59 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  
+  // Input styling
+  variant: {
+    type: String,
+    default: 'outline',
+    validator: (value) => ['outline', 'soft', 'subtle', 'ghost'].includes(value)
+  },
+  color: {
+    type: String,
+    default: 'primary',
+    validator: (value) => ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'].includes(value)
+  },
+  size: {
+    type: String,
+    default: 'md',
+    validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl'].includes(value)
+  },
+  
+  // Icon props
+  icon: String,
   leadingIcon: String,
   trailingIcon: String,
-  min: [String, Number],
-  max: [String, Number],
-  step: [String, Number],
-  pattern: String,
-  autocomplete: String,
-  maxLength: Number,
-  showCharCount: {
+  
+  // Textarea specific
+  rows: {
+    type: Number,
+    default: 3
+  },
+  
+  // Select specific
+  options: {
+    type: Array,
+    default: () => []
+  },
+  multiple: {
     type: Boolean,
     default: false
-  }
-})
-
-const emit = defineEmits([
-  'update:modelValue',
-  'focus',
-  'blur',
-  'keydown',
-  'trailing-click'
-])
-
-const inputRef = ref(null)
-const isFocused = ref(false)
-
-// Generate unique ID
-const inputId = computed(() => {
-  return `input-${Math.random().toString(36).substr(2, 9)}`
-})
-
-// Character count
-const characterCount = computed(() => {
-  return String(props.modelValue || '').length
-})
-
-// Classes
-const baseClasses = computed(() => {
-  return [
-    'block w-full rounded-lg border transition-all duration-200',
-    'focus:outline-none focus:ring-2 focus:ring-offset-0',
-    'dark:bg-gray-800 dark:border-gray-600 dark:text-white',
-    'disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
-    'dark:disabled:bg-gray-700 dark:disabled:text-gray-400'
-  ].join(' ')
-})
-
-const sizeClasses = computed(() => {
-  const sizes = {
-    sm: 'px-3 py-2 text-sm',
-    md: 'px-4 py-3 text-base',
-    lg: 'px-4 py-4 text-lg'
-  }
-  return sizes[props.size]
-})
-
-const stateClasses = computed(() => {
-  if (props.error) {
-    return 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-600 dark:focus:border-red-500'
-  }
+  },
   
-  if (isFocused.value) {
-    return 'border-blue-300 focus:border-blue-500 focus:ring-blue-500'
-  }
+  // Number input specific
+  min: Number,
+  max: Number,
+  step: Number,
   
-  return 'border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-400'
-})
-
-const labelClasses = computed(() => {
-  if (props.error) {
-    return 'text-red-700 dark:text-red-400'
-  }
-  return 'text-gray-700 dark:text-gray-300'
-})
-
-const iconClasses = computed(() => {
-  if (props.error) {
-    return 'text-red-400'
-  }
-  if (props.disabled) {
-    return 'text-gray-400'
-  }
-  return 'text-gray-500 dark:text-gray-400'
-})
-
-const charCountClasses = computed(() => {
-  if (props.maxLength && characterCount.value > props.maxLength) {
-    return 'text-red-500'
-  }
-  if (props.maxLength && characterCount.value > props.maxLength * 0.8) {
-    return 'text-yellow-500'
-  }
-  return 'text-gray-500'
-})
-
-// Event handlers
-const handleInput = (event) => {
-  const value = props.type === 'number' 
-    ? parseFloat(event.target.value) || null
-    : event.target.value
+  // File input specific
+  accept: String,
   
-  emit('update:modelValue', value)
-}
-
-const handleFocus = (event) => {
-  isFocused.value = true
-  emit('focus', event)
-}
-
-const handleBlur = (event) => {
-  isFocused.value = false
-  emit('blur', event)
-}
-
-const handleKeydown = (event) => {
-  emit('keydown', event)
-}
-
-// Methods
-const focus = async () => {
-  await nextTick()
-  inputRef.value?.focus()
-}
-
-const blur = () => {
-  inputRef.value?.blur()
-}
-
-const select = () => {
-  inputRef.value?.select()
-}
-
-// Expose methods
-defineExpose({
-  focus,
-  blur,
-  select,
-  inputRef
+  // Custom classes
+  inputClass: {
+    type: String,
+    default: ''
+  }
 })
+
+const emit = defineEmits(['update:modelValue'])
 </script>

@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
     <!-- Header Component -->
     <Header :user="user" />
-    
+
     <div class="max-w-7xl mx-auto space-y-6">
       <!-- Development Logout Button -->
       <div class="bg-red-50 border border-red-200 rounded-lg p-3">
@@ -15,13 +15,7 @@
             <span class="text-xs text-red-600">
               Logged in as: {{ user?.email }}
             </span>
-            <UButton 
-              color="red" 
-              variant="outline" 
-              size="xs"
-              @click="handleDevLogout"
-              :loading="loggingOut"
-            >
+            <UButton color="red" variant="outline" size="xs" @click="handleDevLogout" :loading="loggingOut">
               <Icon name="i-heroicons-arrow-right-on-rectangle" class="w-3 h-3 mr-1" />
               Test Logout
             </UButton>
@@ -37,7 +31,7 @@
         </p>
       </div>
     </div>
-    
+
     <div class="mx-auto max-w-7xl px-6 lg:px-8 py-8 space-y-8">
       <!-- Welcome Section -->
       <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
@@ -69,134 +63,73 @@
       <!-- Priority Badge Showcase -->
       <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
         <template #header>
-          <h3 class="text-xl font-bold text-slate-800">🏷️ Priority Badge Component</h3>
+          <h3 class="text-xl font-bold text-slate-800">🏷️ Priority Badge (Nuxt UI v3)</h3>
         </template>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
           <div class="text-center space-y-3">
             <h4 class="font-semibold text-slate-700">LOW Priority</h4>
             <div class="space-y-2">
-              <PriorityBadge priority="LOW" variant="solid" />
-              <PriorityBadge priority="LOW" variant="soft" />
-              <PriorityBadge priority="LOW" variant="outline" />
-              <PriorityBadge priority="LOW" variant="subtle" />
+              <UBadge label="LOW" color="success" variant="solid" size="md" leading-icon="i-lucide-arrow-down" />
+              <UBadge label="LOW" color="success" variant="soft" size="md" leading-icon="i-lucide-arrow-down" />
+              <UBadge label="LOW" color="success" variant="outline" size="md" leading-icon="i-lucide-arrow-down" />
+              <UBadge label="LOW" color="success" variant="subtle" size="md" leading-icon="i-lucide-arrow-down" />
             </div>
           </div>
+
           <div class="text-center space-y-3">
             <h4 class="font-semibold text-slate-700">MEDIUM Priority</h4>
             <div class="space-y-2">
-              <PriorityBadge priority="MEDIUM" variant="solid" />
-              <PriorityBadge priority="MEDIUM" variant="soft" />
-              <PriorityBadge priority="MEDIUM" variant="outline" />
-              <PriorityBadge priority="MEDIUM" variant="subtle" />
+              <UBadge label="MEDIUM" color="warning" variant="solid" size="md" leading-icon="i-lucide-minus" />
+              <UBadge label="MEDIUM" color="warning" variant="soft" size="md" leading-icon="i-lucide-minus" />
+              <UBadge label="MEDIUM" color="warning" variant="outline" size="md" leading-icon="i-lucide-minus" />
+              <UBadge label="MEDIUM" color="warning" variant="subtle" size="md" leading-icon="i-lucide-minus" />
             </div>
           </div>
+
           <div class="text-center space-y-3">
             <h4 class="font-semibold text-slate-700">HIGH Priority</h4>
             <div class="space-y-2">
-              <PriorityBadge priority="HIGH" variant="solid" />
-              <PriorityBadge priority="HIGH" variant="soft" />
-              <PriorityBadge priority="HIGH" variant="outline" />
-              <PriorityBadge priority="HIGH" variant="subtle" />
+              <UBadge label="HIGH" color="error" variant="solid" size="md" leading-icon="i-lucide-arrow-up" />
+              <UBadge label="HIGH" color="error" variant="soft" size="md" leading-icon="i-lucide-arrow-up" />
+              <UBadge label="HIGH" color="error" variant="outline" size="md" leading-icon="i-lucide-arrow-up" />
+              <UBadge label="HIGH" color="error" variant="subtle" size="md" leading-icon="i-lucide-arrow-up" />
             </div>
           </div>
+
           <div class="text-center space-y-3">
             <h4 class="font-semibold text-slate-700">URGENT Priority</h4>
             <div class="space-y-2">
-              <PriorityBadge priority="URGENT" variant="solid" />
-              <PriorityBadge priority="URGENT" variant="soft" />
-              <PriorityBadge priority="URGENT" variant="outline" />
-              <PriorityBadge priority="URGENT" variant="subtle" />
+              <UBadge label="URGENT" color="error" variant="solid" size="md" leading-icon="i-lucide-alert-triangle" />
+              <UBadge label="URGENT" color="error" variant="soft" size="md" leading-icon="i-lucide-alert-triangle" />
+              <UBadge label="URGENT" color="error" variant="outline" size="md" leading-icon="i-lucide-alert-triangle" />
+              <UBadge label="URGENT" color="error" variant="subtle" size="md" leading-icon="i-lucide-alert-triangle" />
             </div>
           </div>
         </div>
       </UCard>
 
-      <!-- Progress Bar Showcase -->
+      <!-- Dashboard.vue içindeki Progress Bar bölümü -->
       <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
         <template #header>
-          <h3 class="text-xl font-bold text-slate-800">📊 Progress Bar Component</h3>
+          <h3 class="text-xl font-bold text-slate-800">📊 Progress Bar (Nuxt UI v3)</h3>
         </template>
-
-        <div class="space-y-6">
-          <ProgressBar :value="15" label="Planning Phase" estimated="5 days remaining" show-status />
-          <ProgressBar :value="45" label="Development Phase" estimated="3 days remaining" show-status />
-          <ProgressBar :value="75" label="Testing Phase" estimated="1 day remaining" show-status />
-          <ProgressBar :value="100" label="Completed Project" estimated="Complete" show-status />
-
-          <!-- Custom Colors -->
-          <div class="mt-8 pt-6 border-t border-gray-200">
-            <h4 class="font-semibold text-slate-700 mb-4">Custom Colors</h4>
-            <div class="space-y-4">
-              <ProgressBar :value="60" label="Blue Progress" color="blue" />
-              <ProgressBar :value="80" label="Green Progress" color="green" />
-              <ProgressBar :value="40" label="Orange Progress" color="orange" />
-              <ProgressBar :value="90" label="Purple Progress" color="purple" />
-            </div>
-          </div>
-        </div>
       </UCard>
 
-      <!-- Avatar Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+      <!-- Progress Bar Section -->
+      <UCard>
         <template #header>
-          <h3 class="text-xl font-bold text-slate-800">👤 Avatar Component</h3>
+          <h3>📊 Progress Bar (Nuxt UI v3)</h3>
         </template>
+        <ProgressBarShowcase />
+      </UCard>
 
-        <div class="space-y-8">
-          <!-- Size variations -->
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">Size Variations</h4>
-            <div class="flex items-center space-x-6">
-              <div class="text-center space-y-2">
-                <Avatar :user="sampleUsers[0]" size="xs" />
-                <p class="text-xs text-slate-600">XS</p>
-              </div>
-              <div class="text-center space-y-2">
-                <Avatar :user="sampleUsers[0]" size="sm" />
-                <p class="text-xs text-slate-600">SM</p>
-              </div>
-              <div class="text-center space-y-2">
-                <Avatar :user="sampleUsers[0]" size="md" />
-                <p class="text-xs text-slate-600">MD</p>
-              </div>
-              <div class="text-center space-y-2">
-                <Avatar :user="sampleUsers[0]" size="lg" />
-                <p class="text-xs text-slate-600">LG</p>
-              </div>
-              <div class="text-center space-y-2">
-                <Avatar :user="sampleUsers[0]" size="xl" />
-                <p class="text-xs text-slate-600">XL</p>
-              </div>
-              <div class="text-center space-y-2">
-                <Avatar :user="sampleUsers[0]" size="2xl" />
-                <p class="text-xs text-slate-600">2XL</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Different users -->
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">Different Users</h4>
-            <div class="flex items-center space-x-4">
-              <div v-for="user in sampleUsers" :key="user.id" class="text-center space-y-2">
-                <Avatar :user="user" size="lg" show-online-status />
-                <p class="text-sm font-medium text-slate-700">{{ user.name }}</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- With badges -->
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">With Notifications</h4>
-            <div class="flex items-center space-x-4">
-              <Avatar :user="sampleUsers[0]" size="lg" :badge="3" />
-              <Avatar :user="sampleUsers[1]" size="lg" :badge="12" />
-              <Avatar :user="sampleUsers[2]" size="lg" :badge="99" />
-              <Avatar :user="sampleUsers[3]" size="lg" :badge="150" />
-            </div>
-          </div>
-        </div>
+      <!-- Avatar Section -->
+      <UCard>
+        <template #header>
+          <h3>👤 Avatar (Nuxt UI v3)</h3>
+        </template>
+        <AvatarShowcase />
       </UCard>
 
       <!-- Loading Components Showcase -->
@@ -280,7 +213,8 @@
             <div class="space-y-4">
               <h4 class="font-semibold text-slate-700">Project Details</h4>
               <div class="bg-gray-50 p-4 rounded-lg">
-                <p class="text-gray-600">Detailed project information, timelines, and specifications would be displayed
+                <p class="text-gray-600">Detailed project information, timelines, and specifications would be
+                  displayed
                   here.</p>
                 <ul class="mt-2 space-y-1 text-sm text-gray-500">
                   <li>• Project specifications</li>
@@ -369,115 +303,21 @@
         </div>
       </UCard>
 
-      <!-- Form Input Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+      <!-- Form Section -->
+      <UCard>
         <template #header>
-          <h3 class="text-xl font-bold text-slate-800">📝 Form Input Component</h3>
+          <h3>📝 Form Components (Nuxt UI v3)</h3>
         </template>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <!-- Input Examples -->
-          <div class="space-y-6">
-            <h4 class="font-semibold text-slate-700">Input Examples</h4>
-
-            <FormInput v-model="formData.name" label="Full Name" placeholder="Enter your full name"
-              leading-icon="i-heroicons-user" help-text="This will be displayed on your profile" required />
-
-            <FormInput v-model="formData.email" type="email" label="Email Address" placeholder="you@example.com"
-              leading-icon="i-heroicons-envelope" :error="formErrors.email" />
-
-            <FormInput v-model="formData.password" type="password" label="Password" placeholder="Enter password"
-              leading-icon="i-heroicons-lock-closed" trailing-icon="i-heroicons-eye" :max-length="50" show-char-count
-              @trailing-click="togglePasswordVisibility" />
-
-            <FormInput v-model="formData.budget" type="number" label="Project Budget" placeholder="0.00"
-              leading-icon="i-heroicons-currency-dollar" min="0" step="0.01" />
-          </div>
-
-          <!-- Input States -->
-          <div class="space-y-6">
-            <h4 class="font-semibold text-slate-700">Input States</h4>
-
-            <FormInput v-model="formData.loading" label="Loading State" placeholder="Processing..."
-              leading-icon="i-heroicons-clock" :loading="true" disabled />
-
-            <FormInput v-model="formData.disabled" label="Disabled Input" placeholder="This field is disabled"
-              leading-icon="i-heroicons-x-circle" disabled />
-
-            <FormInput v-model="formData.readonly" label="Readonly Input" placeholder="This field is readonly"
-              leading-icon="i-heroicons-lock-closed" readonly />
-
-            <FormInput v-model="formData.search" type="search" label="Search" placeholder="Search anything..."
-              leading-icon="i-heroicons-magnifying-glass" trailing-icon="i-heroicons-x-mark"
-              @trailing-click="clearSearch" />
-          </div>
-        </div>
+        <FormShowcase :default-show-states="true" :default-show-textarea-select="true" :default-show-advanced="true"
+          :default-show-variants="false" :default-show-working-form="true" />
       </UCard>
 
       <!-- Status Indicator Showcase -->
       <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
         <template #header>
-          <h3 class="text-xl font-bold text-slate-800">🔍 Status Indicator Component</h3>
+          <h3 class="text-xl font-bold text-slate-800">🔍 Status Indicator (Nuxt UI v3)</h3>
         </template>
-
-        <div class="space-y-8">
-          <!-- User Status -->
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">User Status</h4>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div class="space-y-2">
-                <StatusIndicator status="online" label="Online" size="lg" />
-                <StatusIndicator status="away" label="Away" size="md" />
-                <StatusIndicator status="busy" label="Busy" size="sm" />
-                <StatusIndicator status="offline" label="Offline" size="xs" />
-              </div>
-            </div>
-          </div>
-
-          <!-- System Status -->
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">System Status</h4>
-            <div class="space-y-3">
-              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span class="font-medium">API Server</span>
-                <StatusIndicator status="live" label="Operational" pulse />
-              </div>
-              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span class="font-medium">Database</span>
-                <StatusIndicator status="active" label="Connected" />
-              </div>
-              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span class="font-medium">File Storage</span>
-                <StatusIndicator status="maintenance" label="Maintenance" pulse />
-              </div>
-              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span class="font-medium">Payment Gateway</span>
-                <StatusIndicator status="error" label="Error" pulse />
-              </div>
-            </div>
-          </div>
-
-          <!-- Project Status -->
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">Project Status</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="p-3 bg-gray-50 rounded-lg">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="font-medium">Website Redesign</span>
-                  <StatusIndicator status="active" label="In Progress" />
-                </div>
-                <p class="text-sm text-gray-600">75% complete</p>
-              </div>
-              <div class="p-3 bg-gray-50 rounded-lg">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="font-medium">Mobile App</span>
-                  <StatusIndicator status="completed" label="Completed" />
-                </div>
-                <p class="text-sm text-gray-600">100% complete</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <StatusShowcase :default-show-badge-style="true" :default-show-sizes="false" :default-show-interactive="true" />
       </UCard>
 
       <!-- Modal Showcase -->
@@ -548,7 +388,8 @@
               <p>Are you sure you want to delete this project? This action cannot be undone.</p>
               <div class="bg-red-50 border border-red-200 rounded-lg p-4">
                 <p class="text-red-800 font-medium">Warning: This action is permanent</p>
-                <p class="text-red-600 text-sm mt-1">All project data, files, and associated records will be permanently
+                <p class="text-red-600 text-sm mt-1">All project data, files, and associated records will be
+                  permanently
                   deleted.</p>
               </div>
             </div>
@@ -814,48 +655,11 @@
         </div>
       </UCard>
 
-      <!-- Toast Notification Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+      <UCard>
         <template #header>
-          <h3 class="text-xl font-bold text-slate-800">🔔 Toast Notifications</h3>
+          <h3>📢 Toast Notifications (Nuxt UI v3)</h3>
         </template>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <UButton color="green" variant="solid" icon="i-heroicons-check-circle" @click="showSuccessToast"
-            class="w-full">
-            Success Toast
-          </UButton>
-
-          <UButton color="red" variant="solid" icon="i-heroicons-x-circle" @click="showErrorToast" class="w-full">
-            Error Toast
-          </UButton>
-
-          <UButton color="amber" variant="solid" icon="i-heroicons-exclamation-triangle" @click="showWarningToast"
-            class="w-full">
-            Warning Toast
-          </UButton>
-
-          <UButton color="blue" variant="solid" icon="i-heroicons-information-circle" @click="showInfoToast"
-            class="w-full">
-            Info Toast
-          </UButton>
-        </div>
-
-        <div class="mt-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border border-purple-200">
-          <h4 class="font-semibold text-purple-800 mb-3">🚀 WebSocket Simulation</h4>
-          <p class="text-sm text-purple-700 mb-4">
-            Test real-time notifications that would come from your backend via WebSocket connections.
-          </p>
-          <div class="flex space-x-3">
-            <UButton color="violet" variant="solid" icon="i-heroicons-bolt" @click="simulateWebSocketMessage">
-              Simulate WebSocket
-            </UButton>
-            <UButton color="purple" variant="outline" icon="i-heroicons-arrow-path" @click="startWebSocketSimulation"
-              :loading="isSimulating">
-              {{ isSimulating ? 'Stop Simulation' : 'Start Auto Simulation' }}
-            </UButton>
-          </div>
-        </div>
+        <ToastShowcase />
       </UCard>
 
       <!-- Business Components Showcase -->
@@ -988,20 +792,19 @@
         </div>
       </UCard>
     </div>
-
-    <!-- Toast Container -->
-    <ToastContainer />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { useCustomToast } from '~/composables/useCustomToast'
+import { useDualToast } from '~/composables/useDualToast'
 import { useAuthStore } from '~/stores/auth'
 import FileUpload from '~/components/forms/FileUpload.vue'
 import Pagination from '~/components/ui/Pagination.vue'
+import StatusShowcase from '~/components/showcase/StatusShowcase.vue'
+import StatusIndicator from '~/components/base/StatusIndicator.vue'
 
-const customToast = useCustomToast()
+const dualToast = useDualToast()
 const authStore = useAuthStore()
 
 // Add logout state
@@ -1016,10 +819,10 @@ const handleDevLogout = async () => {
   loggingOut.value = true
   try {
     await authStore.logout()
-    customToast.success('Logged out successfully!')
+    dualToast.success('Logged out successfully!')
   } catch (error) {
     console.error('Logout error:', error)
-    customToast.error('Logout failed, redirecting anyway...')
+    dualToast.error('Logout failed, redirecting anyway...')
     // Force redirect even if logout fails
     await navigateTo('/login')
   } finally {
@@ -1027,11 +830,11 @@ const handleDevLogout = async () => {
   }
 }
 
-// Fix: Update these functions to use customToast consistently
-const success = (message) => customToast.success(message)
-const error = (message) => customToast.error(message)
-const warning = (message, options) => customToast.warning(message, options)
-const info = (message) => customToast.info(message)
+// Fix: Update these functions to use dualToast consistently
+const success = (message) => dualToast.success(message)
+const error = (message) => dualToast.error(message)
+const warning = (message, options) => dualToast.warning(message, options)
+const info = (message) => dualToast.info(message)
 
 let simulationInterval = null
 
@@ -1309,14 +1112,14 @@ const sampleErrors = ref({
 
 // Toast methods using custom toast - Fixed variable names
 const showSuccessToast = () => {
-  customToast.success('Operation completed successfully!', {
+  dualToast.success('Operation completed successfully!', {
     title: 'Success',
     duration: 4000
   })
 }
 
 const showErrorToast = () => {
-  customToast.error('Something went wrong. Please try again.', {
+  dualToast.error('Something went wrong. Please try again.', {
     title: 'Error',
     action: {
       text: 'Retry',
@@ -1328,21 +1131,21 @@ const showErrorToast = () => {
 }
 
 const showWarningToast = () => {
-  customToast.warning('Please check your input before proceeding.', {
+  dualToast.warning('Please check your input before proceeding.', {
     title: 'Warning',
     duration: 6000
   })
 }
 
 const showInfoToast = () => {
-  customToast.info('Here is some useful information for you.', {
+  dualToast.info('Here is some useful information for you.', {
     title: 'Information'
   })
 }
 
-// Fix: Use customToast instead of undefined variable
+// Fix: Use dualToast instead of undefined variable
 const simulateWebSocketMessage = () => {
-  customToast.simulateWebSocket()
+  dualToast.simulateWebSocket()
 }
 
 const startWebSocketSimulation = () => {
@@ -1357,7 +1160,7 @@ const startWebSocketSimulation = () => {
     // Start simulation
     isSimulating.value = true
     simulationInterval = setInterval(() => {
-      customToast.simulateWebSocket()
+      dualToast.simulateWebSocket()
     }, 3000) // Send a message every 3 seconds
   }
 }

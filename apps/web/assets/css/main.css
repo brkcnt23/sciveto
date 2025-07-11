@@ -4,3 +4,14 @@
 body {
   font-family: Inter, system-ui, sans-serif;
 }
+/* Toast positioning for header compatibility */
+[data-sonner-toaster] {
+  top: 4rem !important;
+  right: 1rem !important;
+  z-index: 40 !important;
+}
+
+[data-sonner-toast] {
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}

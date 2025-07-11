@@ -1,165 +1,186 @@
-<!-- apps/web/components/base/Avatar.vue -->
+<!-- components/base/Avatar.vue -->
 <template>
   <div class="relative inline-block">
-    <!-- Avatar Image or Initials -->
-    <div 
-      class="rounded-full flex items-center justify-center font-bold text-white border-2 border-white shadow-lg relative overflow-hidden"
-      :class="[sizeClass, backgroundGradient]"
+    <!-- Ana Avatar with Chip for border colors -->
+    <UChip 
+      v-if="color && color !== 'none' && bgColor === 'none'"
+      :color="color" 
+      :inset="true"
+      :class="chipSizeClasses[size]"
     >
-      <!-- User Image -->
-      <img 
-        v-if="avatarUrl"
-        :src="avatarUrl" 
-        :alt="displayName"
-        class="w-full h-full object-cover rounded-full"
-        @error="onImageError"
+      <UAvatar 
+        :src="user?.avatar || user?.image" 
+        :alt="user?.name || user?.username || 'User'"
+        :text="getInitials(user?.name || user?.username)"
+        :size="size"
       />
-      
-      <!-- Initials -->
-      <span v-else class="select-none" :class="textSizeClass">
-        {{ initials }}
-      </span>
-    </div>
+    </UChip>
     
-    <!-- Online Status Indicator -->
+    <!-- Avatar with background color fill -->
+    <UAvatar 
+      v-else-if="bgColor && bgColor !== 'none'"
+      :src="showImage ? (user?.avatar || user?.image) : undefined"
+      :alt="user?.name || user?.username || 'User'"
+      :text="getInitials(user?.name || user?.username)"
+      :size="size"
+      :class="[
+        bgColorClasses[bgColor],
+        'ring-2 ring-white shadow-lg'
+      ]"
+    />
+    
+    <!-- Avatar without any special styling (default) -->
+    <UAvatar 
+      v-else
+      :src="user?.avatar || user?.image" 
+      :alt="user?.name || user?.username || 'User'"
+      :text="getInitials(user?.name || user?.username)"
+      :size="size"
+      :class="[
+        'ring-2 ring-white shadow-lg',
+        sizeClasses[size]
+      ]"
+    />
+    
+    <!-- Online Status Badge -->
     <div 
-      v-if="showOnlineStatus"
-      class="absolute bottom-0 right-0 rounded-full border-2 border-white"
-      :class="[statusSizeClass, onlineStatusClass]"
+      v-if="showOnlineStatus && user?.isOnline !== undefined"
+      :class="[
+        'absolute bottom-0 right-0 rounded-full ring-2 ring-white',
+        user.isOnline ? 'bg-emerald-500' : 'bg-slate-400',
+        statusSizeClasses[size]
+      ]"
     ></div>
     
-    <!-- Badge/Notification -->
+    <!-- Notification Badge -->
     <div 
-      v-if="badge"
-      class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full min-w-5 h-5 flex items-center justify-center font-bold border-2 border-white"
+      v-if="notificationCount && notificationCount > 0"
+      :class="[
+        'absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center ring-2 ring-white',
+        badgeSizeClasses[size]
+      ]"
     >
-      {{ badge > 99 ? '99+' : badge }}
+      {{ notificationCount > 99 ? '99+' : notificationCount }}
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps({
   user: {
     type: Object,
-    default: () => ({})
+    required: true
   },
   size: {
     type: String,
     default: 'md',
-    validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl', '2xl'].includes(value)
+    validator: (value) => ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'].includes(value)
+  },
+  color: {
+    type: String,
+    default: 'none',
+    validator: (value) => ['none', 'primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'].includes(value)
+  },
+  bgColor: {
+    type: String,
+    default: 'none',
+    validator: (value) => ['none', 'red', 'blue', 'green', 'yellow', 'purple', 'pink', 'indigo', 'orange', 'teal', 'cyan', 'lime', 'emerald', 'violet', 'fuchsia', 'rose', 'sky', 'amber'].includes(value)
   },
   showOnlineStatus: {
     type: Boolean,
     default: false
   },
-  isOnline: {
+  notificationCount: {
+    type: Number,
+    default: 0
+  },
+  showImage: {
     type: Boolean,
     default: true
-  },
-  badge: {
-    type: [Number, String],
-    default: null
   }
 })
 
-const imageError = ref(false)
+// Size mappings for different elements
+const sizeClasses = {
+  '3xs': '',
+  '2xs': '',
+  'xs': '',
+  'sm': '',
+  'md': '',
+  'lg': '',
+  'xl': '',
+  '2xl': '',
+  '3xl': ''
+}
 
-const avatarUrl = computed(() => {
-  if (imageError.value) return null
-  return props.user?.avatar || props.user?.avatarUrl || null
-})
+const chipSizeClasses = {
+  '3xs': 'p-0.5',
+  '2xs': 'p-0.5', 
+  'xs': 'p-0.5',
+  'sm': 'p-1',
+  'md': 'p-1',
+  'lg': 'p-1',
+  'xl': 'p-1.5',
+  '2xl': 'p-1.5',
+  '3xl': 'p-2'
+}
 
-const displayName = computed(() => {
-  return props.user?.name || 
-         `${props.user?.firstName || ''} ${props.user?.lastName || ''}`.trim() ||
-         props.user?.email || 
-         'User'
-})
+// Background color classes for avatar fill
+const bgColorClasses = {
+  'none': '',
+  'red': 'bg-red-500 text-white',
+  'blue': 'bg-blue-500 text-white',
+  'green': 'bg-green-500 text-white',
+  'yellow': 'bg-yellow-500 text-black',
+  'purple': 'bg-purple-500 text-white',
+  'pink': 'bg-pink-500 text-white',
+  'indigo': 'bg-indigo-500 text-white',
+  'orange': 'bg-orange-500 text-white',
+  'teal': 'bg-teal-500 text-white',
+  'cyan': 'bg-cyan-500 text-white',
+  'lime': 'bg-lime-500 text-black',
+  'emerald': 'bg-emerald-500 text-white',
+  'violet': 'bg-violet-500 text-white',
+  'fuchsia': 'bg-fuchsia-500 text-white',
+  'rose': 'bg-rose-500 text-white',
+  'sky': 'bg-sky-500 text-white',
+  'amber': 'bg-amber-500 text-black'
+}
 
-const initials = computed(() => {
-  const name = displayName.value
+const statusSizeClasses = {
+  '3xs': 'w-2 h-2',
+  '2xs': 'w-2 h-2', 
+  'xs': 'w-2.5 h-2.5',
+  'sm': 'w-3 h-3',
+  'md': 'w-3 h-3',
+  'lg': 'w-4 h-4',
+  'xl': 'w-5 h-5',
+  '2xl': 'w-6 h-6',
+  '3xl': 'w-7 h-7'
+}
+
+const badgeSizeClasses = {
+  '3xs': 'w-4 h-4 text-[8px]',
+  '2xs': 'w-4 h-4 text-[8px]',
+  'xs': 'w-5 h-5 text-[9px]',
+  'sm': 'w-5 h-5 text-[10px]',
+  'md': 'w-6 h-6 text-xs',
+  'lg': 'w-7 h-7 text-xs',
+  'xl': 'w-8 h-8 text-sm',
+  '2xl': 'w-9 h-9 text-sm',
+  '3xl': 'w-10 h-10 text-base'
+}
+
+// Helper function to get initials from name
+const getInitials = (name) => {
+  if (!name) return '?'
   
-  if (name === 'User') return 'U'
-  
-  // Email case - use first letter
-  if (name.includes('@')) {
-    return name.charAt(0).toUpperCase()
-  }
-  
-  // Name case - use first letters of words
-  const words = name.split(' ').filter(word => word.length > 0)
-  if (words.length >= 2) {
-    return `${words[0][0]}${words[1][0]}`.toUpperCase()
-  }
-  
-  return name.substring(0, 2).toUpperCase()
-})
-
-const sizeClass = computed(() => {
-  const sizes = {
-    xs: 'w-6 h-6',
-    sm: 'w-8 h-8',
-    md: 'w-10 h-10',
-    lg: 'w-12 h-12',
-    xl: 'w-16 h-16',
-    '2xl': 'w-20 h-20'
-  }
-  return sizes[props.size]
-})
-
-const textSizeClass = computed(() => {
-  const sizes = {
-    xs: 'text-xs',
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg',
-    xl: 'text-xl',
-    '2xl': 'text-2xl'
-  }
-  return sizes[props.size]
-})
-
-const statusSizeClass = computed(() => {
-  const sizes = {
-    xs: 'w-2 h-2',
-    sm: 'w-2.5 h-2.5',
-    md: 'w-3 h-3',
-    lg: 'w-3.5 h-3.5',
-    xl: 'w-4 h-4',
-    '2xl': 'w-5 h-5'
-  }
-  return sizes[props.size]
-})
-
-const backgroundGradient = computed(() => {
-  // Generate consistent color based on name
-  const name = displayName.value
-  const hash = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
-  
-  const gradients = [
-    'bg-gradient-to-br from-sky-400 to-sky-600',
-    'bg-gradient-to-br from-emerald-400 to-emerald-600',
-    'bg-gradient-to-br from-violet-400 to-violet-600',
-    'bg-gradient-to-br from-orange-400 to-orange-600',
-    'bg-gradient-to-br from-rose-400 to-rose-600',
-    'bg-gradient-to-br from-amber-400 to-amber-600',
-    'bg-gradient-to-br from-indigo-400 to-indigo-600',
-    'bg-gradient-to-br from-teal-400 to-teal-600',
-    'bg-gradient-to-br from-pink-400 to-pink-600',
-    'bg-gradient-to-br from-purple-400 to-purple-600'
-  ]
-  
-  return gradients[hash % gradients.length]
-})
-
-const onlineStatusClass = computed(() => {
-  return props.isOnline ? 'bg-green-400' : 'bg-gray-400'
-})
-
-const onImageError = () => {
-  imageError.value = true
+  return name
+    .split(' ')
+    .map(part => part.charAt(0).toUpperCase())
+    .slice(0, 2)
+    .join('')
 }
 </script>
