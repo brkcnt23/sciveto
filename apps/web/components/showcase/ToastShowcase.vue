@@ -371,7 +371,18 @@
 
 <script setup>
 import { ref, onUnmounted } from 'vue'
+import { useDualToast } from '@/composables/useDualToast'
+import Toast from '@/components/ui/Toast.vue'
+const { toasts } = useDualToast()
+const TOP_TYPES = ['error', 'danger', 'warning', 'alert']
 
+function getPosition(toast) {
+  if (toast.position && toast.position !== 'auto') return toast.position
+  return TOP_TYPES.includes(toast.type) ? 'top' : 'bottom'
+}
+
+const topToasts = computed(() => toasts.value.filter(t => getPosition(t) === 'top'))
+const bottomToasts = computed(() => toasts.value.filter(t => getPosition(t) === 'bottom'))
 // Props for controlling sections
 const props = defineProps({
   showControls: {
