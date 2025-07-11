@@ -1,6 +1,7 @@
-// composables/useToastManager.ts
-import { ref } from 'vue'
+// composables/useToastManager.ts - TypeScript Fixed Version
+import { ref, readonly } from 'vue'
 
+// Toast interface
 interface ToastOptions {
   title: string
   description?: string
@@ -14,95 +15,93 @@ interface ToastOptions {
   position?: 'auto' | 'top' | 'bottom'
 }
 
+interface Toast extends ToastOptions {
+  id: string
+  timestamp: number
+  type: 'success' | 'error' | 'warning' | 'info' | 'neutral'
+}
+
+// Global toast state - kendi sistemimiz
+const toastList = ref<Toast[]>([])
+
 export const useToastManager = () => {
-  // Nuxt UI v3 toast instances
-  const alertToast = useToast()
-  const notificationToast = useToast()
-  const TOP_TYPES = ['error', 'danger', 'warning', 'alert']
-  const addToast = (options: ToastOptions) => {
+  
+  const addToast = (options: ToastOptions): string => {
     const toastType = options.type || 'info'
     
-    // Determine routing: error/warning → top, success/info/neutral → bottom
-    let useTopToaster = false
-    if (options.position === 'top') {
-      useTopToaster = true
-    } else if (options.position === 'bottom') {
-      useTopToaster = false
-    } else {
-      // Auto routing based on type
-      useTopToaster = toastType === 'error' || toastType === 'warning'
-    }
-    
-    // Default icons for Nuxt UI v3
+    // Default icons
     const defaultIcons: Record<string, string> = {
       success: 'i-lucide-check-circle',
-      error: 'i-lucide-x-circle',
+      error: 'i-lucide-x-circle', 
       warning: 'i-lucide-alert-triangle',
       info: 'i-lucide-info',
       neutral: 'i-lucide-bell'
     }
     
-    // Smart duration based on type
+    // Smart duration
     const smartDuration = options.duration ?? (
       options.persistent ? 0 : (
         toastType === 'error' || toastType === 'warning' ? 7000 : 4000
       )
     )
     
-    // Map our types to Nuxt UI v3 colors
-    const colorMap: Record<string, string> = {
-      success: 'success',
-      error: 'error', 
-      warning: 'warning',
-      info: 'info',
-      neutral: 'neutral'
-    }
+    // Create toast with unique ID
+    const toastId = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
     
-    // Prepare toast payload for Nuxt UI v3
-    const toastPayload = {
+    const toast: Toast = {
+      id: toastId,
       title: options.title,
       description: options.description,
+      type: toastType,
       icon: options.icon || defaultIcons[toastType],
-      color: colorMap[toastType] as any,
-      duration: smartDuration === 0 ? undefined : smartDuration,
-      actions: options.actions,
-      avatar: options.avatar
+      duration: smartDuration,
+      actions: options.actions || [],
+      avatar: options.avatar,
+      size: options.size || 'md',
+      persistent: options.persistent || false,
+      position: options.position || 'auto',
+      timestamp: Date.now()
     }
     
-    // Route to appropriate toaster
-    if (useTopToaster) {
-      return alertToast.add(toastPayload)
-    } else {
-      return notificationToast.add(toastPayload)
+    // Add to our list
+    toastList.value.push(toast)
+    
+    // Auto remove after duration
+    if (toast.duration && toast.duration > 0) {
+      setTimeout(() => {
+        removeToast(toastId)
+      }, toast.duration)
     }
+    
+    return toastId
   }
   
-  const removeToast = (id: string) => {
-    // Remove from both toasters (Nuxt UI v3 handles this internally)
-    alertToast.remove(id)
-    notificationToast.remove(id)
+  const removeToast = (id: string): void => {
+    const index = toastList.value.findIndex(toast => toast.id === id)
+    if (index > -1) {
+      toastList.value.splice(index, 1)
+    }
   }
   
   // Convenience methods
-  const success = (title: string, description?: string, options?: Partial<ToastOptions>) => {
+  const success = (title: string, description?: string, options: Partial<ToastOptions> = {}): string => {
     return addToast({ title, description, type: 'success', ...options })
   }
   
-  const error = (title: string, description?: string, options?: Partial<ToastOptions>) => {
+  const error = (title: string, description?: string, options: Partial<ToastOptions> = {}): string => {
     return addToast({ title, description, type: 'error', ...options })
   }
   
-  const warning = (title: string, description?: string, options?: Partial<ToastOptions>) => {
+  const warning = (title: string, description?: string, options: Partial<ToastOptions> = {}): string => {
     return addToast({ title, description, type: 'warning', ...options })
   }
   
-  const info = (title: string, description?: string, options?: Partial<ToastOptions>) => {
+  const info = (title: string, description?: string, options: Partial<ToastOptions> = {}): string => {
     return addToast({ title, description, type: 'info', ...options })
   }
   
-  const clear = () => {
-    alertToast.clear()
-    notificationToast.clear()
+  const clear = (): void => {
+    toastList.value = []
   }
   
   return {
@@ -113,8 +112,6 @@ export const useToastManager = () => {
     warning,
     info,
     clear,
-    // Expose toaster instances for advanced usage
-    alertToast,
-    notificationToast
+    toasts: toastList // readonly kaldırıyoruz
   }
 }

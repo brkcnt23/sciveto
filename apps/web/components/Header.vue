@@ -106,7 +106,8 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-
+//UDropdown import
+import {UDropdown} from 'nuxt'
 const searchQuery = ref('')
 const showMobileMenu = ref(false)
 const showNotifications = ref(false)

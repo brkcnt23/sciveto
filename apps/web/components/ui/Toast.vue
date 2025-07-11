@@ -1,231 +1,264 @@
-<!-- components/ui/Toast.vue -->
+<!-- components/ui/Toast.vue - UPDATED VERSION -->
 <template>
-  <UToast
-    :title="title"
-    :description="description"
-    :icon="icon"
-    :avatar="avatar"
-    :color="color"
-    :duration="duration"
-    :actions="actions"
-    :progress="progress"
-    :orientation="orientation"
-    :close="close"
-    :class="[
-      'relative overflow-hidden backdrop-blur-sm',
-      colorClasses[color],
-      sizeClasses[size],
-      customClass
-    ]"
-    v-bind="$attrs"
-  >
-    <!-- Custom slots -->
-    <template v-if="$slots.icon" #icon>
-      <slot name="icon" />
-    </template>
-    
-    <template v-if="$slots.title" #title>
-      <slot name="title" />
-    </template>
-    
-    <template v-if="$slots.description" #description>
-      <slot name="description" />
-    </template>
-    
-    <template v-if="$slots.actions" #actions>
-      <slot name="actions" />
-    </template>
-    
-    <template v-if="$slots.default" #default>
-      <slot />
-    </template>
-  </UToast>
+  <div>
+    <!-- Top Toasts - Error/Warning -->
+    <Teleport to="body">
+      <div 
+        id="top-toasts" 
+        class="fixed top-4 right-4 z-[9999] pointer-events-none max-w-sm w-full"
+      >
+        <div class="space-y-3 pointer-events-auto">
+          <TransitionGroup name="slide-top" tag="div" class="space-y-3">
+            <div
+              v-for="toast in topToasts"
+              :key="toast.id"
+              :class="getToastClasses(toast)"
+              class="relative overflow-hidden rounded-lg border p-4 shadow-lg backdrop-blur-sm flex items-start space-x-3 transition-all duration-300 cursor-pointer"
+              @click="handleToastClick(toast)"
+            >
+              <!-- Icon -->
+              <UIcon 
+                :name="toast.icon"
+                :class="['w-5 h-5 mt-0.5 flex-shrink-0', getIconClasses(toast.type)]"
+              />
+              
+              <!-- Content -->
+              <div class="flex-1 min-w-0">
+                <h5 class="font-semibold text-sm">{{ toast.title }}</h5>
+                <p v-if="toast.description" class="text-sm mt-1 opacity-90">
+                  {{ toast.description }}
+                </p>
+                
+                <!-- Actions - Stop propagation to prevent closing -->
+                <div v-if="toast.actions?.length" class="flex gap-2 mt-3" @click.stop>
+                  <UButton
+                    v-for="(action, index) in toast.actions"
+                    :key="index"
+                    :label="action.label"
+                    :color="action.color || 'neutral'"
+                    :variant="action.variant || 'outline'"
+                    size="xs"
+                    @click="action.onClick"
+                  />
+                </div>
+              </div>
+              
+              <!-- Close Button - Always visible for action toasts -->
+              <button
+                v-if="toast.actions?.length"
+                class="opacity-70 hover:opacity-100 transition-opacity p-1 flex-shrink-0"
+                @click.stop="handleRemoveToast(toast.id)"
+              >
+                <UIcon name="i-lucide-x" class="w-4 h-4" />
+              </button>
+
+              <!-- Progress Bar -->
+              <div 
+                v-if="toast.duration && toast.duration > 0"
+                class="absolute bottom-0 left-0 h-1 bg-current opacity-30 transition-all duration-linear"
+                :style="{ 
+                  width: getProgressWidth(toast),
+                  animationDuration: toast.duration + 'ms'
+                }"
+              ></div>
+            </div>
+          </TransitionGroup>
+        </div>
+      </div>
+    </Teleport>
+
+    <!-- Bottom Toasts - Success/Info -->
+    <Teleport to="body">
+      <div 
+        id="bottom-toasts" 
+        class="fixed bottom-4 right-4 z-[9998] pointer-events-none max-w-sm w-full"
+      >
+        <div class="space-y-3 pointer-events-auto">
+          <TransitionGroup name="slide-bottom" tag="div" class="space-y-3">
+            <div
+              v-for="toast in bottomToasts"
+              :key="toast.id"
+              :class="getToastClasses(toast)"
+              class="relative overflow-hidden rounded-lg border p-4 shadow-lg backdrop-blur-sm flex items-start space-x-3 transition-all duration-300 cursor-pointer"
+              @click="handleToastClick(toast)"
+            >
+              <!-- Icon -->
+              <UIcon 
+                :name="toast.icon"
+                :class="['w-5 h-5 mt-0.5 flex-shrink-0', getIconClasses(toast.type)]"
+              />
+              
+              <!-- Content -->
+              <div class="flex-1 min-w-0">
+                <h5 class="font-semibold text-sm">{{ toast.title }}</h5>
+                <p v-if="toast.description" class="text-sm mt-1 opacity-90">
+                  {{ toast.description }}
+                </p>
+                
+                <!-- Actions - Stop propagation to prevent closing -->
+                <div v-if="toast.actions?.length" class="flex gap-2 mt-3" @click.stop>
+                  <UButton
+                    v-for="(action, index) in toast.actions"
+                    :key="index"
+                    :label="action.label"
+                    :color="action.color || 'neutral'"
+                    :variant="action.variant || 'outline'"
+                    size="xs"
+                    @click="action.onClick"
+                  />
+                </div>
+              </div>
+              
+              <!-- Close Button - Only visible for action toasts -->
+              <button
+                v-if="toast.actions?.length"
+                class="opacity-70 hover:opacity-100 transition-opacity p-1 flex-shrink-0"
+                @click.stop="handleRemoveToast(toast.id)"
+              >
+                <UIcon name="i-lucide-x" class="w-4 h-4" />
+              </button>
+
+              <!-- Progress Bar -->
+              <div 
+                v-if="toast.duration && toast.duration > 0"
+                class="absolute bottom-0 left-0 h-1 bg-current opacity-30 transition-all duration-linear progress-bar"
+                :style="{ animationDuration: toast.duration + 'ms' }"
+              ></div>
+            </div>
+          </TransitionGroup>
+        </div>
+      </div>
+    </Teleport>
+  </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+// Get toasts from our composable
+const { toasts, removeToast } = useDualToast()
 
-const props = defineProps({
-  // Core props
-  title: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    default: ''
-  },
-  
-  // Type and styling
-  type: {
-    type: String,
-    default: 'info',
-    validator: (value) => ['success', 'error', 'warning', 'info', 'neutral'].includes(value)
-  },
-  variant: {
-    type: String,
-    default: 'default',
-    validator: (value) => ['default', 'destructive', 'success', 'warning'].includes(value)
-  },
-  size: {
-    type: String,
-    default: 'md',
-    validator: (value) => ['sm', 'md', 'lg'].includes(value)
-  },
-  
-  // Display options
-  icon: {
-    type: String,
-    default: ''
-  },
-  avatar: {
-    type: Object,
-    default: null
-  },
-  duration: {
-    type: Number,
-    default: null // Will use smart defaults from useDualToast
-  },
-  persistent: {
-    type: Boolean,
-    default: false
-  },
-  
-  // Interactive elements
-  actions: {
-    type: Array,
-    default: () => []
-  },
-  progress: {
-    type: [Boolean, Object],
-    default: false
-  },
-  orientation: {
-    type: String,
-    default: 'vertical',
-    validator: (value) => ['horizontal', 'vertical'].includes(value)
-  },
-  close: {
-    type: [Boolean, Object],
-    default: true
-  },
-  
-  // Positioning hint for useDualToast
-  position: {
-    type: String,
-    default: 'auto', // auto, top, bottom
-    validator: (value) => ['auto', 'top', 'bottom'].includes(value)
-  },
-  
-  // Custom styling
-  customClass: {
-    type: String,
-    default: ''
-  }
-})
-
-// Compute color from type if not explicitly set
-const color = computed(() => {
-  const typeToColor = {
-    success: 'success',
-    error: 'error', 
-    warning: 'warning',
-    info: 'info',
-    neutral: 'neutral'
-  }
-  return typeToColor[props.type] || 'neutral'
-})
-
-// Enhanced color classes for better visual hierarchy
-const colorClasses = {
-  success: 'border-green-200 bg-green-50/95 text-green-900 shadow-green-100/50',
-  error: 'border-red-200 bg-red-50/95 text-red-900 shadow-red-100/50',
-  warning: 'border-yellow-200 bg-yellow-50/95 text-yellow-900 shadow-yellow-100/50',
-  info: 'border-blue-200 bg-blue-50/95 text-blue-900 shadow-blue-100/50',
-  neutral: 'border-gray-200 bg-white/95 text-gray-900 shadow-gray-100/50',
-  primary: 'border-blue-200 bg-blue-50/95 text-blue-900 shadow-blue-100/50',
-  secondary: 'border-gray-200 bg-gray-50/95 text-gray-900 shadow-gray-100/50'
+// Make sure removeToast is available
+if (!removeToast) {
+  console.error('removeToast function not available from useDualToast')
 }
 
-const sizeClasses = {
-  sm: 'text-sm p-3 max-w-sm',
-  md: 'text-sm p-4 max-w-md', 
-  lg: 'text-base p-5 max-w-lg'
+// Define which types go to top (alerts)
+const TOP_TYPES = ['error', 'warning']
+
+// Computed for positioning
+const topToasts = computed(() => 
+  toasts.value.filter(toast => 
+    toast.position === 'top' || 
+    (toast.position === 'auto' && TOP_TYPES.includes(toast.type))
+  )
+)
+
+const bottomToasts = computed(() => 
+  toasts.value.filter(toast => 
+    toast.position === 'bottom' || 
+    (toast.position === 'auto' && !TOP_TYPES.includes(toast.type))
+  )
+)
+
+// Handle toast click
+const handleToastClick = (toast) => {
+  // Only close if it doesn't have actions
+  if (!toast.actions || toast.actions.length === 0) {
+    handleRemoveToast(toast.id)
+  }
 }
 
-// Default icons based on type
-const defaultIcon = computed(() => {
-  if (props.icon) return props.icon
-  
-  const iconMap = {
-    success: 'i-lucide-check-circle',
-    error: 'i-lucide-x-circle',
-    warning: 'i-lucide-alert-triangle',
-    info: 'i-lucide-info',
-    neutral: 'i-lucide-bell'
+// Safe remove function
+const handleRemoveToast = (toastId) => {
+  if (typeof removeToast === 'function') {
+    removeToast(toastId)
+  } else {
+    console.warn('removeToast function not available')
   }
-  return iconMap[props.type] || 'i-lucide-bell'
-})
+}
 
-// Computed duration based on type for smart defaults
-const smartDuration = computed(() => {
-  if (props.duration !== null) return props.duration
-  if (props.persistent) return 0
+// Progress bar calculation
+const getProgressWidth = (toast) => {
+  if (!toast.duration || toast.duration <= 0) return '0%'
+  const elapsed = Date.now() - toast.timestamp
+  const progress = Math.max(0, Math.min(100, (elapsed / toast.duration) * 100))
+  return (100 - progress) + '%'
+}
+
+// Styling functions
+const getToastClasses = (toast) => {
+  const colorClasses = {
+    success: 'border-green-200 bg-green-50/95 text-green-900',
+    error: 'border-red-200 bg-red-50/95 text-red-900 border-l-4 border-l-red-500',
+    warning: 'border-yellow-200 bg-yellow-50/95 text-yellow-900 border-l-4 border-l-yellow-500',
+    info: 'border-blue-200 bg-blue-50/95 text-blue-900',
+    neutral: 'border-gray-200 bg-white/95 text-gray-900'
+  }
   
-  // Smart defaults: alerts longer, notifications shorter
-  const isAlert = props.type === 'error' || props.type === 'warning'
-  return isAlert ? 7000 : 4000
-})
+  return colorClasses[toast.type] || colorClasses.neutral
+}
 
-// Expose for parent components
-defineExpose({
-  type: props.type,
-  isAlert: computed(() => props.type === 'error' || props.type === 'warning'),
-  isNotification: computed(() => props.type === 'success' || props.type === 'info'),
-  smartDuration
-})
+const getIconClasses = (type) => {
+  const classes = {
+    success: 'text-green-600',
+    error: 'text-red-600',
+    warning: 'text-yellow-600',
+    info: 'text-blue-600',
+    neutral: 'text-gray-600'
+  }
+  return classes[type] || classes.neutral
+}
 </script>
 
 <style scoped>
-/* Enhanced backdrop blur and shadow effects */
-.toast-enhanced {
-  backdrop-filter: blur(12px);
-  box-shadow: 
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
+/* Top toast animations */
+.slide-top-enter-active,
+.slide-top-leave-active {
+  transition: all 0.3s ease;
 }
 
-/* Subtle animations */
-.toast-enhanced {
-  animation: toast-slide-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.slide-top-enter-from {
+  opacity: 0;
+  transform: translateX(100%);
 }
 
-@keyframes toast-slide-in {
+.slide-top-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+/* Bottom toast animations */
+.slide-bottom-enter-active,
+.slide-bottom-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-bottom-enter-from {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.slide-bottom-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+/* Progress bar animation */
+.progress-bar {
+  animation: progress-countdown linear;
+}
+
+@keyframes progress-countdown {
   from {
-    opacity: 0;
-    transform: translateX(100%) translateY(-10px);
+    width: 100%;
   }
   to {
-    opacity: 1;
-    transform: translateX(0) translateY(0);
+    width: 0%;
   }
 }
 
-/* Type-specific enhancements */
-.toast-enhanced[data-type="error"] {
-  border-left: 4px solid rgb(239 68 68);
-}
-
-.toast-enhanced[data-type="warning"] {
-  border-left: 4px solid rgb(245 158 11);
-}
-
-.toast-enhanced[data-type="success"] {
-  border-left: 4px solid rgb(34 197 94);
-}
-
-.toast-enhanced[data-type="info"] {
-  border-left: 4px solid rgb(59 130 246);
+/* Hover effect for clickable toasts */
+.cursor-pointer:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
 }
 </style>

@@ -932,20 +932,15 @@ const sampleCategories = ref([
 ])
 
 const formData = ref({
-  name: '',
-  email: '',
-  password: '',
-  budget: 0,
-  loading: 'Loading example...',
-  disabled: 'This is disabled',
-  readonly: 'This is readonly',
-  search: '',
+  projectName: 'Modern Website Redesign',
+  description: 'Complete website redesign project',
   priority: 'HIGH',
   category: 'web',
   status: 'active',
   startDate: '',
   endDate: '',
-  time: ''
+  time: '',
+  budget: 0
 })
 
 const uploadedFiles = ref({
@@ -969,11 +964,12 @@ const priorityOptions = ref([
   { value: 'URGENT', label: 'Urgent Priority', description: 'Critical tasks' }
 ])
 
-const categoryOptions = ref([
-  { value: 'web', label: 'Web Development' },
-  { value: 'mobile', label: 'Mobile Development' },
-  { value: 'design', label: 'Design' }
-])
+const categoryOptions = [
+  { label: 'Web Development', value: 'web' },
+  { label: 'Mobile App', value: 'mobile' },
+  { label: 'Design', value: 'design' },
+  { label: 'Marketing', value: 'marketing' }
+]
 
 const categoryGroups = ref([
   {
@@ -994,12 +990,12 @@ const categoryGroups = ref([
   }
 ])
 
-const statusOptions = ref([
-  'Active',
-  'Inactive',
-  'Pending',
-  'Completed'
-])
+const statusOptions = [
+  { label: 'Active', value: 'active' },
+  { label: 'Inactive', value: 'inactive' },
+  { label: 'Pending', value: 'pending' },
+  { label: 'Completed', value: 'completed' }
+]
 
 const formErrors = ref({
   email: 'Please enter a valid email address'
@@ -1110,38 +1106,22 @@ const sampleErrors = ref({
   }
 })
 
-// Toast methods using custom toast - Fixed variable names
 const showSuccessToast = () => {
-  dualToast.success('Operation completed successfully!', {
-    title: 'Success',
-    duration: 4000
-  })
+  success('Success!', 'Operation completed successfully!')
 }
 
 const showErrorToast = () => {
-  dualToast.error('Something went wrong. Please try again.', {
-    title: 'Error',
-    action: {
-      text: 'Retry',
-      handler: () => {
-        showSuccessToast()
-      }
-    }
-  })
+  error('Error!', 'Something went wrong. Please try again.')
 }
 
 const showWarningToast = () => {
-  dualToast.warning('Please check your input before proceeding.', {
-    title: 'Warning',
-    duration: 6000
-  })
+  warning('Warning!', 'Please check your input before proceeding.')
 }
 
 const showInfoToast = () => {
-  dualToast.info('Here is some useful information for you.', {
-    title: 'Information'
-  })
+  info('Info!', 'Here is some useful information for you.')
 }
+
 
 // Fix: Use dualToast instead of undefined variable
 const simulateWebSocketMessage = () => {
@@ -1272,11 +1252,10 @@ const handleCreateProject = () => {
   console.log('Create new project')
   success('Redirecting to project creation...')
 }
-
-const handleUploadSuccess = ({ file }) => {
-  success(`File "${file.name}" uploaded successfully!`)
+// Other methods
+const handleUploadSuccess = (file) => {
+  success('Upload Success', `File ${file.name} uploaded successfully`)
 }
-
 const handleUploadError = ({ file, error }) => {
   error(`Failed to upload "${file.name}": ${error.message || error}`)
 }
