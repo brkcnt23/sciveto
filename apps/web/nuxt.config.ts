@@ -1,8 +1,9 @@
+import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
   ssr: false,
-  
+
   components: [
     {
       path: '~/components/base',
@@ -29,7 +30,7 @@ export default defineNuxtConfig({
       pathPrefix: false,
     }
   ],
-  
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/icon',
@@ -38,6 +39,10 @@ export default defineNuxtConfig({
     '@vueuse/nuxt'
   ],
   
+  alias: {
+    echarts: 'echarts',
+  },
+
   css: ['~/assets/css/main.css'],
 
   runtimeConfig: {

@@ -3,7 +3,7 @@
   <UApp>
     <!-- Ana App Content -->
     <NuxtPage />
-    
+
     <!-- Custom Toast System -->
     <Toast />
   </UApp>
@@ -15,7 +15,10 @@ useHead({
   titleTemplate: '%s - Sciveto',
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-  ]
+  ],
+  htmlAttrs: {
+    class: 'light' // ✅ Zorla açık mod
+  }
 })
 </script>
 
