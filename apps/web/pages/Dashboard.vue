@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
     <!-- Header Component -->
-    <Header :user="user" />
+    <UHeader :user="user" />
 
     <div class="max-w-7xl mx-auto space-y-6">
       <!-- Development Logout Button -->
@@ -15,7 +15,7 @@
             <span class="text-xs text-red-600">
               Logged in as: {{ user?.email }}
             </span>
-            <UButton color="red" variant="outline" size="xs" @click="handleDevLogout" :loading="loggingOut">
+            <UButton color="red" variant="outline" size="xs" :loading="loggingOut" @click="handleDevLogout">
               <Icon name="i-heroicons-arrow-right-on-rectangle" class="w-3 h-3 mr-1" />
               Test Logout
             </UButton>
@@ -415,27 +415,29 @@
         </div>
       </UCard>
 
-      <!-- Dashboard.vue içindeki Progress Bar bölümü -->
+      <!-- World Map Section -->
+      <UCard>
+        <template #header>
+          🌍 Global Project Map
+        </template>
+
+        <WorldMap name="world-map"/>
+      </UCard>
+
+      <!-- Progress Bar Section -->
       <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">📊 Progress Bar (Nuxt UI v3)</h3>
         </template>
-      </UCard>
-
-      <!-- Progress Bar Section -->
-      <UCard>
-        <template #header>
-          <h3>📊 Progress Bar (Nuxt UI v3)</h3>
-        </template>
-        <ProgressBarShowcase />
+        <ProgressBarShowcase name="ProgressBarShowcase" />
       </UCard>
 
       <!-- Avatar Section -->
       <UCard>
         <template #header>
-          <h3>👤 Avatar (Nuxt UI v3)</h3>
+          <h3 class="text-xl font-bold text-slate-800">👤 Avatar (Nuxt UI v3)</h3>
         </template>
-        <AvatarShowcase />
+        <AvatarShowcase name="AvatarShowcase" />
       </UCard>
 
       <!-- Loading Components Showcase -->
@@ -448,18 +450,18 @@
           <!-- Skeleton Loading -->
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Skeleton Loading</h4>
-            <SkeletonLoader type="card" />
-            <SkeletonLoader type="list" />
-            <SkeletonLoader type="text" :lines="4" />
+            <SkeletonLoader name ="SkeletonLoader" type="card" />
+            <SkeletonLoader name ="SkeletonLoader" type="list" />
+            <SkeletonLoader name ="SkeletonLoader" type="text" :lines="4" />
           </div>
 
           <!-- Spinner Loading -->
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Spinner Loading</h4>
             <div class="space-y-4">
-              <LoadingSpinner size="sm" text="Loading..." />
-              <LoadingSpinner size="md" color="emerald" text="Processing..." />
-              <LoadingSpinner size="lg" color="violet" text="Uploading..." />
+              <LoadingSpinner name ="LoadingSpinner" size="sm" text="Loading..." />
+              <LoadingSpinner name ="LoadingSpinner" size="md" color="emerald" text="Processing..." />
+              <LoadingSpinner name ="LoadingSpinner" size="lg" color="violet" text="Uploading..." />
             </div>
           </div>
         </div>
@@ -474,14 +476,14 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">No Projects</h4>
-            <EmptyState icon="i-heroicons-briefcase" title="No Projects Found"
+            <EmptyState  name ="EmptyState" icon="i-heroicons-briefcase" title="No Projects Found"
               description="You haven't created any projects yet. Get started by creating your first project."
               action-text="Create Project" action-icon="i-heroicons-plus" @action="handleCreateProject" />
           </div>
 
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">No Stock Items</h4>
-            <EmptyState icon="i-heroicons-cube" title="No Stock Items"
+            <EmptyState name ="EmptyState" icon="i-heroicons-cube" title="No Stock Items"
               description="Your inventory is empty. Add some stock items to get started." action-text="Add Stock Item"
               action-icon="i-heroicons-plus" @action="handleAddStock" />
           </div>
@@ -538,7 +540,7 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div v-for="user in sampleUsers" :key="user.id"
                   class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                  <Avatar :user="user" size="md" show-online-status />
+                  <Avatar name ="Avatar" :user="user" size="md" show-online-status />
                   <div>
                     <p class="font-medium text-gray-900">{{ user.name }}</p>
                     <p class="text-sm text-gray-500">{{ user.email }}</p>
@@ -552,13 +554,13 @@
             <div class="space-y-4">
               <h4 class="font-semibold text-slate-700">Project Settings</h4>
               <div class="space-y-4">
-                <FormInput v-model="settingsForm.name" label="Project Name" placeholder="Enter project name"
+                <FormInput name ="FormInput" v-model="settingsForm.name" label="Project Name" placeholder="Enter project name"
                   leading-icon="i-heroicons-folder" />
-                <FormInput v-model="settingsForm.description" label="Description" placeholder="Project description"
+                <FormInput name ="FormInput" v-model="settingsForm.description" label="Description" placeholder="Project description"
                   leading-icon="i-heroicons-document-text" />
                 <div class="flex space-x-2">
-                  <UButton color="blue" @click="saveSettings">Save Changes</UButton>
-                  <UButton color="gray" variant="outline" @click="resetSettings">Reset</UButton>
+                  <UButton name ="UButton" color="blue" @click="saveSettings">Save Changes</UButton>
+                  <UButton name ="UButton" color="gray" variant="outline" @click="resetSettings">Reset</UButton>
                 </div>
               </div>
             </div>
@@ -578,7 +580,7 @@
             <h4 class="font-semibold text-slate-700 mb-4">Error Types</h4>
             <div class="space-y-4">
               <ErrorMessage v-if="showErrorExample" type="error" title="Validation Error"
-                :error="sampleErrors.validation" :show-retry="true" @retry="handleRetryError" dismissible
+                :error="sampleErrors.validation" :show-retry="true" dismissible @retry="handleRetryError"
                 @dismiss="showErrorExample = false" />
 
               <ErrorMessage v-if="showWarningExample" type="warning" title="Warning"
@@ -614,7 +616,7 @@
         <template #header>
           <h3>📝 Form Components (Nuxt UI v3)</h3>
         </template>
-        <FormShowcase :default-show-states="true" :default-show-textarea-select="true" :default-show-advanced="true"
+        <FormShowcase name="FormShowcase" :default-show-states="true" :default-show-textarea-select="true" :default-show-advanced="true"
           :default-show-variants="false" :default-show-working-form="true" />
       </UCard>
 
@@ -623,7 +625,7 @@
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">🔍 Status Indicator (Nuxt UI v3)</h3>
         </template>
-        <StatusShowcase :default-show-badge-style="true" :default-show-sizes="false" :default-show-interactive="true" />
+        <StatusShowcase name="StatusShowcase" :default-show-badge-style="true" :default-show-sizes="false" :default-show-interactive="true" />
       </UCard>
 
       <!-- Modal Showcase -->
@@ -725,8 +727,8 @@
             <div class="space-y-4">
               <p class="text-sm text-gray-600">Fill in the details below</p>
               <div class="space-y-4">
-                <FormInput v-model="modalForm.name" label="Project Name" placeholder="Enter project name" required />
-                <FormInput v-model="modalForm.description" label="Description" placeholder="Project description" />
+                <FormInput name="FormInput" v-model="modalForm.name" label="Project Name" placeholder="Enter project name" required />
+                <FormInput name="FormInput" v-model="modalForm.description" label="Description" placeholder="Project description" />
               </div>
             </div>
 
@@ -782,14 +784,14 @@
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Form Select</h4>
 
-            <FormSelect v-model="formData.priority" label="Priority Level" placeholder="Select priority"
+            <FormSelect name="FormSelect" v-model="formData.priority" label="Priority Level" placeholder="Select priority"
               leading-icon="i-heroicons-flag" :options="priorityOptions"
               help-text="Choose the priority level for this task" />
 
-            <FormSelect v-model="formData.category" label="Category" placeholder="Select category"
+            <FormSelect name="FormSelect" v-model="formData.category" label="Category" placeholder="Select category"
               :options="categoryOptions" :option-groups="categoryGroups" show-selected-value />
 
-            <FormSelect v-model="formData.status" label="Status" :options="statusOptions" :loading="selectLoading"
+            <FormSelect name="FormSelect" v-model="formData.status" label="Status" :options="statusOptions" :loading="selectLoading"
               disabled />
           </div>
 
@@ -797,13 +799,13 @@
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Date Picker</h4>
 
-            <DatePicker v-model="formData.startDate" label="Start Date" placeholder="Select start date"
+            <DatePicker name="DatePicker" v-model="formData.startDate" label="Start Date" placeholder="Select start date"
               leading-icon="i-heroicons-calendar-days" help-text="Choose the project start date" />
 
-            <DatePicker v-model="formData.endDate" label="End Date" placeholder="Select end date"
+            <DatePicker name="DatePicker" v-model="formData.endDate" label="End Date" placeholder="Select end date"
               :min-date="formData.startDate" type="datetime-local" />
 
-            <DatePicker v-model="formData.time" label="Meeting Time" type="time" placeholder="Select time" />
+            <DatePicker name="DatePicker" v-model="formData.time" label="Meeting Time" type="time" placeholder="Select time" />
           </div>
         </div>
       </UCard>
@@ -818,7 +820,7 @@
           <!-- Single File Upload -->
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Single File Upload</h4>
-            <FileUpload v-model="uploadedFiles.single" label="Profile Picture" accept="image/*"
+            <FileUpload name="FileUpload" v-model="uploadedFiles.single" label="Profile Picture" accept="image/*"
               :max-size="2 * 1024 * 1024" help-text="Upload a profile picture (max 2MB)"
               @upload-success="handleUploadSuccess" @upload-error="handleUploadError" />
           </div>
@@ -826,7 +828,7 @@
           <!-- Multiple File Upload -->
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Multiple File Upload</h4>
-            <FileUpload v-model="uploadedFiles.multiple" label="Project Documents" accept=".pdf,.doc,.docx,.jpg,.png"
+            <FileUpload name="FileUpload" v-model="uploadedFiles.multiple" label="Project Documents" accept=".pdf,.doc,.docx,.jpg,.png"
               :multiple="true" :max-files="5" :max-size="10 * 1024 * 1024"
               help-text="Upload project documents (max 5 files, 10MB each)" auto-upload
               @upload-success="handleUploadSuccess" @upload-error="handleUploadError" />
@@ -856,7 +858,7 @@
             </div>
           </div>
 
-          <Pagination :current-page="paginationData.currentPage" :total-pages="paginationData.totalPages"
+          <Pagination name="Pagination" :current-page="paginationData.currentPage" :total-pages="paginationData.totalPages"
             :total="paginationData.total" :per-page="paginationData.perPage" @page-change="handlePageChange" />
         </div>
       </UCard>
@@ -873,43 +875,43 @@
             <h4 class="font-semibold text-slate-700 mb-4">Tooltip Placements</h4>
             <div class="grid grid-cols-3 gap-4 place-items-center">
               <!-- Top row -->
-              <Tooltip content="Top start tooltip" placement="top-start">
+              <Tooltip name="Tooltip" content="Top start tooltip" placement="top-start">
                 <UButton variant="outline" size="sm">Top Start</UButton>
               </Tooltip>
 
-              <Tooltip content="Top center tooltip" placement="top">
+              <Tooltip name="Tooltip" content="Top center tooltip" placement="top">
                 <UButton variant="outline" size="sm">Top</UButton>
               </Tooltip>
 
-              <Tooltip content="Top end tooltip" placement="top-end">
+              <Tooltip name="Tooltip" content="Top end tooltip" placement="top-end">
                 <UButton variant="outline" size="sm">Top End</UButton>
               </Tooltip>
 
               <!-- Middle row -->
-              <Tooltip content="Left tooltip with more content" placement="left">
+              <Tooltip name="Tooltip" content="Left tooltip with more content" placement="left">
                 <UButton variant="outline" size="sm">Left</UButton>
               </Tooltip>
 
               <div class="text-center">
-                <Tooltip content="Click me tooltip" trigger="click">
+                <Tooltip name="Tooltip" content="Click me tooltip" trigger="click">
                   <UButton color="blue" size="sm">Click Me</UButton>
                 </Tooltip>
               </div>
 
-              <Tooltip content="Right tooltip" placement="right">
+              <Tooltip name="Tooltip" content="Right tooltip" placement="right">
                 <UButton variant="outline" size="sm">Right</UButton>
               </Tooltip>
 
               <!-- Bottom row -->
-              <Tooltip content="Bottom start tooltip" placement="bottom-start">
+              <Tooltip name="Tooltip" content="Bottom start tooltip" placement="bottom-start">
                 <UButton variant="outline" size="sm">Bottom Start</UButton>
               </Tooltip>
 
-              <Tooltip content="Bottom center tooltip" placement="bottom">
+              <Tooltip name="Tooltip" content="Bottom center tooltip" placement="bottom">
                 <UButton variant="outline" size="sm">Bottom</UButton>
               </Tooltip>
 
-              <Tooltip content="Bottom end tooltip" placement="bottom-end">
+              <Tooltip name="Tooltip" content="Bottom end tooltip" placement="bottom-end">
                 <UButton variant="outline" size="sm">Bottom End</UButton>
               </Tooltip>
             </div>
@@ -919,23 +921,23 @@
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Tooltip Themes</h4>
             <div class="flex flex-wrap gap-3">
-              <Tooltip content="Dark theme (default)" theme="dark">
+              <Tooltip name="Tooltip" content="Dark theme (default)" theme="dark">
                 <UButton variant="outline" color="gray">Dark</UButton>
               </Tooltip>
 
-              <Tooltip content="Light theme tooltip" theme="light">
+              <Tooltip name="Tooltip" content="Light theme tooltip" theme="light">
                 <UButton variant="outline" color="gray">Light</UButton>
               </Tooltip>
 
-              <Tooltip content="Error theme tooltip" theme="error">
+              <Tooltip name="Tooltip" content="Error theme tooltip" theme="error">
                 <UButton variant="outline" color="red">Error</UButton>
               </Tooltip>
 
-              <Tooltip content="Warning theme tooltip" theme="warning">
+              <Tooltip name="Tooltip" content="Warning theme tooltip" theme="warning">
                 <UButton variant="outline" color="amber">Warning</UButton>
               </Tooltip>
 
-              <Tooltip content="Success theme tooltip" theme="success">
+              <Tooltip name="Tooltip" content="Success theme tooltip" theme="success">
                 <UButton variant="outline" color="green">Success</UButton>
               </Tooltip>
             </div>
@@ -945,15 +947,15 @@
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Advanced Features</h4>
             <div class="flex flex-wrap gap-3">
-              <Tooltip content="Tooltip with delay" :delay="500">
+              <Tooltip name="Tooltip" content="Tooltip with delay" :delay="500">
                 <UButton variant="outline">Delayed</UButton>
               </Tooltip>
 
-              <Tooltip content="Large tooltip text" size="lg" max-width="300px">
+              <Tooltip name="Tooltip" content="Large tooltip text" size="lg" max-width="300px">
                 <UButton variant="outline">Large</UButton>
               </Tooltip>
 
-              <Tooltip content="This tooltip is disabled" disabled>
+              <Tooltip name="Tooltip" content="This tooltip is disabled" disabled>
                 <UButton variant="outline" disabled>Disabled</UButton>
               </Tooltip>
             </div>
@@ -979,7 +981,7 @@
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Stock Item Cards</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <StockItemCard v-for="stockItem in sampleStockItems" :key="stockItem.id" :stock-item="stockItem"
+              <StockItemCard name="StockItemCard" v-for="stockItem in sampleStockItems" :key="stockItem.id" :stock-item="stockItem"
                 @click="handleStockItemClick(stockItem.id)" @view="handleStockItemView" @edit="handleStockItemEdit"
                 @delete="handleStockItemDelete" @adjust-stock="handleStockAdjust"
                 @add-to-project="handleAddToProject" />
@@ -990,7 +992,7 @@
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Category Cards</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <CategoryCard v-for="category in sampleCategories" :key="category.id" :category="category"
+              <CategoryCard name="CategoryCard" v-for="category in sampleCategories" :key="category.id" :category="category"
                 @click="handleCategoryClick(category.id)" @view="handleCategoryView" @edit="handleCategoryEdit"
                 @delete="handleCategoryDelete" @add-item="handleCategoryAddItem"
                 @view-items="handleCategoryViewItems" />
@@ -1004,7 +1006,7 @@
         <template #header>
           <div class="flex items-center justify-between">
             <h3 class="text-xl font-bold text-slate-800">🎴 Project Cards</h3>
-            <UButton variant="outline" size="sm" @click="toggleProjectsLoading" :loading="projectsLoading">
+            <UButton variant="outline" size="sm" :loading="projectsLoading" @click="toggleProjectsLoading">
               {{ projectsLoading ? 'Loading...' : 'Toggle Loading' }}
             </UButton>
           </div>
@@ -1012,12 +1014,12 @@
 
         <!-- Loading State -->
         <div v-if="projectsLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <SkeletonLoader v-for="n in 3" :key="n" type="card" />
+          <SkeletonLoader name="SkeletonLoader" v-for="n in 3" :key="n" type="card" />
         </div>
 
         <!-- Loaded State -->
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <ProjectCard v-for="project in sampleProjects" :key="project.id" :project="project"
+          <ProjectCard name="ProjectCard" v-for="project in sampleProjects" :key="project.id" :project="project"
             @click="handleProjectClick(project.id)" />
         </div>
       </UCard>
@@ -1027,7 +1029,7 @@
         <template #header>
           <div class="flex items-center justify-between">
             <h3 class="text-xl font-bold text-slate-800">📊 Project Table</h3>
-            <UButton variant="outline" size="sm" @click="toggleTableLoading" :loading="tableLoading">
+            <UButton variant="outline" size="sm" :loading="tableLoading" @click="toggleTableLoading">
               {{ tableLoading ? 'Loading...' : 'Toggle Loading' }}
             </UButton>
           </div>
@@ -1035,11 +1037,11 @@
 
         <!-- Loading State -->
         <div v-if="tableLoading" class="space-y-0 bg-white rounded-lg border overflow-hidden">
-          <SkeletonLoader v-for="n in 5" :key="n" type="table-row" />
+          <SkeletonLoader name="SkeletonLoader" v-for="n in 5" :key="n" type="table-row" />
         </div>
 
         <!-- Loaded State -->
-        <ProjectTable v-else :projects="sampleProjects" @view="handleProjectView" @edit="handleProjectEdit"
+        <ProjectTable name="ProjectTable" v-else :projects="sampleProjects" @view="handleProjectView" @edit="handleProjectEdit"
           @delete="handleProjectDelete" />
       </UCard>
 
@@ -1109,6 +1111,7 @@ import FileUpload from '~/components/forms/FileUpload.vue'
 import Pagination from '~/components/ui/Pagination.vue'
 import StatusShowcase from '~/components/showcase/StatusShowcase.vue'
 import StatusIndicator from '~/components/base/StatusIndicator.vue'
+import WorldMap from '@/components/WorldMap.vue'const toast = useToast()
 const toast = useToast()
 const dualToast = useDualToast()
 const authStore = useAuthStore()

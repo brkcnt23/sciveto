@@ -24,6 +24,9 @@
 
         <!-- Right side items -->
         <div class="flex items-center space-x-4">
+          <!-- Dark mode toggle -->
+          <UButton variant="ghost" color="gray" size="sm" :icon="isDark ? 'i-heroicons-moon' : 'i-heroicons-sun'"
+            @click="toggleDarkMode" />
           <!-- Search -->
           <div class="hidden md:block">
             <UInput v-model="searchQuery" placeholder="Search..." icon="i-heroicons-magnifying-glass" size="sm"
@@ -109,7 +112,7 @@ import { ref, computed } from 'vue'
 const searchQuery = ref('')
 const showMobileMenu = ref(false)
 const showNotifications = ref(false)
-
+const isDark = ref(false)
 // Props
 const props = defineProps({
   user: Object,
@@ -118,6 +121,26 @@ const props = defineProps({
     default: () => []
   }
 })
+onMounted(() => {
+  isDark.value = localStorage.getItem('theme') === 'dark'
+  updateHtmlClass()
+})
+
+const toggleDarkMode = () => {
+  isDark.value = !isDark.value
+  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
+  updateHtmlClass()
+}
+
+const updateHtmlClass = () => {
+  if (isDark.value) {
+    document.documentElement.classList.add('dark')
+    document.documentElement.classList.remove('light')
+  } else {
+    document.documentElement.classList.remove('dark')
+    document.documentElement.classList.add('light')
+  }
+}
 
 // Navigation items
 const navigationItems = [

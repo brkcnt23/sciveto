@@ -1,3 +1,5 @@
+import { useToastManager } from "./useToastManager"
+
 // composables/useDualToast.ts - TypeScript Fixed Version
 interface ToastOptions {
   title: string
