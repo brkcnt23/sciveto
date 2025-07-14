@@ -60,6 +60,312 @@
         </div>
       </UCard>
 
+      <!-- Migration Status Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <UCard class="bg-gradient-to-br from-primary-50 to-primary-100 border-primary-200">
+          <template #header>
+            <h4 class="font-bold text-primary-800">✅ Migrated</h4>
+          </template>
+          <ul class="text-sm text-primary-700 space-y-1">
+            <li>🔄 UDropdown → UDropdownMenu</li>
+            <li>🔄 USelect options → items</li>
+            <li>🔄 Added name props</li>
+            <li>🔄 Color system (gray → neutral)</li>
+            <li>🔄 New theming system</li>
+          </ul>
+        </UCard>
+
+        <UCard class="bg-gradient-to-br from-success-50 to-success-100 border-success-200">
+          <template #header>
+            <h4 class="font-bold text-success-800">🎯 Features</h4>
+          </template>
+          <ul class="text-sm text-success-700 space-y-1">
+            <li>✅ Tailwind CSS v4</li>
+            <li>✅ Reka UI Components</li>
+            <li>✅ Better Performance</li>
+            <li>✅ TypeScript Support</li>
+            <li>✅ Accessibility</li>
+          </ul>
+        </UCard>
+
+        <UCard class="bg-gradient-to-br from-warning-50 to-warning-100 border-warning-200">
+          <template #header>
+            <h4 class="font-bold text-warning-800">⚡ Performance</h4>
+          </template>
+          <ul class="text-sm text-warning-700 space-y-1">
+            <li>📦 Smaller Bundle</li>
+            <li>🚀 Faster Loading</li>
+            <li>⚡ Tree Shaking</li>
+            <li>📱 Mobile Optimized</li>
+          </ul>
+        </UCard>
+
+        <UCard class="bg-gradient-to-br from-info-50 to-info-100 border-info-200">
+          <template #header>
+            <h4 class="font-bold text-info-800">🎨 Design</h4>
+          </template>
+          <ul class="text-sm text-info-700 space-y-1">
+            <li>🎯 New Design Tokens</li>
+            <li>🌗 Dark Mode Support</li>
+            <li>🎨 Custom Theming</li>
+            <li>📐 Consistent Spacing</li>
+          </ul>
+        </UCard>
+      </div>
+      <!-- Toast Showcase -->
+      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm mb-8">
+        <template #header>
+          <h3 class="text-xl font-bold text-neutral-800">🍞 Toast Notifications (Updated API)</h3>
+        </template>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <UButton color="success" variant="outline" @click="showSuccess">
+            Success Toast
+          </UButton>
+          <UButton color="error" variant="outline" @click="showError">
+            Error Toast
+          </UButton>
+          <UButton color="warning" variant="outline" @click="showWarning">
+            Warning Toast
+          </UButton>
+          <UButton color="info" variant="outline" @click="showInfo">
+            Info Toast
+          </UButton>
+        </div>
+      </UCard>
+      <!-- Form Components -->
+      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm mb-8">
+        <template #header>
+          <h3 class="text-xl font-bold text-neutral-800">📝 Form Components (with Required Name Props)</h3>
+        </template>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="space-y-4">
+            <FormInput 
+              v-model="formData.name" 
+              name="projectName"
+              label="Project Name" 
+              placeholder="Enter project name"
+              icon="i-heroicons-folder" 
+              required
+            />
+
+            <FormInput 
+              v-model="formData.email" 
+              name="projectEmail"
+              label="Email Address" 
+              placeholder="Enter email"
+              icon="i-heroicons-envelope" 
+              type="email" 
+            />
+
+            <FormSelect 
+              v-model="formData.priority" 
+              name="projectPriority"
+              label="Priority Level" 
+              placeholder="Select priority"
+              leading-icon="i-heroicons-flag" 
+              :items="priorityOptions"
+              help="Choose the priority level for this task" 
+            />
+          </div>
+
+          <div class="space-y-4">
+            <FormInput 
+              v-model="formData.budget" 
+              name="projectBudget"
+              label="Budget" 
+              placeholder="0.00"
+              icon="i-heroicons-currency-dollar" 
+              type="number" 
+            />
+
+            <UTextarea 
+              v-model="formData.description" 
+              name="projectDescription"
+              label="Description" 
+              placeholder="Project description"
+              rows="3" 
+            />
+
+            <div class="flex space-x-2">
+              <UButton color="primary" @click="handleSave">
+                <UIcon name="i-heroicons-check" class="w-4 h-4 mr-2" />
+                Save Project
+              </UButton>
+              <UButton color="neutral" variant="outline" @click="handleReset">
+                Reset
+              </UButton>
+            </div>
+          </div>
+        </div>
+      </UCard>
+
+      <!-- Date Picker Showcase -->
+      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm mb-8">
+        <template #header>
+          <h3 class="text-xl font-bold text-neutral-800">📅 Date Picker Component</h3>
+        </template>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <DatePicker 
+            v-model="formData.startDate" 
+            name="startDate"
+            label="Start Date" 
+            placeholder="Select start date"
+            leading-icon="i-heroicons-calendar-days" 
+            help="Choose the project start date" 
+          />
+
+          <DatePicker 
+            v-model="formData.endDate" 
+            name="endDate"
+            label="End Date" 
+            placeholder="Select end date"
+            :min-date="formData.startDate" 
+            type="datetime-local" 
+          />
+
+          <DatePicker 
+            v-model="formData.time" 
+            name="meetingTime"
+            label="Meeting Time" 
+            type="time" 
+            placeholder="Select time" 
+          />
+        </div>
+      </UCard>
+
+      <!-- File Upload Showcase -->
+      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm mb-8">
+        <template #header>
+          <h3 class="text-xl font-bold text-neutral-800">📎 File Upload Component</h3>
+        </template>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Single File Upload -->
+          <div>
+            <h4 class="font-semibold text-neutral-700 mb-4">Single File Upload</h4>
+            <FileUpload 
+              v-model="uploadedFiles.single" 
+              name="profilePicture"
+              label="Profile Picture" 
+              accept="image/*"
+              :max-size="2 * 1024 * 1024" 
+              help="Upload a profile picture (max 2MB)"
+              @upload-success="handleUploadSuccess" 
+              @upload-error="handleUploadError" 
+            />
+          </div>
+
+          <!-- Multiple File Upload -->
+          <div>
+            <h4 class="font-semibold text-neutral-700 mb-4">Multiple File Upload</h4>
+            <FileUpload 
+              v-model="uploadedFiles.multiple" 
+              name="projectDocuments"
+              label="Project Documents" 
+              accept=".pdf,.doc,.docx,.jpg,.png"
+              :multiple="true" 
+              :max-files="5" 
+              :max-size="10 * 1024 * 1024"
+              help="Upload project documents (max 5 files, 10MB each)" 
+              auto-upload
+              @upload-success="handleUploadSuccess" 
+              @upload-error="handleUploadError" 
+            />
+          </div>
+        </div>
+      </UCard>
+
+      <!-- Pagination Showcase -->
+      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm mb-8">
+        <template #header>
+          <h3 class="text-xl font-bold text-neutral-800">📄 Pagination Component</h3>
+        </template>
+
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-blue-50 p-4 rounded-lg">
+              <h5 class="font-semibold text-blue-800">Total Items</h5>
+              <p class="text-2xl font-bold text-blue-600">{{ paginationData.total }}</p>
+            </div>
+            <div class="bg-green-50 p-4 rounded-lg">
+              <h5 class="font-semibold text-green-800">Current Page</h5>
+              <p class="text-2xl font-bold text-green-600">{{ paginationData.currentPage }}</p>
+            </div>
+            <div class="bg-purple-50 p-4 rounded-lg">
+              <h5 class="font-semibold text-purple-800">Per Page</h5>
+              <p class="text-2xl font-bold text-purple-600">{{ paginationData.perPage }}</p>
+            </div>
+          </div>
+
+          <Pagination
+            v-model:current-page="paginationData.currentPage"
+            v-model:per-page="paginationData.perPage"
+            name="examplePagination"
+            :total="paginationData.total"
+            :show-info="true"
+            :show-per-page-select="true"
+            :show-first-last="true"
+            @change="handlePaginationChange"
+          />
+        </div>
+      </UCard>
+
+      <!-- Projects Grid -->
+      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+        <template #header>
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-bold text-neutral-800">📊 Projects (Nuxt UI v3)</h3>
+            <UButton variant="outline" size="sm" @click="toggleProjectsLoading" :loading="projectsLoading">
+              {{ projectsLoading ? 'Loading...' : 'Refresh' }}
+            </UButton>
+          </div>
+        </template>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <UCard v-for="project in projects" :key="project.id" class="hover:shadow-lg transition-shadow">
+            <template #header>
+              <div class="flex items-center justify-between">
+                <h4 class="font-semibold text-neutral-800">{{ project.name }}</h4>
+                <UBadge :color="project.status === 'completed' ? 'success' : project.status === 'in-progress' ? 'warning' : 'neutral'">
+                  {{ project.status }}
+                </UBadge>
+              </div>
+            </template>
+
+            <div class="space-y-3">
+              <p class="text-sm text-neutral-600">{{ project.description }}</p>
+              
+              <div class="space-y-2">
+                <div class="flex justify-between text-sm">
+                  <span class="text-neutral-500">Progress</span>
+                  <span class="font-medium">{{ project.progress }}%</span>
+                </div>
+                <UProgress :model-value="project.progress" :max="100" />
+              </div>
+
+              <div class="flex items-center justify-between text-sm text-neutral-500">
+                <span>{{ project.team }} team members</span>
+                <span>Due {{ project.dueDate }}</span>
+              </div>
+            </div>
+
+            <template #footer>
+              <div class="flex space-x-2">
+                <UButton size="sm" variant="outline" class="flex-1">
+                  View Details
+                </UButton>
+                <UButton size="sm" color="primary" class="flex-1">
+                  Edit Project
+                </UButton>
+              </div>
+            </template>
+          </UCard>
+        </div>
+      </UCard>
+
       <!-- Priority Badge Showcase -->
       <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
         <template #header>
@@ -803,7 +1109,7 @@ import FileUpload from '~/components/forms/FileUpload.vue'
 import Pagination from '~/components/ui/Pagination.vue'
 import StatusShowcase from '~/components/showcase/StatusShowcase.vue'
 import StatusIndicator from '~/components/base/StatusIndicator.vue'
-
+const toast = useToast()
 const dualToast = useDualToast()
 const authStore = useAuthStore()
 
@@ -852,6 +1158,37 @@ const showWarningExample = ref(false)
 const showInfoExample = ref(false)
 
 const activeTab = ref(0)
+
+// Projects data
+const projects = ref([
+  {
+    id: 1,
+    name: 'E-commerce Platform',
+    description: 'Modern e-commerce solution with advanced features',
+    status: 'in-progress',
+    progress: 75,
+    team: 8,
+    dueDate: 'Dec 15'
+  },
+  {
+    id: 2,
+    name: 'Mobile App',
+    description: 'Cross-platform mobile application',
+    status: 'completed',
+    progress: 100,
+    team: 5,
+    dueDate: 'Nov 30'
+  },
+  {
+    id: 3,
+    name: 'Analytics Dashboard',
+    description: 'Real-time analytics and reporting dashboard',
+    status: 'pending',
+    progress: 25,
+    team: 3,
+    dueDate: 'Jan 20'
+  }
+])
 
 const sampleStockItems = ref([
   {
@@ -930,6 +1267,7 @@ const sampleCategories = ref([
     lastActivityDescription: 'New power tools added'
   }
 ])
+
 
 const formData = ref({
   projectName: 'Modern Website Redesign',
@@ -1106,20 +1444,41 @@ const sampleErrors = ref({
   }
 })
 
-const showSuccessToast = () => {
-  success('Success!', 'Operation completed successfully!')
+// Methods
+const showSuccess = () => {
+  toast.add({
+    title: 'Success!',
+    description: 'This is a success message with Nuxt UI v3.',
+    color: 'success',
+    icon: 'i-heroicons-check'
+  })
 }
 
-const showErrorToast = () => {
-  error('Error!', 'Something went wrong. Please try again.')
+const showError = () => {
+  toast.add({
+    title: 'Error!',
+    description: 'This is an error message with Nuxt UI v3.',
+    color: 'error',
+    icon: 'i-heroicons-x-mark'
+  })
 }
 
-const showWarningToast = () => {
-  warning('Warning!', 'Please check your input before proceeding.')
+const showWarning = () => {
+  toast.add({
+    title: 'Warning!',
+    description: 'This is a warning message with Nuxt UI v3.',
+    color: 'warning',
+    icon: 'i-heroicons-exclamation-triangle'
+  })
 }
 
-const showInfoToast = () => {
-  info('Info!', 'Here is some useful information for you.')
+const showInfo = () => {
+  toast.add({
+    title: 'Info!',
+    description: 'This is an info message with Nuxt UI v3.',
+    color: 'info',
+    icon: 'i-heroicons-information-circle'
+  })
 }
 
 
@@ -1347,6 +1706,22 @@ const handleAddStock = () => {
   console.log('Add new stock item')
   success('Redirecting to stock item creation...')
 }
+const handleSave = () => {
+  showSuccess()
+  console.log('Form data:', formData)
+}
+
+const handleReset = () => {
+  Object.keys(formData).forEach(key => {
+    formData[key] = typeof formData[key] === 'string' ? '' : null
+  })
+  showInfo()
+}
+
+const handlePaginationChange = (data) => {
+  console.log('Pagination changed:', data)
+}
+
 
 // Set page title
 useHead({

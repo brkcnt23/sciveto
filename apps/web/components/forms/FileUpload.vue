@@ -1,4 +1,3 @@
-<!-- components/base/FileUpload.vue -->
 <template>
   <UFormField 
     :label="label" 
@@ -9,14 +8,26 @@
     :size="size"
     :error="error"
   >
+    <!-- File Input (Hidden) -->
+    <input
+      ref="fileInputRef"
+      :name="name"
+      type="file"
+      :accept="accept"
+      :multiple="multiple"
+      :disabled="disabled"
+      class="hidden"
+      @change="handleFileSelect"
+    >
+
     <!-- Drop Zone -->
     <div
       :class="[
-        'relative border-2 border-dashed rounded-lg transition-colors duration-200',
-        isDragOver 
-          ? 'border-primary-500 bg-primary-50' 
-          : 'border-gray-300 hover:border-gray-400',
-        disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer',
+        'relative border-2 border-dashed rounded-lg transition-all duration-200 cursor-pointer',
+        'hover:border-primary-400 hover:bg-primary-50/50',
+        isDragOver && 'border-primary-400 bg-primary-50 scale-[1.02]',
+        disabled && 'opacity-50 cursor-not-allowed',
+        sizeClasses[size]?.container || 'p-6',
         dropZoneClass
       ]"
       @click="triggerFileInput"
@@ -24,121 +35,119 @@
       @dragleave.prevent="handleDragLeave"
       @drop.prevent="handleDrop"
     >
-      <!-- Hidden File Input -->
-      <input
-        ref="fileInputRef"
-        type="file"
-        :accept="accept"
-        :multiple="multiple"
-        :disabled="disabled"
-        class="hidden"
-        @change="handleFileSelect"
-      />
-      
-      <!-- Upload Area -->
-      <div class="flex flex-col items-center justify-center py-8 px-6">
-        <UIcon
-          :name="uploadIcon"
+      <!-- Upload Icon and Text -->
+      <div class="flex flex-col items-center justify-center text-center space-y-3">
+        <UIcon 
+          :name="uploadIcon" 
           :class="[
-            'mb-4',
-            sizeClasses[size].icon,
-            isDragOver ? 'text-primary-500' : 'text-gray-400'
-          ]"
+            'text-neutral-400',
+            sizeClasses[size]?.icon || 'w-12 h-12'
+          ]" 
         />
         
-        <p :class="['text-center font-medium', sizeClasses[size].title]">
-          <span v-if="isDragOver" class="text-primary-600">
-            Drop files here
-          </span>
-          <span v-else>
+        <div class="space-y-1">
+          <p :class="['font-medium text-neutral-700', sizeClasses[size]?.title || 'text-base']">
             {{ uploadText }}
-          </span>
-        </p>
-        
-        <p :class="['text-center text-gray-500 mt-1', sizeClasses[size].subtitle]">
-          {{ uploadSubtext }}
-        </p>
-        
-        <!-- Upload restrictions -->
-        <div v-if="showRestrictions" class="mt-2 text-xs text-gray-400 text-center">
-          <p v-if="accept">Accepted: {{ accept }}</p>
-          <p v-if="maxSize">Max size: {{ formatFileSize(maxSize) }}</p>
-          <p v-if="multiple && maxFiles">Max files: {{ maxFiles }}</p>
+          </p>
+          <p :class="['text-neutral-500', sizeClasses[size]?.subtitle || 'text-sm']">
+            {{ uploadSubtext }}
+          </p>
+        </div>
+
+        <!-- File Restrictions -->
+        <div v-if="showRestrictions" class="text-xs text-neutral-400 space-y-1">
+          <p v-if="accept !== '*/*'">Accepted: {{ accept }}</p>
+          <p>Max size: {{ formatFileSize(maxSize) }}</p>
+          <p v-if="multiple">Max files: {{ maxFiles }}</p>
+        </div>
+      </div>
+
+      <!-- Loading Overlay -->
+      <div 
+        v-if="isUploading" 
+        class="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center"
+      >
+        <div class="text-center space-y-2">
+          <UIcon name="i-lucide-loader-2" class="w-8 h-8 text-primary-600 animate-spin mx-auto" />
+          <p class="text-sm font-medium text-neutral-700">Uploading...</p>
         </div>
       </div>
     </div>
-    
+
     <!-- File List -->
-    <div v-if="fileList.length > 0" class="mt-4 space-y-2">
-      <h4 class="text-sm font-medium text-gray-700">
-        {{ multiple ? 'Selected Files' : 'Selected File' }}
-      </h4>
-      
-      <div class="space-y-2">
-        <div
-          v-for="(file, index) in fileList"
-          :key="index"
-          :class="[
-            'flex items-center justify-between p-3 bg-gray-50 rounded-lg border',
-            file.error ? 'border-red-200 bg-red-50' : 'border-gray-200'
-          ]"
+    <div v-if="fileList.length > 0" class="mt-4 space-y-3">
+      <div class="flex items-center justify-between">
+        <h4 class="text-sm font-medium text-neutral-700">
+          Selected Files ({{ fileList.length }})
+        </h4>
+        <UButton
+          v-if="!autoUpload"
+          variant="ghost"
+          color="neutral"
+          size="xs"
+          icon="i-lucide-trash-2"
+          @click="clearFiles"
         >
-          <!-- File Info -->
+          Clear All
+        </UButton>
+      </div>
+
+      <!-- File Items -->
+      <div class="space-y-2">
+        <div 
+          v-for="(fileItem, index) in fileList" 
+          :key="`${fileItem.name}-${index}`"
+          class="flex items-center justify-between p-3 border border-neutral-200 rounded-lg bg-neutral-50"
+        >
           <div class="flex items-center space-x-3 flex-1 min-w-0">
-            <UIcon
-              :name="getFileIcon(file)"
-              :class="[
-                'flex-shrink-0',
-                file.error ? 'text-red-500' : 'text-gray-500'
-              ]"
-            />
+            <!-- File Icon -->
+            <UIcon :name="getFileIcon(fileItem)" class="w-5 h-5 text-neutral-500 shrink-0" />
             
+            <!-- File Info -->
             <div class="flex-1 min-w-0">
-              <p :class="[
-                'text-sm font-medium truncate',
-                file.error ? 'text-red-700' : 'text-gray-900'
-              ]">
-                {{ file.name }}
-              </p>
+              <p class="text-sm font-medium text-neutral-700 truncate">{{ fileItem.name }}</p>
+              <p class="text-xs text-neutral-500">{{ formatFileSize(fileItem.size) }}</p>
               
-              <div class="flex items-center space-x-2 text-xs text-gray-500">
-                <span>{{ formatFileSize(file.size) }}</span>
-                
-                <!-- Upload Progress -->
-                <template v-if="file.uploading">
-                  <span>•</span>
-                  <span class="text-blue-600">{{ file.progress }}%</span>
-                </template>
-                
-                <!-- Upload Status -->
-                <template v-else-if="file.uploaded">
-                  <span>•</span>
-                  <span class="text-green-600">✓ Uploaded</span>
-                </template>
-                
-                <template v-else-if="file.error">
-                  <span>•</span>
-                  <span class="text-red-600">{{ file.error }}</span>
-                </template>
-              </div>
-              
-              <!-- Progress Bar -->
-              <div v-if="file.uploading" class="mt-1">
-                <UProgress
-                  :model-value="file.progress"
-                  color="primary"
-                  size="xs"
-                />
-              </div>
+              <!-- Error Message -->
+              <p v-if="fileItem.error" class="text-xs text-error-600 mt-1">{{ fileItem.error }}</p>
             </div>
           </div>
-          
-          <!-- Actions -->
-          <div class="flex items-center space-x-2">
+
+          <!-- Upload Status -->
+          <div class="flex items-center space-x-3 shrink-0">
+            <!-- Progress Bar -->
+            <div v-if="fileItem.uploading" class="flex items-center space-x-2">
+              <UProgress 
+                :model-value="fileItem.progress" 
+                :max="100" 
+                size="sm"
+                class="w-16"
+              />
+              <span class="text-xs text-neutral-500">{{ fileItem.progress }}%</span>
+            </div>
+
+            <!-- Upload Status Icons -->
+            <UIcon 
+              v-else-if="fileItem.uploaded" 
+              name="i-lucide-check-circle" 
+              class="w-5 h-5 text-success-600" 
+            />
+            <UIcon 
+              v-else-if="fileItem.error" 
+              name="i-lucide-x-circle" 
+              class="w-5 h-5 text-error-600" 
+            />
+            <UIcon 
+              v-else 
+              name="i-lucide-clock" 
+              class="w-5 h-5 text-neutral-400" 
+            />
+
+            <!-- Remove Button -->
             <UButton
-              v-if="!file.uploading"
               variant="ghost"
-              size="sm"
+              color="neutral"
+              size="xs"
               icon="i-lucide-x"
               @click="removeFile(index)"
             />
@@ -150,6 +159,7 @@
       <div v-if="!autoUpload && hasUnuploadedFiles" class="flex justify-end space-x-2 pt-2">
         <UButton
           variant="outline"
+          color="neutral"
           size="sm"
           @click="clearFiles"
         >
@@ -168,7 +178,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const props = defineProps({
   // v-model
@@ -177,14 +187,14 @@ const props = defineProps({
     default: () => []
   },
   
-  // Form field props
+  // Form field props - NAME IS NOW REQUIRED
   label: {
     type: String,
     default: ''
   },
   name: {
     type: String,
-    required: true
+    required: true // This is now required for Nuxt UI v3
   },
   description: {
     type: String,
@@ -271,13 +281,38 @@ const isUploading = ref(false)
 // File management
 const fileList = ref([])
 
-// Size classes
+// Size classes for Nuxt UI v3
 const sizeClasses = {
-  xs: { icon: 'w-8 h-8', title: 'text-xs', subtitle: 'text-xs' },
-  sm: { icon: 'w-10 h-10', title: 'text-sm', subtitle: 'text-xs' },
-  md: { icon: 'w-12 h-12', title: 'text-base', subtitle: 'text-sm' },
-  lg: { icon: 'w-14 h-14', title: 'text-lg', subtitle: 'text-sm' },
-  xl: { icon: 'w-16 h-16', title: 'text-xl', subtitle: 'text-base' }
+  xs: { 
+    container: 'p-3', 
+    icon: 'w-8 h-8', 
+    title: 'text-xs', 
+    subtitle: 'text-xs' 
+  },
+  sm: { 
+    container: 'p-4', 
+    icon: 'w-10 h-10', 
+    title: 'text-sm', 
+    subtitle: 'text-xs' 
+  },
+  md: { 
+    container: 'p-6', 
+    icon: 'w-12 h-12', 
+    title: 'text-base', 
+    subtitle: 'text-sm' 
+  },
+  lg: { 
+    container: 'p-8', 
+    icon: 'w-14 h-14', 
+    title: 'text-lg', 
+    subtitle: 'text-sm' 
+  },
+  xl: { 
+    container: 'p-10', 
+    icon: 'w-16 h-16', 
+    title: 'text-xl', 
+    subtitle: 'text-base' 
+  }
 }
 
 // Computed
