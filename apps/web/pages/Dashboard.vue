@@ -1111,7 +1111,7 @@ import FileUpload from '~/components/forms/FileUpload.vue'
 import Pagination from '~/components/ui/Pagination.vue'
 import StatusShowcase from '~/components/showcase/StatusShowcase.vue'
 import StatusIndicator from '~/components/base/StatusIndicator.vue'
-import WorldMap from '@/components/WorldMap.vue'const toast = useToast()
+import WorldMap from '@/components/WorldMap.vue'
 const toast = useToast()
 const dualToast = useDualToast()
 const authStore = useAuthStore()
