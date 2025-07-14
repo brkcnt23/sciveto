@@ -114,4 +114,4 @@ export const useToastManager = () => {
     clear,
     toasts: toastList // readonly kaldırıyoruz
   }
-}
+} 

@@ -37,7 +37,7 @@
           <p class="text-xs text-slate-600">Yellow</p>
         </div>
         <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="purple" size="lg" :show-image="false" />
+          <Avatar :user="sampleUser" bg-color="purple" size="lg" :show-image="false" text-color="white"/>
           <p class="text-xs text-slate-600">Purple</p>
         </div>
         <div class="text-center space-y-2">
@@ -281,7 +281,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, Text } from 'vue'
 
 // Props for controlling what sections to show
 const props = defineProps({
@@ -331,7 +331,7 @@ const teamMembers = [
     id: 1,
     name: 'Alice Johnson',
     email: 'alice@example.com',
-    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://www.shutterstock.com/editorial/image-editorial/M2TcQex9M6jck55eNjM3MDQ=/alice-johnson-swim-school-performing-trnsmt-2023-440nw-14002564i.jpg',
     isOnline: true
   },
   {

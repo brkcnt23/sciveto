@@ -73,7 +73,7 @@ const chartOptions = {
           name: 'İstanbul',
           value: [28.9784, 41.0082],
           project: 'Kemerburgaz Dome',
-          link: 'https://site.com/istanbul',
+          link: 'https://www.asma-germe.com/tr/projeler/mersin-stadyumu',
           image: '/projects/project1.jpg'
         },
         {
