@@ -16,6 +16,10 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@sciveto/database": ["../../packages/database/src"],
+      "@sciveto/shared-types": ["../../packages/shared-types/src"]
+    }
   }
 }

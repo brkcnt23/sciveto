@@ -610,6 +610,7 @@
         </div>
       </UCard>
 
+      
       <!-- Tooltip Showcase -->
       <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
         <template #header>
@@ -1192,6 +1193,66 @@ const sampleErrors = ref({
     password: 'Password must contain at least 8 characters'
   }
 })
+
+// Methods
+const showSuccess = () => {
+  toast.add({
+    title: 'Success!',
+    description: 'This is a success message with Nuxt UI v3.',
+    color: 'success',
+    icon: 'i-heroicons-check'
+  })
+}
+
+const showError = () => {
+  toast.add({
+    title: 'Error!',
+    description: 'This is an error message with Nuxt UI v3.',
+    color: 'error',
+    icon: 'i-heroicons-x-mark'
+  })
+}
+
+const showWarning = () => {
+  toast.add({
+    title: 'Warning!',
+    description: 'This is a warning message with Nuxt UI v3.',
+    color: 'warning',
+    icon: 'i-heroicons-exclamation-triangle'
+  })
+}
+
+const showInfo = () => {
+  toast.add({
+    title: 'Info!',
+    description: 'This is an info message with Nuxt UI v3.',
+    color: 'info',
+    icon: 'i-heroicons-information-circle'
+  })
+}
+
+
+// Fix: Use dualToast instead of undefined variable
+const simulateWebSocketMessage = () => {
+  dualToast.simulateWebSocket()
+}
+
+const startWebSocketSimulation = () => {
+  if (isSimulating.value) {
+    // Stop simulation
+    if (simulationInterval) {
+      clearInterval(simulationInterval)
+      simulationInterval = null
+    }
+    isSimulating.value = false
+  } else {
+    // Start simulation
+    isSimulating.value = true
+    simulationInterval = setInterval(() => {
+      dualToast.simulateWebSocket()
+    }, 3000) // Send a message every 3 seconds
+  }
+}
 
 const handleTabChange = ({ index, tab }) => {
   console.log('Tab changed:', { index, tab })
