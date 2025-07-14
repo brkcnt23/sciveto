@@ -9,7 +9,7 @@
       "~~/*": ["./*"],
       "@@/*": ["./*"]
     },
-    "types": ["@types/node"],
+    "types": ["@types/node", "nuxt"],
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -28,7 +28,8 @@
     "plugins/**/*",
     "utils/**/*",
     "app.vue", 
-    "nuxt.config.ts"
+    "nuxt.config.ts",
+    "app.config.ts"
   ],
   "exclude": [
     "node_modules",

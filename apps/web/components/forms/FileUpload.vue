@@ -1,50 +1,27 @@
 <template>
-  <UFormField 
-    :label="label" 
-    :name="name"
-    :description="description"
-    :help="help"
-    :required="required"
-    :size="size"
-    :error="error"
-  >
+  <UFormField :label="label" :name="name" :description="description" :help="help" :required="required" :size="size"
+    :error="error">
     <!-- File Input (Hidden) -->
-    <input
-      ref="fileInputRef"
-      :name="name"
-      type="file"
-      :accept="accept"
-      :multiple="multiple"
-      :disabled="disabled"
-      class="hidden"
-      @change="handleFileSelect"
-    >
+    <input ref="fileInputRef" :id="uid" :name="name" type="file" :accept="accept" :multiple="multiple"
+      :disabled="disabled" class="hidden" @change="handleFileSelect">
 
     <!-- Drop Zone -->
-    <div
-      :class="[
-        'relative border-2 border-dashed rounded-lg transition-all duration-200 cursor-pointer',
-        'hover:border-primary-400 hover:bg-primary-50/50',
-        isDragOver && 'border-primary-400 bg-primary-50 scale-[1.02]',
-        disabled && 'opacity-50 cursor-not-allowed',
-        sizeClasses[size]?.container || 'p-6',
-        dropZoneClass
-      ]"
-      @click="triggerFileInput"
-      @dragover.prevent="handleDragOver"
-      @dragleave.prevent="handleDragLeave"
-      @drop.prevent="handleDrop"
-    >
+    <div :class="[
+      'relative border-2 border-dashed rounded-lg transition-all duration-200 cursor-pointer',
+      'hover:border-primary-400 hover:bg-primary-50/50',
+      isDragOver && 'border-primary-400 bg-primary-50 scale-[1.02]',
+      disabled && 'opacity-50 cursor-not-allowed',
+      sizeClasses[size]?.container || 'p-6',
+      dropZoneClass
+    ]" @click="triggerFileInput" @dragover.prevent="handleDragOver" @dragleave.prevent="handleDragLeave"
+      @drop.prevent="handleDrop">
       <!-- Upload Icon and Text -->
       <div class="flex flex-col items-center justify-center text-center space-y-3">
-        <UIcon 
-          :name="uploadIcon" 
-          :class="[
-            'text-neutral-400',
-            sizeClasses[size]?.icon || 'w-12 h-12'
-          ]" 
-        />
-        
+        <UIcon :id="uid" :name="uploadIcon" :class="[
+          'text-neutral-400',
+          sizeClasses[size]?.icon || 'w-12 h-12'
+        ]" />
+
         <div class="space-y-1">
           <p :class="['font-medium text-neutral-700', sizeClasses[size]?.title || 'text-base']">
             {{ uploadText }}
@@ -63,10 +40,8 @@
       </div>
 
       <!-- Loading Overlay -->
-      <div 
-        v-if="isUploading" 
-        class="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center"
-      >
+      <div v-if="isUploading"
+        class="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center">
         <div class="text-center space-y-2">
           <UIcon name="i-lucide-loader-2" class="w-8 h-8 text-primary-600 animate-spin mx-auto" />
           <p class="text-sm font-medium text-neutral-700">Uploading...</p>
@@ -80,34 +55,25 @@
         <h4 class="text-sm font-medium text-neutral-700">
           Selected Files ({{ fileList.length }})
         </h4>
-        <UButton
-          v-if="!autoUpload"
-          variant="ghost"
-          color="neutral"
-          size="xs"
-          icon="i-lucide-trash-2"
-          @click="clearFiles"
-        >
+        <UButton v-if="!autoUpload" :id="uid" variant="ghost" color="neutral" size="xs" icon="i-lucide-trash-2"
+          @click="clearFiles">
           Clear All
         </UButton>
       </div>
 
       <!-- File Items -->
       <div class="space-y-2">
-        <div 
-          v-for="(fileItem, index) in fileList" 
-          :key="`${fileItem.name}-${index}`"
-          class="flex items-center justify-between p-3 border border-neutral-200 rounded-lg bg-neutral-50"
-        >
+        <div v-for="(fileItem, index) in fileList" :id="uid" :key="`${fileItem.name}-${index}`"
+          class="flex items-center justify-between p-3 border border-neutral-200 rounded-lg bg-neutral-50">
           <div class="flex items-center space-x-3 flex-1 min-w-0">
             <!-- File Icon -->
             <UIcon :name="getFileIcon(fileItem)" class="w-5 h-5 text-neutral-500 shrink-0" />
-            
+
             <!-- File Info -->
             <div class="flex-1 min-w-0">
               <p class="text-sm font-medium text-neutral-700 truncate">{{ fileItem.name }}</p>
               <p class="text-xs text-neutral-500">{{ formatFileSize(fileItem.size) }}</p>
-              
+
               <!-- Error Message -->
               <p v-if="fileItem.error" class="text-xs text-error-600 mt-1">{{ fileItem.error }}</p>
             </div>
@@ -117,59 +83,28 @@
           <div class="flex items-center space-x-3 shrink-0">
             <!-- Progress Bar -->
             <div v-if="fileItem.uploading" class="flex items-center space-x-2">
-              <UProgress 
-                :model-value="fileItem.progress" 
-                :max="100" 
-                size="sm"
-                class="w-16"
-              />
+              <UProgress :id="uid" :model-value="fileItem.progress" :max="100" size="sm" class="w-16" />
               <span class="text-xs text-neutral-500">{{ fileItem.progress }}%</span>
             </div>
 
             <!-- Upload Status Icons -->
-            <UIcon 
-              v-else-if="fileItem.uploaded" 
-              name="i-lucide-check-circle" 
-              class="w-5 h-5 text-success-600" 
-            />
-            <UIcon 
-              v-else-if="fileItem.error" 
-              name="i-lucide-x-circle" 
-              class="w-5 h-5 text-error-600" 
-            />
-            <UIcon 
-              v-else 
-              name="i-lucide-clock" 
-              class="w-5 h-5 text-neutral-400" 
-            />
+            <UIcon v-else-if="fileItem.uploaded" :id="uid" name="i-lucide-check-circle"
+              class="w-5 h-5 text-success-600" />
+            <UIcon v-else-if="fileItem.error" :id="uid" name="i-lucide-x-circle" class="w-5 h-5 text-error-600" />
+            <UIcon v-else :id="uid" name="i-lucide-clock" class="w-5 h-5 text-neutral-400" />
 
             <!-- Remove Button -->
-            <UButton
-              variant="ghost"
-              color="neutral"
-              size="xs"
-              icon="i-lucide-x"
-              @click="removeFile(index)"
-            />
+            <UButton variant="ghost" color="neutral" size="xs" icon="i-lucide-x" @click="removeFile(index)" />
           </div>
         </div>
       </div>
-      
+
       <!-- Upload Actions -->
       <div v-if="!autoUpload && hasUnuploadedFiles" class="flex justify-end space-x-2 pt-2">
-        <UButton
-          variant="outline"
-          color="neutral"
-          size="sm"
-          @click="clearFiles"
-        >
+        <UButton :id="uid" variant="outline" color="neutral" size="sm" @click="clearFiles">
           Clear All
         </UButton>
-        <UButton
-          size="sm"
-          :loading="isUploading"
-          @click="uploadFiles"
-        >
+        <UButton :id="uid" size="sm" :loading="isUploading" @click="uploadFiles">
           Upload Files
         </UButton>
       </div>
@@ -179,14 +114,16 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
+import { useId } from '#imports'
 
+const uid = useId()
 const props = defineProps({
   // v-model
   modelValue: {
     type: [Array, File, FileList],
     default: () => []
   },
-  
+
   // Form field props - NAME IS NOW REQUIRED
   label: {
     type: String,
@@ -212,7 +149,7 @@ const props = defineProps({
     type: [String, Boolean],
     default: false
   },
-  
+
   // File upload props
   accept: {
     type: String,
@@ -238,14 +175,14 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  
+
   // Styling props
   size: {
     type: String,
     default: 'md',
     validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl'].includes(value)
   },
-  
+
   // Text customization
   uploadText: {
     type: String,
@@ -263,7 +200,7 @@ const props = defineProps({
     type: Boolean,
     default: true
   },
-  
+
   // Custom classes
   dropZoneClass: {
     type: String,
@@ -283,35 +220,35 @@ const fileList = ref([])
 
 // Size classes for Nuxt UI v3
 const sizeClasses = {
-  xs: { 
-    container: 'p-3', 
-    icon: 'w-8 h-8', 
-    title: 'text-xs', 
-    subtitle: 'text-xs' 
+  xs: {
+    container: 'p-3',
+    icon: 'w-8 h-8',
+    title: 'text-xs',
+    subtitle: 'text-xs'
   },
-  sm: { 
-    container: 'p-4', 
-    icon: 'w-10 h-10', 
-    title: 'text-sm', 
-    subtitle: 'text-xs' 
+  sm: {
+    container: 'p-4',
+    icon: 'w-10 h-10',
+    title: 'text-sm',
+    subtitle: 'text-xs'
   },
-  md: { 
-    container: 'p-6', 
-    icon: 'w-12 h-12', 
-    title: 'text-base', 
-    subtitle: 'text-sm' 
+  md: {
+    container: 'p-6',
+    icon: 'w-12 h-12',
+    title: 'text-base',
+    subtitle: 'text-sm'
   },
-  lg: { 
-    container: 'p-8', 
-    icon: 'w-14 h-14', 
-    title: 'text-lg', 
-    subtitle: 'text-sm' 
+  lg: {
+    container: 'p-8',
+    icon: 'w-14 h-14',
+    title: 'text-lg',
+    subtitle: 'text-sm'
   },
-  xl: { 
-    container: 'p-10', 
-    icon: 'w-16 h-16', 
-    title: 'text-xl', 
-    subtitle: 'text-base' 
+  xl: {
+    container: 'p-10',
+    icon: 'w-16 h-16',
+    title: 'text-xl',
+    subtitle: 'text-base'
   }
 }
 
@@ -326,13 +263,13 @@ const validateFile = (file) => {
   if (file.size > props.maxSize) {
     return `File too large. Max size: ${formatFileSize(props.maxSize)}`
   }
-  
+
   // Check file type if accept is specified
   if (props.accept !== '*/*' && props.accept) {
     const acceptedTypes = props.accept.split(',').map(type => type.trim())
     const fileType = file.type
     const fileExtension = '.' + file.name.split('.').pop().toLowerCase()
-    
+
     const isValidType = acceptedTypes.some(acceptedType => {
       if (acceptedType.startsWith('.')) {
         return acceptedType === fileExtension
@@ -343,12 +280,12 @@ const validateFile = (file) => {
       }
       return acceptedType === fileType
     })
-    
+
     if (!isValidType) {
       return `Invalid file type. Accepted: ${props.accept}`
     }
   }
-  
+
   return null
 }
 
@@ -372,7 +309,7 @@ const handleDragLeave = (event) => {
 const handleDrop = (event) => {
   isDragOver.value = false
   if (props.disabled) return
-  
+
   const files = Array.from(event.dataTransfer.files)
   processFiles(files)
 }
@@ -386,7 +323,7 @@ const handleFileSelect = (event) => {
 
 const processFiles = (files) => {
   if (files.length === 0) return
-  
+
   // Check max files limit
   if (props.multiple && props.maxFiles) {
     const totalFiles = fileList.value.length + files.length
@@ -395,7 +332,7 @@ const processFiles = (files) => {
       return
     }
   }
-  
+
   // Process each file
   const newFiles = files.map(file => {
     const error = validateFile(file)
@@ -410,16 +347,16 @@ const processFiles = (files) => {
       error: error
     }
   })
-  
+
   if (props.multiple) {
     fileList.value.push(...newFiles)
   } else {
     fileList.value = [newFiles[0]]
   }
-  
+
   updateModelValue()
   emit('files-added', newFiles)
-  
+
   if (props.autoUpload) {
     uploadFiles()
   }
@@ -439,23 +376,23 @@ const clearFiles = () => {
 const uploadFiles = async () => {
   const filesToUpload = fileList.value.filter(file => !file.uploaded && !file.uploading && !file.error)
   if (filesToUpload.length === 0) return
-  
+
   isUploading.value = true
-  
+
   for (const fileItem of filesToUpload) {
     try {
       fileItem.uploading = true
-      
+
       // Simulate upload progress
       for (let progress = 0; progress <= 100; progress += 10) {
         fileItem.progress = progress
         await new Promise(resolve => setTimeout(resolve, 100))
       }
-      
+
       fileItem.uploading = false
       fileItem.uploaded = true
       fileItem.progress = 100
-      
+
       emit('upload-success', fileItem)
     } catch (error) {
       fileItem.uploading = false
@@ -463,7 +400,7 @@ const uploadFiles = async () => {
       emit('upload-error', error, fileItem)
     }
   }
-  
+
   isUploading.value = false
 }
 

@@ -1,151 +1,64 @@
 <!-- components/base/FormInput.vue -->
 <template>
-  <UFormField 
-    :label="label" 
-    :name="name"
-    :description="description"
-    :help="help"
-    :required="required"
-    :size="size"
-    :error="error"
-  >
+  <UFormField :label="label" :name="name" :description="description" :help="help" :required="required" :size="size"
+    :error="error">
     <!-- Text Input -->
-    <UInput 
-      v-if="type === 'text' || type === 'email' || type === 'password' || type === 'url' || type === 'number'"
-      :model-value="modelValue"
-      :type="type"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :loading="loading"
-      :icon="icon"
-      :leading-icon="leadingIcon"
-      :trailing-icon="trailingIcon"
-      :variant="variant"
-      :color="color"
-      :size="size"
-      :class="inputClass"
-      @update:model-value="$emit('update:modelValue', $event)"
-    />
+    <UInput v-if="type === 'text' || type === 'email' || type === 'password' || type === 'url' || type === 'number'"
+      :id="uid" :model-value="modelValue" :type="type" :placeholder="placeholder" :disabled="disabled"
+      :loading="loading" :icon="icon" :leading-icon="leadingIcon" :trailing-icon="trailingIcon" :variant="variant"
+      :color="color" :size="size" :class="inputClass" @update:model-value="$emit('update:modelValue', $event)" />
 
     <!-- Textarea -->
-    <UTextarea 
-      v-else-if="type === 'textarea'"
-      :model-value="modelValue"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :rows="rows"
-      :variant="variant"
-      :color="color"
-      :size="size"
-      :class="inputClass"
-      @update:model-value="$emit('update:modelValue', $event)"
-    />
+    <UTextarea v-else-if="type === 'textarea'" :id="uid" :model-value="modelValue" :placeholder="placeholder"
+      :disabled="disabled" :rows="rows" :variant="variant" :color="color" :size="size" :class="inputClass"
+      @update:model-value="$emit('update:modelValue', $event)" />
 
     <!-- Select -->
-    <USelect
-      v-else-if="type === 'select'"
-      :model-value="modelValue"
-      :options="options"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :variant="variant"
-      :color="color"
-      :size="size"
-      :class="inputClass"
-      @update:model-value="$emit('update:modelValue', $event)"
-    />
+    <USelect v-else-if="type === 'select'" :id="uid" :model-value="modelValue" :options="options"
+      :placeholder="placeholder" :disabled="disabled" :variant="variant" :color="color" :size="size" :class="inputClass"
+      @update:model-value="$emit('update:modelValue', $event)" />
 
     <!-- Select Menu (Multiple support) -->
-    <USelectMenu
-      v-else-if="type === 'select-menu'"
-      :model-value="modelValue"
-      :options="options"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :multiple="multiple"
-      :variant="variant"
-      :color="color"
-      :size="size"
-      :class="inputClass"
-      @update:model-value="$emit('update:modelValue', $event)"
-    />
+    <USelectMenu v-else-if="type === 'select-menu'" :id="uid" :model-value="modelValue" :options="options"
+      :placeholder="placeholder" :disabled="disabled" :multiple="multiple" :variant="variant" :color="color"
+      :size="size" :class="inputClass" @update:model-value="$emit('update:modelValue', $event)" />
 
     <!-- Input Number -->
-    <UInputNumber
-      v-else-if="type === 'input-number'"
-      :model-value="modelValue"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :min="min"
-      :max="max"
-      :step="step"
-      :variant="variant"
-      :color="color"
-      :size="size"
-      :class="inputClass"
-      @update:model-value="$emit('update:modelValue', $event)"
-    />
+    <UInputNumber v-else-if="type === 'input-number'" :id="uid" :model-value="modelValue" :placeholder="placeholder"
+      :disabled="disabled" :min="min" :max="max" :step="step" :variant="variant" :color="color" :size="size"
+      :class="inputClass" @update:model-value="$emit('update:modelValue', $event)" />
 
     <!-- File Input -->
-    <UInput
-      v-else-if="type === 'file'"
-      :type="type"
-      :disabled="disabled"
-      :accept="accept"
-      :multiple="multiple"
-      :variant="variant"
-      :color="color"
-      :size="size"
-      :class="inputClass"
-      @change="$emit('update:modelValue', $event.target.files)"
-    />
+    <UInput v-else-if="type === 'file'" :id="uid" :type="type" :disabled="disabled" :accept="accept"
+      :multiple="multiple" :variant="variant" :color="color" :size="size" :class="inputClass"
+      @change="$emit('update:modelValue', $event.target.files)" />
 
     <!-- Search Input with clear button -->
-    <UInput
-      v-else-if="type === 'search'"
-      :model-value="modelValue"
-      type="text"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :loading="loading"
-      icon="i-lucide-search"
-      :trailing-icon="modelValue ? 'i-lucide-x' : undefined"
-      :variant="variant"
-      :color="color"
-      :size="size"
-      :class="inputClass"
-      @update:model-value="$emit('update:modelValue', $event)"
-      @click:trailing="$emit('update:modelValue', '')"
-    />
+    <UInput v-else-if="type === 'search'" :id="uid" :model-value="modelValue" type="text" :placeholder="placeholder"
+      :disabled="disabled" :loading="loading" icon="i-lucide-search"
+      :trailing-icon="modelValue ? 'i-lucide-x' : undefined" :variant="variant" :color="color" :size="size"
+      :class="inputClass" @update:model-value="$emit('update:modelValue', $event)"
+      @click:trailing="$emit('update:modelValue', '')" />
 
     <!-- Default fallback -->
-    <UInput
-      v-else
-      :model-value="modelValue"
-      :type="type"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :loading="loading"
-      :icon="icon"
-      :leading-icon="leadingIcon"
-      :trailing-icon="trailingIcon"
-      :variant="variant"
-      :color="color"
-      :size="size"
-      :class="inputClass"
-      @update:model-value="$emit('update:modelValue', $event)"
-    />
+    <UInput v-else :id="uid" :model-value="modelValue" :type="type" :placeholder="placeholder" :disabled="disabled"
+      :loading="loading" :icon="icon" :leading-icon="leadingIcon" :trailing-icon="trailingIcon" :variant="variant"
+      :color="color" :size="size" :class="inputClass" @update:model-value="$emit('update:modelValue', $event)" />
   </UFormField>
 </template>
 
 <script setup>
+import { useId } from '#imports'
+
+const uid = useId()
+
 const props = defineProps({
   // v-model
   modelValue: {
     type: [String, Number, Array, Object, File, FileList],
     default: ''
   },
-  
+
   // Form field props
   label: {
     type: String,
@@ -171,7 +84,7 @@ const props = defineProps({
     type: [String, Boolean],
     default: false
   },
-  
+
   // Input props
   type: {
     type: String,
@@ -193,7 +106,7 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  
+
   // Input styling
   variant: {
     type: String,
@@ -210,18 +123,18 @@ const props = defineProps({
     default: 'md',
     validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl'].includes(value)
   },
-  
+
   // Icon props
   icon: String,
   leadingIcon: String,
   trailingIcon: String,
-  
+
   // Textarea specific
   rows: {
     type: Number,
     default: 3
   },
-  
+
   // Select specific
   options: {
     type: Array,
@@ -231,15 +144,15 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  
+
   // Number input specific
   min: Number,
   max: Number,
   step: Number,
-  
+
   // File input specific
   accept: String,
-  
+
   // Custom classes
   inputClass: {
     type: String,

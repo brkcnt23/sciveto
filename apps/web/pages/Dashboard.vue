@@ -141,52 +141,23 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div class="space-y-4">
-            <FormInput 
-              v-model="formData.name" 
-              name="projectName"
-              label="Project Name" 
-              placeholder="Enter project name"
-              icon="i-heroicons-folder" 
-              required
-            />
+            <FormInput v-model="formData.name" name="projectName" label="Project Name" placeholder="Enter project name"
+              icon="i-heroicons-folder" required />
 
-            <FormInput 
-              v-model="formData.email" 
-              name="projectEmail"
-              label="Email Address" 
-              placeholder="Enter email"
-              icon="i-heroicons-envelope" 
-              type="email" 
-            />
+            <FormInput v-model="formData.email" name="projectEmail" label="Email Address" placeholder="Enter email"
+              icon="i-heroicons-envelope" type="email" />
 
-            <FormSelect 
-              v-model="formData.priority" 
-              name="projectPriority"
-              label="Priority Level" 
-              placeholder="Select priority"
-              leading-icon="i-heroicons-flag" 
-              :items="priorityOptions"
-              help="Choose the priority level for this task" 
-            />
+            <FormSelect v-model="formData.priority" name="projectPriority" label="Priority Level"
+              placeholder="Select priority" leading-icon="i-heroicons-flag" :items="priorityOptions"
+              help="Choose the priority level for this task" />
           </div>
 
           <div class="space-y-4">
-            <FormInput 
-              v-model="formData.budget" 
-              name="projectBudget"
-              label="Budget" 
-              placeholder="0.00"
-              icon="i-heroicons-currency-dollar" 
-              type="number" 
-            />
+            <FormInput v-model="formData.budget" name="projectBudget" label="Budget" placeholder="0.00"
+              icon="i-heroicons-currency-dollar" type="number" />
 
-            <UTextarea 
-              v-model="formData.description" 
-              name="projectDescription"
-              label="Description" 
-              placeholder="Project description"
-              rows="3" 
-            />
+            <UTextarea v-model="formData.description" name="projectDescription" label="Description"
+              placeholder="Project description" rows="3" />
 
             <div class="flex space-x-2">
               <UButton color="primary" @click="handleSave">
@@ -208,31 +179,14 @@
         </template>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <DatePicker 
-            v-model="formData.startDate" 
-            name="startDate"
-            label="Start Date" 
-            placeholder="Select start date"
-            leading-icon="i-heroicons-calendar-days" 
-            help="Choose the project start date" 
-          />
+          <DatePicker v-model="formData.startDate" name="startDate" label="Start Date" placeholder="Select start date"
+            leading-icon="i-heroicons-calendar-days" help="Choose the project start date" />
 
-          <DatePicker 
-            v-model="formData.endDate" 
-            name="endDate"
-            label="End Date" 
-            placeholder="Select end date"
-            :min-date="formData.startDate" 
-            type="datetime-local" 
-          />
+          <DatePicker v-model="formData.endDate" name="endDate" label="End Date" placeholder="Select end date"
+            :min-date="formData.startDate" type="datetime-local" />
 
-          <DatePicker 
-            v-model="formData.time" 
-            name="meetingTime"
-            label="Meeting Time" 
-            type="time" 
-            placeholder="Select time" 
-          />
+          <DatePicker v-model="formData.time" name="meetingTime" label="Meeting Time" type="time"
+            placeholder="Select time" />
         </div>
       </UCard>
 
@@ -246,34 +200,18 @@
           <!-- Single File Upload -->
           <div>
             <h4 class="font-semibold text-neutral-700 mb-4">Single File Upload</h4>
-            <FileUpload 
-              v-model="uploadedFiles.single" 
-              name="profilePicture"
-              label="Profile Picture" 
-              accept="image/*"
-              :max-size="2 * 1024 * 1024" 
-              help="Upload a profile picture (max 2MB)"
-              @upload-success="handleUploadSuccess" 
-              @upload-error="handleUploadError" 
-            />
+            <FileUpload v-model="uploadedFiles.single" name="profilePicture" label="Profile Picture" accept="image/*"
+              :max-size="2 * 1024 * 1024" help="Upload a profile picture (max 2MB)"
+              @upload-success="handleUploadSuccess" @upload-error="handleUploadError" />
           </div>
 
           <!-- Multiple File Upload -->
           <div>
             <h4 class="font-semibold text-neutral-700 mb-4">Multiple File Upload</h4>
-            <FileUpload 
-              v-model="uploadedFiles.multiple" 
-              name="projectDocuments"
-              label="Project Documents" 
-              accept=".pdf,.doc,.docx,.jpg,.png"
-              :multiple="true" 
-              :max-files="5" 
-              :max-size="10 * 1024 * 1024"
-              help="Upload project documents (max 5 files, 10MB each)" 
-              auto-upload
-              @upload-success="handleUploadSuccess" 
-              @upload-error="handleUploadError" 
-            />
+            <FileUpload v-model="uploadedFiles.multiple" name="projectDocuments" label="Project Documents"
+              accept=".pdf,.doc,.docx,.jpg,.png" :multiple="true" :max-files="5" :max-size="10 * 1024 * 1024"
+              help="Upload project documents (max 5 files, 10MB each)" auto-upload @upload-success="handleUploadSuccess"
+              @upload-error="handleUploadError" />
           </div>
         </div>
       </UCard>
@@ -300,16 +238,9 @@
             </div>
           </div>
 
-          <Pagination
-            v-model:current-page="paginationData.currentPage"
-            v-model:per-page="paginationData.perPage"
-            name="examplePagination"
-            :total="paginationData.total"
-            :show-info="true"
-            :show-per-page-select="true"
-            :show-first-last="true"
-            @change="handlePaginationChange"
-          />
+          <Pagination v-model:current-page="paginationData.currentPage" v-model:per-page="paginationData.perPage"
+            name="examplePagination" :total="paginationData.total" :show-info="true" :show-per-page-select="true"
+            :show-first-last="true" @change="handlePaginationChange" />
         </div>
       </UCard>
 
@@ -329,7 +260,8 @@
             <template #header>
               <div class="flex items-center justify-between">
                 <h4 class="font-semibold text-neutral-800">{{ project.name }}</h4>
-                <UBadge :color="project.status === 'completed' ? 'success' : project.status === 'in-progress' ? 'warning' : 'neutral'">
+                <UBadge
+                  :color="project.status === 'completed' ? 'success' : project.status === 'in-progress' ? 'warning' : 'neutral'">
                   {{ project.status }}
                 </UBadge>
               </div>
@@ -337,7 +269,7 @@
 
             <div class="space-y-3">
               <p class="text-sm text-neutral-600">{{ project.description }}</p>
-              
+
               <div class="space-y-2">
                 <div class="flex justify-between text-sm">
                   <span class="text-neutral-500">Progress</span>
@@ -421,7 +353,7 @@
           🌍 Global Project Map
         </template>
 
-        <WorldMap name="world-map"/>
+        <WorldMap name="world-map" />
       </UCard>
 
       <!-- Progress Bar Section -->
@@ -450,18 +382,18 @@
           <!-- Skeleton Loading -->
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Skeleton Loading</h4>
-            <SkeletonLoader name ="SkeletonLoader" type="card" />
-            <SkeletonLoader name ="SkeletonLoader" type="list" />
-            <SkeletonLoader name ="SkeletonLoader" type="text" :lines="4" />
+            <SkeletonLoader name="SkeletonLoader" type="card" />
+            <SkeletonLoader name="SkeletonLoader" type="list" />
+            <SkeletonLoader name="SkeletonLoader" type="text" :lines="4" />
           </div>
 
           <!-- Spinner Loading -->
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Spinner Loading</h4>
             <div class="space-y-4">
-              <LoadingSpinner name ="LoadingSpinner" size="sm" text="Loading..." />
-              <LoadingSpinner name ="LoadingSpinner" size="md" color="emerald" text="Processing..." />
-              <LoadingSpinner name ="LoadingSpinner" size="lg" color="violet" text="Uploading..." />
+              <LoadingSpinner name="LoadingSpinner" size="sm" text="Loading..." />
+              <LoadingSpinner name="LoadingSpinner" size="md" color="emerald" text="Processing..." />
+              <LoadingSpinner name="LoadingSpinner" size="lg" color="violet" text="Uploading..." />
             </div>
           </div>
         </div>
@@ -476,14 +408,14 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">No Projects</h4>
-            <EmptyState  name ="EmptyState" icon="i-heroicons-briefcase" title="No Projects Found"
+            <EmptyState name="EmptyState" icon="i-heroicons-briefcase" title="No Projects Found"
               description="You haven't created any projects yet. Get started by creating your first project."
               action-text="Create Project" action-icon="i-heroicons-plus" @action="handleCreateProject" />
           </div>
 
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">No Stock Items</h4>
-            <EmptyState name ="EmptyState" icon="i-heroicons-cube" title="No Stock Items"
+            <EmptyState name="EmptyState" icon="i-heroicons-cube" title="No Stock Items"
               description="Your inventory is empty. Add some stock items to get started." action-text="Add Stock Item"
               action-icon="i-heroicons-plus" @action="handleAddStock" />
           </div>
@@ -540,7 +472,7 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div v-for="user in sampleUsers" :key="user.id"
                   class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                  <Avatar name ="Avatar" :user="user" size="md" show-online-status />
+                  <Avatar name="Avatar" :user="user" size="md" show-online-status />
                   <div>
                     <p class="font-medium text-gray-900">{{ user.name }}</p>
                     <p class="text-sm text-gray-500">{{ user.email }}</p>
@@ -554,13 +486,13 @@
             <div class="space-y-4">
               <h4 class="font-semibold text-slate-700">Project Settings</h4>
               <div class="space-y-4">
-                <FormInput name ="FormInput" v-model="settingsForm.name" label="Project Name" placeholder="Enter project name"
-                  leading-icon="i-heroicons-folder" />
-                <FormInput name ="FormInput" v-model="settingsForm.description" label="Description" placeholder="Project description"
-                  leading-icon="i-heroicons-document-text" />
+                <FormInput name="FormInput" v-model="settingsForm.name" label="Project Name"
+                  placeholder="Enter project name" leading-icon="i-heroicons-folder" />
+                <FormInput name="FormInput" v-model="settingsForm.description" label="Description"
+                  placeholder="Project description" leading-icon="i-heroicons-document-text" />
                 <div class="flex space-x-2">
-                  <UButton name ="UButton" color="blue" @click="saveSettings">Save Changes</UButton>
-                  <UButton name ="UButton" color="gray" variant="outline" @click="resetSettings">Reset</UButton>
+                  <UButton name="UButton" color="blue" @click="saveSettings">Save Changes</UButton>
+                  <UButton name="UButton" color="gray" variant="outline" @click="resetSettings">Reset</UButton>
                 </div>
               </div>
             </div>
@@ -616,8 +548,8 @@
         <template #header>
           <h3>📝 Form Components (Nuxt UI v3)</h3>
         </template>
-        <FormShowcase name="FormShowcase" :default-show-states="true" :default-show-textarea-select="true" :default-show-advanced="true"
-          :default-show-variants="false" :default-show-working-form="true" />
+        <FormShowcase name="FormShowcase" :default-show-states="true" :default-show-textarea-select="true"
+          :default-show-advanced="true" :default-show-variants="false" :default-show-working-form="true" />
       </UCard>
 
       <!-- Status Indicator Showcase -->
@@ -625,7 +557,8 @@
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">🔍 Status Indicator (Nuxt UI v3)</h3>
         </template>
-        <StatusShowcase name="StatusShowcase" :default-show-badge-style="true" :default-show-sizes="false" :default-show-interactive="true" />
+        <StatusShowcase name="StatusShowcase" :default-show-badge-style="true" :default-show-sizes="false"
+          :default-show-interactive="true" />
       </UCard>
 
       <!-- Modal Showcase -->
@@ -727,8 +660,10 @@
             <div class="space-y-4">
               <p class="text-sm text-gray-600">Fill in the details below</p>
               <div class="space-y-4">
-                <FormInput name="FormInput" v-model="modalForm.name" label="Project Name" placeholder="Enter project name" required />
-                <FormInput name="FormInput" v-model="modalForm.description" label="Description" placeholder="Project description" />
+                <FormInput name="FormInput" v-model="modalForm.name" label="Project Name"
+                  placeholder="Enter project name" required />
+                <FormInput name="FormInput" v-model="modalForm.description" label="Description"
+                  placeholder="Project description" />
               </div>
             </div>
 
@@ -784,28 +719,30 @@
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Form Select</h4>
 
-            <FormSelect name="FormSelect" v-model="formData.priority" label="Priority Level" placeholder="Select priority"
-              leading-icon="i-heroicons-flag" :options="priorityOptions"
+            <FormSelect name="FormSelect" v-model="formData.priority" label="Priority Level"
+              placeholder="Select priority" leading-icon="i-heroicons-flag" :options="priorityOptions"
               help-text="Choose the priority level for this task" />
 
             <FormSelect name="FormSelect" v-model="formData.category" label="Category" placeholder="Select category"
               :options="categoryOptions" :option-groups="categoryGroups" show-selected-value />
 
-            <FormSelect name="FormSelect" v-model="formData.status" label="Status" :options="statusOptions" :loading="selectLoading"
-              disabled />
+            <FormSelect name="FormSelect" v-model="formData.status" label="Status" :options="statusOptions"
+              :loading="selectLoading" disabled />
           </div>
 
           <!-- Date Picker -->
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Date Picker</h4>
 
-            <DatePicker name="DatePicker" v-model="formData.startDate" label="Start Date" placeholder="Select start date"
-              leading-icon="i-heroicons-calendar-days" help-text="Choose the project start date" />
+            <DatePicker name="DatePicker" v-model="formData.startDate" label="Start Date"
+              placeholder="Select start date" leading-icon="i-heroicons-calendar-days"
+              help-text="Choose the project start date" />
 
             <DatePicker name="DatePicker" v-model="formData.endDate" label="End Date" placeholder="Select end date"
               :min-date="formData.startDate" type="datetime-local" />
 
-            <DatePicker name="DatePicker" v-model="formData.time" label="Meeting Time" type="time" placeholder="Select time" />
+            <DatePicker name="DatePicker" v-model="formData.time" label="Meeting Time" type="time"
+              placeholder="Select time" />
           </div>
         </div>
       </UCard>
@@ -828,8 +765,8 @@
           <!-- Multiple File Upload -->
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Multiple File Upload</h4>
-            <FileUpload name="FileUpload" v-model="uploadedFiles.multiple" label="Project Documents" accept=".pdf,.doc,.docx,.jpg,.png"
-              :multiple="true" :max-files="5" :max-size="10 * 1024 * 1024"
+            <FileUpload name="FileUpload" v-model="uploadedFiles.multiple" label="Project Documents"
+              accept=".pdf,.doc,.docx,.jpg,.png" :multiple="true" :max-files="5" :max-size="10 * 1024 * 1024"
               help-text="Upload project documents (max 5 files, 10MB each)" auto-upload
               @upload-success="handleUploadSuccess" @upload-error="handleUploadError" />
           </div>
@@ -858,8 +795,9 @@
             </div>
           </div>
 
-          <Pagination name="Pagination" :current-page="paginationData.currentPage" :total-pages="paginationData.totalPages"
-            :total="paginationData.total" :per-page="paginationData.perPage" @page-change="handlePageChange" />
+          <Pagination name="Pagination" :current-page="paginationData.currentPage"
+            :total-pages="paginationData.totalPages" :total="paginationData.total" :per-page="paginationData.perPage"
+            @page-change="handlePageChange" />
         </div>
       </UCard>
 
@@ -981,9 +919,9 @@
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Stock Item Cards</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <StockItemCard name="StockItemCard" v-for="stockItem in sampleStockItems" :key="stockItem.id" :stock-item="stockItem"
-                @click="handleStockItemClick(stockItem.id)" @view="handleStockItemView" @edit="handleStockItemEdit"
-                @delete="handleStockItemDelete" @adjust-stock="handleStockAdjust"
+              <StockItemCard name="StockItemCard" v-for="stockItem in sampleStockItems" :key="stockItem.id"
+                :stock-item="stockItem" @click="handleStockItemClick(stockItem.id)" @view="handleStockItemView"
+                @edit="handleStockItemEdit" @delete="handleStockItemDelete" @adjust-stock="handleStockAdjust"
                 @add-to-project="handleAddToProject" />
             </div>
           </div>
@@ -992,9 +930,9 @@
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Category Cards</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <CategoryCard name="CategoryCard" v-for="category in sampleCategories" :key="category.id" :category="category"
-                @click="handleCategoryClick(category.id)" @view="handleCategoryView" @edit="handleCategoryEdit"
-                @delete="handleCategoryDelete" @add-item="handleCategoryAddItem"
+              <CategoryCard name="CategoryCard" v-for="category in sampleCategories" :key="category.id"
+                :category="category" @click="handleCategoryClick(category.id)" @view="handleCategoryView"
+                @edit="handleCategoryEdit" @delete="handleCategoryDelete" @add-item="handleCategoryAddItem"
                 @view-items="handleCategoryViewItems" />
             </div>
           </div>
@@ -1041,8 +979,8 @@
         </div>
 
         <!-- Loaded State -->
-        <ProjectTable name="ProjectTable" v-else :projects="sampleProjects" @view="handleProjectView" @edit="handleProjectEdit"
-          @delete="handleProjectDelete" />
+        <ProjectTable name="ProjectTable" v-else :projects="sampleProjects" @view="handleProjectView"
+          @edit="handleProjectEdit" @delete="handleProjectDelete" />
       </UCard>
 
       <!-- Component Library Summary -->

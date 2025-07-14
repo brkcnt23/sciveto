@@ -1,4 +1,3 @@
-// app.config.ts
 export default defineAppConfig({
   ui: {
     // Global UI Theme

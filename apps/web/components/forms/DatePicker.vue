@@ -1,28 +1,13 @@
 <template>
-  <UFormField 
-    :label="label" 
-    :name="name"
-    :description="description"
-    :help="help"
-    :required="required"
-    :size="size"
-    :error="error"
-  >
+  <UFormField :label="label" :name="name" :description="description" :help="help" :required="required" :size="size"
+    :error="error">
     <UPopover v-model:open="isOpen">
-      <UButton
-        :name="name"
-        :variant="variant"
-        :color="color"
-        :size="size"
-        :disabled="disabled"
-        :icon="leadingIcon || 'i-lucide-calendar'"
-        :class="[
+      <UButton :id="name" :name="name" :variant="variant" :color="color" :size="size" :disabled="disabled"
+        :icon="leadingIcon || 'i-lucide-calendar'" :class="[
           'w-full justify-between text-left font-normal',
           !modelValue && 'text-muted-foreground',
           buttonClass
-        ]"
-        trailing-icon="i-lucide-chevron-down"
-      >
+        ]" trailing-icon="i-lucide-chevron-down">
         <span v-if="displayValue" class="truncate">{{ displayValue }}</span>
         <span v-else class="text-neutral-500">{{ placeholder }}</span>
       </UButton>
@@ -30,58 +15,26 @@
       <template #content>
         <div class="p-4">
           <!-- Single Date Picker -->
-          <UCalendar
-            v-if="!range && !multiple"
-            v-model="internalValue"
-            :min-value="minDate"
-            :max-value="maxDate"
-            :disabled="disabled"
-            @update:model-value="handleDateChange"
-          />
-          
+          <UCalendar v-if="!range && !multiple" :id="uid" v-model="internalValue" :min-value="minDate"
+            :max-value="maxDate" :disabled="disabled" @update:model-value="handleDateChange" />
+
           <!-- Date Range Picker -->
-          <UCalendar
-            v-else-if="range"
-            v-model="internalValue"
-            :min-value="minDate"
-            :max-value="maxDate"
-            :disabled="disabled"
-            selection-mode="range"
-            @update:model-value="handleDateChange"
-          />
-          
+          <UCalendar v-else-if="range" :id="uid" v-model="internalValue" :min-value="minDate" :max-value="maxDate"
+            :disabled="disabled" selection-mode="range" @update:model-value="handleDateChange" />
+
           <!-- Multiple Date Picker -->
-          <UCalendar
-            v-else-if="multiple"
-            v-model="internalValue"
-            :min-value="minDate"
-            :max-value="maxDate"
-            :disabled="disabled"
-            selection-mode="multiple"
-            @update:model-value="handleDateChange"
-          />
+          <UCalendar v-else-if="multiple" :id="uid" v-model="internalValue" :min-value="minDate" :max-value="maxDate"
+            :disabled="disabled" selection-mode="multiple" @update:model-value="handleDateChange" />
 
           <!-- Time Picker for datetime-local -->
           <div v-if="type === 'datetime-local' && internalValue" class="mt-4 pt-4 border-t border-neutral-200">
             <div class="space-y-3">
               <label class="text-sm font-medium text-neutral-700">Select Time</label>
               <div class="flex space-x-2">
-                <USelect
-                  v-model="selectedHour"
-                  name="hour"
-                  :items="hourOptions"
-                  placeholder="Hour"
-                  size="sm"
-                  class="flex-1"
-                />
-                <USelect
-                  v-model="selectedMinute"
-                  name="minute"
-                  :items="minuteOptions"
-                  placeholder="Min"
-                  size="sm"
-                  class="flex-1"
-                />
+                <USelect :id="uid" v-model="selectedHour" name="hour" :items="hourOptions" placeholder="Hour" size="sm"
+                  class="flex-1" />
+                <USelect :id="uid" v-model="selectedMinute" name="minute" :items="minuteOptions" placeholder="Min"
+                  size="sm" class="flex-1" />
               </div>
             </div>
           </div>
@@ -90,39 +43,19 @@
           <div v-if="type === 'time'" class="space-y-3">
             <label class="text-sm font-medium text-neutral-700">Select Time</label>
             <div class="flex space-x-2">
-              <USelect
-                v-model="selectedHour"
-                name="hour"
-                :items="hourOptions"
-                placeholder="Hour"
-                size="sm"
-                class="flex-1"
-              />
-              <USelect
-                v-model="selectedMinute"
-                name="minute"
-                :items="minuteOptions"
-                placeholder="Min"
-                size="sm"
-                class="flex-1"
-              />
+              <USelect :id="uid" v-model="selectedHour" name="hour" :items="hourOptions" placeholder="Hour" size="sm"
+                class="flex-1" />
+              <USelect :id="uid" v-model="selectedMinute" name="minute" :items="minuteOptions" placeholder="Min"
+                size="sm" class="flex-1" />
             </div>
           </div>
 
           <!-- Action Buttons -->
           <div class="flex justify-end space-x-2 mt-4 pt-4 border-t border-neutral-200">
-            <UButton
-              variant="outline"
-              color="neutral"
-              size="sm"
-              @click="clearDate"
-            >
+            <UButton :id="uid" variant="outline" color="neutral" size="sm" @click="clearDate">
               Clear
             </UButton>
-            <UButton
-              size="sm"
-              @click="confirmDate"
-            >
+            <UButton size="sm" @click="confirmDate">
               {{ range ? 'Select Range' : multiple ? 'Select Dates' : 'Select Date' }}
             </UButton>
           </div>
@@ -135,14 +68,16 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { CalendarDate, DateFormatter, getLocalTimeZone, parseDate } from '@internationalized/date'
+import { useId } from '#imports'
 
+const uid = useId()
 const props = defineProps({
   // v-model
   modelValue: {
     type: [String, Date, Object, Array],
     default: null
   },
-  
+
   // Form field props - NAME IS NOW REQUIRED
   label: {
     type: String,
@@ -168,7 +103,7 @@ const props = defineProps({
     type: [String, Boolean],
     default: false
   },
-  
+
   // DatePicker specific props
   type: {
     type: String,
@@ -183,7 +118,7 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  
+
   // Styling props - Updated for v3
   variant: {
     type: String,
@@ -200,10 +135,10 @@ const props = defineProps({
     default: 'md',
     validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl'].includes(value)
   },
-  
+
   // Icon props
   leadingIcon: String,
-  
+
   // Calendar props
   minDate: {
     type: [String, Object, Date],
@@ -221,13 +156,13 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  
+
   // Date format
   dateFormat: {
     type: String,
     default: 'medium' // short, medium, long, full
   },
-  
+
   // Custom classes
   buttonClass: {
     type: String,
@@ -256,7 +191,7 @@ const timeFormatter = new DateFormatter('en-US', {
 const internalValue = computed({
   get() {
     if (!props.modelValue) return null
-    
+
     if (typeof props.modelValue === 'string') {
       if (props.type === 'time') {
         // Handle time string like "14:30"
@@ -272,12 +207,12 @@ const internalValue = computed({
         return new CalendarDate(new Date(props.modelValue))
       }
     }
-    
+
     if (props.modelValue instanceof Date) {
       const date = props.modelValue
       return new CalendarDate(date.getFullYear(), date.getMonth() + 1, date.getDate())
     }
-    
+
     return props.modelValue
   },
   set(value) {
@@ -288,24 +223,24 @@ const internalValue = computed({
 // Display value formatting
 const displayValue = computed(() => {
   if (!props.modelValue) return ''
-  
+
   if (props.type === 'time') {
     return `${selectedHour.value}:${selectedMinute.value}`
   }
-  
+
   if (props.range && Array.isArray(props.modelValue) && props.modelValue.length === 2) {
     const start = formatDisplayDate(props.modelValue[0])
     const end = formatDisplayDate(props.modelValue[1])
     return `${start} - ${end}`
   }
-  
+
   if (props.multiple && Array.isArray(props.modelValue)) {
     if (props.modelValue.length === 1) {
       return formatDisplayDate(props.modelValue[0])
     }
     return `${props.modelValue.length} dates selected`
   }
-  
+
   return formatDisplayDate(props.modelValue)
 })
 
@@ -331,12 +266,12 @@ const minuteOptions = computed(() => {
 // Methods
 const formatDisplayDate = (date) => {
   if (!date) return ''
-  
+
   if (typeof date === 'string') {
     if (props.type === 'time') return date
     date = new Date(date)
   }
-  
+
   if (date instanceof Date) {
     if (props.type === 'datetime-local') {
       return date.toLocaleString('en-US', {
@@ -349,13 +284,13 @@ const formatDisplayDate = (date) => {
     }
     return df.format(date)
   }
-  
+
   if (date?.toDate) {
     const jsDate = date.toDate(getLocalTimeZone())
     if (props.type === 'datetime-local') {
       return jsDate.toLocaleString('en-US', {
         year: 'numeric',
-        month: 'short', 
+        month: 'short',
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit'
@@ -363,7 +298,7 @@ const formatDisplayDate = (date) => {
     }
     return df.format(jsDate)
   }
-  
+
   return String(date)
 }
 
@@ -373,7 +308,7 @@ const handleDateChange = (value) => {
     emit('update:modelValue', timeString)
     return
   }
-  
+
   if (props.type === 'datetime-local' && value) {
     // Combine date with selected time
     const jsDate = value.toDate ? value.toDate(getLocalTimeZone()) : new Date(value)
@@ -381,7 +316,7 @@ const handleDateChange = (value) => {
     emit('update:modelValue', jsDate.toISOString().slice(0, 16)) // datetime-local format
     return
   }
-  
+
   if (value?.toDate) {
     // Convert CalendarDate to Date
     emit('update:modelValue', value.toDate(getLocalTimeZone()))
