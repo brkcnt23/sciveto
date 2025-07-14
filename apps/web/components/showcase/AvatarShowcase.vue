@@ -37,7 +37,7 @@
           <p class="text-xs text-slate-600">Yellow</p>
         </div>
         <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="purple" size="lg" :show-image="false" text-color="white"/>
+          <Avatar :user="sampleUser" bg-color="purple" size="lg" :show-image="false" text-color="white" />
           <p class="text-xs text-slate-600">Purple</p>
         </div>
         <div class="text-center space-y-2">
@@ -170,17 +170,12 @@
       <h4 class="font-semibold text-slate-700 text-lg border-b border-slate-200 pb-2">
         Avatar Groups
       </h4>
-      
+
       <div class="space-y-6">
         <!-- Normal Group -->
         <div class="text-center space-y-2">
           <UAvatarGroup size="lg">
-            <UAvatar 
-              v-for="user in teamMembers.slice(0, 3)" 
-              :key="user.id"
-              :src="user.avatar" 
-              :alt="user.name" 
-            />
+            <UAvatar v-for="user in teamMembers.slice(0, 3)" :key="user.id" :src="user.avatar" :alt="user.name" />
           </UAvatarGroup>
           <p class="text-xs text-slate-600">Team Collaboration</p>
         </div>
@@ -188,12 +183,7 @@
         <!-- With Max -->
         <div class="text-center space-y-2">
           <UAvatarGroup size="lg" :max="3">
-            <UAvatar 
-              v-for="user in teamMembers" 
-              :key="user.id"
-              :src="user.avatar" 
-              :alt="user.name" 
-            />
+            <UAvatar v-for="user in teamMembers" :key="user.id" :src="user.avatar" :alt="user.name" />
           </UAvatarGroup>
           <p class="text-xs text-slate-600">Max 3 Avatars (+1 more)</p>
         </div>
@@ -202,36 +192,21 @@
         <div class="flex items-center justify-center space-x-8">
           <div class="text-center space-y-2">
             <UAvatarGroup size="sm">
-              <UAvatar 
-                v-for="user in teamMembers.slice(0, 3)" 
-                :key="user.id"
-                :src="user.avatar" 
-                :alt="user.name" 
-              />
+              <UAvatar v-for="user in teamMembers.slice(0, 3)" :key="user.id" :src="user.avatar" :alt="user.name" />
             </UAvatarGroup>
             <p class="text-xs text-slate-600">Small</p>
           </div>
-          
+
           <div class="text-center space-y-2">
             <UAvatarGroup size="md">
-              <UAvatar 
-                v-for="user in teamMembers.slice(0, 3)" 
-                :key="user.id"
-                :src="user.avatar" 
-                :alt="user.name" 
-              />
+              <UAvatar v-for="user in teamMembers.slice(0, 3)" :key="user.id" :src="user.avatar" :alt="user.name" />
             </UAvatarGroup>
             <p class="text-xs text-slate-600">Medium</p>
           </div>
-          
+
           <div class="text-center space-y-2">
             <UAvatarGroup size="xl">
-              <UAvatar 
-                v-for="user in teamMembers.slice(0, 3)" 
-                :key="user.id"
-                :src="user.avatar" 
-                :alt="user.name" 
-              />
+              <UAvatar v-for="user in teamMembers.slice(0, 3)" :key="user.id" :src="user.avatar" :alt="user.name" />
             </UAvatarGroup>
             <p class="text-xs text-slate-600">Extra Large</p>
           </div>
@@ -243,36 +218,20 @@
     <div v-if="showControls" class="pt-6 border-t border-slate-200">
       <h4 class="font-semibold text-slate-700 mb-4">Show/Hide Sections</h4>
       <div class="flex flex-wrap gap-2">
-        <UButton 
-          :variant="showColors ? 'solid' : 'outline'" 
-          color="primary" 
-          size="sm"
-          @click="showColors = !showColors"
-        >
+        <UButton :variant="showColors ? 'solid' : 'outline'" color="primary" size="sm"
+          @click="showColors = !showColors">
           Border Colors
         </UButton>
-        <UButton 
-          :variant="showBgColors ? 'solid' : 'outline'" 
-          color="primary" 
-          size="sm"
-          @click="showBgColors = !showBgColors"
-        >
+        <UButton :variant="showBgColors ? 'solid' : 'outline'" color="primary" size="sm"
+          @click="showBgColors = !showBgColors">
           Background Colors
         </UButton>
-        <UButton 
-          :variant="showNotifications ? 'solid' : 'outline'" 
-          color="primary" 
-          size="sm"
-          @click="showNotifications = !showNotifications"
-        >
+        <UButton :variant="showNotifications ? 'solid' : 'outline'" color="primary" size="sm"
+          @click="showNotifications = !showNotifications">
           Notifications
         </UButton>
-        <UButton 
-          :variant="showAvatarGroup ? 'solid' : 'outline'" 
-          color="primary" 
-          size="sm"
-          @click="showAvatarGroup = !showAvatarGroup"
-        >
+        <UButton :variant="showAvatarGroup ? 'solid' : 'outline'" color="primary" size="sm"
+          @click="showAvatarGroup = !showAvatarGroup">
           Avatar Groups
         </UButton>
       </div>
@@ -304,7 +263,11 @@ const props = defineProps({
   defaultShowAvatarGroup: {
     type: Boolean,
     default: true
-  }
+  },
+  textColor: {
+    type: String,
+    default: 'white' // varsayılan beyaz
+  },
 })
 
 // Reactive state for showing/hiding sections
@@ -337,7 +300,7 @@ const teamMembers = [
   {
     id: 2,
     name: 'Bob Smith',
-    email: 'bob@example.com', 
+    email: 'bob@example.com',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
     isOnline: true
   },

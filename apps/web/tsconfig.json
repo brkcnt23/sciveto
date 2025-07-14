@@ -2,7 +2,37 @@
   // https://nuxt.com/docs/guide/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "types": ["node"]
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"],
+      "~~/*": ["./*"],
+      "@@/*": ["./*"]
+    },
+    "types": ["@types/node"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
-  "include": ["types", "components", "pages", "composables", "app.vue", "nuxt.config.ts"]
+  "include": [
+    "types/**/*",
+    "components/**/*", 
+    "pages/**/*", 
+    "composables/**/*", 
+    "stores/**/*",
+    "middleware/**/*",
+    "plugins/**/*",
+    "utils/**/*",
+    "app.vue", 
+    "nuxt.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".nuxt",
+    "dist"
+  ]
 }
