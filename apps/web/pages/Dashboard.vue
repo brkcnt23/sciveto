@@ -1,852 +1,852 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
-    <!-- Header Component -->
-    <UHeader :user="user" />
+  <div class="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
+    <!-- Header - Full width, fixed position -->
+    <AppHeader 
+      :navigation="headerNavigation"
+      :user="user"
+      :notification-count="notificationCount"
+      :app-name="appName"
+      @open-search="openSearch"
+      @toggle-notifications="toggleNotifications"
+      @sign-out="signOut"
+    />
 
-    <div class="max-w-7xl mx-auto space-y-6">
-      <!-- Development Logout Button -->
-      <div class="bg-red-50 border border-red-200 rounded-lg p-3">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-2">
-            <Icon name="i-heroicons-information-circle" class="w-5 h-5 text-red-500" />
-            <span class="text-sm text-red-700 font-medium">Development Mode</span>
-          </div>
-          <div class="flex items-center space-x-3">
-            <span class="text-xs text-red-600">
-              Logged in as: {{ user?.email }}
-            </span>
-            <UButton color="red" variant="outline" size="xs" :loading="loggingOut" @click="handleDevLogout">
-              <Icon name="i-heroicons-arrow-right-on-rectangle" class="w-3 h-3 mr-1" />
-              Test Logout
-            </UButton>
-          </div>
-        </div>
-      </div>
+    <!-- Main Layout Container -->
+    <div class="flex flex-1 overflow-hidden">
+      <!-- Sidebar -->
+      <AppSidebar 
+        :navigation="sidebarNavigation"
+        :user="user"
+        :is-open="sidebarOpen"
+        @close="sidebarOpen = false"
+      />
 
-      <!-- Header -->
-      <div class="text-center mb-8">
-        <h1 class="text-4xl font-bold text-slate-800 mb-2 mt-12">🎨 Component Showcase</h1>
-        <p class="text-slate-600 max-w-2xl mx-auto">
-          Explore our beautiful UI components with interactive examples and demonstrations
-        </p>
-      </div>
-    </div>
-
-    <div class="mx-auto max-w-7xl px-6 lg:px-8 py-8 space-y-8">
-      <!-- Welcome Section -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h2 class="text-2xl font-bold text-slate-800">🚀 Component Showcase Dashboard</h2>
-        </template>
-
-        <p class="text-slate-600 mb-6">
-          Bu sayfada projemizde kullanacağımız tüm base component'leri görebilirsiniz.
-          Her component doğal renkler ve modern tasarım prensipleri ile oluşturulmuştur.
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="bg-sky-50 p-4 rounded-lg border border-sky-200">
-            <h4 class="font-semibold text-sky-800">🎨 Layout Components</h4>
-            <p class="text-sm text-sky-600 mt-1">Header, Sidebar, Footer, Breadcrumb</p>
-          </div>
-          <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
-            <h4 class="font-semibold text-emerald-800">🔧 Core UI Components</h4>
-            <p class="text-sm text-emerald-600 mt-1">Card, Table, Modal, Button, Badge</p>
-          </div>
-          <div class="bg-violet-50 p-4 rounded-lg border border-violet-200">
-            <h4 class="font-semibold text-violet-800">📊 Data Components</h4>
-            <p class="text-sm text-violet-600 mt-1">ProgressBar, StatusIndicator, Avatar</p>
-          </div>
-        </div>
-      </UCard>
-
-      <!-- Migration Status Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <UCard class="bg-gradient-to-br from-primary-50 to-primary-100 border-primary-200">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8 py-8 space-y-8">
+        <!-- Welcome Section -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
           <template #header>
-            <h4 class="font-bold text-primary-800">✅ Migrated</h4>
+            <h2 class="text-2xl font-bold text-slate-800">🚀 Component Showcase Dashboard</h2>
           </template>
-          <ul class="text-sm text-primary-700 space-y-1">
-            <li>🔄 UDropdown → UDropdownMenu</li>
-            <li>🔄 USelect options → items</li>
-            <li>🔄 Added name props</li>
-            <li>🔄 Color system (gray → neutral)</li>
-            <li>🔄 New theming system</li>
-          </ul>
+
+          <p class="text-slate-600 mb-6">
+            Bu sayfada projemizde kullanacağımız tüm base component'leri görebilirsiniz.
+            Her component doğal renkler ve modern tasarım prensipleri ile oluşturulmuştur.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-sky-50 p-4 rounded-lg border border-sky-200">
+              <h4 class="font-semibold text-sky-800">🎨 Layout Components</h4>
+              <p class="text-sm text-sky-600 mt-1">Header, Sidebar, Footer, Breadcrumb</p>
+            </div>
+            <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
+              <h4 class="font-semibold text-emerald-800">🔧 Core UI Components</h4>
+              <p class="text-sm text-emerald-600 mt-1">Card, Table, Modal, Button, Badge</p>
+            </div>
+            <div class="bg-violet-50 p-4 rounded-lg border border-violet-200">
+              <h4 class="font-semibold text-violet-800">📊 Data Components</h4>
+              <p class="text-sm text-violet-600 mt-1">ProgressBar, StatusIndicator, Avatar</p>
+            </div>
+          </div>
         </UCard>
 
-        <UCard class="bg-gradient-to-br from-success-50 to-success-100 border-success-200">
-          <template #header>
-            <h4 class="font-bold text-success-800">🎯 Features</h4>
-          </template>
-          <ul class="text-sm text-success-700 space-y-1">
-            <li>✅ Tailwind CSS v4</li>
-            <li>✅ Reka UI Components</li>
-            <li>✅ Better Performance</li>
-            <li>✅ TypeScript Support</li>
-            <li>✅ Accessibility</li>
-          </ul>
-        </UCard>
+        <!-- Migration Status Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <UCard class="bg-gradient-to-br from-primary-50 to-primary-100 border-primary-200">
+            <template #header>
+              <h4 class="font-bold text-primary-800">✅ Migrated</h4>
+            </template>
+            <ul class="text-sm text-primary-700 space-y-1">
+              <li>🔄 UDropdown → UDropdownMenu</li>
+              <li>🔄 USelect options → items</li>
+              <li>🔄 Added name props</li>
+              <li>🔄 Color system (gray → neutral)</li>
+              <li>🔄 New theming system</li>
+            </ul>
+          </UCard>
 
-        <UCard class="bg-gradient-to-br from-warning-50 to-warning-100 border-warning-200">
-          <template #header>
-            <h4 class="font-bold text-warning-800">⚡ Performance</h4>
-          </template>
-          <ul class="text-sm text-warning-700 space-y-1">
-            <li>📦 Smaller Bundle</li>
-            <li>🚀 Faster Loading</li>
-            <li>⚡ Tree Shaking</li>
-            <li>📱 Mobile Optimized</li>
-          </ul>
-        </UCard>
+          <UCard class="bg-gradient-to-br from-success-50 to-success-100 border-success-200">
+            <template #header>
+              <h4 class="font-bold text-success-800">🎯 Features</h4>
+            </template>
+            <ul class="text-sm text-success-700 space-y-1">
+              <li>✅ Tailwind CSS v4</li>
+              <li>✅ Reka UI Components</li>
+              <li>✅ Better Performance</li>
+              <li>✅ TypeScript Support</li>
+              <li>✅ Accessibility</li>
+            </ul>
+          </UCard>
 
-        <UCard class="bg-gradient-to-br from-info-50 to-info-100 border-info-200">
-          <template #header>
-            <h4 class="font-bold text-info-800">🎨 Design</h4>
-          </template>
-          <ul class="text-sm text-info-700 space-y-1">
-            <li>🎯 New Design Tokens</li>
-            <li>🌗 Dark Mode Support</li>
-            <li>🎨 Custom Theming</li>
-            <li>📐 Consistent Spacing</li>
-          </ul>
-        </UCard>
-      </div>
+          <UCard class="bg-gradient-to-br from-warning-50 to-warning-100 border-warning-200">
+            <template #header>
+              <h4 class="font-bold text-warning-800">⚡ Performance</h4>
+            </template>
+            <ul class="text-sm text-warning-700 space-y-1">
+              <li>📦 Smaller Bundle</li>
+              <li>🚀 Faster Loading</li>
+              <li>⚡ Tree Shaking</li>
+              <li>📱 Mobile Optimized</li>
+            </ul>
+          </UCard>
 
-      <!-- Priority Badge Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">🏷️ Priority Badge (Nuxt UI v3)</h3>
-        </template>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div class="text-center space-y-3">
-            <h4 class="font-semibold text-slate-700">LOW Priority</h4>
-            <div class="space-y-2">
-              <UBadge label="LOW" color="success" variant="solid" size="md" leading-icon="i-lucide-arrow-down" />
-              <UBadge label="LOW" color="success" variant="soft" size="md" leading-icon="i-lucide-arrow-down" />
-              <UBadge label="LOW" color="success" variant="outline" size="md" leading-icon="i-lucide-arrow-down" />
-              <UBadge label="LOW" color="success" variant="subtle" size="md" leading-icon="i-lucide-arrow-down" />
-            </div>
-          </div>
-
-          <div class="text-center space-y-3">
-            <h4 class="font-semibold text-slate-700">MEDIUM Priority</h4>
-            <div class="space-y-2">
-              <UBadge label="MEDIUM" color="warning" variant="solid" size="md" leading-icon="i-lucide-minus" />
-              <UBadge label="MEDIUM" color="warning" variant="soft" size="md" leading-icon="i-lucide-minus" />
-              <UBadge label="MEDIUM" color="warning" variant="outline" size="md" leading-icon="i-lucide-minus" />
-              <UBadge label="MEDIUM" color="warning" variant="subtle" size="md" leading-icon="i-lucide-minus" />
-            </div>
-          </div>
-
-          <div class="text-center space-y-3">
-            <h4 class="font-semibold text-slate-700">HIGH Priority</h4>
-            <div class="space-y-2">
-              <UBadge label="HIGH" color="error" variant="solid" size="md" leading-icon="i-lucide-arrow-up" />
-              <UBadge label="HIGH" color="error" variant="soft" size="md" leading-icon="i-lucide-arrow-up" />
-              <UBadge label="HIGH" color="error" variant="outline" size="md" leading-icon="i-lucide-arrow-up" />
-              <UBadge label="HIGH" color="error" variant="subtle" size="md" leading-icon="i-lucide-arrow-up" />
-            </div>
-          </div>
-
-          <div class="text-center space-y-3">
-            <h4 class="font-semibold text-slate-700">URGENT Priority</h4>
-            <div class="space-y-2">
-              <UBadge label="URGENT" color="error" variant="solid" size="md" leading-icon="i-lucide-alert-triangle" />
-              <UBadge label="URGENT" color="error" variant="soft" size="md" leading-icon="i-lucide-alert-triangle" />
-              <UBadge label="URGENT" color="error" variant="outline" size="md" leading-icon="i-lucide-alert-triangle" />
-              <UBadge label="URGENT" color="error" variant="subtle" size="md" leading-icon="i-lucide-alert-triangle" />
-            </div>
-          </div>
+          <UCard class="bg-gradient-to-br from-info-50 to-info-100 border-info-200">
+            <template #header>
+              <h4 class="font-bold text-info-800">🎨 Design</h4>
+            </template>
+            <ul class="text-sm text-info-700 space-y-1">
+              <li>🎯 New Design Tokens</li>
+              <li>🌗 Dark Mode Support</li>
+              <li>🎨 Custom Theming</li>
+              <li>📐 Consistent Spacing</li>
+            </ul>
+          </UCard>
         </div>
-      </UCard>
 
-      <!-- World Map Section -->
-      <UCard>
-        <template #header>
-          🌍 Global Project Map
-        </template>
+        <!-- Priority Badge Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">🏷️ Priority Badge (Nuxt UI v3)</h3>
+          </template>
 
-        <WorldMap name="world-map"/>
-      </UCard>
-
-      <!-- Progress Bar Section -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">📊 Progress Bar (Nuxt UI v3)</h3>
-        </template>
-        <ProgressBarShowcase name="ProgressBarShowcase" />
-      </UCard>
-
-      <!-- Avatar Section -->
-      <UCard>
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">👤 Avatar (Nuxt UI v3)</h3>
-        </template>
-        <AvatarShowcase name="AvatarShowcase" />
-      </UCard>
-
-      <!-- Loading Components Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">⏳ Loading Components</h3>
-        </template>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <!-- Skeleton Loading -->
-          <div class="space-y-4">
-            <h4 class="font-semibold text-slate-700">Skeleton Loading</h4>
-            <SkeletonLoader name ="SkeletonLoader" type="card" />
-            <SkeletonLoader name ="SkeletonLoader" type="list" />
-            <SkeletonLoader name ="SkeletonLoader" type="text" :lines="4" />
-          </div>
-
-          <!-- Spinner Loading -->
-          <div class="space-y-4">
-            <h4 class="font-semibold text-slate-700">Spinner Loading</h4>
-            <div class="space-y-4">
-              <LoadingSpinner name ="LoadingSpinner" size="sm" text="Loading..." />
-              <LoadingSpinner name ="LoadingSpinner" size="md" color="emerald" text="Processing..." />
-              <LoadingSpinner name ="LoadingSpinner" size="lg" color="violet" text="Uploading..." />
-            </div>
-          </div>
-        </div>
-      </UCard>
-
-      <!-- Empty State Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">📭 Empty State Component</h3>
-        </template>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">No Projects</h4>
-            <EmptyState  name ="EmptyState" icon="i-heroicons-briefcase" title="No Projects Found"
-              description="You haven't created any projects yet. Get started by creating your first project."
-              action-text="Create Project" action-icon="i-heroicons-plus" @action="handleCreateProject" />
-          </div>
-
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">No Stock Items</h4>
-            <EmptyState name ="EmptyState" icon="i-heroicons-cube" title="No Stock Items"
-              description="Your inventory is empty. Add some stock items to get started." action-text="Add Stock Item"
-              action-icon="i-heroicons-plus" @action="handleAddStock" />
-          </div>
-        </div>
-      </UCard>
-
-      <!-- Tabs Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">📑 Tabs Component</h3>
-        </template>
-
-        <Tabs v-model="activeTab" :tabs="sampleTabs" @change="handleTabChange">
-          <template #overview>
-            <div class="space-y-4">
-              <h4 class="font-semibold text-slate-700">Project Overview</h4>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-blue-50 p-4 rounded-lg">
-                  <h5 class="font-semibold text-blue-800">Total Projects</h5>
-                  <p class="text-2xl font-bold text-blue-600">24</p>
-                </div>
-                <div class="bg-green-50 p-4 rounded-lg">
-                  <h5 class="font-semibold text-green-800">Completed</h5>
-                  <p class="text-2xl font-bold text-green-600">18</p>
-                </div>
-                <div class="bg-orange-50 p-4 rounded-lg">
-                  <h5 class="font-semibold text-orange-800">In Progress</h5>
-                  <p class="text-2xl font-bold text-orange-600">6</p>
-                </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="text-center space-y-3">
+              <h4 class="font-semibold text-slate-700">LOW Priority</h4>
+              <div class="space-y-2">
+                <UBadge label="LOW" color="success" variant="solid" size="md" leading-icon="i-lucide-arrow-down" />
+                <UBadge label="LOW" color="success" variant="soft" size="md" leading-icon="i-lucide-arrow-down" />
+                <UBadge label="LOW" color="success" variant="outline" size="md" leading-icon="i-lucide-arrow-down" />
+                <UBadge label="LOW" color="success" variant="subtle" size="md" leading-icon="i-lucide-arrow-down" />
               </div>
             </div>
-          </template>
 
-          <template #details>
-            <div class="space-y-4">
-              <h4 class="font-semibold text-slate-700">Project Details</h4>
-              <div class="bg-gray-50 p-4 rounded-lg">
-                <p class="text-gray-600">Detailed project information, timelines, and specifications would be
-                  displayed
-                  here.</p>
-                <ul class="mt-2 space-y-1 text-sm text-gray-500">
-                  <li>• Project specifications</li>
-                  <li>• Timeline and milestones</li>
-                  <li>• Resource allocation</li>
-                  <li>• Risk assessment</li>
-                </ul>
+            <div class="text-center space-y-3">
+              <h4 class="font-semibold text-slate-700">MEDIUM Priority</h4>
+              <div class="space-y-2">
+                <UBadge label="MEDIUM" color="warning" variant="solid" size="md" leading-icon="i-lucide-minus" />
+                <UBadge label="MEDIUM" color="warning" variant="soft" size="md" leading-icon="i-lucide-minus" />
+                <UBadge label="MEDIUM" color="warning" variant="outline" size="md" leading-icon="i-lucide-minus" />
+                <UBadge label="MEDIUM" color="warning" variant="subtle" size="md" leading-icon="i-lucide-minus" />
               </div>
             </div>
+
+            <div class="text-center space-y-3">
+              <h4 class="font-semibold text-slate-700">HIGH Priority</h4>
+              <div class="space-y-2">
+                <UBadge label="HIGH" color="error" variant="solid" size="md" leading-icon="i-lucide-arrow-up" />
+                <UBadge label="HIGH" color="error" variant="soft" size="md" leading-icon="i-lucide-arrow-up" />
+                <UBadge label="HIGH" color="error" variant="outline" size="md" leading-icon="i-lucide-arrow-up" />
+                <UBadge label="HIGH" color="error" variant="subtle" size="md" leading-icon="i-lucide-arrow-up" />
+              </div>
+            </div>
+
+            <div class="text-center space-y-3">
+              <h4 class="font-semibold text-slate-700">URGENT Priority</h4>
+              <div class="space-y-2">
+                <UBadge label="URGENT" color="error" variant="solid" size="md" leading-icon="i-lucide-alert-triangle" />
+                <UBadge label="URGENT" color="error" variant="soft" size="md" leading-icon="i-lucide-alert-triangle" />
+                <UBadge label="URGENT" color="error" variant="outline" size="md"
+                  leading-icon="i-lucide-alert-triangle" />
+                <UBadge label="URGENT" color="error" variant="subtle" size="md"
+                  leading-icon="i-lucide-alert-triangle" />
+              </div>
+            </div>
+          </div>
+        </UCard>
+
+        <!-- World Map Section -->
+        <UCard>
+          <template #header>
+            🌍 Global Project Map
           </template>
 
-          <template #team>
+          <WorldMap name="world-map" />
+        </UCard>
+
+        <!-- Progress Bar Section -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">📊 Progress Bar (Nuxt UI v3)</h3>
+          </template>
+          <ProgressBarShowcase name="ProgressBarShowcase" />
+        </UCard>
+
+        <!-- Avatar Section -->
+        <UCard>
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">👤 Avatar (Nuxt UI v3)</h3>
+          </template>
+          <AvatarShowcase name="AvatarShowcase" />
+        </UCard>
+
+        <!-- Loading Components Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">⏳ Loading Components</h3>
+          </template>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Skeleton Loading -->
             <div class="space-y-4">
-              <h4 class="font-semibold text-slate-700">Team Members</h4>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div v-for="user in sampleUsers" :key="user.id"
-                  class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                  <Avatar name ="Avatar" :user="user" size="md" show-online-status />
-                  <div>
-                    <p class="font-medium text-gray-900">{{ user.name }}</p>
-                    <p class="text-sm text-gray-500">{{ user.email }}</p>
+              <h4 class="font-semibold text-slate-700">Skeleton Loading</h4>
+              <SkeletonLoader name="SkeletonLoader" type="card" />
+              <SkeletonLoader name="SkeletonLoader" type="list" />
+              <SkeletonLoader name="SkeletonLoader" type="text" :lines="4" />
+            </div>
+
+            <!-- Spinner Loading -->
+            <div class="space-y-4">
+              <h4 class="font-semibold text-slate-700">Spinner Loading</h4>
+              <div class="space-y-4">
+                <LoadingSpinner name="LoadingSpinner" size="sm" text="Loading..." />
+                <LoadingSpinner name="LoadingSpinner" size="md" color="emerald" text="Processing..." />
+                <LoadingSpinner name="LoadingSpinner" size="lg" color="violet" text="Uploading..." />
+              </div>
+            </div>
+          </div>
+        </UCard>
+
+        <!-- Empty State Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">📭 Empty State Component</h3>
+          </template>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+              <h4 class="font-semibold text-slate-700 mb-4">No Projects</h4>
+              <EmptyState name="EmptyState" icon="i-heroicons-briefcase" title="No Projects Found"
+                description="You haven't created any projects yet. Get started by creating your first project."
+                action-text="Create Project" action-icon="i-heroicons-plus" @action="handleCreateProject" />
+            </div>
+
+            <div>
+              <h4 class="font-semibold text-slate-700 mb-4">No Stock Items</h4>
+              <EmptyState name="EmptyState" icon="i-heroicons-cube" title="No Stock Items"
+                description="Your inventory is empty. Add some stock items to get started." action-text="Add Stock Item"
+                action-icon="i-heroicons-plus" @action="handleAddStock" />
+            </div>
+          </div>
+        </UCard>
+
+        <!-- Tabs Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">📑 Tabs Component</h3>
+          </template>
+
+          <Tabs v-model="activeTab" :tabs="sampleTabs" @change="handleTabChange">
+            <template #overview>
+              <div class="space-y-4">
+                <h4 class="font-semibold text-slate-700">Project Overview</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div class="bg-blue-50 p-4 rounded-lg">
+                    <h5 class="font-semibold text-blue-800">Total Projects</h5>
+                    <p class="text-2xl font-bold text-blue-600">24</p>
+                  </div>
+                  <div class="bg-green-50 p-4 rounded-lg">
+                    <h5 class="font-semibold text-green-800">Completed</h5>
+                    <p class="text-2xl font-bold text-green-600">18</p>
+                  </div>
+                  <div class="bg-orange-50 p-4 rounded-lg">
+                    <h5 class="font-semibold text-orange-800">In Progress</h5>
+                    <p class="text-2xl font-bold text-orange-600">6</p>
                   </div>
                 </div>
               </div>
-            </div>
-          </template>
+            </template>
 
-          <template #settings>
-            <div class="space-y-4">
-              <h4 class="font-semibold text-slate-700">Project Settings</h4>
+            <template #details>
               <div class="space-y-4">
-                <FormInput name ="FormInput" v-model="settingsForm.name" label="Project Name" placeholder="Enter project name"
-                  leading-icon="i-heroicons-folder" />
-                <FormInput name ="FormInput" v-model="settingsForm.description" label="Description" placeholder="Project description"
-                  leading-icon="i-heroicons-document-text" />
-                <div class="flex space-x-2">
-                  <UButton name ="UButton" color="blue" @click="saveSettings">Save Changes</UButton>
-                  <UButton name ="UButton" color="gray" variant="outline" @click="resetSettings">Reset</UButton>
+                <h4 class="font-semibold text-slate-700">Project Details</h4>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <p class="text-gray-600">Detailed project information, timelines, and specifications would be
+                    displayed
+                    here.</p>
+                  <ul class="mt-2 space-y-1 text-sm text-gray-500">
+                    <li>• Project specifications</li>
+                    <li>• Timeline and milestones</li>
+                    <li>• Resource allocation</li>
+                    <li>• Risk assessment</li>
+                  </ul>
                 </div>
               </div>
-            </div>
-          </template>
-        </Tabs>
-      </UCard>
-
-      <!-- Error Message Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">⚠️ Error Message Component</h3>
-        </template>
-
-        <div class="space-y-6">
-          <!-- Error Types -->
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">Error Types</h4>
-            <div class="space-y-4">
-              <ErrorMessage v-if="showErrorExample" type="error" title="Validation Error"
-                :error="sampleErrors.validation" :show-retry="true" dismissible @retry="handleRetryError"
-                @dismiss="showErrorExample = false" />
-
-              <ErrorMessage v-if="showWarningExample" type="warning" title="Warning"
-                error="This action cannot be undone. Please proceed with caution." dismissible
-                @dismiss="showWarningExample = false" />
-
-              <ErrorMessage v-if="showInfoExample" type="info" title="Information"
-                error="Your session will expire in 5 minutes. Save your work to avoid losing changes." dismissible
-                @dismiss="showInfoExample = false" />
-            </div>
-          </div>
-
-          <!-- Control Buttons -->
-          <div class="flex flex-wrap gap-2">
-            <UButton v-if="!showErrorExample" color="red" variant="outline" @click="showErrorExample = true">
-              Show Error
-            </UButton>
-            <UButton v-if="!showWarningExample" color="amber" variant="outline" @click="showWarningExample = true">
-              Show Warning
-            </UButton>
-            <UButton v-if="!showInfoExample" color="blue" variant="outline" @click="showInfoExample = true">
-              Show Info
-            </UButton>
-            <UButton color="gray" variant="soft" @click="showAllErrors">
-              Show All
-            </UButton>
-          </div>
-        </div>
-      </UCard>
-
-      <!-- Form Section -->
-      <UCard>
-        <template #header>
-          <h3>📝 Form Components (Nuxt UI v3)</h3>
-        </template>
-        <FormShowcase name="FormShowcase" :default-show-states="true" :default-show-textarea-select="true" :default-show-advanced="true"
-          :default-show-variants="false" :default-show-working-form="true" />
-      </UCard>
-
-      <!-- Status Indicator Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">🔍 Status Indicator (Nuxt UI v3)</h3>
-        </template>
-        <StatusShowcase name="StatusShowcase" :default-show-badge-style="true" :default-show-sizes="false" :default-show-interactive="true" />
-      </UCard>
-
-      <!-- Modal Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">🪟 Modal Component</h3>
-        </template>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <UButton color="blue" @click="showModal = true">
-            Basic Modal
-          </UButton>
-
-          <UButton color="red" @click="showDeleteModal = true">
-            Delete Modal
-          </UButton>
-
-          <UButton color="green" @click="showFormModal = true">
-            Form Modal
-          </UButton>
-
-          <UButton color="purple" @click="showInfoModal = true">
-            Info Modal
-          </UButton>
-        </div>
-
-        <!-- Basic Modal -->
-        <UModal v-model="showModal">
-          <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
-            <template #header>
-              <div class="flex items-center justify-between">
-                <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-                  Basic Modal
-                </h3>
-                <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
-                  @click="showModal = false" />
-              </div>
             </template>
 
-            <div class="space-y-4">
-              <p>This is the modal content area. You can put any content here.</p>
-              <p>Click the buttons below to interact with the modal.</p>
-            </div>
-
-            <template #footer>
-              <div class="flex justify-end space-x-3">
-                <UButton variant="outline" @click="showModal = false">Cancel</UButton>
-                <UButton @click="handleModalConfirm">Confirm</UButton>
-              </div>
-            </template>
-          </UCard>
-        </UModal>
-
-        <!-- Delete Modal -->
-        <UModal v-model="showDeleteModal">
-          <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
-            <template #header>
-              <div class="flex items-center justify-between">
-                <h3 class="text-base font-semibold leading-6 text-red-600">
-                  Delete Project
-                </h3>
-                <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
-                  @click="showDeleteModal = false" />
-              </div>
-            </template>
-
-            <div class="space-y-4">
-              <p>Are you sure you want to delete this project? This action cannot be undone.</p>
-              <div class="bg-red-50 border border-red-200 rounded-lg p-4">
-                <p class="text-red-800 font-medium">Warning: This action is permanent</p>
-                <p class="text-red-600 text-sm mt-1">All project data, files, and associated records will be
-                  permanently
-                  deleted.</p>
-              </div>
-            </div>
-
-            <template #footer>
-              <div class="flex justify-end space-x-3">
-                <UButton variant="outline" @click="showDeleteModal = false">Cancel</UButton>
-                <UButton color="red" @click="handleDeleteConfirm">Delete</UButton>
-              </div>
-            </template>
-          </UCard>
-        </UModal>
-
-        <!-- Form Modal -->
-        <UModal v-model="showFormModal">
-          <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
-            <template #header>
-              <div class="flex items-center justify-between">
-                <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-                  Create New Project
-                </h3>
-                <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
-                  @click="showFormModal = false" />
-              </div>
-            </template>
-
-            <div class="space-y-4">
-              <p class="text-sm text-gray-600">Fill in the details below</p>
+            <template #team>
               <div class="space-y-4">
-                <FormInput name="FormInput" v-model="modalForm.name" label="Project Name" placeholder="Enter project name" required />
-                <FormInput name="FormInput" v-model="modalForm.description" label="Description" placeholder="Project description" />
-              </div>
-            </div>
-
-            <template #footer>
-              <div class="flex justify-end space-x-3">
-                <UButton variant="outline" @click="showFormModal = false">Cancel</UButton>
-                <UButton color="green" @click="handleFormSubmit">Create</UButton>
-              </div>
-            </template>
-          </UCard>
-        </UModal>
-
-        <!-- Info Modal -->
-        <UModal v-model="showInfoModal">
-          <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
-            <template #header>
-              <div class="flex items-center justify-between">
-                <h3 class="text-base font-semibold leading-6 text-blue-600">
-                  System Information
-                </h3>
-                <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
-                  @click="showInfoModal = false" />
-              </div>
-            </template>
-
-            <div class="space-y-4">
-              <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <div class="space-y-2">
-                  <p><strong>Version:</strong> 1.0.0</p>
-                  <p><strong>Environment:</strong> Development</p>
-                  <p><strong>Last Updated:</strong> {{ new Date().toLocaleDateString() }}</p>
+                <h4 class="font-semibold text-slate-700">Team Members</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div v-for="user in sampleUsers" :key="user.id"
+                    class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                    <Avatar name="Avatar" :user="user" size="md" show-online-status />
+                    <div>
+                      <p class="font-medium text-gray-900">{{ user.name }}</p>
+                      <p class="text-sm text-gray-500">{{ user.email }}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </template>
 
-            <template #footer>
-              <div class="flex justify-end">
-                <UButton @click="showInfoModal = false">Got it</UButton>
+            <template #settings>
+              <div class="space-y-4">
+                <h4 class="font-semibold text-slate-700">Project Settings</h4>
+                <div class="space-y-4">
+                  <FormInput name="FormInput" v-model="settingsForm.name" label="Project Name"
+                    placeholder="Enter project name" leading-icon="i-heroicons-folder" />
+                  <FormInput name="FormInput" v-model="settingsForm.description" label="Description"
+                    placeholder="Project description" leading-icon="i-heroicons-document-text" />
+                  <div class="flex space-x-2">
+                    <UButton name="UButton" color="blue" @click="saveSettings">Save Changes</UButton>
+                    <UButton name="UButton" color="gray" variant="outline" @click="resetSettings">Reset</UButton>
+                  </div>
+                </div>
               </div>
             </template>
-          </UCard>
-        </UModal>
-      </UCard>
+          </Tabs>
+        </UCard>
 
-      <!-- Form Components Extended Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">📋 Extended Form Components</h3>
-        </template>
+        <!-- Error Message Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">⚠️ Error Message Component</h3>
+          </template>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <!-- Form Select -->
-          <div class="space-y-4">
-            <h4 class="font-semibold text-slate-700">Form Select</h4>
+          <div class="space-y-6">
+            <!-- Error Types -->
+            <div>
+              <h4 class="font-semibold text-slate-700 mb-4">Error Types</h4>
+              <div class="space-y-4">
+                <ErrorMessage v-if="showErrorExample" type="error" title="Validation Error"
+                  :error="sampleErrors.validation" :show-retry="true" dismissible @retry="handleRetryError"
+                  @dismiss="showErrorExample = false" />
 
-            <FormSelect name="FormSelect" v-model="formData.priority" label="Priority Level" placeholder="Select priority"
-              leading-icon="i-heroicons-flag" :options="priorityOptions"
-              help-text="Choose the priority level for this task" />
+                <ErrorMessage v-if="showWarningExample" type="warning" title="Warning"
+                  error="This action cannot be undone. Please proceed with caution." dismissible
+                  @dismiss="showWarningExample = false" />
 
-            <FormSelect name="FormSelect" v-model="formData.category" label="Category" placeholder="Select category"
-              :options="categoryOptions" :option-groups="categoryGroups" show-selected-value />
-
-            <FormSelect name="FormSelect" v-model="formData.status" label="Status" :options="statusOptions" :loading="selectLoading"
-              disabled />
-          </div>
-
-          <!-- Date Picker -->
-          <div class="space-y-4">
-            <h4 class="font-semibold text-slate-700">Date Picker</h4>
-
-            <DatePicker name="DatePicker" v-model="formData.startDate" label="Start Date" placeholder="Select start date"
-              leading-icon="i-heroicons-calendar-days" help-text="Choose the project start date" />
-
-            <DatePicker name="DatePicker" v-model="formData.endDate" label="End Date" placeholder="Select end date"
-              :min-date="formData.startDate" type="datetime-local" />
-
-            <DatePicker name="DatePicker" v-model="formData.time" label="Meeting Time" type="time" placeholder="Select time" />
-          </div>
-        </div>
-      </UCard>
-
-      <!-- File Upload Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">📎 File Upload Component</h3>
-        </template>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <!-- Single File Upload -->
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">Single File Upload</h4>
-            <FileUpload name="FileUpload" v-model="uploadedFiles.single" label="Profile Picture" accept="image/*"
-              :max-size="2 * 1024 * 1024" help-text="Upload a profile picture (max 2MB)"
-              @upload-success="handleUploadSuccess" @upload-error="handleUploadError" />
-          </div>
-
-          <!-- Multiple File Upload -->
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">Multiple File Upload</h4>
-            <FileUpload name="FileUpload" v-model="uploadedFiles.multiple" label="Project Documents" accept=".pdf,.doc,.docx,.jpg,.png"
-              :multiple="true" :max-files="5" :max-size="10 * 1024 * 1024"
-              help-text="Upload project documents (max 5 files, 10MB each)" auto-upload
-              @upload-success="handleUploadSuccess" @upload-error="handleUploadError" />
-          </div>
-        </div>
-      </UCard>
-
-      <!-- Pagination Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">📄 Pagination Component</h3>
-        </template>
-
-        <div class="space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-blue-50 p-4 rounded-lg">
-              <h5 class="font-semibold text-blue-800">Total Items</h5>
-              <p class="text-2xl font-bold text-blue-600">{{ paginationData.total }}</p>
+                <ErrorMessage v-if="showInfoExample" type="info" title="Information"
+                  error="Your session will expire in 5 minutes. Save your work to avoid losing changes." dismissible
+                  @dismiss="showInfoExample = false" />
+              </div>
             </div>
-            <div class="bg-green-50 p-4 rounded-lg">
-              <h5 class="font-semibold text-green-800">Current Page</h5>
-              <p class="text-2xl font-bold text-green-600">{{ paginationData.currentPage }}</p>
-            </div>
-            <div class="bg-purple-50 p-4 rounded-lg">
-              <h5 class="font-semibold text-purple-800">Per Page</h5>
-              <p class="text-2xl font-bold text-purple-600">{{ paginationData.perPage }}</p>
+
+            <!-- Control Buttons -->
+            <div class="flex flex-wrap gap-2">
+              <UButton v-if="!showErrorExample" color="red" variant="outline" @click="showErrorExample = true">
+                Show Error
+              </UButton>
+              <UButton v-if="!showWarningExample" color="amber" variant="outline" @click="showWarningExample = true">
+                Show Warning
+              </UButton>
+              <UButton v-if="!showInfoExample" color="blue" variant="outline" @click="showInfoExample = true">
+                Show Info
+              </UButton>
+              <UButton color="gray" variant="soft" @click="showAllErrors">
+                Show All
+              </UButton>
             </div>
           </div>
+        </UCard>
 
-          <Pagination name="Pagination" :current-page="paginationData.currentPage" :total-pages="paginationData.totalPages"
-            :total="paginationData.total" :per-page="paginationData.perPage" @page-change="handlePageChange" />
-        </div>
-      </UCard>
+        <!-- Form Section -->
+        <UCard>
+          <template #header>
+            <h3>📝 Form Components (Nuxt UI v3)</h3>
+          </template>
+          <FormShowcase name="FormShowcase" :default-show-states="true" :default-show-textarea-select="true"
+            :default-show-advanced="true" :default-show-variants="false" :default-show-working-form="true" />
+        </UCard>
 
-      
-      <!-- Tooltip Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">💬 Tooltip Component</h3>
-        </template>
+        <!-- Status Indicator Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">🔍 Status Indicator (Nuxt UI v3)</h3>
+          </template>
+          <StatusShowcase name="StatusShowcase" :default-show-badge-style="true" :default-show-sizes="false"
+            :default-show-interactive="true" />
+        </UCard>
 
-        <div class="space-y-8">
-          <!-- Tooltip Placements -->
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">Tooltip Placements</h4>
-            <div class="grid grid-cols-3 gap-4 place-items-center">
-              <!-- Top row -->
-              <Tooltip name="Tooltip" content="Top start tooltip" placement="top-start">
-                <UButton variant="outline" size="sm">Top Start</UButton>
-              </Tooltip>
+        <!-- Modal Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">🪟 Modal Component</h3>
+          </template>
 
-              <Tooltip name="Tooltip" content="Top center tooltip" placement="top">
-                <UButton variant="outline" size="sm">Top</UButton>
-              </Tooltip>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <UButton color="blue" @click="showModal = true">
+              Basic Modal
+            </UButton>
 
-              <Tooltip name="Tooltip" content="Top end tooltip" placement="top-end">
-                <UButton variant="outline" size="sm">Top End</UButton>
-              </Tooltip>
+            <UButton color="red" @click="showDeleteModal = true">
+              Delete Modal
+            </UButton>
 
-              <!-- Middle row -->
-              <Tooltip name="Tooltip" content="Left tooltip with more content" placement="left">
-                <UButton variant="outline" size="sm">Left</UButton>
-              </Tooltip>
+            <UButton color="green" @click="showFormModal = true">
+              Form Modal
+            </UButton>
 
-              <div class="text-center">
-                <Tooltip name="Tooltip" content="Click me tooltip" trigger="click">
-                  <UButton color="blue" size="sm">Click Me</UButton>
+            <UButton color="purple" @click="showInfoModal = true">
+              Info Modal
+            </UButton>
+          </div>
+
+          <!-- Basic Modal -->
+          <UModal v-model="showModal">
+            <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+              <template #header>
+                <div class="flex items-center justify-between">
+                  <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                    Basic Modal
+                  </h3>
+                  <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
+                    @click="showModal = false" />
+                </div>
+              </template>
+
+              <div class="space-y-4">
+                <p>This is the modal content area. You can put any content here.</p>
+                <p>Click the buttons below to interact with the modal.</p>
+              </div>
+
+              <template #footer>
+                <div class="flex justify-end space-x-3">
+                  <UButton variant="outline" @click="showModal = false">Cancel</UButton>
+                  <UButton @click="handleModalConfirm">Confirm</UButton>
+                </div>
+              </template>
+            </UCard>
+          </UModal>
+
+          <!-- Delete Modal -->
+          <UModal v-model="showDeleteModal">
+            <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+              <template #header>
+                <div class="flex items-center justify-between">
+                  <h3 class="text-base font-semibold leading-6 text-red-600">
+                    Delete Project
+                  </h3>
+                  <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
+                    @click="showDeleteModal = false" />
+                </div>
+              </template>
+
+              <div class="space-y-4">
+                <p>Are you sure you want to delete this project? This action cannot be undone.</p>
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                  <p class="text-red-800 font-medium">Warning: This action is permanent</p>
+                  <p class="text-red-600 text-sm mt-1">All project data, files, and associated records will be
+                    permanently
+                    deleted.</p>
+                </div>
+              </div>
+
+              <template #footer>
+                <div class="flex justify-end space-x-3">
+                  <UButton variant="outline" @click="showDeleteModal = false">Cancel</UButton>
+                  <UButton color="red" @click="handleDeleteConfirm">Delete</UButton>
+                </div>
+              </template>
+            </UCard>
+          </UModal>
+
+          <!-- Form Modal -->
+          <UModal v-model="showFormModal">
+            <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+              <template #header>
+                <div class="flex items-center justify-between">
+                  <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                    Create New Project
+                  </h3>
+                  <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
+                    @click="showFormModal = false" />
+                </div>
+              </template>
+
+              <div class="space-y-4">
+                <p class="text-sm text-gray-600">Fill in the details below</p>
+                <div class="space-y-4">
+                  <FormInput name="FormInput" v-model="modalForm.name" label="Project Name"
+                    placeholder="Enter project name" required />
+                  <FormInput name="FormInput" v-model="modalForm.description" label="Description"
+                    placeholder="Project description" />
+                </div>
+              </div>
+
+              <template #footer>
+                <div class="flex justify-end space-x-3">
+                  <UButton variant="outline" @click="showFormModal = false">Cancel</UButton>
+                  <UButton color="green" @click="handleFormSubmit">Create</UButton>
+                </div>
+              </template>
+            </UCard>
+          </UModal>
+
+          <!-- Info Modal -->
+          <UModal v-model="showInfoModal">
+            <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+              <template #header>
+                <div class="flex items-center justify-between">
+                  <h3 class="text-base font-semibold leading-6 text-blue-600">
+                    System Information
+                  </h3>
+                  <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
+                    @click="showInfoModal = false" />
+                </div>
+              </template>
+
+              <div class="space-y-4">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div class="space-y-2">
+                    <p><strong>Version:</strong> 1.0.0</p>
+                    <p><strong>Environment:</strong> Development</p>
+                    <p><strong>Last Updated:</strong> {{ new Date().toLocaleDateString() }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <template #footer>
+                <div class="flex justify-end">
+                  <UButton @click="showInfoModal = false">Got it</UButton>
+                </div>
+              </template>
+            </UCard>
+          </UModal>
+        </UCard>
+
+        <!-- Form Components Extended Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">📋 Extended Form Components</h3>
+          </template>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Form Select -->
+            <div class="space-y-4">
+              <h4 class="font-semibold text-slate-700">Form Select</h4>
+
+              <FormSelect name="FormSelect" v-model="formData.priority" label="Priority Level"
+                placeholder="Select priority" leading-icon="i-heroicons-flag" :options="priorityOptions"
+                help-text="Choose the priority level for this task" />
+
+              <FormSelect name="FormSelect" v-model="formData.category" label="Category" placeholder="Select category"
+                :options="categoryOptions" :option-groups="categoryGroups" show-selected-value />
+
+              <FormSelect name="FormSelect" v-model="formData.status" label="Status" :options="statusOptions"
+                :loading="selectLoading" disabled />
+            </div>
+
+            <!-- Date Picker -->
+            <div class="space-y-4">
+              <h4 class="font-semibold text-slate-700">Date Picker</h4>
+
+              <DatePicker name="DatePicker" v-model="formData.startDate" label="Start Date"
+                placeholder="Select start date" leading-icon="i-heroicons-calendar-days"
+                help-text="Choose the project start date" />
+
+              <DatePicker name="DatePicker" v-model="formData.endDate" label="End Date" placeholder="Select end date"
+                :min-date="formData.startDate" type="datetime-local" />
+
+              <DatePicker name="DatePicker" v-model="formData.time" label="Meeting Time" type="time"
+                placeholder="Select time" />
+            </div>
+          </div>
+        </UCard>
+
+        <!-- File Upload Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">📎 File Upload Component</h3>
+          </template>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Single File Upload -->
+            <div>
+              <h4 class="font-semibold text-slate-700 mb-4">Single File Upload</h4>
+              <FileUpload name="FileUpload" v-model="uploadedFiles.single" label="Profile Picture" accept="image/*"
+                :max-size="2 * 1024 * 1024" help-text="Upload a profile picture (max 2MB)"
+                @upload-success="handleUploadSuccess" @upload-error="handleUploadError" />
+            </div>
+
+            <!-- Multiple File Upload -->
+            <div>
+              <h4 class="font-semibold text-slate-700 mb-4">Multiple File Upload</h4>
+              <FileUpload name="FileUpload" v-model="uploadedFiles.multiple" label="Project Documents"
+                accept=".pdf,.doc,.docx,.jpg,.png" :multiple="true" :max-files="5" :max-size="10 * 1024 * 1024"
+                help-text="Upload project documents (max 5 files, 10MB each)" auto-upload
+                @upload-success="handleUploadSuccess" @upload-error="handleUploadError" />
+            </div>
+          </div>
+        </UCard>
+
+        <!-- Pagination Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">📄 Pagination Component</h3>
+          </template>
+
+          <div class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="bg-blue-50 p-4 rounded-lg">
+                <h5 class="font-semibold text-blue-800">Total Items</h5>
+                <p class="text-2xl font-bold text-blue-600">{{ paginationData.total }}</p>
+              </div>
+              <div class="bg-green-50 p-4 rounded-lg">
+                <h5 class="font-semibold text-green-800">Current Page</h5>
+                <p class="text-2xl font-bold text-green-600">{{ paginationData.currentPage }}</p>
+              </div>
+              <div class="bg-purple-50 p-4 rounded-lg">
+                <h5 class="font-semibold text-purple-800">Per Page</h5>
+                <p class="text-2xl font-bold text-purple-600">{{ paginationData.perPage }}</p>
+              </div>
+            </div>
+
+            <Pagination name="Pagination" :current-page="paginationData.currentPage"
+              :total-pages="paginationData.totalPages" :total="paginationData.total" :per-page="paginationData.perPage"
+              @page-change="handlePageChange" />
+          </div>
+        </UCard>
+
+
+        <!-- Tooltip Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">💬 Tooltip Component</h3>
+          </template>
+
+          <div class="space-y-8">
+            <!-- Tooltip Placements -->
+            <div>
+              <h4 class="font-semibold text-slate-700 mb-4">Tooltip Placements</h4>
+              <div class="grid grid-cols-3 gap-4 place-items-center">
+                <!-- Top row -->
+                <Tooltip name="Tooltip" content="Top start tooltip" placement="top-start">
+                  <UButton variant="outline" size="sm">Top Start</UButton>
+                </Tooltip>
+
+                <Tooltip name="Tooltip" content="Top center tooltip" placement="top">
+                  <UButton variant="outline" size="sm">Top</UButton>
+                </Tooltip>
+
+                <Tooltip name="Tooltip" content="Top end tooltip" placement="top-end">
+                  <UButton variant="outline" size="sm">Top End</UButton>
+                </Tooltip>
+
+                <!-- Middle row -->
+                <Tooltip name="Tooltip" content="Left tooltip with more content" placement="left">
+                  <UButton variant="outline" size="sm">Left</UButton>
+                </Tooltip>
+
+                <div class="text-center">
+                  <Tooltip name="Tooltip" content="Click me tooltip" trigger="click">
+                    <UButton color="blue" size="sm">Click Me</UButton>
+                  </Tooltip>
+                </div>
+
+                <Tooltip name="Tooltip" content="Right tooltip" placement="right">
+                  <UButton variant="outline" size="sm">Right</UButton>
+                </Tooltip>
+
+                <!-- Bottom row -->
+                <Tooltip name="Tooltip" content="Bottom start tooltip" placement="bottom-start">
+                  <UButton variant="outline" size="sm">Bottom Start</UButton>
+                </Tooltip>
+
+                <Tooltip name="Tooltip" content="Bottom center tooltip" placement="bottom">
+                  <UButton variant="outline" size="sm">Bottom</UButton>
+                </Tooltip>
+
+                <Tooltip name="Tooltip" content="Bottom end tooltip" placement="bottom-end">
+                  <UButton variant="outline" size="sm">Bottom End</UButton>
                 </Tooltip>
               </div>
+            </div>
 
-              <Tooltip name="Tooltip" content="Right tooltip" placement="right">
-                <UButton variant="outline" size="sm">Right</UButton>
-              </Tooltip>
+            <!-- Tooltip Themes -->
+            <div>
+              <h4 class="font-semibold text-slate-700 mb-4">Tooltip Themes</h4>
+              <div class="flex flex-wrap gap-3">
+                <Tooltip name="Tooltip" content="Dark theme (default)" theme="dark">
+                  <UButton variant="outline" color="gray">Dark</UButton>
+                </Tooltip>
 
-              <!-- Bottom row -->
-              <Tooltip name="Tooltip" content="Bottom start tooltip" placement="bottom-start">
-                <UButton variant="outline" size="sm">Bottom Start</UButton>
-              </Tooltip>
+                <Tooltip name="Tooltip" content="Light theme tooltip" theme="light">
+                  <UButton variant="outline" color="gray">Light</UButton>
+                </Tooltip>
 
-              <Tooltip name="Tooltip" content="Bottom center tooltip" placement="bottom">
-                <UButton variant="outline" size="sm">Bottom</UButton>
-              </Tooltip>
+                <Tooltip name="Tooltip" content="Error theme tooltip" theme="error">
+                  <UButton variant="outline" color="red">Error</UButton>
+                </Tooltip>
 
-              <Tooltip name="Tooltip" content="Bottom end tooltip" placement="bottom-end">
-                <UButton variant="outline" size="sm">Bottom End</UButton>
-              </Tooltip>
+                <Tooltip name="Tooltip" content="Warning theme tooltip" theme="warning">
+                  <UButton variant="outline" color="amber">Warning</UButton>
+                </Tooltip>
+
+                <Tooltip name="Tooltip" content="Success theme tooltip" theme="success">
+                  <UButton variant="outline" color="green">Success</UButton>
+                </Tooltip>
+              </div>
+            </div>
+
+            <!-- Advanced Tooltips -->
+            <div>
+              <h4 class="font-semibold text-slate-700 mb-4">Advanced Features</h4>
+              <div class="flex flex-wrap gap-3">
+                <Tooltip name="Tooltip" content="Tooltip with delay" :delay="500">
+                  <UButton variant="outline">Delayed</UButton>
+                </Tooltip>
+
+                <Tooltip name="Tooltip" content="Large tooltip text" size="lg" max-width="300px">
+                  <UButton variant="outline">Large</UButton>
+                </Tooltip>
+
+                <Tooltip name="Tooltip" content="This tooltip is disabled" disabled>
+                  <UButton variant="outline" disabled>Disabled</UButton>
+                </Tooltip>
+              </div>
             </div>
           </div>
+        </UCard>
 
-          <!-- Tooltip Themes -->
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">Tooltip Themes</h4>
-            <div class="flex flex-wrap gap-3">
-              <Tooltip name="Tooltip" content="Dark theme (default)" theme="dark">
-                <UButton variant="outline" color="gray">Dark</UButton>
-              </Tooltip>
+        <UCard>
+          <template #header>
+            <h3>📢 Toast Notifications (Nuxt UI v3)</h3>
+          </template>
+          <ToastShowcase />
+        </UCard>
 
-              <Tooltip name="Tooltip" content="Light theme tooltip" theme="light">
-                <UButton variant="outline" color="gray">Light</UButton>
-              </Tooltip>
+        <!-- Business Components Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">🏢 Business Components</h3>
+          </template>
 
-              <Tooltip name="Tooltip" content="Error theme tooltip" theme="error">
-                <UButton variant="outline" color="red">Error</UButton>
-              </Tooltip>
+          <div class="space-y-8">
+            <!-- Stock Item Cards -->
+            <div>
+              <h4 class="font-semibold text-slate-700 mb-4">Stock Item Cards</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <StockItemCard name="StockItemCard" v-for="stockItem in sampleStockItems" :key="stockItem.id"
+                  :stock-item="stockItem" @click="handleStockItemClick(stockItem.id)" @view="handleStockItemView"
+                  @edit="handleStockItemEdit" @delete="handleStockItemDelete" @adjust-stock="handleStockAdjust"
+                  @add-to-project="handleAddToProject" />
+              </div>
+            </div>
 
-              <Tooltip name="Tooltip" content="Warning theme tooltip" theme="warning">
-                <UButton variant="outline" color="amber">Warning</UButton>
-              </Tooltip>
-
-              <Tooltip name="Tooltip" content="Success theme tooltip" theme="success">
-                <UButton variant="outline" color="green">Success</UButton>
-              </Tooltip>
+            <!-- Category Cards -->
+            <div>
+              <h4 class="font-semibold text-slate-700 mb-4">Category Cards</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <CategoryCard name="CategoryCard" v-for="category in sampleCategories" :key="category.id"
+                  :category="category" @click="handleCategoryClick(category.id)" @view="handleCategoryView"
+                  @edit="handleCategoryEdit" @delete="handleCategoryDelete" @add-item="handleCategoryAddItem"
+                  @view-items="handleCategoryViewItems" />
+              </div>
             </div>
           </div>
+        </UCard>
 
-          <!-- Advanced Tooltips -->
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">Advanced Features</h4>
-            <div class="flex flex-wrap gap-3">
-              <Tooltip name="Tooltip" content="Tooltip with delay" :delay="500">
-                <UButton variant="outline">Delayed</UButton>
-              </Tooltip>
+        <!-- Project Cards Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-bold text-slate-800">🎴 Project Cards</h3>
+              <UButton variant="outline" size="sm" :loading="projectsLoading" @click="toggleProjectsLoading">
+                {{ projectsLoading ? 'Loading...' : 'Toggle Loading' }}
+              </UButton>
+            </div>
+          </template>
 
-              <Tooltip name="Tooltip" content="Large tooltip text" size="lg" max-width="300px">
-                <UButton variant="outline">Large</UButton>
-              </Tooltip>
+          <!-- Loading State -->
+          <div v-if="projectsLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <SkeletonLoader name="SkeletonLoader" v-for="n in 3" :key="n" type="card" />
+          </div>
 
-              <Tooltip name="Tooltip" content="This tooltip is disabled" disabled>
-                <UButton variant="outline" disabled>Disabled</UButton>
-              </Tooltip>
+          <!-- Loaded State -->
+          <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <ProjectCard name="ProjectCard" v-for="project in sampleProjects" :key="project.id" :project="project"
+              @click="handleProjectClick(project.id)" />
+          </div>
+        </UCard>
+
+        <!-- Project Table Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-bold text-slate-800">📊 Project Table</h3>
+              <UButton variant="outline" size="sm" :loading="tableLoading" @click="toggleTableLoading">
+                {{ tableLoading ? 'Loading...' : 'Toggle Loading' }}
+              </UButton>
+            </div>
+          </template>
+
+          <!-- Loading State -->
+          <div v-if="tableLoading" class="space-y-0 bg-white rounded-lg border overflow-hidden">
+            <SkeletonLoader name="SkeletonLoader" v-for="n in 5" :key="n" type="table-row" />
+          </div>
+
+          <!-- Loaded State -->
+          <ProjectTable name="ProjectTable" v-else :projects="sampleProjects" @view="handleProjectView"
+            @edit="handleProjectEdit" @delete="handleProjectDelete" />
+        </UCard>
+
+        <!-- Component Library Summary -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">📚 Component Library</h3>
+          </template>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-gradient-to-br from-sky-50 to-sky-100 p-4 rounded-lg border border-sky-200">
+              <h4 class="font-bold text-sky-800 mb-2">Base Components</h4>
+              <ul class="text-sm text-sky-700 space-y-1">
+                <li>✅ PriorityBadge</li>
+                <li>✅ ProgressBar</li>
+                <li>✅ Avatar</li>
+                <li>✅ StatusIndicator</li>
+                <li>✅ Modal</li>
+              </ul>
+            </div>
+
+            <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-4 rounded-lg border border-emerald-200">
+              <h4 class="font-bold text-emerald-800 mb-2">UI Components</h4>
+              <ul class="text-sm text-emerald-700 space-y-1">
+                <li>✅ SkeletonLoader</li>
+                <li>✅ LoadingSpinner</li>
+                <li>✅ EmptyState</li>
+                <li>✅ Toast</li>
+                <li>✅ Tabs</li>
+                <li>✅ Pagination</li>
+                <li>✅ Tooltip</li>
+              </ul>
+            </div>
+
+            <div class="bg-gradient-to-br from-violet-50 to-violet-100 p-4 rounded-lg border border-violet-200">
+              <h4 class="font-bold text-violet-800 mb-2">Business Components</h4>
+              <ul class="text-sm text-violet-700 space-y-1">
+                <li>✅ ProjectCard</li>
+                <li>✅ ProjectTable</li>
+                <li>✅ StockItemCard</li>
+                <li>✅ CategoryCard</li>
+                <li>⏳ UserCard</li>
+              </ul>
+            </div>
+
+            <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-lg border border-orange-200">
+              <h4 class="font-bold text-orange-800 mb-2">Form Components</h4>
+              <ul class="text-sm text-orange-700 space-y-1">
+                <li>✅ SearchBox</li>
+                <li>✅ FormInput</li>
+                <li>✅ FormSelect</li>
+                <li>✅ DatePicker</li>
+                <li>✅ FileUpload</li>
+              </ul>
             </div>
           </div>
-        </div>
-      </UCard>
-
-      <UCard>
-        <template #header>
-          <h3>📢 Toast Notifications (Nuxt UI v3)</h3>
-        </template>
-        <ToastShowcase />
-      </UCard>
-
-      <!-- Business Components Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">🏢 Business Components</h3>
-        </template>
-
-        <div class="space-y-8">
-          <!-- Stock Item Cards -->
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">Stock Item Cards</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <StockItemCard name="StockItemCard" v-for="stockItem in sampleStockItems" :key="stockItem.id" :stock-item="stockItem"
-                @click="handleStockItemClick(stockItem.id)" @view="handleStockItemView" @edit="handleStockItemEdit"
-                @delete="handleStockItemDelete" @adjust-stock="handleStockAdjust"
-                @add-to-project="handleAddToProject" />
-            </div>
-          </div>
-
-          <!-- Category Cards -->
-          <div>
-            <h4 class="font-semibold text-slate-700 mb-4">Category Cards</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <CategoryCard name="CategoryCard" v-for="category in sampleCategories" :key="category.id" :category="category"
-                @click="handleCategoryClick(category.id)" @view="handleCategoryView" @edit="handleCategoryEdit"
-                @delete="handleCategoryDelete" @add-item="handleCategoryAddItem"
-                @view-items="handleCategoryViewItems" />
-            </div>
-          </div>
-        </div>
-      </UCard>
-
-      <!-- Project Cards Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <div class="flex items-center justify-between">
-            <h3 class="text-xl font-bold text-slate-800">🎴 Project Cards</h3>
-            <UButton variant="outline" size="sm" :loading="projectsLoading" @click="toggleProjectsLoading">
-              {{ projectsLoading ? 'Loading...' : 'Toggle Loading' }}
-            </UButton>
-          </div>
-        </template>
-
-        <!-- Loading State -->
-        <div v-if="projectsLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <SkeletonLoader name="SkeletonLoader" v-for="n in 3" :key="n" type="card" />
-        </div>
-
-        <!-- Loaded State -->
-        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <ProjectCard name="ProjectCard" v-for="project in sampleProjects" :key="project.id" :project="project"
-            @click="handleProjectClick(project.id)" />
-        </div>
-      </UCard>
-
-      <!-- Project Table Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <div class="flex items-center justify-between">
-            <h3 class="text-xl font-bold text-slate-800">📊 Project Table</h3>
-            <UButton variant="outline" size="sm" :loading="tableLoading" @click="toggleTableLoading">
-              {{ tableLoading ? 'Loading...' : 'Toggle Loading' }}
-            </UButton>
-          </div>
-        </template>
-
-        <!-- Loading State -->
-        <div v-if="tableLoading" class="space-y-0 bg-white rounded-lg border overflow-hidden">
-          <SkeletonLoader name="SkeletonLoader" v-for="n in 5" :key="n" type="table-row" />
-        </div>
-
-        <!-- Loaded State -->
-        <ProjectTable name="ProjectTable" v-else :projects="sampleProjects" @view="handleProjectView" @edit="handleProjectEdit"
-          @delete="handleProjectDelete" />
-      </UCard>
-
-      <!-- Component Library Summary -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <h3 class="text-xl font-bold text-slate-800">📚 Component Library</h3>
-        </template>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-gradient-to-br from-sky-50 to-sky-100 p-4 rounded-lg border border-sky-200">
-            <h4 class="font-bold text-sky-800 mb-2">Base Components</h4>
-            <ul class="text-sm text-sky-700 space-y-1">
-              <li>✅ PriorityBadge</li>
-              <li>✅ ProgressBar</li>
-              <li>✅ Avatar</li>
-              <li>✅ StatusIndicator</li>
-              <li>✅ Modal</li>
-            </ul>
-          </div>
-
-          <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-4 rounded-lg border border-emerald-200">
-            <h4 class="font-bold text-emerald-800 mb-2">UI Components</h4>
-            <ul class="text-sm text-emerald-700 space-y-1">
-              <li>✅ SkeletonLoader</li>
-              <li>✅ LoadingSpinner</li>
-              <li>✅ EmptyState</li>
-              <li>✅ Toast</li>
-              <li>✅ Tabs</li>
-              <li>✅ Pagination</li>
-              <li>✅ Tooltip</li>
-            </ul>
-          </div>
-
-          <div class="bg-gradient-to-br from-violet-50 to-violet-100 p-4 rounded-lg border border-violet-200">
-            <h4 class="font-bold text-violet-800 mb-2">Business Components</h4>
-            <ul class="text-sm text-violet-700 space-y-1">
-              <li>✅ ProjectCard</li>
-              <li>✅ ProjectTable</li>
-              <li>✅ StockItemCard</li>
-              <li>✅ CategoryCard</li>
-              <li>⏳ UserCard</li>
-            </ul>
-          </div>
-
-          <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-lg border border-orange-200">
-            <h4 class="font-bold text-orange-800 mb-2">Form Components</h4>
-            <ul class="text-sm text-orange-700 space-y-1">
-              <li>✅ SearchBox</li>
-              <li>✅ FormInput</li>
-              <li>✅ FormSelect</li>
-              <li>✅ DatePicker</li>
-              <li>✅ FileUpload</li>
-            </ul>
-          </div>
-        </div>
-      </UCard>
+        </UCard>
+      </div>
+      <!-- Footer -->
+      <AppFooter :app-name="appName" />
     </div>
   </div>
 </template>

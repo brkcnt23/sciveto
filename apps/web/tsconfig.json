@@ -10,13 +10,17 @@
       "@@/*": ["./*"]
     },
     "types": ["@types/node", "nuxt"],
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false
   },
   "include": [
     "types/**/*",
@@ -29,11 +33,13 @@
     "utils/**/*",
     "app.vue", 
     "nuxt.config.ts",
-    "app.config.ts"
+    "app.config.ts",
+    ".nuxt/nuxt.d.ts"
   ],
   "exclude": [
     "node_modules",
     ".nuxt",
-    "dist"
+    "dist",
+    ".output"
   ]
 }

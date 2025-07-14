@@ -15,9 +15,10 @@
     "db:push": "cd packages/database && pnpm run db:push",
     "db:migrate": "cd packages/database && pnpm run db:migrate",
     "db:studio": "cd packages/database && pnpm run db:studio",
-    "packages:build": "cd packages/database && pnpm run build && cd ../shared-types && pnpm run build",
-    "clean": "turbo run clean",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "packages:build": "pnpm run db:generate && cd packages/database && pnpm run build && cd ../shared-types && pnpm run build",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "fresh-install": "pnpm run clean && pnpm install && pnpm run db:generate && pnpm run packages:build && pnpm run build"
   },
   "devDependencies": {
     "turbo": "^2.5.4",

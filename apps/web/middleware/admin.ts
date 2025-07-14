@@ -2,6 +2,7 @@ import { defineNuxtRouteMiddleware, navigateTo, createError } from 'nuxt/app'
 import type { RouteLocationNormalized } from 'vue-router'
 import { useAuthStore } from "~/stores/auth"
 
+// Middleware for admin-only routes
 export default defineNuxtRouteMiddleware(async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
   const authStore = useAuthStore()
   
@@ -17,16 +18,12 @@ export default defineNuxtRouteMiddleware(async (to: RouteLocationNormalized, fro
     return navigateTo(`/login?redirect=${encodeURIComponent(redirectPath)}`)
   }
   
-  // Check if user has required permissions for protected routes
-  if (to.meta?.requiresAuth === false) {
-    return
-  }
-  
-  // Check role-based access
-  if (to.meta?.requiredRole && authStore.user?.role !== to.meta.requiredRole) {
+  // Check if user has admin role
+  const userRole = authStore.user?.role
+  if (userRole !== 'SUPER_ADMIN' && userRole !== 'ORG_ADMIN') {
     throw createError({
       statusCode: 403,
-      statusMessage: 'Access Denied: Insufficient permissions'
+      statusMessage: 'Access Denied: Admin privileges required'
     })
   }
 })

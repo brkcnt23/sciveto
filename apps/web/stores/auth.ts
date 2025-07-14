@@ -1,162 +1,168 @@
-// apps/web/stores/auth.ts
-export const useAuthStore = defineStore('auth', () => {
-  const user = ref<any>(null)
-  const token = ref<string | null>(null)
-  const isAuthenticated = computed(() => !!token.value && !!user.value)
-  const isInitialized = ref(false)
+import { defineStore } from 'pinia'
+import { navigateTo } from 'nuxt/app'
 
-  // Initialize auth state from localStorage on client side
-  const initializeAuth = () => {
-    if (process.client && !isInitialized.value) {
+interface User {
+  id: string
+  email: string
+  firstName?: string
+  lastName?: string
+  role: 'USER' | 'MANAGER' | 'ORG_ADMIN' | 'SUPER_ADMIN'
+  organizationId: string
+  createdAt: string
+  updatedAt: string
+}
+
+interface AuthState {
+  user: User | null
+  token: string | null
+  isAuthenticated: boolean
+  isLoading: boolean
+}
+
+export const useAuthStore = defineStore('auth', {
+  state: (): AuthState => ({
+    user: null,
+    token: null,
+    isAuthenticated: false,
+    isLoading: false
+  }),
+
+  getters: {
+    isLoggedIn: (state) => state.isAuthenticated && !!state.user,
+    userRole: (state) => state.user?.role,
+    userName: (state) => state.user ? `${state.user.firstName} ${state.user.lastName}` : '',
+    userEmail: (state) => state.user?.email || ''
+  },
+
+  actions: {
+    async initializeAuth() {
+      this.isLoading = true
+      
       try {
-        const savedToken = localStorage.getItem('auth_token')
-        const savedUser = localStorage.getItem('auth_user')
+        const token = process.client ? localStorage.getItem('auth-token') : null
         
-        console.log('Initializing auth:', { hasToken: !!savedToken, hasUser: !!savedUser })
-        
-        if (savedToken && savedUser) {
-          token.value = savedToken
-          user.value = JSON.parse(savedUser)
-          console.log('Auth initialized successfully:', { userId: user.value?.id, tokenLength: token.value?.length })
+        if (token) {
+          this.token = token
+          const userData = process.client ? localStorage.getItem('auth-user') : null
+          if (userData) {
+            this.user = JSON.parse(userData)
+            this.isAuthenticated = true
+          }
         }
       } catch (error) {
-        console.error('Error initializing auth:', error)
-        clearAuth()
+        console.error('Failed to initialize auth:', error)
+        this.clearAuth()
       } finally {
-        isInitialized.value = true
+        this.isLoading = false
       }
-    }
-  }
+    },
 
-  const setAuth = (authData: { user: any; access_token: string }) => {
-    console.log('Setting auth data:', { userId: authData.user?.id, tokenLength: authData.access_token?.length })
-    
-    user.value = authData.user
-    token.value = authData.access_token
-    
-    if (process.client) {
-      localStorage.setItem('auth_token', authData.access_token)
-      localStorage.setItem('auth_user', JSON.stringify(authData.user))
-    }
-  }
-
-  const clearAuth = () => {
-    console.log('Clearing auth')
-    user.value = null
-    token.value = null
-    
-    if (process.client) {
-      localStorage.removeItem('auth_token')
-      localStorage.removeItem('auth_user')
-    }
-  }
-
-  const login = async (credentials: { email: string; password: string }) => {
-    try {
-      const data = await $fetch<{ user: any; access_token: string }>('http://localhost:3001/api/auth/login', {
-        method: 'POST',
-        body: credentials
-      })
+    async login(credentials: { email: string; password: string }) {
+      this.isLoading = true
       
-      setAuth(data)
-      await navigateTo('/dashboard')
-      return data
-    } catch (error) {
-      console.error('Login error:', error)
-      throw error
-    }
-  }
-
-  const register = async (userData: { 
-    email: string; 
-    password: string; 
-    firstName?: string; 
-    lastName?: string; 
-    organizationName?: string;
-    marketingEmails?: boolean;
-  }) => {
-    try {
-      const data = await $fetch<{ user: any; access_token: string }>('http://localhost:3001/api/auth/register', {
-        method: 'POST',
-        body: userData
-      })
-      
-      setAuth(data)
-      await navigateTo('/dashboard')
-      return data
-    } catch (error) {
-      console.error('Register error:', error)
-      throw error
-    }
-  }
-
-  const logout = async () => {
-    try {
-      if (token.value) {
-        await $fetch('http://localhost:3001/api/auth/logout', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token.value}`
-          }
-        })
-      }
-    } catch (error) {
-      console.error('Logout error:', error)
-    } finally {
-      clearAuth()
-      await navigateTo('/login')
-    }
-  }
-
-  const fetchProfile = async () => {
-    try {
-      if (!token.value) {
-        console.log('No token available for profile fetch')
-        return null
-      }
-      
-      console.log('Fetching profile with token:', token.value.substring(0, 10) + '...')
-      
-      const data = await $fetch<any>('http://localhost:3001/api/auth/profile', {
-        headers: {
-          Authorization: `Bearer ${token.value}`
+      try {
+        // Mock login for development
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        
+        const mockUser: User = {
+          id: 'user_' + Date.now(),
+          email: credentials.email,
+          firstName: 'Demo',
+          lastName: 'User',
+          role: 'ORG_ADMIN',
+          organizationId: 'org_demo',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
         }
-      })
-      
-      user.value = data
-      if (process.client) {
-        localStorage.setItem('auth_user', JSON.stringify(data))
+        
+        const mockToken = 'mock_token_' + Date.now()
+        this.setAuth(mockUser, mockToken)
+        
+        return { success: true }
+      } catch (error: any) {
+        console.error('Login failed:', error)
+        return { 
+          success: false, 
+          error: error.message || 'Login failed' 
+        }
+      } finally {
+        this.isLoading = false
       }
-      return data
-    } catch (error) {
-      console.error('Profile fetch error:', error)
-      clearAuth()
-      throw error
-    }
-  }
+    },
 
-  // Helper function to get auth headers
-  const getAuthHeaders = () => {
-    if (!token.value) {
-      console.warn('No token available for auth headers')
-      return {}
-    }
-    return {
-      Authorization: `Bearer ${token.value}`
-    }
-  }
+    // Register fonksiyonu - mevcut register sayfası ile uyumlu
+    async register(userData: {
+      email: string
+      password: string
+      firstName: string
+      lastName?: string
+      organizationName?: string
+      marketingEmails?: boolean
+    }) {
+      this.isLoading = true
+      
+      try {
+        // Mock registration for development
+        await new Promise(resolve => setTimeout(resolve, 1500))
+        
+        const mockUser: User = {
+          id: 'user_' + Date.now(),
+          email: userData.email,
+          firstName: userData.firstName,
+          lastName: userData.lastName || '',
+          role: 'ORG_ADMIN',
+          organizationId: userData.organizationName ? 'org_' + Date.now() : 'org_default',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }
+        
+        const mockToken = 'mock_token_' + Date.now()
+        this.setAuth(mockUser, mockToken)
+        
+        // Redirect to dashboard after successful registration
+        await navigateTo('/dashboard')
+        
+        return { success: true }
+      } catch (error: any) {
+        console.error('Registration failed:', error)
+        throw error // Let the component handle the error
+      } finally {
+        this.isLoading = false
+      }
+    },
 
-  return {
-    user: readonly(user),
-    token: readonly(token),
-    isAuthenticated,
-    isInitialized: readonly(isInitialized),
-    initializeAuth,
-    login,
-    register,
-    logout,
-    fetchProfile,
-    clearAuth,
-    getAuthHeaders
+    async logout() {
+      try {
+        // Mock logout
+        console.log('Logging out...')
+      } catch (error) {
+        console.error('Logout error:', error)
+      } finally {
+        this.clearAuth()
+        await navigateTo('/login')
+      }
+    },
+
+    setAuth(user: User, token: string) {
+      this.user = user
+      this.token = token
+      this.isAuthenticated = true
+      
+      if (process.client) {
+        localStorage.setItem('auth-token', token)
+        localStorage.setItem('auth-user', JSON.stringify(user))
+      }
+    },
+
+    clearAuth() {
+      this.user = null
+      this.token = null
+      this.isAuthenticated = false
+      
+      if (process.client) {
+        localStorage.removeItem('auth-token')
+        localStorage.removeItem('auth-user')
+      }
+    }
   }
 })

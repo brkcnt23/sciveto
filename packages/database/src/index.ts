@@ -1,7 +1,9 @@
+// Export the Prisma client and all generated types
 export * from '@prisma/client'
 export { PrismaClient } from '@prisma/client'
 
-// Re-export all types and enums
+// Explicitly re-export the types to ensure they're available
+// This will work after prisma generate is run
 export type {
   User,
   Organization,
@@ -16,4 +18,9 @@ export type {
   ProjectPriority,
   AllocationStatus,
   TransactionType
+} from '@prisma/client'
+
+// Export Prisma utility types
+export type {
+  Prisma
 } from '@prisma/client'
