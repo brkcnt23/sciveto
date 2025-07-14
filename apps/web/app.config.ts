@@ -10,7 +10,36 @@ export default defineAppConfig({
     warning: 'amber',
     error: 'red',
     neutral: 'slate',
+button: {
+      slots: {
+        base: 'font-medium transition-colors duration-200'
+      },
+      defaultVariants: {
+        size: 'md',
+        color: 'primary'
+      }
+    },
 
+    card: {
+      slots: {
+        base: 'bg-white dark:bg-neutral-900 shadow-lg rounded-xl border border-neutral-200 dark:border-neutral-800'
+      }
+    },
+
+    badge: {
+      slots: {
+        base: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium'
+      },
+      variants: {
+        color: {
+          primary: 'bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200',
+          success: 'bg-success-100 text-success-800 dark:bg-success-900 dark:text-success-200',
+          warning: 'bg-warning-100 text-warning-800 dark:bg-warning-900 dark:text-warning-200',
+          error: 'bg-error-100 text-error-800 dark:bg-error-900 dark:text-error-200',
+          neutral: 'bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200'
+        }
+      }
+    },
     toast: {
       slots: {
         root: 'relative overflow-hidden bg-white dark:bg-neutral-900 shadow-lg ring-1 ring-neutral-200 dark:ring-neutral-800 rounded-lg p-4 flex gap-3',

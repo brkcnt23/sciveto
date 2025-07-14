@@ -14,7 +14,7 @@
 useHead({
   titleTemplate: '%s - Sciveto',
   meta: [
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    { name: 'viewport', content: 'Modern dashboard built with Nuxt UI v3', content: 'width=device-width, initial-scale=1' }
   ],
   htmlAttrs: {
     class: 'light' // ✅ Zorla açık mod
