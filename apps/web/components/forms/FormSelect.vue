@@ -1,16 +1,48 @@
-<!-- components/base/FormSelect.vue -->
+<!-- components/forms/FormSelect.vue -->
 <template>
-  <UFormField :label="label" :name="name" :description="description" :help="help" :required="required" :size="size"
-    :error="error">
+  <UFormField 
+    :label="label" 
+    :name="name" 
+    :description="description" 
+    :help="help" 
+    :required="required" 
+    :size="size"
+    :error="error"
+  >
     <!-- Basic Select -->
-    <USelect v-if="type === 'basic'" :id="uid" :model-value="modelValue" :options="options" :placeholder="placeholder"
-      :disabled="disabled" :loading="loading" :variant="variant" :color="color" :size="size" :class="selectClass"
-      @update:model-value="handleChange" />
+    <USelect 
+      v-if="type === 'basic'" 
+      :id="uid" 
+      :name="name"
+      :model-value="modelValue" 
+      :options="options" 
+      :placeholder="placeholder"
+      :disabled="disabled" 
+      :loading="loading" 
+      :variant="variant" 
+      :color="color" 
+      :size="size" 
+      :class="selectClass"
+      @update:model-value="handleChange" 
+    />
 
     <!-- Select Menu (Advanced) -->
-    <USelectMenu v-else-if="type === 'menu'" :id="uid" :model-value="modelValue" :options="options"
-      :placeholder="placeholder" :disabled="disabled" :multiple="multiple" :searchable="searchable" :variant="variant"
-      :color="color" :size="size" :class="selectClass" @update:model-value="handleChange">
+    <USelectMenu 
+      v-else-if="type === 'menu'" 
+      :id="uid" 
+      :name="name"
+      :model-value="modelValue" 
+      :options="options"
+      :placeholder="placeholder" 
+      :disabled="disabled" 
+      :multiple="multiple" 
+      :searchable="searchable" 
+      :variant="variant"
+      :color="color" 
+      :size="size" 
+      :class="selectClass" 
+      @update:model-value="handleChange"
+    >
       <!-- Custom option template -->
       <template v-if="$slots.option" #option="{ option }">
         <slot name="option" :option="option" />
@@ -23,10 +55,23 @@
     </USelectMenu>
 
     <!-- Input Menu (Searchable with custom input) -->
-    <UInputMenu v-else-if="type === 'input-menu'" :id="uid" :model-value="modelValue" :options="options"
-      :placeholder="placeholder" :disabled="disabled" :multiple="multiple" :variant="variant" :color="color"
-      :size="size" :leading-icon="leadingIcon" :trailing-icon="trailingIcon" :class="selectClass"
-      @update:model-value="handleChange">
+    <UInputMenu 
+      v-else-if="type === 'input-menu'" 
+      :id="uid" 
+      :name="name"
+      :model-value="modelValue" 
+      :options="options"
+      :placeholder="placeholder" 
+      :disabled="disabled" 
+      :multiple="multiple" 
+      :variant="variant" 
+      :color="color"
+      :size="size" 
+      :leading-icon="leadingIcon" 
+      :trailing-icon="trailingIcon" 
+      :class="selectClass"
+      @update:model-value="handleChange"
+    >
       <!-- Custom option template -->
       <template v-if="$slots.option" #option="{ option }">
         <slot name="option" :option="option" />
@@ -35,11 +80,21 @@
 
     <!-- Combobox (Custom implementation) -->
     <UPopover v-else-if="type === 'combobox'" v-model:open="isOpen">
-      <UButton :id="uid" :variant="variant" :color="color" :size="size" :disabled="disabled" :class="[
-        'w-full justify-between text-left font-normal',
-        !selectedOptions.length && 'text-muted-foreground',
-        selectClass
-      ]" :icon="leadingIcon" :trailing-icon="isOpen ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'">
+      <UButton 
+        :id="uid" 
+        :name="name"
+        :variant="variant" 
+        :color="color" 
+        :size="size" 
+        :disabled="disabled" 
+        :class="[
+          'w-full justify-between text-left font-normal',
+          !selectedOptions.length && 'text-muted-foreground',
+          selectClass
+        ]" 
+        :icon="leadingIcon" 
+        :trailing-icon="isOpen ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
+      >
         <span v-if="selectedOptions.length" class="truncate">
           {{ displayValue }}
         </span>
@@ -49,62 +104,83 @@
       <template #content>
         <div class="p-2 w-64">
           <!-- Search Input -->
-          <UInput v-if="searchable" :id="uid" v-model="searchQuery" placeholder="Search options..."
-            icon="i-lucide-search" size="sm" class="mb-2" />
+          <UInput 
+            v-if="searchable" 
+            :id="`${uid}-search`" 
+            :name="`${name}-search`"
+            v-model="searchQuery" 
+            placeholder="Search options..."
+            icon="i-lucide-search" 
+            size="sm" 
+            class="mb-2" 
+          />
 
           <!-- Options List -->
           <div class="max-h-48 overflow-y-auto space-y-1">
-            <UButton v-for="option in filteredOptions" :key="getOptionValue(option)"
-              :variant="isSelected(option) ? 'soft' : 'ghost'" :color="isSelected(option) ? color : 'neutral'" size="sm"
-              class="w-full justify-start" @click="selectOption(option)">
-              <UCheckbox v-if="multiple" :id="uid" :model-value="isSelected(option)" size="sm" class="mr-2"
-                @click.stop />
-
+            <UButton 
+              v-for="option in filteredOptions" 
+              :key="getOptionValue(option)"
+              :variant="isSelected(option) ? 'soft' : 'ghost'" 
+              :color="isSelected(option) ? color : 'neutral'"
+              size="sm" 
+              class="w-full justify-start text-left" 
+              @click="selectOption(option)"
+            >
+              <UCheckbox 
+                v-if="multiple" 
+                :model-value="isSelected(option)" 
+                :name="`${name}-option-${getOptionValue(option)}`"
+                size="sm" 
+                class="mr-2" 
+                readonly 
+              />
               <span class="truncate">{{ getOptionLabel(option) }}</span>
-
-              <UIcon v-if="!multiple && isSelected(option)" name="i-lucide-check" class="ml-auto h-4 w-4" />
             </UButton>
-
-            <div v-if="filteredOptions.length === 0" class="text-center py-4 text-gray-500 text-sm">
-              No options found
-            </div>
           </div>
 
-          <!-- Actions -->
-          <div v-if="multiple && selectedOptions.length > 0"
-            class="flex justify-between items-center mt-2 pt-2 border-t">
-            <span class="text-xs text-gray-500">
-              {{ selectedOptions.length }} selected
-            </span>
-            <UButton variant="ghost" size="xs" @click="clearSelection">
-              Clear All
-            </UButton>
+          <!-- No options message -->
+          <div v-if="filteredOptions.length === 0" class="text-center text-gray-500 text-sm py-2">
+            No options found
           </div>
         </div>
       </template>
     </UPopover>
 
-    <!-- Multi-select Tags Display -->
+    <!-- Multiple selection tags display -->
     <div v-if="multiple && selectedOptions.length > 0 && showTags" class="flex flex-wrap gap-1 mt-2">
-      <UBadge v-for="option in selectedOptions" :id="uid" :key="getOptionValue(option)" :color="color" variant="soft"
-        size="sm" class="flex items-center gap-1">
+      <UBadge 
+        v-for="option in selectedOptions" 
+        :key="getOptionValue(option)"
+        :color="color" 
+        variant="soft" 
+        size="sm"
+      >
         {{ getOptionLabel(option) }}
-        <UButton variant="ghost" size="xs" icon="i-lucide-x" class="h-3 w-3 p-0" @click="removeOption(option)" />
+        <UButton 
+          :name="`${name}-remove-${getOptionValue(option)}`"
+          icon="i-lucide-x" 
+          size="2xs" 
+          color="gray" 
+          variant="ghost" 
+          class="ml-1 -mr-1" 
+          @click="removeOption(option)"
+        />
       </UBadge>
     </div>
   </UFormField>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
 import { useId } from '#imports'
 
+// Generate unique ID for accessibility
 const uid = useId()
+
 const props = defineProps({
   // v-model
   modelValue: {
     type: [String, Number, Array, Object],
-    default: () => null
+    default: null
   },
 
   // Form field props
@@ -136,16 +212,17 @@ const props = defineProps({
   // Select props
   type: {
     type: String,
-    default: 'menu', // basic, menu, input-menu, combobox
+    default: 'basic',
     validator: (value) => ['basic', 'menu', 'input-menu', 'combobox'].includes(value)
   },
   options: {
     type: Array,
+    required: true,
     default: () => []
   },
   placeholder: {
     type: String,
-    default: 'Select option'
+    default: 'Select option...'
   },
   disabled: {
     type: Boolean,
@@ -155,6 +232,8 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+
+  // Multiple selection
   multiple: {
     type: Boolean,
     default: false
@@ -289,9 +368,9 @@ const selectOption = (option) => {
       currentValues.push(value)
     }
 
-    emit('update:modelValue', currentValues)
+    handleChange(currentValues)
   } else {
-    emit('update:modelValue', value)
+    handleChange(value)
     isOpen.value = false
   }
 }
@@ -305,17 +384,8 @@ const removeOption = (option) => {
 
   if (index > -1) {
     currentValues.splice(index, 1)
-    emit('update:modelValue', currentValues)
+    handleChange(currentValues)
   }
-}
-
-const clearSelection = () => {
-  if (props.multiple) {
-    emit('update:modelValue', [])
-  } else {
-    emit('update:modelValue', null)
-  }
-  isOpen.value = false
 }
 
 const handleChange = (value) => {
@@ -323,8 +393,8 @@ const handleChange = (value) => {
   emit('change', value)
 }
 
-// Watch search query
-watch(searchQuery, (newQuery) => {
-  emit('search', newQuery)
+// Watch for search query changes
+watch(searchQuery, (newValue) => {
+  emit('search', newValue)
 })
 </script>

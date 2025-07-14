@@ -1,13 +1,30 @@
+<!-- components/forms/DatePicker.vue -->
 <template>
-  <UFormField :label="label" :name="name" :description="description" :help="help" :required="required" :size="size"
-    :error="error">
+  <UFormField 
+    :label="label" 
+    :name="name" 
+    :description="description" 
+    :help="help" 
+    :required="required" 
+    :size="size"
+    :error="error"
+  >
     <UPopover v-model:open="isOpen">
-      <UButton :id="name" :name="name" :variant="variant" :color="color" :size="size" :disabled="disabled"
-        :icon="leadingIcon || 'i-lucide-calendar'" :class="[
+      <UButton 
+        :id="uid" 
+        :name="name"
+        :variant="variant" 
+        :color="color" 
+        :size="size" 
+        :disabled="disabled"
+        :icon="leadingIcon || 'i-lucide-calendar'" 
+        :class="[
           'w-full justify-between text-left font-normal',
           !modelValue && 'text-muted-foreground',
           buttonClass
-        ]" trailing-icon="i-lucide-chevron-down">
+        ]" 
+        trailing-icon="i-lucide-chevron-down"
+      >
         <span v-if="displayValue" class="truncate">{{ displayValue }}</span>
         <span v-else class="text-neutral-500">{{ placeholder }}</span>
       </UButton>
@@ -15,48 +32,114 @@
       <template #content>
         <div class="p-4">
           <!-- Single Date Picker -->
-          <UCalendar v-if="!range && !multiple" :id="uid" v-model="internalValue" :min-value="minDate"
-            :max-value="maxDate" :disabled="disabled" @update:model-value="handleDateChange" />
+          <UCalendar 
+            v-if="!range && !multiple" 
+            :id="`${uid}-calendar`" 
+            :name="`${name}-calendar`"
+            v-model="internalValue" 
+            :min-value="minDate"
+            :max-value="maxDate" 
+            :disabled="disabled" 
+            @update:model-value="handleDateChange" 
+          />
 
           <!-- Date Range Picker -->
-          <UCalendar v-else-if="range" :id="uid" v-model="internalValue" :min-value="minDate" :max-value="maxDate"
-            :disabled="disabled" selection-mode="range" @update:model-value="handleDateChange" />
+          <UCalendar 
+            v-else-if="range" 
+            :id="`${uid}-calendar`" 
+            :name="`${name}-calendar`"
+            v-model="internalValue" 
+            :min-value="minDate" 
+            :max-value="maxDate"
+            :disabled="disabled" 
+            selection-mode="range" 
+            @update:model-value="handleDateChange" 
+          />
 
           <!-- Multiple Date Picker -->
-          <UCalendar v-else-if="multiple" :id="uid" v-model="internalValue" :min-value="minDate" :max-value="maxDate"
-            :disabled="disabled" selection-mode="multiple" @update:model-value="handleDateChange" />
+          <UCalendar 
+            v-else-if="multiple" 
+            :id="`${uid}-calendar`" 
+            :name="`${name}-calendar`"
+            v-model="internalValue" 
+            :min-value="minDate" 
+            :max-value="maxDate"
+            :disabled="disabled" 
+            selection-mode="multiple" 
+            @update:model-value="handleDateChange" 
+          />
 
           <!-- Time Picker for datetime-local -->
           <div v-if="type === 'datetime-local' && internalValue" class="mt-4 pt-4 border-t border-neutral-200">
             <div class="space-y-3">
               <label class="text-sm font-medium text-neutral-700">Select Time</label>
               <div class="flex space-x-2">
-                <USelect :id="uid" v-model="selectedHour" name="hour" :items="hourOptions" placeholder="Hour" size="sm"
-                  class="flex-1" />
-                <USelect :id="uid" v-model="selectedMinute" name="minute" :items="minuteOptions" placeholder="Min"
-                  size="sm" class="flex-1" />
+                <USelect 
+                  :id="`${uid}-hour`" 
+                  :name="`${name}-hour`"
+                  v-model="selectedHour" 
+                  :items="hourOptions" 
+                  placeholder="Hour" 
+                  size="sm"
+                  class="flex-1" 
+                />
+                <USelect 
+                  :id="`${uid}-minute`" 
+                  :name="`${name}-minute`"
+                  v-model="selectedMinute" 
+                  :items="minuteOptions" 
+                  placeholder="Min" 
+                  size="sm"
+                  class="flex-1" 
+                />
               </div>
             </div>
           </div>
 
-          <!-- Time Only Picker -->
+          <!-- Time only picker -->
           <div v-if="type === 'time'" class="space-y-3">
             <label class="text-sm font-medium text-neutral-700">Select Time</label>
             <div class="flex space-x-2">
-              <USelect :id="uid" v-model="selectedHour" name="hour" :items="hourOptions" placeholder="Hour" size="sm"
-                class="flex-1" />
-              <USelect :id="uid" v-model="selectedMinute" name="minute" :items="minuteOptions" placeholder="Min"
-                size="sm" class="flex-1" />
+              <USelect 
+                :id="`${uid}-hour`" 
+                :name="`${name}-hour`"
+                v-model="selectedHour" 
+                :items="hourOptions" 
+                placeholder="Hour" 
+                size="sm"
+                class="flex-1" 
+              />
+              <USelect 
+                :id="`${uid}-minute`" 
+                :name="`${name}-minute`"
+                v-model="selectedMinute" 
+                :items="minuteOptions" 
+                placeholder="Min" 
+                size="sm"
+                class="flex-1" 
+              />
             </div>
           </div>
 
-          <!-- Action Buttons -->
-          <div class="flex justify-end space-x-2 mt-4 pt-4 border-t border-neutral-200">
-            <UButton :id="uid" variant="outline" color="neutral" size="sm" @click="clearDate">
+          <!-- Action buttons -->
+          <div v-if="type !== 'time'" class="flex justify-between items-center mt-4 pt-4 border-t border-neutral-200">
+            <UButton 
+              :name="`${name}-clear`"
+              variant="ghost" 
+              color="neutral" 
+              size="sm" 
+              @click="clearDate"
+            >
               Clear
             </UButton>
-            <UButton size="sm" @click="confirmDate">
-              {{ range ? 'Select Range' : multiple ? 'Select Dates' : 'Select Date' }}
+            <UButton 
+              :name="`${name}-confirm`"
+              variant="solid" 
+              color="primary" 
+              size="sm" 
+              @click="confirmDate"
+            >
+              Confirm
             </UButton>
           </div>
         </div>
@@ -66,26 +149,26 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
-import { CalendarDate, DateFormatter, getLocalTimeZone, parseDate } from '@internationalized/date'
 import { useId } from '#imports'
 
+// Generate unique ID for accessibility
 const uid = useId()
+
 const props = defineProps({
   // v-model
   modelValue: {
-    type: [String, Date, Object, Array],
+    type: [String, Date, Array, Object],
     default: null
   },
 
-  // Form field props - NAME IS NOW REQUIRED
+  // Form field props
   label: {
     type: String,
     default: ''
   },
   name: {
     type: String,
-    required: true // This is now required for Nuxt UI v3
+    required: true
   },
   description: {
     type: String,
@@ -104,7 +187,7 @@ const props = defineProps({
     default: false
   },
 
-  // DatePicker specific props
+  // Date picker props
   type: {
     type: String,
     default: 'date',
@@ -112,14 +195,34 @@ const props = defineProps({
   },
   placeholder: {
     type: String,
-    default: 'Select date'
+    default: 'Select date...'
   },
   disabled: {
     type: Boolean,
     default: false
   },
 
-  // Styling props - Updated for v3
+  // Date range and multiple
+  range: {
+    type: Boolean,
+    default: false
+  },
+  multiple: {
+    type: Boolean,
+    default: false
+  },
+
+  // Date constraints
+  minDate: {
+    type: [String, Date],
+    default: null
+  },
+  maxDate: {
+    type: [String, Date],
+    default: null
+  },
+
+  // Styling props
   variant: {
     type: String,
     default: 'outline',
@@ -139,28 +242,10 @@ const props = defineProps({
   // Icon props
   leadingIcon: String,
 
-  // Calendar props
-  minDate: {
-    type: [String, Object, Date],
-    default: null
-  },
-  maxDate: {
-    type: [String, Object, Date],
-    default: null
-  },
-  range: {
-    type: Boolean,
-    default: false
-  },
-  multiple: {
-    type: Boolean,
-    default: false
-  },
-
-  // Date format
-  dateFormat: {
+  // Format
+  format: {
     type: String,
-    default: 'medium' // short, medium, long, full
+    default: 'YYYY-MM-DD'
   },
 
   // Custom classes
@@ -170,198 +255,131 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'change'])
 
 // State
 const isOpen = ref(false)
+const internalValue = ref(props.modelValue)
 const selectedHour = ref('12')
 const selectedMinute = ref('00')
 
-// Date formatter
-const df = new DateFormatter('en-US', {
-  dateStyle: props.dateFormat
-})
-
-const timeFormatter = new DateFormatter('en-US', {
-  hour: '2-digit',
-  minute: '2-digit'
-})
-
-// Internal value for calendar
-const internalValue = computed({
-  get() {
-    if (!props.modelValue) return null
-
-    if (typeof props.modelValue === 'string') {
-      if (props.type === 'time') {
-        // Handle time string like "14:30"
-        const [hour, minute] = props.modelValue.split(':')
-        selectedHour.value = hour || '12'
-        selectedMinute.value = minute || '00'
-        return null
-      }
-      // Parse date string
-      try {
-        return parseDate(props.modelValue)
-      } catch {
-        return new CalendarDate(new Date(props.modelValue))
-      }
-    }
-
-    if (props.modelValue instanceof Date) {
-      const date = props.modelValue
-      return new CalendarDate(date.getFullYear(), date.getMonth() + 1, date.getDate())
-    }
-
-    return props.modelValue
-  },
-  set(value) {
-    emit('update:modelValue', value)
-  }
-})
-
-// Display value formatting
+// Computed
 const displayValue = computed(() => {
-  if (!props.modelValue) return ''
+  if (!internalValue.value) return ''
+
+  if (props.range && Array.isArray(internalValue.value)) {
+    if (internalValue.value.length === 2) {
+      const start = formatDate(internalValue.value[0])
+      const end = formatDate(internalValue.value[1])
+      return `${start} - ${end}`
+    }
+    return ''
+  }
+
+  if (props.multiple && Array.isArray(internalValue.value)) {
+    if (internalValue.value.length === 1) {
+      return formatDate(internalValue.value[0])
+    }
+    return `${internalValue.value.length} dates selected`
+  }
 
   if (props.type === 'time') {
     return `${selectedHour.value}:${selectedMinute.value}`
   }
 
-  if (props.range && Array.isArray(props.modelValue) && props.modelValue.length === 2) {
-    const start = formatDisplayDate(props.modelValue[0])
-    const end = formatDisplayDate(props.modelValue[1])
-    return `${start} - ${end}`
+  if (props.type === 'datetime-local') {
+    const dateStr = formatDate(internalValue.value)
+    return `${dateStr} ${selectedHour.value}:${selectedMinute.value}`
   }
 
-  if (props.multiple && Array.isArray(props.modelValue)) {
-    if (props.modelValue.length === 1) {
-      return formatDisplayDate(props.modelValue[0])
-    }
-    return `${props.modelValue.length} dates selected`
-  }
-
-  return formatDisplayDate(props.modelValue)
+  return formatDate(internalValue.value)
 })
 
-// Time options
 const hourOptions = computed(() => {
-  const hours = []
-  for (let i = 0; i < 24; i++) {
+  return Array.from({ length: 24 }, (_, i) => {
     const hour = i.toString().padStart(2, '0')
-    hours.push({ label: hour, value: hour })
-  }
-  return hours
+    return { label: hour, value: hour }
+  })
 })
 
 const minuteOptions = computed(() => {
-  const minutes = []
-  for (let i = 0; i < 60; i += 5) {
+  return Array.from({ length: 60 }, (_, i) => {
     const minute = i.toString().padStart(2, '0')
-    minutes.push({ label: minute, value: minute })
-  }
-  return minutes
+    return { label: minute, value: minute }
+  })
 })
 
 // Methods
-const formatDisplayDate = (date) => {
+const formatDate = (date) => {
   if (!date) return ''
-
-  if (typeof date === 'string') {
-    if (props.type === 'time') return date
-    date = new Date(date)
+  
+  try {
+    const d = new Date(date)
+    if (isNaN(d.getTime())) return ''
+    
+    return d.toLocaleDateString('en-CA') // YYYY-MM-DD format
+  } catch (error) {
+    return String(date)
   }
-
-  if (date instanceof Date) {
-    if (props.type === 'datetime-local') {
-      return date.toLocaleString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      })
-    }
-    return df.format(date)
-  }
-
-  if (date?.toDate) {
-    const jsDate = date.toDate(getLocalTimeZone())
-    if (props.type === 'datetime-local') {
-      return jsDate.toLocaleString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      })
-    }
-    return df.format(jsDate)
-  }
-
-  return String(date)
 }
 
-const handleDateChange = (value) => {
+const handleDateChange = (newValue) => {
+  internalValue.value = newValue
+  
   if (props.type === 'time') {
-    const timeString = `${selectedHour.value}:${selectedMinute.value}`
-    emit('update:modelValue', timeString)
-    return
-  }
-
-  if (props.type === 'datetime-local' && value) {
-    // Combine date with selected time
-    const jsDate = value.toDate ? value.toDate(getLocalTimeZone()) : new Date(value)
-    jsDate.setHours(parseInt(selectedHour.value), parseInt(selectedMinute.value))
-    emit('update:modelValue', jsDate.toISOString().slice(0, 16)) // datetime-local format
-    return
-  }
-
-  if (value?.toDate) {
-    // Convert CalendarDate to Date
-    emit('update:modelValue', value.toDate(getLocalTimeZone()))
+    emit('update:modelValue', `${selectedHour.value}:${selectedMinute.value}`)
+    emit('change', `${selectedHour.value}:${selectedMinute.value}`)
   } else {
-    emit('update:modelValue', value)
+    emit('update:modelValue', newValue)
+    emit('change', newValue)
   }
 }
 
 const clearDate = () => {
+  internalValue.value = null
+  selectedHour.value = '12'
+  selectedMinute.value = '00'
   emit('update:modelValue', null)
+  emit('change', null)
   isOpen.value = false
 }
 
 const confirmDate = () => {
-  if (props.type === 'time') {
-    const timeString = `${selectedHour.value}:${selectedMinute.value}`
-    emit('update:modelValue', timeString)
-  } else if (props.type === 'datetime-local' && internalValue.value) {
-    // Combine current date with selected time
-    const jsDate = internalValue.value.toDate(getLocalTimeZone())
-    jsDate.setHours(parseInt(selectedHour.value), parseInt(selectedMinute.value))
-    emit('update:modelValue', jsDate.toISOString().slice(0, 16))
+  let finalValue = internalValue.value
+
+  if (props.type === 'datetime-local' && finalValue) {
+    // Combine date and time for datetime-local
+    const date = new Date(finalValue)
+    date.setHours(parseInt(selectedHour.value))
+    date.setMinutes(parseInt(selectedMinute.value))
+    finalValue = date.toISOString().slice(0, 16) // YYYY-MM-DDTHH:mm format
   }
+
+  emit('update:modelValue', finalValue)
+  emit('change', finalValue)
   isOpen.value = false
 }
+
+// Watch for external value changes
+watch(() => props.modelValue, (newValue) => {
+  internalValue.value = newValue
+  
+  // Extract time from datetime-local or time values
+  if (newValue && (props.type === 'datetime-local' || props.type === 'time')) {
+    const timeMatch = String(newValue).match(/(\d{2}):(\d{2})/)
+    if (timeMatch) {
+      selectedHour.value = timeMatch[1]
+      selectedMinute.value = timeMatch[2]
+    }
+  }
+}, { immediate: true })
 
 // Watch for time changes
 watch([selectedHour, selectedMinute], () => {
   if (props.type === 'time') {
-    handleDateChange(null)
-  } else if (props.type === 'datetime-local' && internalValue.value) {
-    handleDateChange(internalValue.value)
+    const timeValue = `${selectedHour.value}:${selectedMinute.value}`
+    emit('update:modelValue', timeValue)
+    emit('change', timeValue)
   }
 })
-
-// Initialize time from modelValue
-watch(() => props.modelValue, (newValue) => {
-  if (props.type === 'time' && typeof newValue === 'string') {
-    const [hour, minute] = newValue.split(':')
-    selectedHour.value = hour || '12'
-    selectedMinute.value = minute || '00'
-  } else if (props.type === 'datetime-local' && newValue) {
-    const date = new Date(newValue)
-    selectedHour.value = date.getHours().toString().padStart(2, '0')
-    selectedMinute.value = date.getMinutes().toString().padStart(2, '0')
-  }
-}, { immediate: true })
 </script>

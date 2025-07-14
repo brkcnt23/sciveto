@@ -1,137 +1,185 @@
+<!-- components/forms/FileUpload.vue -->
 <template>
-  <UFormField :label="label" :name="name" :description="description" :help="help" :required="required" :size="size"
-    :error="error">
-    <!-- File Input (Hidden) -->
-    <input ref="fileInputRef" :id="uid" :name="name" type="file" :accept="accept" :multiple="multiple"
-      :disabled="disabled" class="hidden" @change="handleFileSelect">
+  <UFormField 
+    :label="label" 
+    :name="name" 
+    :description="description" 
+    :help="help" 
+    :required="required" 
+    :size="size"
+    :error="error"
+  >
+    <div class="space-y-4">
+      <!-- File Input Area -->
+      <div 
+        :class="[
+          'relative border-2 border-dashed rounded-lg p-6 transition-colors duration-200',
+          dragActive ? 'border-primary-500 bg-primary-50' : 'border-gray-300 hover:border-gray-400',
+          disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer',
+          error ? 'border-red-300 bg-red-50' : ''
+        ]"
+        @click="triggerFileInput"
+        @dragover.prevent="handleDragOver"
+        @dragleave.prevent="handleDragLeave"
+        @drop.prevent="handleDrop"
+      >
+        <!-- Hidden file input -->
+        <input
+          :id="uid"
+          :name="name"
+          ref="fileInput"
+          type="file"
+          :accept="accept"
+          :multiple="multiple"
+          :disabled="disabled"
+          class="hidden"
+          @change="handleFileSelect"
+        />
 
-    <!-- Drop Zone -->
-    <div :class="[
-      'relative border-2 border-dashed rounded-lg transition-all duration-200 cursor-pointer',
-      'hover:border-primary-400 hover:bg-primary-50/50',
-      isDragOver && 'border-primary-400 bg-primary-50 scale-[1.02]',
-      disabled && 'opacity-50 cursor-not-allowed',
-      sizeClasses[size]?.container || 'p-6',
-      dropZoneClass
-    ]" @click="triggerFileInput" @dragover.prevent="handleDragOver" @dragleave.prevent="handleDragLeave"
-      @drop.prevent="handleDrop">
-      <!-- Upload Icon and Text -->
-      <div class="flex flex-col items-center justify-center text-center space-y-3">
-        <UIcon :id="uid" :name="uploadIcon" :class="[
-          'text-neutral-400',
-          sizeClasses[size]?.icon || 'w-12 h-12'
-        ]" />
-
-        <div class="space-y-1">
-          <p :class="['font-medium text-neutral-700', sizeClasses[size]?.title || 'text-base']">
-            {{ uploadText }}
-          </p>
-          <p :class="['text-neutral-500', sizeClasses[size]?.subtitle || 'text-sm']">
-            {{ uploadSubtext }}
-          </p>
-        </div>
-
-        <!-- File Restrictions -->
-        <div v-if="showRestrictions" class="text-xs text-neutral-400 space-y-1">
-          <p v-if="accept !== '*/*'">Accepted: {{ accept }}</p>
-          <p>Max size: {{ formatFileSize(maxSize) }}</p>
-          <p v-if="multiple">Max files: {{ maxFiles }}</p>
-        </div>
-      </div>
-
-      <!-- Loading Overlay -->
-      <div v-if="isUploading"
-        class="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center">
-        <div class="text-center space-y-2">
-          <UIcon name="i-lucide-loader-2" class="w-8 h-8 text-primary-600 animate-spin mx-auto" />
-          <p class="text-sm font-medium text-neutral-700">Uploading...</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- File List -->
-    <div v-if="fileList.length > 0" class="mt-4 space-y-3">
-      <div class="flex items-center justify-between">
-        <h4 class="text-sm font-medium text-neutral-700">
-          Selected Files ({{ fileList.length }})
-        </h4>
-        <UButton v-if="!autoUpload" :id="uid" variant="ghost" color="neutral" size="xs" icon="i-lucide-trash-2"
-          @click="clearFiles">
-          Clear All
-        </UButton>
-      </div>
-
-      <!-- File Items -->
-      <div class="space-y-2">
-        <div v-for="(fileItem, index) in fileList" :id="uid" :key="`${fileItem.name}-${index}`"
-          class="flex items-center justify-between p-3 border border-neutral-200 rounded-lg bg-neutral-50">
-          <div class="flex items-center space-x-3 flex-1 min-w-0">
-            <!-- File Icon -->
-            <UIcon :name="getFileIcon(fileItem)" class="w-5 h-5 text-neutral-500 shrink-0" />
-
-            <!-- File Info -->
-            <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium text-neutral-700 truncate">{{ fileItem.name }}</p>
-              <p class="text-xs text-neutral-500">{{ formatFileSize(fileItem.size) }}</p>
-
-              <!-- Error Message -->
-              <p v-if="fileItem.error" class="text-xs text-error-600 mt-1">{{ fileItem.error }}</p>
-            </div>
+        <!-- Upload Content -->
+        <div class="text-center">
+          <!-- Upload Icon -->
+          <div class="mx-auto w-12 h-12 text-gray-400 mb-4">
+            <UIcon :name="uploadIcon" class="w-full h-full" />
           </div>
 
-          <!-- Upload Status -->
-          <div class="flex items-center space-x-3 shrink-0">
-            <!-- Progress Bar -->
-            <div v-if="fileItem.uploading" class="flex items-center space-x-2">
-              <UProgress :id="uid" :model-value="fileItem.progress" :max="100" size="sm" class="w-16" />
-              <span class="text-xs text-neutral-500">{{ fileItem.progress }}%</span>
-            </div>
+          <!-- Upload Text -->
+          <div class="space-y-2">
+            <p class="text-sm font-medium text-gray-900">
+              {{ uploadText || 'Click to upload or drag and drop' }}
+            </p>
+            <p class="text-xs text-gray-500">
+              {{ uploadSubtext || getUploadSubtext() }}
+            </p>
+          </div>
 
-            <!-- Upload Status Icons -->
-            <UIcon v-else-if="fileItem.uploaded" :id="uid" name="i-lucide-check-circle"
-              class="w-5 h-5 text-success-600" />
-            <UIcon v-else-if="fileItem.error" :id="uid" name="i-lucide-x-circle" class="w-5 h-5 text-error-600" />
-            <UIcon v-else :id="uid" name="i-lucide-clock" class="w-5 h-5 text-neutral-400" />
+          <!-- Loading State -->
+          <div v-if="uploading" class="mt-4">
+            <div class="flex items-center justify-center space-x-2">
+              <UIcon name="i-lucide-loader-2" class="w-4 h-4 animate-spin" />
+              <span class="text-sm text-gray-600">Uploading...</span>
+            </div>
+            <div v-if="uploadProgress !== null" class="mt-2">
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div 
+                  class="bg-primary-600 h-2 rounded-full transition-all duration-300"
+                  :style="{ width: `${uploadProgress}%` }"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- File List -->
+      <div v-if="fileList.length > 0" class="space-y-2">
+        <h4 class="text-sm font-medium text-gray-900">
+          {{ multiple ? 'Selected Files' : 'Selected File' }}
+        </h4>
+        
+        <div class="space-y-2 max-h-32 overflow-y-auto">
+          <div
+            v-for="(file, index) in fileList"
+            :key="`${file.name}-${index}`"
+            class="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+          >
+            <div class="flex items-center space-x-3 flex-1 min-w-0">
+              <!-- File Icon -->
+              <UIcon :name="getFileIcon(file)" class="w-5 h-5 text-gray-500 flex-shrink-0" />
+              
+              <!-- File Info -->
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-900 truncate">
+                  {{ file.name }}
+                </p>
+                <p class="text-xs text-gray-500">
+                  {{ formatFileSize(file.size) }}
+                </p>
+              </div>
+              
+              <!-- Upload Status -->
+              <div class="flex items-center space-x-2">
+                <UIcon 
+                  v-if="file.status === 'success'" 
+                  name="i-lucide-check-circle" 
+                  class="w-4 h-4 text-green-500" 
+                />
+                <UIcon 
+                  v-else-if="file.status === 'error'" 
+                  name="i-lucide-x-circle" 
+                  class="w-4 h-4 text-red-500" 
+                />
+                <UIcon 
+                  v-else-if="file.status === 'uploading'" 
+                  name="i-lucide-loader-2" 
+                  class="w-4 h-4 text-blue-500 animate-spin" 
+                />
+              </div>
+            </div>
 
             <!-- Remove Button -->
-            <UButton variant="ghost" color="neutral" size="xs" icon="i-lucide-x" @click="removeFile(index)" />
+            <UButton
+              :name="`${name}-remove-${index}`"
+              icon="i-lucide-x"
+              size="xs"
+              color="gray"
+              variant="ghost"
+              class="ml-2"
+              @click="removeFile(index)"
+            />
           </div>
         </div>
       </div>
 
-      <!-- Upload Actions -->
-      <div v-if="!autoUpload && hasUnuploadedFiles" class="flex justify-end space-x-2 pt-2">
-        <UButton :id="uid" variant="outline" color="neutral" size="sm" @click="clearFiles">
-          Clear All
-        </UButton>
-        <UButton :id="uid" size="sm" :loading="isUploading" @click="uploadFiles">
-          Upload Files
-        </UButton>
+      <!-- Error Messages -->
+      <div v-if="fileErrors.length > 0" class="space-y-1">
+        <UAlert
+          v-for="(error, index) in fileErrors"
+          :key="index"
+          color="error"
+          variant="soft"
+          :description="error"
+          class="text-sm"
+        />
+      </div>
+
+      <!-- File Constraints Info -->
+      <div v-if="showConstraints" class="text-xs text-gray-500 space-y-1">
+        <p v-if="maxSize">
+          Maximum file size: {{ formatFileSize(maxSize) }}
+        </p>
+        <p v-if="multiple && maxFiles">
+          Maximum files: {{ maxFiles }}
+        </p>
+        <p v-if="accept">
+          Accepted formats: {{ accept }}
+        </p>
       </div>
     </div>
   </UFormField>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
 import { useId } from '#imports'
 
+// Generate unique ID for accessibility
 const uid = useId()
+
 const props = defineProps({
   // v-model
   modelValue: {
-    type: [Array, File, FileList],
-    default: () => []
+    type: [File, FileList, Array],
+    default: null
   },
 
-  // Form field props - NAME IS NOW REQUIRED
+  // Form field props
   label: {
     type: String,
     default: ''
   },
   name: {
     type: String,
-    required: true // This is now required for Nuxt UI v3
+    required: true
   },
   description: {
     type: String,
@@ -159,285 +207,290 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  maxSize: {
-    type: Number,
-    default: 10 * 1024 * 1024 // 10MB
-  },
-  maxFiles: {
-    type: Number,
-    default: 5
-  },
   disabled: {
     type: Boolean,
     default: false
   },
+
+  // File constraints
+  maxSize: {
+    type: Number,
+    default: null // in bytes
+  },
+  maxFiles: {
+    type: Number,
+    default: null
+  },
+
+  // Upload behavior
   autoUpload: {
     type: Boolean,
     default: false
   },
-
-  // Styling props
-  size: {
+  uploadUrl: {
     type: String,
-    default: 'md',
-    validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl'].includes(value)
+    default: null
   },
 
-  // Text customization
+  // UI customization
+  uploadIcon: {
+    type: String,
+    default: 'i-lucide-upload'
+  },
   uploadText: {
     type: String,
-    default: 'Click to upload or drag and drop'
+    default: ''
   },
   uploadSubtext: {
     type: String,
-    default: 'Select files to upload'
+    default: ''
   },
-  uploadIcon: {
-    type: String,
-    default: 'i-lucide-upload-cloud'
-  },
-  showRestrictions: {
+  showConstraints: {
     type: Boolean,
     default: true
   },
 
-  // Custom classes
-  dropZoneClass: {
+  // Styling
+  size: {
     type: String,
-    default: ''
+    default: 'md',
+    validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl'].includes(value)
   }
 })
 
-const emit = defineEmits(['update:modelValue', 'upload-success', 'upload-error', 'files-added', 'file-removed'])
+const emit = defineEmits([
+  'update:modelValue', 
+  'upload-success', 
+  'upload-error', 
+  'file-added', 
+  'file-removed'
+])
 
-// Refs
-const fileInputRef = ref(null)
-const isDragOver = ref(false)
-const isUploading = ref(false)
-
-// File management
+// State
+const fileInput = ref(null)
+const dragActive = ref(false)
+const uploading = ref(false)
+const uploadProgress = ref(null)
 const fileList = ref([])
-
-// Size classes for Nuxt UI v3
-const sizeClasses = {
-  xs: {
-    container: 'p-3',
-    icon: 'w-8 h-8',
-    title: 'text-xs',
-    subtitle: 'text-xs'
-  },
-  sm: {
-    container: 'p-4',
-    icon: 'w-10 h-10',
-    title: 'text-sm',
-    subtitle: 'text-xs'
-  },
-  md: {
-    container: 'p-6',
-    icon: 'w-12 h-12',
-    title: 'text-base',
-    subtitle: 'text-sm'
-  },
-  lg: {
-    container: 'p-8',
-    icon: 'w-14 h-14',
-    title: 'text-lg',
-    subtitle: 'text-sm'
-  },
-  xl: {
-    container: 'p-10',
-    icon: 'w-16 h-16',
-    title: 'text-xl',
-    subtitle: 'text-base'
-  }
-}
-
-// Computed
-const hasUnuploadedFiles = computed(() => {
-  return fileList.value.some(file => !file.uploaded && !file.uploading && !file.error)
-})
-
-// File validation
-const validateFile = (file) => {
-  // Check file size
-  if (file.size > props.maxSize) {
-    return `File too large. Max size: ${formatFileSize(props.maxSize)}`
-  }
-
-  // Check file type if accept is specified
-  if (props.accept !== '*/*' && props.accept) {
-    const acceptedTypes = props.accept.split(',').map(type => type.trim())
-    const fileType = file.type
-    const fileExtension = '.' + file.name.split('.').pop().toLowerCase()
-
-    const isValidType = acceptedTypes.some(acceptedType => {
-      if (acceptedType.startsWith('.')) {
-        return acceptedType === fileExtension
-      }
-      if (acceptedType.includes('*')) {
-        const baseType = acceptedType.split('/')[0]
-        return fileType.startsWith(baseType)
-      }
-      return acceptedType === fileType
-    })
-
-    if (!isValidType) {
-      return `Invalid file type. Accepted: ${props.accept}`
-    }
-  }
-
-  return null
-}
+const fileErrors = ref([])
 
 // Methods
 const triggerFileInput = () => {
   if (!props.disabled) {
-    fileInputRef.value?.click()
+    fileInput.value?.click()
   }
 }
 
-const handleDragOver = (event) => {
+const handleDragOver = (e) => {
   if (!props.disabled) {
-    isDragOver.value = true
+    dragActive.value = true
   }
 }
 
-const handleDragLeave = (event) => {
-  isDragOver.value = false
+const handleDragLeave = (e) => {
+  dragActive.value = false
 }
 
-const handleDrop = (event) => {
-  isDragOver.value = false
-  if (props.disabled) return
-
-  const files = Array.from(event.dataTransfer.files)
-  processFiles(files)
+const handleDrop = (e) => {
+  dragActive.value = false
+  if (!props.disabled) {
+    const files = Array.from(e.dataTransfer.files)
+    processFiles(files)
+  }
 }
 
-const handleFileSelect = (event) => {
-  const files = Array.from(event.target.files)
+const handleFileSelect = (e) => {
+  const files = Array.from(e.target.files)
   processFiles(files)
-  // Reset input value to allow selecting the same file again
-  event.target.value = ''
 }
 
 const processFiles = (files) => {
-  if (files.length === 0) return
-
-  // Check max files limit
+  fileErrors.value = []
+  
+  // Validate file count
   if (props.multiple && props.maxFiles) {
     const totalFiles = fileList.value.length + files.length
     if (totalFiles > props.maxFiles) {
-      emit('upload-error', `Too many files. Maximum ${props.maxFiles} files allowed.`)
+      fileErrors.value.push(`Maximum ${props.maxFiles} files allowed`)
       return
     }
   }
 
-  // Process each file
-  const newFiles = files.map(file => {
-    const error = validateFile(file)
-    return {
-      name: file.name,
-      size: file.size,
-      type: file.type,
-      file: file,
-      uploaded: false,
-      uploading: false,
-      progress: 0,
-      error: error
+  const validFiles = []
+
+  for (const file of files) {
+    const errors = validateFile(file)
+    if (errors.length === 0) {
+      validFiles.push({
+        file,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        status: 'pending'
+      })
+    } else {
+      fileErrors.value.push(...errors)
     }
-  })
-
-  if (props.multiple) {
-    fileList.value.push(...newFiles)
-  } else {
-    fileList.value = [newFiles[0]]
   }
 
-  updateModelValue()
-  emit('files-added', newFiles)
+  if (validFiles.length > 0) {
+    if (props.multiple) {
+      fileList.value.push(...validFiles)
+    } else {
+      fileList.value = [validFiles[0]]
+    }
 
-  if (props.autoUpload) {
-    uploadFiles()
+    // Emit the files
+    const filesToEmit = props.multiple 
+      ? fileList.value.map(f => f.file)
+      : validFiles[0].file
+
+    emit('update:modelValue', filesToEmit)
+    emit('file-added', validFiles)
+
+    // Auto upload if enabled
+    if (props.autoUpload && props.uploadUrl) {
+      uploadFiles(validFiles)
+    }
   }
+}
+
+const validateFile = (file) => {
+  const errors = []
+
+  // Size validation
+  if (props.maxSize && file.size > props.maxSize) {
+    errors.push(`File "${file.name}" is too large. Maximum size: ${formatFileSize(props.maxSize)}`)
+  }
+
+  // Type validation
+  if (props.accept !== '*/*') {
+    const acceptedTypes = props.accept.split(',').map(t => t.trim())
+    const isAccepted = acceptedTypes.some(type => {
+      if (type.startsWith('.')) {
+        return file.name.toLowerCase().endsWith(type.toLowerCase())
+      }
+      return file.type.match(type.replace('*', '.*'))
+    })
+
+    if (!isAccepted) {
+      errors.push(`File "${file.name}" type not accepted`)
+    }
+  }
+
+  return errors
 }
 
 const removeFile = (index) => {
-  const removedFile = fileList.value.splice(index, 1)[0]
-  updateModelValue()
+  const removedFile = fileList.value[index]
+  fileList.value.splice(index, 1)
+
+  // Update model value
+  const filesToEmit = props.multiple 
+    ? fileList.value.map(f => f.file)
+    : (fileList.value.length > 0 ? fileList.value[0].file : null)
+
+  emit('update:modelValue', filesToEmit)
   emit('file-removed', removedFile)
 }
 
-const clearFiles = () => {
-  fileList.value = []
-  updateModelValue()
-}
+const uploadFiles = async (files) => {
+  if (!props.uploadUrl) return
 
-const uploadFiles = async () => {
-  const filesToUpload = fileList.value.filter(file => !file.uploaded && !file.uploading && !file.error)
-  if (filesToUpload.length === 0) return
+  uploading.value = true
+  uploadProgress.value = 0
 
-  isUploading.value = true
+  try {
+    for (let i = 0; i < files.length; i++) {
+      const fileItem = files[i]
+      fileItem.status = 'uploading'
 
-  for (const fileItem of filesToUpload) {
-    try {
-      fileItem.uploading = true
+      const formData = new FormData()
+      formData.append('file', fileItem.file)
 
-      // Simulate upload progress
-      for (let progress = 0; progress <= 100; progress += 10) {
-        fileItem.progress = progress
-        await new Promise(resolve => setTimeout(resolve, 100))
+      try {
+        const response = await fetch(props.uploadUrl, {
+          method: 'POST',
+          body: formData
+        })
+
+        if (response.ok) {
+          fileItem.status = 'success'
+          emit('upload-success', { file: fileItem.file, response })
+        } else {
+          fileItem.status = 'error'
+          emit('upload-error', { file: fileItem.file, error: 'Upload failed' })
+        }
+      } catch (error) {
+        fileItem.status = 'error'
+        emit('upload-error', { file: fileItem.file, error })
       }
 
-      fileItem.uploading = false
-      fileItem.uploaded = true
-      fileItem.progress = 100
-
-      emit('upload-success', fileItem)
-    } catch (error) {
-      fileItem.uploading = false
-      fileItem.error = error.message || 'Upload failed'
-      emit('upload-error', error, fileItem)
+      uploadProgress.value = ((i + 1) / files.length) * 100
     }
-  }
-
-  isUploading.value = false
-}
-
-const updateModelValue = () => {
-  const files = fileList.value.map(item => item.file)
-  if (props.multiple) {
-    emit('update:modelValue', files)
-  } else {
-    emit('update:modelValue', files[0] || null)
+  } finally {
+    uploading.value = false
+    setTimeout(() => {
+      uploadProgress.value = null
+    }, 2000)
   }
 }
 
-// Utility functions
 const formatFileSize = (bytes) => {
-  if (bytes === 0) return '0 Bytes'
-  const k = 1024
-  const sizes = ['Bytes', 'KB', 'MB', 'GB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+  if (!bytes) return '0 B'
+  
+  const sizes = ['B', 'KB', 'MB', 'GB']
+  const i = Math.floor(Math.log(bytes) / Math.log(1024))
+  
+  return `${Math.round(bytes / Math.pow(1024, i) * 100) / 100} ${sizes[i]}`
 }
 
 const getFileIcon = (file) => {
-  const type = file.type.toLowerCase()
-  if (type.includes('image')) return 'i-lucide-image'
-  if (type.includes('video')) return 'i-lucide-video'
-  if (type.includes('audio')) return 'i-lucide-music'
-  if (type.includes('pdf')) return 'i-lucide-file-text'
-  if (type.includes('word') || type.includes('document')) return 'i-lucide-file-text'
-  if (type.includes('excel') || type.includes('spreadsheet')) return 'i-lucide-file-spreadsheet'
-  if (type.includes('zip') || type.includes('rar')) return 'i-lucide-archive'
+  const type = file.type || file.file?.type
+  
+  if (type?.startsWith('image/')) return 'i-lucide-image'
+  if (type?.startsWith('video/')) return 'i-lucide-video'
+  if (type?.startsWith('audio/')) return 'i-lucide-music'
+  if (type?.includes('pdf')) return 'i-lucide-file-text'
+  if (type?.includes('word') || type?.includes('document')) return 'i-lucide-file-text'
+  if (type?.includes('sheet') || type?.includes('excel')) return 'i-lucide-table'
+  if (type?.includes('zip') || type?.includes('rar')) return 'i-lucide-archive'
+  
   return 'i-lucide-file'
 }
 
-// Watch for external changes
+const getUploadSubtext = () => {
+  const parts = []
+  
+  if (props.accept !== '*/*') {
+    parts.push(props.accept.replace(/,/g, ', '))
+  }
+  
+  if (props.maxSize) {
+    parts.push(`up to ${formatFileSize(props.maxSize)}`)
+  }
+  
+  if (props.multiple && props.maxFiles) {
+    parts.push(`max ${props.maxFiles} files`)
+  }
+  
+  return parts.length > 0 ? parts.join(' • ') : 'Any file type'
+}
+
+// Watch for external model value changes
 watch(() => props.modelValue, (newValue) => {
   if (!newValue) {
     fileList.value = []
+  } else if (newValue !== fileList.value.map(f => f.file)) {
+    // Sync external changes if needed
+    const files = Array.isArray(newValue) ? newValue : [newValue]
+    fileList.value = files.map(file => ({
+      file,
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      status: 'pending'
+    }))
   }
-}, { deep: true })
+}, { immediate: true })
 </script>

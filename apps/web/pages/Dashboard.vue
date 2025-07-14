@@ -112,191 +112,6 @@
           </ul>
         </UCard>
       </div>
-      <!-- Toast Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm mb-8">
-        <template #header>
-          <h3 class="text-xl font-bold text-neutral-800">🍞 Toast Notifications (Updated API)</h3>
-        </template>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <UButton color="success" variant="outline" @click="showSuccess">
-            Success Toast
-          </UButton>
-          <UButton color="error" variant="outline" @click="showError">
-            Error Toast
-          </UButton>
-          <UButton color="warning" variant="outline" @click="showWarning">
-            Warning Toast
-          </UButton>
-          <UButton color="info" variant="outline" @click="showInfo">
-            Info Toast
-          </UButton>
-        </div>
-      </UCard>
-      <!-- Form Components -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm mb-8">
-        <template #header>
-          <h3 class="text-xl font-bold text-neutral-800">📝 Form Components (with Required Name Props)</h3>
-        </template>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div class="space-y-4">
-            <FormInput v-model="formData.name" name="projectName" label="Project Name" placeholder="Enter project name"
-              icon="i-heroicons-folder" required />
-
-            <FormInput v-model="formData.email" name="projectEmail" label="Email Address" placeholder="Enter email"
-              icon="i-heroicons-envelope" type="email" />
-
-            <FormSelect v-model="formData.priority" name="projectPriority" label="Priority Level"
-              placeholder="Select priority" leading-icon="i-heroicons-flag" :items="priorityOptions"
-              help="Choose the priority level for this task" />
-          </div>
-
-          <div class="space-y-4">
-            <FormInput v-model="formData.budget" name="projectBudget" label="Budget" placeholder="0.00"
-              icon="i-heroicons-currency-dollar" type="number" />
-
-            <UTextarea v-model="formData.description" name="projectDescription" label="Description"
-              placeholder="Project description" rows="3" />
-
-            <div class="flex space-x-2">
-              <UButton color="primary" @click="handleSave">
-                <UIcon name="i-heroicons-check" class="w-4 h-4 mr-2" />
-                Save Project
-              </UButton>
-              <UButton color="neutral" variant="outline" @click="handleReset">
-                Reset
-              </UButton>
-            </div>
-          </div>
-        </div>
-      </UCard>
-
-      <!-- Date Picker Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm mb-8">
-        <template #header>
-          <h3 class="text-xl font-bold text-neutral-800">📅 Date Picker Component</h3>
-        </template>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <DatePicker v-model="formData.startDate" name="startDate" label="Start Date" placeholder="Select start date"
-            leading-icon="i-heroicons-calendar-days" help="Choose the project start date" />
-
-          <DatePicker v-model="formData.endDate" name="endDate" label="End Date" placeholder="Select end date"
-            :min-date="formData.startDate" type="datetime-local" />
-
-          <DatePicker v-model="formData.time" name="meetingTime" label="Meeting Time" type="time"
-            placeholder="Select time" />
-        </div>
-      </UCard>
-
-      <!-- File Upload Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm mb-8">
-        <template #header>
-          <h3 class="text-xl font-bold text-neutral-800">📎 File Upload Component</h3>
-        </template>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <!-- Single File Upload -->
-          <div>
-            <h4 class="font-semibold text-neutral-700 mb-4">Single File Upload</h4>
-            <FileUpload v-model="uploadedFiles.single" name="profilePicture" label="Profile Picture" accept="image/*"
-              :max-size="2 * 1024 * 1024" help="Upload a profile picture (max 2MB)"
-              @upload-success="handleUploadSuccess" @upload-error="handleUploadError" />
-          </div>
-
-          <!-- Multiple File Upload -->
-          <div>
-            <h4 class="font-semibold text-neutral-700 mb-4">Multiple File Upload</h4>
-            <FileUpload v-model="uploadedFiles.multiple" name="projectDocuments" label="Project Documents"
-              accept=".pdf,.doc,.docx,.jpg,.png" :multiple="true" :max-files="5" :max-size="10 * 1024 * 1024"
-              help="Upload project documents (max 5 files, 10MB each)" auto-upload @upload-success="handleUploadSuccess"
-              @upload-error="handleUploadError" />
-          </div>
-        </div>
-      </UCard>
-
-      <!-- Pagination Showcase -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm mb-8">
-        <template #header>
-          <h3 class="text-xl font-bold text-neutral-800">📄 Pagination Component</h3>
-        </template>
-
-        <div class="space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-blue-50 p-4 rounded-lg">
-              <h5 class="font-semibold text-blue-800">Total Items</h5>
-              <p class="text-2xl font-bold text-blue-600">{{ paginationData.total }}</p>
-            </div>
-            <div class="bg-green-50 p-4 rounded-lg">
-              <h5 class="font-semibold text-green-800">Current Page</h5>
-              <p class="text-2xl font-bold text-green-600">{{ paginationData.currentPage }}</p>
-            </div>
-            <div class="bg-purple-50 p-4 rounded-lg">
-              <h5 class="font-semibold text-purple-800">Per Page</h5>
-              <p class="text-2xl font-bold text-purple-600">{{ paginationData.perPage }}</p>
-            </div>
-          </div>
-
-          <Pagination v-model:current-page="paginationData.currentPage" v-model:per-page="paginationData.perPage"
-            name="examplePagination" :total="paginationData.total" :show-info="true" :show-per-page-select="true"
-            :show-first-last="true" @change="handlePaginationChange" />
-        </div>
-      </UCard>
-
-      <!-- Projects Grid -->
-      <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-        <template #header>
-          <div class="flex items-center justify-between">
-            <h3 class="text-xl font-bold text-neutral-800">📊 Projects (Nuxt UI v3)</h3>
-            <UButton variant="outline" size="sm" @click="toggleProjectsLoading" :loading="projectsLoading">
-              {{ projectsLoading ? 'Loading...' : 'Refresh' }}
-            </UButton>
-          </div>
-        </template>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <UCard v-for="project in projects" :key="project.id" class="hover:shadow-lg transition-shadow">
-            <template #header>
-              <div class="flex items-center justify-between">
-                <h4 class="font-semibold text-neutral-800">{{ project.name }}</h4>
-                <UBadge
-                  :color="project.status === 'completed' ? 'success' : project.status === 'in-progress' ? 'warning' : 'neutral'">
-                  {{ project.status }}
-                </UBadge>
-              </div>
-            </template>
-
-            <div class="space-y-3">
-              <p class="text-sm text-neutral-600">{{ project.description }}</p>
-
-              <div class="space-y-2">
-                <div class="flex justify-between text-sm">
-                  <span class="text-neutral-500">Progress</span>
-                  <span class="font-medium">{{ project.progress }}%</span>
-                </div>
-                <UProgress :model-value="project.progress" :max="100" />
-              </div>
-
-              <div class="flex items-center justify-between text-sm text-neutral-500">
-                <span>{{ project.team }} team members</span>
-                <span>Due {{ project.dueDate }}</span>
-              </div>
-            </div>
-
-            <template #footer>
-              <div class="flex space-x-2">
-                <UButton size="sm" variant="outline" class="flex-1">
-                  View Details
-                </UButton>
-                <UButton size="sm" color="primary" class="flex-1">
-                  Edit Project
-                </UButton>
-              </div>
-            </template>
-          </UCard>
-        </div>
-      </UCard>
 
       <!-- Priority Badge Showcase -->
       <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
@@ -353,7 +168,7 @@
           🌍 Global Project Map
         </template>
 
-        <WorldMap name="world-map" />
+        <WorldMap name="world-map"/>
       </UCard>
 
       <!-- Progress Bar Section -->
@@ -382,18 +197,18 @@
           <!-- Skeleton Loading -->
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Skeleton Loading</h4>
-            <SkeletonLoader name="SkeletonLoader" type="card" />
-            <SkeletonLoader name="SkeletonLoader" type="list" />
-            <SkeletonLoader name="SkeletonLoader" type="text" :lines="4" />
+            <SkeletonLoader name ="SkeletonLoader" type="card" />
+            <SkeletonLoader name ="SkeletonLoader" type="list" />
+            <SkeletonLoader name ="SkeletonLoader" type="text" :lines="4" />
           </div>
 
           <!-- Spinner Loading -->
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Spinner Loading</h4>
             <div class="space-y-4">
-              <LoadingSpinner name="LoadingSpinner" size="sm" text="Loading..." />
-              <LoadingSpinner name="LoadingSpinner" size="md" color="emerald" text="Processing..." />
-              <LoadingSpinner name="LoadingSpinner" size="lg" color="violet" text="Uploading..." />
+              <LoadingSpinner name ="LoadingSpinner" size="sm" text="Loading..." />
+              <LoadingSpinner name ="LoadingSpinner" size="md" color="emerald" text="Processing..." />
+              <LoadingSpinner name ="LoadingSpinner" size="lg" color="violet" text="Uploading..." />
             </div>
           </div>
         </div>
@@ -408,14 +223,14 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">No Projects</h4>
-            <EmptyState name="EmptyState" icon="i-heroicons-briefcase" title="No Projects Found"
+            <EmptyState  name ="EmptyState" icon="i-heroicons-briefcase" title="No Projects Found"
               description="You haven't created any projects yet. Get started by creating your first project."
               action-text="Create Project" action-icon="i-heroicons-plus" @action="handleCreateProject" />
           </div>
 
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">No Stock Items</h4>
-            <EmptyState name="EmptyState" icon="i-heroicons-cube" title="No Stock Items"
+            <EmptyState name ="EmptyState" icon="i-heroicons-cube" title="No Stock Items"
               description="Your inventory is empty. Add some stock items to get started." action-text="Add Stock Item"
               action-icon="i-heroicons-plus" @action="handleAddStock" />
           </div>
@@ -472,7 +287,7 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div v-for="user in sampleUsers" :key="user.id"
                   class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                  <Avatar name="Avatar" :user="user" size="md" show-online-status />
+                  <Avatar name ="Avatar" :user="user" size="md" show-online-status />
                   <div>
                     <p class="font-medium text-gray-900">{{ user.name }}</p>
                     <p class="text-sm text-gray-500">{{ user.email }}</p>
@@ -486,13 +301,13 @@
             <div class="space-y-4">
               <h4 class="font-semibold text-slate-700">Project Settings</h4>
               <div class="space-y-4">
-                <FormInput name="FormInput" v-model="settingsForm.name" label="Project Name"
-                  placeholder="Enter project name" leading-icon="i-heroicons-folder" />
-                <FormInput name="FormInput" v-model="settingsForm.description" label="Description"
-                  placeholder="Project description" leading-icon="i-heroicons-document-text" />
+                <FormInput name ="FormInput" v-model="settingsForm.name" label="Project Name" placeholder="Enter project name"
+                  leading-icon="i-heroicons-folder" />
+                <FormInput name ="FormInput" v-model="settingsForm.description" label="Description" placeholder="Project description"
+                  leading-icon="i-heroicons-document-text" />
                 <div class="flex space-x-2">
-                  <UButton name="UButton" color="blue" @click="saveSettings">Save Changes</UButton>
-                  <UButton name="UButton" color="gray" variant="outline" @click="resetSettings">Reset</UButton>
+                  <UButton name ="UButton" color="blue" @click="saveSettings">Save Changes</UButton>
+                  <UButton name ="UButton" color="gray" variant="outline" @click="resetSettings">Reset</UButton>
                 </div>
               </div>
             </div>
@@ -548,8 +363,8 @@
         <template #header>
           <h3>📝 Form Components (Nuxt UI v3)</h3>
         </template>
-        <FormShowcase name="FormShowcase" :default-show-states="true" :default-show-textarea-select="true"
-          :default-show-advanced="true" :default-show-variants="false" :default-show-working-form="true" />
+        <FormShowcase name="FormShowcase" :default-show-states="true" :default-show-textarea-select="true" :default-show-advanced="true"
+          :default-show-variants="false" :default-show-working-form="true" />
       </UCard>
 
       <!-- Status Indicator Showcase -->
@@ -557,8 +372,7 @@
         <template #header>
           <h3 class="text-xl font-bold text-slate-800">🔍 Status Indicator (Nuxt UI v3)</h3>
         </template>
-        <StatusShowcase name="StatusShowcase" :default-show-badge-style="true" :default-show-sizes="false"
-          :default-show-interactive="true" />
+        <StatusShowcase name="StatusShowcase" :default-show-badge-style="true" :default-show-sizes="false" :default-show-interactive="true" />
       </UCard>
 
       <!-- Modal Showcase -->
@@ -660,10 +474,8 @@
             <div class="space-y-4">
               <p class="text-sm text-gray-600">Fill in the details below</p>
               <div class="space-y-4">
-                <FormInput name="FormInput" v-model="modalForm.name" label="Project Name"
-                  placeholder="Enter project name" required />
-                <FormInput name="FormInput" v-model="modalForm.description" label="Description"
-                  placeholder="Project description" />
+                <FormInput name="FormInput" v-model="modalForm.name" label="Project Name" placeholder="Enter project name" required />
+                <FormInput name="FormInput" v-model="modalForm.description" label="Description" placeholder="Project description" />
               </div>
             </div>
 
@@ -719,30 +531,28 @@
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Form Select</h4>
 
-            <FormSelect name="FormSelect" v-model="formData.priority" label="Priority Level"
-              placeholder="Select priority" leading-icon="i-heroicons-flag" :options="priorityOptions"
+            <FormSelect name="FormSelect" v-model="formData.priority" label="Priority Level" placeholder="Select priority"
+              leading-icon="i-heroicons-flag" :options="priorityOptions"
               help-text="Choose the priority level for this task" />
 
             <FormSelect name="FormSelect" v-model="formData.category" label="Category" placeholder="Select category"
               :options="categoryOptions" :option-groups="categoryGroups" show-selected-value />
 
-            <FormSelect name="FormSelect" v-model="formData.status" label="Status" :options="statusOptions"
-              :loading="selectLoading" disabled />
+            <FormSelect name="FormSelect" v-model="formData.status" label="Status" :options="statusOptions" :loading="selectLoading"
+              disabled />
           </div>
 
           <!-- Date Picker -->
           <div class="space-y-4">
             <h4 class="font-semibold text-slate-700">Date Picker</h4>
 
-            <DatePicker name="DatePicker" v-model="formData.startDate" label="Start Date"
-              placeholder="Select start date" leading-icon="i-heroicons-calendar-days"
-              help-text="Choose the project start date" />
+            <DatePicker name="DatePicker" v-model="formData.startDate" label="Start Date" placeholder="Select start date"
+              leading-icon="i-heroicons-calendar-days" help-text="Choose the project start date" />
 
             <DatePicker name="DatePicker" v-model="formData.endDate" label="End Date" placeholder="Select end date"
               :min-date="formData.startDate" type="datetime-local" />
 
-            <DatePicker name="DatePicker" v-model="formData.time" label="Meeting Time" type="time"
-              placeholder="Select time" />
+            <DatePicker name="DatePicker" v-model="formData.time" label="Meeting Time" type="time" placeholder="Select time" />
           </div>
         </div>
       </UCard>
@@ -765,8 +575,8 @@
           <!-- Multiple File Upload -->
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Multiple File Upload</h4>
-            <FileUpload name="FileUpload" v-model="uploadedFiles.multiple" label="Project Documents"
-              accept=".pdf,.doc,.docx,.jpg,.png" :multiple="true" :max-files="5" :max-size="10 * 1024 * 1024"
+            <FileUpload name="FileUpload" v-model="uploadedFiles.multiple" label="Project Documents" accept=".pdf,.doc,.docx,.jpg,.png"
+              :multiple="true" :max-files="5" :max-size="10 * 1024 * 1024"
               help-text="Upload project documents (max 5 files, 10MB each)" auto-upload
               @upload-success="handleUploadSuccess" @upload-error="handleUploadError" />
           </div>
@@ -795,9 +605,8 @@
             </div>
           </div>
 
-          <Pagination name="Pagination" :current-page="paginationData.currentPage"
-            :total-pages="paginationData.totalPages" :total="paginationData.total" :per-page="paginationData.perPage"
-            @page-change="handlePageChange" />
+          <Pagination name="Pagination" :current-page="paginationData.currentPage" :total-pages="paginationData.totalPages"
+            :total="paginationData.total" :per-page="paginationData.perPage" @page-change="handlePageChange" />
         </div>
       </UCard>
 
@@ -919,9 +728,9 @@
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Stock Item Cards</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <StockItemCard name="StockItemCard" v-for="stockItem in sampleStockItems" :key="stockItem.id"
-                :stock-item="stockItem" @click="handleStockItemClick(stockItem.id)" @view="handleStockItemView"
-                @edit="handleStockItemEdit" @delete="handleStockItemDelete" @adjust-stock="handleStockAdjust"
+              <StockItemCard name="StockItemCard" v-for="stockItem in sampleStockItems" :key="stockItem.id" :stock-item="stockItem"
+                @click="handleStockItemClick(stockItem.id)" @view="handleStockItemView" @edit="handleStockItemEdit"
+                @delete="handleStockItemDelete" @adjust-stock="handleStockAdjust"
                 @add-to-project="handleAddToProject" />
             </div>
           </div>
@@ -930,9 +739,9 @@
           <div>
             <h4 class="font-semibold text-slate-700 mb-4">Category Cards</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <CategoryCard name="CategoryCard" v-for="category in sampleCategories" :key="category.id"
-                :category="category" @click="handleCategoryClick(category.id)" @view="handleCategoryView"
-                @edit="handleCategoryEdit" @delete="handleCategoryDelete" @add-item="handleCategoryAddItem"
+              <CategoryCard name="CategoryCard" v-for="category in sampleCategories" :key="category.id" :category="category"
+                @click="handleCategoryClick(category.id)" @view="handleCategoryView" @edit="handleCategoryEdit"
+                @delete="handleCategoryDelete" @add-item="handleCategoryAddItem"
                 @view-items="handleCategoryViewItems" />
             </div>
           </div>
@@ -979,8 +788,8 @@
         </div>
 
         <!-- Loaded State -->
-        <ProjectTable name="ProjectTable" v-else :projects="sampleProjects" @view="handleProjectView"
-          @edit="handleProjectEdit" @delete="handleProjectDelete" />
+        <ProjectTable name="ProjectTable" v-else :projects="sampleProjects" @view="handleProjectView" @edit="handleProjectEdit"
+          @delete="handleProjectDelete" />
       </UCard>
 
       <!-- Component Library Summary -->
@@ -1050,7 +859,6 @@ import Pagination from '~/components/ui/Pagination.vue'
 import StatusShowcase from '~/components/showcase/StatusShowcase.vue'
 import StatusIndicator from '~/components/base/StatusIndicator.vue'
 import WorldMap from '@/components/WorldMap.vue'
-const toast = useToast()
 const dualToast = useDualToast()
 const authStore = useAuthStore()
 
@@ -1384,66 +1192,6 @@ const sampleErrors = ref({
     password: 'Password must contain at least 8 characters'
   }
 })
-
-// Methods
-const showSuccess = () => {
-  toast.add({
-    title: 'Success!',
-    description: 'This is a success message with Nuxt UI v3.',
-    color: 'success',
-    icon: 'i-heroicons-check'
-  })
-}
-
-const showError = () => {
-  toast.add({
-    title: 'Error!',
-    description: 'This is an error message with Nuxt UI v3.',
-    color: 'error',
-    icon: 'i-heroicons-x-mark'
-  })
-}
-
-const showWarning = () => {
-  toast.add({
-    title: 'Warning!',
-    description: 'This is a warning message with Nuxt UI v3.',
-    color: 'warning',
-    icon: 'i-heroicons-exclamation-triangle'
-  })
-}
-
-const showInfo = () => {
-  toast.add({
-    title: 'Info!',
-    description: 'This is an info message with Nuxt UI v3.',
-    color: 'info',
-    icon: 'i-heroicons-information-circle'
-  })
-}
-
-
-// Fix: Use dualToast instead of undefined variable
-const simulateWebSocketMessage = () => {
-  dualToast.simulateWebSocket()
-}
-
-const startWebSocketSimulation = () => {
-  if (isSimulating.value) {
-    // Stop simulation
-    if (simulationInterval) {
-      clearInterval(simulationInterval)
-      simulationInterval = null
-    }
-    isSimulating.value = false
-  } else {
-    // Start simulation
-    isSimulating.value = true
-    simulationInterval = setInterval(() => {
-      dualToast.simulateWebSocket()
-    }, 3000) // Send a message every 3 seconds
-  }
-}
 
 const handleTabChange = ({ index, tab }) => {
   console.log('Tab changed:', { index, tab })
