@@ -1,572 +1,472 @@
-<!-- components/showcase/FormShowcase.vue -->
 <template>
   <div class="space-y-8">
-    <!-- Input Examples -->
-    <div class="space-y-6">
-      <h4 class="font-semibold text-slate-700 text-lg border-b border-slate-200 pb-2">
-        Input Examples
-      </h4>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Full Name -->
-        <FormInput
-          v-model="formData.fullName"
-          name="fullName"
-          label="Full Name"
-          type="text"
-          placeholder="Enter your full name"
-          description="This will be displayed on your profile"
-          leading-icon="i-lucide-user"
-          required
-        />
-
-        <!-- Email Address -->
-        <FormInput
-          v-model="formData.email"
-          name="email"
-          label="Email Address"
-          type="email"
-          placeholder="you@example.com"
-          leading-icon="i-lucide-mail"
-          :error="emailError"
-          required
-        />
-
-        <!-- Password -->
-        <FormInput
-          v-model="formData.password"
-          name="password"
-          label="Password"
-          type="password"
-          placeholder="Enter password"
-          leading-icon="i-lucide-lock"
-          :trailing-icon="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
-          help="Password must be at least 8 characters"
-        />
-
-        <!-- Project Budget -->
-        <FormInput
-          v-model="formData.budget"
-          name="budget"
-          label="Project Budget"
-          type="input-number"
-          placeholder="0"
-          leading-icon="i-lucide-dollar-sign"
-          :min="0"
-          :step="100"
-        />
-      </div>
-    </div>
-
-    <!-- Input States -->
-    <div v-if="showStates" class="space-y-6">
-      <h4 class="font-semibold text-slate-700 text-lg border-b border-slate-200 pb-2">
-        Input States
-      </h4>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Loading State -->
-        <FormInput
-          v-model="formData.loading"
-          name="loading"
-          label="Loading State"
-          placeholder="Loading example..."
-          :loading="true"
-        />
-
-        <!-- Disabled Input -->
-        <FormInput
-          v-model="formData.disabled"
-          name="disabled"
-          label="Disabled Input"
-          placeholder="This is disabled"
-          :disabled="true"
-        />
-
-        <!-- Readonly Input -->
-        <FormInput
-          v-model="formData.readonly"
-          name="readonly"
-          label="Readonly Input"
-          placeholder="This is readonly"
-          :disabled="true"
-          trailing-icon="i-lucide-lock"
-        />
-
-        <!-- Search Input -->
-        <FormInput
-          v-model="formData.search"
-          name="search"
-          label="Search"
-          type="search"
-          placeholder="Search anything..."
-        />
-      </div>
-    </div>
-
-    <!-- Advanced Form Components -->
-    <div v-if="showAdvanced" class="space-y-6">
-      <h4 class="font-semibold text-slate-700 text-lg border-b border-slate-200 pb-2">
-        Advanced Form Components
-      </h4>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Date Picker -->
-        <div class="space-y-4">
-          <h5 class="font-medium text-slate-600">Date Pickers</h5>
-          
-          <DatePicker
-            v-model="formData.startDate"
-            name="startDate"
-            label="Start Date"
-            placeholder="Select start date"
-            help="Choose project start date"
-          />
-          
-          <DatePicker
-            v-model="formData.dateRange"
-            name="dateRange"
-            label="Date Range"
-            placeholder="Select date range"
-            :range="true"
-          />
-          
-          <DatePicker
-            v-model="formData.multipleDates"
-            name="multipleDates"
-            label="Multiple Dates"
-            placeholder="Select multiple dates"
-            :multiple="true"
-          />
+    <!-- Form Components Header -->
+    <UCard>
+      <template #header>
+        <div class="flex items-center gap-3">
+          <UIcon name="i-lucide-form-input" class="w-6 h-6 text-primary" />
+          <h2 class="text-2xl font-bold text-highlighted">Form Components Showcase</h2>
         </div>
+      </template>
 
-        <!-- Form Select Variants -->
-        <div class="space-y-4">
-          <h5 class="font-medium text-slate-600">Select Variants</h5>
-          
-          <FormSelect
-            v-model="formData.basicSelect"
-            name="basicSelect"
-            label="Basic Select"
-            type="basic"
-            :options="selectOptions"
-            placeholder="Choose option"
-          />
-          
-          <FormSelect
-            v-model="formData.menuSelect"
-            name="menuSelect"
-            label="Select Menu"
-            type="menu"
-            :options="selectOptions"
-            placeholder="Advanced select"
-            :searchable="true"
-          />
-          
-          <FormSelect
-            v-model="formData.multiSelect"
-            name="multiSelect"
-            label="Multi Select"
-            type="combobox"
-            :options="selectOptions"
-            :multiple="true"
-            :searchable="true"
-            placeholder="Select multiple"
-          />
-        </div>
-      </div>
-      
-      <!-- File Upload -->
-      <div class="space-y-4">
-        <h5 class="font-medium text-slate-600">File Upload</h5>
+      <p class="text-muted mb-6">
+        Modern form component'leri: Input, Select, Textarea, DatePicker, FileUpload ve validation sistemi.
+        Nuxt UI v3 ile UFormField, UInput, USelect ve UTextarea component'leri.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <UCard variant="soft" color="primary">
+          <div class="flex items-start gap-3">
+            <UIcon name="i-lucide-keyboard" class="w-5 h-5 text-primary mt-0.5" />
+            <div>
+              <h4 class="font-semibold text-highlighted">Form Inputs</h4>
+              <p class="text-sm text-muted mt-1">UInput, UTextarea, USelect</p>
+            </div>
+          </div>
+        </UCard>
         
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <!-- Single File Upload -->
-          <FileUpload
-            v-model="formData.singleFile"
-            name="singleFile"
-            label="Profile Picture"
-            accept="image/*"
-            :max-size="2 * 1024 * 1024"
-            help="Upload profile picture (max 2MB)"
-            upload-text="Click to upload image"
-            upload-subtext="PNG, JPG up to 2MB"
-          />
+        <UCard variant="soft" color="success">
+          <div class="flex items-start gap-3">
+            <UIcon name="i-lucide-shield-check" class="w-5 h-5 text-success mt-0.5" />
+            <div>
+              <h4 class="font-semibold text-highlighted">Validation System</h4>
+              <p class="text-sm text-muted mt-1">UForm, UFormField with errors</p>
+            </div>
+          </div>
+        </UCard>
+        
+        <UCard variant="soft" color="secondary">
+          <div class="flex items-start gap-3">
+            <UIcon name="i-lucide-upload" class="w-5 h-5 text-secondary mt-0.5" />
+            <div>
+              <h4 class="font-semibold text-highlighted">File Handling</h4>
+              <p class="text-sm text-muted mt-1">FileUpload, DatePicker</p>
+            </div>
+          </div>
+        </UCard>
+      </div>
+    </UCard>
 
-          <!-- Multiple File Upload -->
-          <FileUpload
-            v-model="formData.multipleFiles"
-            name="multipleFiles"
-            label="Project Documents"
-            accept=".pdf,.doc,.docx,.txt"
-            :multiple="true"
-            :max-files="3"
-            :max-size="5 * 1024 * 1024"
-            :auto-upload="false"
-            help="Upload documents (max 3 files, 5MB each)"
-            upload-text="Drop files here or click to browse"
-            upload-subtext="PDF, DOC, DOCX, TXT files"
-          />
+    <!-- Basic Form Inputs -->
+    <UCard>
+      <template #header>
+        <div class="flex items-center gap-3">
+          <UIcon name="i-lucide-edit-3" class="w-5 h-5 text-primary" />
+          <h3 class="text-xl font-bold text-highlighted">Basic Form Inputs</h3>
+        </div>
+      </template>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="space-y-6">
+          <UFormField label="Project Name" help="Enter a descriptive project name">
+            <UInput 
+              v-model="formData.name" 
+              placeholder="Enter project name"
+              icon="i-lucide-folder"
+            />
+          </UFormField>
+
+          <UFormField label="Email Address" help="Work email preferred">
+            <UInput 
+              v-model="formData.email" 
+              placeholder="user@example.com"
+              icon="i-lucide-mail"
+              type="email"
+            />
+          </UFormField>
+
+          <UFormField label="Budget" help="Project budget in USD">
+            <UInput 
+              v-model="formData.budget" 
+              placeholder="0.00"
+              icon="i-lucide-dollar-sign"
+              type="number"
+              leading="$"
+            />
+          </UFormField>
+
+          <UFormField label="Priority Level" help="Select project priority">
+            <USelect 
+              v-model="formData.priority" 
+              :items="priorityOptions"
+              placeholder="Select priority"
+            />
+          </UFormField>
+        </div>
+
+        <div class="space-y-6">
+          <UFormField label="Project Description" help="Detailed project description">
+            <UTextarea 
+              v-model="formData.description" 
+              placeholder="Describe your project..."
+              :rows="4"
+            />
+          </UFormField>
+
+          <UFormField label="Project Tags" help="Comma-separated tags">
+            <UInput 
+              v-model="formData.tags" 
+              placeholder="web, frontend, vue"
+              icon="i-lucide-tag"
+            />
+          </UFormField>
+
+          <UFormField label="Website URL" help="Optional project website">
+            <UInput 
+              v-model="formData.website" 
+              placeholder="https://example.com"
+              icon="i-lucide-globe"
+              type="url"
+            />
+          </UFormField>
+
+          <div class="flex gap-3 pt-4">
+            <UButton color="primary" @click="handleSave" :loading="saving">
+              <UIcon name="i-lucide-save" class="w-4 h-4" />
+              Save Project
+            </UButton>
+            <UButton color="neutral" variant="outline" @click="handleReset">
+              <UIcon name="i-lucide-rotate-ccw" class="w-4 h-4" />
+              Reset
+            </UButton>
+          </div>
         </div>
       </div>
-    </div>
+    </UCard>
 
-    <!-- Textarea and Select -->
-    <div v-if="showTextareaSelect" class="space-y-6">
-      <h4 class="font-semibold text-slate-700 text-lg border-b border-slate-200 pb-2">
-        Textarea & Select
-      </h4>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Project Description -->
-        <FormInput
-          v-model="formData.description"
-          name="description"
-          label="Project Description"
-          type="textarea"
-          placeholder="Describe your project..."
-          :rows="4"
-          help="Provide a detailed description"
-        />
+    <!-- Date & Time Inputs -->
+    <UCard>
+      <template #header>
+        <div class="flex items-center gap-3">
+          <UIcon name="i-lucide-calendar" class="w-5 h-5 text-primary" />
+          <h3 class="text-xl font-bold text-highlighted">Date & Time Components</h3>
+        </div>
+      </template>
 
-        <!-- Priority Select -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <UFormField label="Start Date" help="Project start date">
+          <UInput 
+            v-model="formData.startDate" 
+            type="date"
+            icon="i-lucide-calendar-days"
+          />
+        </UFormField>
+
+        <UFormField label="End Date" help="Project deadline">
+          <UInput 
+            v-model="formData.endDate" 
+            type="date"
+            icon="i-lucide-calendar-check"
+            :min="formData.startDate"
+          />
+        </UFormField>
+
+        <UFormField label="Meeting Time" help="Preferred meeting time">
+          <UInput 
+            v-model="formData.time" 
+            type="time"
+            icon="i-lucide-clock"
+          />
+        </UFormField>
+      </div>
+
+      <UAlert color="info" variant="soft" class="mt-6">
+        <template #title>Date & Time Features</template>
+        <template #description>
+          <ul class="mt-2 space-y-1">
+            <li class="flex items-center gap-2">
+              <UIcon name="i-lucide-check" class="w-4 h-4 text-success" />
+              <span>Native HTML5 date/time inputs</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <UIcon name="i-lucide-check" class="w-4 h-4 text-success" />
+              <span>Cross-browser compatibility</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <UIcon name="i-lucide-check" class="w-4 h-4 text-success" />
+              <span>Min/max date validation</span>
+            </li>
+          </ul>
+        </template>
+      </UAlert>
+    </UCard>
+
+    <!-- File Upload Section -->
+    <UCard>
+      <template #header>
+        <div class="flex items-center gap-3">
+          <UIcon name="i-lucide-upload" class="w-5 h-5 text-primary" />
+          <h3 class="text-xl font-bold text-highlighted">File Upload Components</h3>
+        </div>
+      </template>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Single File Upload -->
         <div class="space-y-4">
-          <FormSelect
-            v-model="formData.priority"
-            name="priority"
-            label="Select Priority"
-            type="menu"
-            placeholder="Choose priority"
-            :options="priorityOptions"
-            required
-          />
+          <UFormField label="Profile Picture" help="Upload your profile picture (max 2MB)">
+            <div class="border-2 border-dashed border-accented rounded-lg p-6 text-center hover:border-primary transition-colors">
+              <UIcon name="i-lucide-image" class="w-8 h-8 text-muted mx-auto mb-2" />
+              <p class="text-sm text-highlighted mb-2">Drop your image here or click to browse</p>
+              <p class="text-xs text-muted">PNG, JPG up to 2MB</p>
+              <UButton size="sm" color="primary" variant="outline" class="mt-3">
+                <UIcon name="i-lucide-plus" class="w-4 h-4" />
+                Choose File
+              </UButton>
+            </div>
+          </UFormField>
 
-          <FormSelect
-            v-model="formData.categories"
-            name="categories"
-            label="Multiple Categories"
-            type="combobox"
-            placeholder="Choose categories"
-            :options="categoryOptions"
-            :multiple="true"
-            :searchable="true"
-          />
+          <div v-if="uploadedFiles.single.length" class="space-y-2">
+            <div v-for="file in uploadedFiles.single" :key="file.name" 
+                 class="flex items-center gap-3 p-3 bg-elevated rounded-lg border border-accented">
+              <UIcon name="i-lucide-file-image" class="w-4 h-4 text-success" />
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-highlighted truncate">{{ file.name }}</p>
+                <p class="text-xs text-muted">{{ formatFileSize(file.size) }}</p>
+              </div>
+              <UButton size="xs" color="error" variant="ghost" @click="removeFile('single', file)">
+                <UIcon name="i-lucide-x" class="w-3 h-3" />
+              </UButton>
+            </div>
+          </div>
+        </div>
+
+        <!-- Multiple File Upload -->
+        <div class="space-y-4">
+          <UFormField label="Project Documents" help="Upload multiple files (max 5 files, 10MB each)">
+            <div class="border-2 border-dashed border-accented rounded-lg p-6 text-center hover:border-secondary transition-colors">
+              <UIcon name="i-lucide-files" class="w-8 h-8 text-muted mx-auto mb-2" />
+              <p class="text-sm text-highlighted mb-2">Drop multiple files here</p>
+              <p class="text-xs text-muted">PDF, DOC, Images up to 10MB each</p>
+              <UButton size="sm" color="secondary" variant="outline" class="mt-3">
+                <UIcon name="i-lucide-folder-plus" class="w-4 h-4" />
+                Choose Files
+              </UButton>
+            </div>
+          </UFormField>
+
+          <div v-if="uploadedFiles.multiple.length" class="space-y-2 max-h-40 overflow-y-auto">
+            <div v-for="file in uploadedFiles.multiple" :key="file.name" 
+                 class="flex items-center gap-3 p-2 bg-elevated rounded border border-accented">
+              <UIcon :name="getFileIcon(file.type)" class="w-4 h-4 text-secondary" />
+              <div class="flex-1 min-w-0">
+                <p class="text-xs font-medium text-highlighted truncate">{{ file.name }}</p>
+                <p class="text-xs text-muted">{{ formatFileSize(file.size) }}</p>
+              </div>
+              <UBadge size="xs" color="success" variant="soft">✓</UBadge>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </UCard>
 
-    <!-- Form Variants -->
-    <div v-if="showVariants" class="space-y-6">
-      <h4 class="font-semibold text-slate-700 text-lg border-b border-slate-200 pb-2">
-        Form Variants & Sizes
-      </h4>
-      
-      <!-- Variants -->
-      <div class="space-y-4">
-        <h5 class="font-medium text-slate-600">Variants</h5>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <FormInput
-            v-model="formData.outline"
-            name="outline"
-            label="Outline"
-            variant="outline"
-            placeholder="Outline variant"
-          />
-          <FormInput
-            v-model="formData.soft"
-            name="soft"
-            label="Soft"
-            variant="soft"
-            placeholder="Soft variant"
-          />
-          <FormInput
-            v-model="formData.subtle"
-            name="subtle"
-            label="Subtle"
-            variant="subtle"
-            placeholder="Subtle variant"
-          />
-          <FormInput
-            v-model="formData.ghost"
-            name="ghost"
-            label="Ghost"
-            variant="ghost"
-            placeholder="Ghost variant"
-          />
+    <!-- Form Validation Demo -->
+    <UCard>
+      <template #header>
+        <div class="flex items-center gap-3">
+          <UIcon name="i-lucide-shield-check" class="w-5 h-5 text-primary" />
+          <h3 class="text-xl font-bold text-highlighted">Form Validation System</h3>
+        </div>
+      </template>
+
+      <div class="space-y-6">
+        <UAlert color="warning" variant="soft">
+          <template #title>Validation Features</template>
+          <template #description>
+            UForm ile güçlü validation: Required fields, email format, custom rules ve real-time feedback.
+          </template>
+        </UAlert>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Validation Examples -->
+          <div class="space-y-4">
+            <UFormField label="Required Field" required help="This field is required">
+              <UInput 
+                v-model="validationData.required" 
+                placeholder="Enter required value"
+                :error="validationErrors.required"
+              />
+            </UFormField>
+
+            <UFormField label="Email Validation" help="Must be valid email format">
+              <UInput 
+                v-model="validationData.email" 
+                placeholder="user@domain.com"
+                type="email"
+                :error="validationErrors.email"
+              />
+            </UFormField>
+
+            <UFormField label="Password" help="Minimum 8 characters">
+              <UInput 
+                v-model="validationData.password" 
+                placeholder="Enter password"
+                type="password"
+                :error="validationErrors.password"
+              />
+            </UFormField>
+          </div>
+
+          <!-- Validation Status -->
+          <UCard variant="outline" color="success">
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-check-circle" class="w-4 h-4 text-success" />
+                <h4 class="font-semibold text-highlighted">Validation Status</h4>
+              </div>
+            </template>
+            
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-highlighted">Required Field</span>
+                <UBadge :color="validationData.required ? 'success' : 'error'" variant="soft" size="xs">
+                  {{ validationData.required ? 'Valid' : 'Required' }}
+                </UBadge>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-highlighted">Email Format</span>
+                <UBadge :color="isValidEmail ? 'success' : 'warning'" variant="soft" size="xs">
+                  {{ isValidEmail ? 'Valid' : 'Invalid' }}
+                </UBadge>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-highlighted">Password Length</span>
+                <UBadge :color="isValidPassword ? 'success' : 'error'" variant="soft" size="xs">
+                  {{ isValidPassword ? 'Valid' : 'Too Short' }}
+                </UBadge>
+              </div>
+            </div>
+          </UCard>
         </div>
       </div>
+    </UCard>
 
-      <!-- Sizes -->
-      <div class="space-y-4">
-        <h5 class="font-medium text-slate-600">Sizes</h5>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-          <FormInput
-            v-model="formData.xs"
-            name="xs"
-            label="XS Size"
-            size="xs"
-            placeholder="Extra small"
-          />
-          <FormInput
-            v-model="formData.sm"
-            name="sm"
-            label="SM Size"
-            size="sm"
-            placeholder="Small"
-          />
-          <FormInput
-            v-model="formData.md"
-            name="md"
-            label="MD Size"
-            size="md"
-            placeholder="Medium"
-          />
-          <FormInput
-            v-model="formData.lg"
-            name="lg"
-            label="LG Size"
-            size="lg"
-            placeholder="Large"
-          />
-          <FormInput
-            v-model="formData.xl"
-            name="xl"
-            label="XL Size"
-            size="xl"
-            placeholder="Extra large"
-          />
+    <!-- Pagination Component -->
+    <UCard>
+      <template #header>
+        <div class="flex items-center gap-3">
+          <UIcon name="i-lucide-pages" class="w-5 h-5 text-primary" />
+          <h3 class="text-xl font-bold text-highlighted">Pagination Component</h3>
         </div>
-      </div>
+      </template>
 
-      <!-- Colors -->
-      <div class="space-y-4">
-        <h5 class="font-medium text-slate-600">Colors (Focus State)</h5>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <FormInput
-            v-model="formData.primary"
-            name="primary"
-            label="Primary"
-            color="primary"
-            placeholder="Primary color"
-          />
-          <FormInput
-            v-model="formData.success"
-            name="success"
-            label="Success"
-            color="success"
-            placeholder="Success color"
-          />
-          <FormInput
-            v-model="formData.warning"
-            name="warning"
-            label="Warning"
-            color="warning"
-            placeholder="Warning color"
-          />
-          <FormInput
-            v-model="formData.error"
-            name="error"
-            label="Error"
-            color="error"
-            placeholder="Error color"
-          />
-        </div>
-      </div>
-    </div>
-
-    <!-- Working Form Example -->
-    <div v-if="showWorkingForm" class="space-y-6">
-      <h4 class="font-semibold text-slate-700 text-lg border-b border-slate-200 pb-2">
-        Working Form Example
-      </h4>
-      
-      <UForm :state="projectForm" class="space-y-4" @submit="onSubmit">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <FormInput
-            v-model="projectForm.name"
-            name="projectName"
-            label="Project Name"
-            placeholder="Enter project name"
-            leading-icon="i-lucide-folder"
-            required
-          />
+      <div class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <UCard variant="soft" color="info">
+            <div class="text-center">
+              <h5 class="font-semibold text-highlighted">Total Items</h5>
+              <p class="text-2xl font-bold text-info">{{ paginationData.total }}</p>
+            </div>
+          </UCard>
           
-          <FormInput
-            v-model="projectForm.email"
-            name="projectEmail"
-            label="Contact Email"
-            type="email"
-            placeholder="Enter email"
-            leading-icon="i-lucide-mail"
-            required
-          />
+          <UCard variant="soft" color="success">
+            <div class="text-center">
+              <h5 class="font-semibold text-highlighted">Per Page</h5>
+              <p class="text-2xl font-bold text-success">{{ paginationData.perPage }}</p>
+            </div>
+          </UCard>
           
-          <FormInput
-            v-model="projectForm.priority"
-            name="projectPriority"
-            label="Priority"
-            type="select"
-            placeholder="Select priority"
-            :options="priorityOptions"
-            required
-          />
+          <UCard variant="soft" color="warning">
+            <div class="text-center">
+              <h5 class="font-semibold text-highlighted">Current Page</h5>
+              <p class="text-2xl font-bold text-warning">{{ paginationData.currentPage }}</p>
+            </div>
+          </UCard>
         </div>
 
-        <FormInput
-          v-model="projectForm.budget"
-          name="projectBudget"
-          label="Budget"
-          type="input-number"
-          placeholder="0"
-          leading-icon="i-lucide-dollar-sign"
-          :min="0"
-          help="Enter project budget in USD"
-        />
-
-        <FormInput
-          v-model="projectForm.description"
-          name="projectDescription"
-          label="Project Description"
-          type="textarea"
-          placeholder="Describe the project..."
-          :rows="4"
-        />
-
-        <div class="flex gap-3">
-          <UButton type="submit" color="primary">
-            Save Project
-          </UButton>
-          <UButton type="button" variant="outline" @click="resetForm">
-            Reset
-          </UButton>
+        <!-- Pagination Controls Demo -->
+        <div class="flex justify-center">
+          <div class="flex items-center gap-2">
+            <UButton 
+              size="sm" 
+              color="neutral" 
+              variant="outline" 
+              :disabled="paginationData.currentPage === 1"
+              @click="paginationData.currentPage--"
+            >
+              <UIcon name="i-lucide-chevron-left" class="w-4 h-4" />
+              Previous
+            </UButton>
+            
+            <div class="flex gap-1">
+              <UButton 
+                v-for="page in visiblePages" 
+                :key="page" 
+                size="sm"
+                :color="page === paginationData.currentPage ? 'primary' : 'neutral'"
+                :variant="page === paginationData.currentPage ? 'solid' : 'ghost'"
+                @click="paginationData.currentPage = page"
+              >
+                {{ page }}
+              </UButton>
+            </div>
+            
+            <UButton 
+              size="sm" 
+              color="neutral" 
+              variant="outline" 
+              :disabled="paginationData.currentPage === totalPages"
+              @click="paginationData.currentPage++"
+            >
+              Next
+              <UIcon name="i-lucide-chevron-right" class="w-4 h-4" />
+            </UButton>
+          </div>
         </div>
-      </UForm>
-    </div>
-
-    <!-- Toggle Controls -->
-    <div v-if="showControls" class="pt-6 border-t border-slate-200">
-      <h4 class="font-semibold text-slate-700 mb-4">Show/Hide Sections</h4>
-      <div class="flex flex-wrap gap-2">
-        <UButton 
-          :variant="showStates ? 'solid' : 'outline'" 
-          color="primary" 
-          size="sm"
-          @click="showStates = !showStates"
-        >
-          Input States
-        </UButton>
-        <UButton 
-          :variant="showTextareaSelect ? 'solid' : 'outline'" 
-          color="primary" 
-          size="sm"
-          @click="showTextareaSelect = !showTextareaSelect"
-        >
-          Textarea & Select
-        </UButton>
-        <UButton 
-          :variant="showVariants ? 'solid' : 'outline'" 
-          color="primary" 
-          size="sm"
-          @click="showVariants = !showVariants"
-        >
-          Variants & Sizes
-        </UButton>
-        <UButton 
-          :variant="showWorkingForm ? 'solid' : 'outline'" 
-          color="primary" 
-          size="sm"
-          @click="showWorkingForm = !showWorkingForm"
-        >
-          Working Form
-        </UButton>
       </div>
-    </div>
+    </UCard>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue'
-
-// Props for controlling what sections to show
-const props = defineProps({
-  showControls: {
-    type: Boolean,
-    default: true
-  },
-  defaultShowStates: {
-    type: Boolean,
-    default: true
-  },
-  defaultShowTextareaSelect: {
-    type: Boolean,
-    default: true
-  },
-  defaultShowVariants: {
-    type: Boolean,
-    default: false
-  },
-  defaultShowWorkingForm: {
-    type: Boolean,
-    default: true
-  }
+// Component name for debugging
+defineOptions({
+  name: 'FormShowcase'
 })
 
-// Reactive state for showing/hiding sections
-const showStates = ref(props.defaultShowStates)
-const showTextareaSelect = ref(props.defaultShowTextareaSelect)
-const showAdvanced = ref(props.defaultShowAdvanced)
-const showVariants = ref(props.defaultShowVariants)
-const showWorkingForm = ref(props.defaultShowWorkingForm)
-const showPassword = ref(false)
-
-// Form data for examples
+// Form data
 const formData = reactive({
-  fullName: '',
-  email: 'invalid-email',
-  password: '',
-  budget: 0,
-  loading: '',
-  disabled: 'Cannot edit this',
-  readonly: 'Read only value',
-  search: '',
-  description: '',
-  priority: '',
-  categories: [],
-  // Advanced components
-  startDate: '',
-  dateRange: null,
-  multipleDates: [],
-  basicSelect: '',
-  menuSelect: '',
-  multiSelect: [],
-  singleFile: null,
-  multipleFiles: [],
-  // Variants
-  outline: '',
-  soft: '',
-  subtle: '',
-  ghost: '',
-  xs: '',
-  sm: '',
-  md: '',
-  lg: '',
-  xl: '',
-  primary: '',
-  success: '',
-  warning: '',
-  error: ''
-})
-
-// Working form data
-const projectForm = reactive({
   name: '',
   email: '',
-  priority: '',
-  budget: 0,
-  description: ''
+  budget: null,
+  priority: null,
+  description: '',
+  tags: '',
+  website: '',
+  startDate: '',
+  endDate: '',
+  time: ''
 })
 
-// Options for selects
+// Validation data
+const validationData = reactive({
+  required: '',
+  email: '',
+  password: ''
+})
+
+const validationErrors = reactive({
+  required: '',
+  email: '',
+  password: ''
+})
+
+// Upload files
+const uploadedFiles = reactive({
+  single: [],
+  multiple: []
+})
+
+// Pagination data
+const paginationData = reactive({
+  currentPage: 1,
+  perPage: 12,
+  total: 248
+})
+
+// Loading states
+const saving = ref(false)
+
+// Priority options for USelect
 const priorityOptions = [
   { label: 'Low', value: 'low' },
   { label: 'Medium', value: 'medium' },
@@ -574,54 +474,73 @@ const priorityOptions = [
   { label: 'Urgent', value: 'urgent' }
 ]
 
-const categoryOptions = [
-  { label: 'Development', value: 'development' },
-  { label: 'Design', value: 'design' },
-  { label: 'Marketing', value: 'marketing' },
-  { label: 'Support', value: 'support' }
-]
-
-const selectOptions = [
-  { label: 'Option 1', value: 'option1' },
-  { label: 'Option 2', value: 'option2' },
-  { label: 'Option 3', value: 'option3' },
-  { label: 'Option 4', value: 'option4' },
-  { label: 'Option 5', value: 'option5' }
-]
-
-// Email validation
-const emailError = computed(() => {
-  if (formData.email && !formData.email.includes('@')) {
-    return 'Please enter a valid email address'
-  }
-  return false
+// Computed
+const isValidEmail = computed(() => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return !validationData.email || emailRegex.test(validationData.email)
 })
 
-// Form handlers
-const toast = useToast()
+const isValidPassword = computed(() => {
+  return validationData.password.length >= 8
+})
 
-const onSubmit = (event) => {
-  console.log('Form submitted:', event.data)
-  toast.add({
-    title: 'Success!',
-    description: 'Project saved successfully',
-    color: 'success'
-  })
-}
+const totalPages = computed(() => {
+  return Math.ceil(paginationData.total / paginationData.perPage)
+})
 
-const resetForm = () => {
-  Object.keys(projectForm).forEach(key => {
-    if (typeof projectForm[key] === 'string') {
-      projectForm[key] = ''
-    } else if (typeof projectForm[key] === 'number') {
-      projectForm[key] = 0
-    }
-  })
+const visiblePages = computed(() => {
+  const current = paginationData.currentPage
+  const total = totalPages.value
+  const pages = []
   
-  toast.add({
-    title: 'Form Reset',
-    description: 'All fields have been cleared',
-    color: 'info'
+  for (let i = Math.max(1, current - 2); i <= Math.min(total, current + 2); i++) {
+    pages.push(i)
+  }
+  
+  return pages
+})
+
+// Methods
+const handleSave = async () => {
+  saving.value = true
+  // Simulate API call
+  await new Promise(resolve => setTimeout(resolve, 1500))
+  saving.value = false
+  
+  // Show success toast (if toast system available)
+  console.log('Form saved successfully!')
+}
+
+const handleReset = () => {
+  Object.keys(formData).forEach(key => {
+    formData[key] = typeof formData[key] === 'string' ? '' : null
   })
 }
+
+const removeFile = (type, file) => {
+  const index = uploadedFiles[type].findIndex(f => f.name === file.name)
+  if (index > -1) {
+    uploadedFiles[type].splice(index, 1)
+  }
+}
+
+const formatFileSize = (bytes) => {
+  if (bytes === 0) return '0 Bytes'
+  const k = 1024
+  const sizes = ['Bytes', 'KB', 'MB', 'GB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+}
+
+const getFileIcon = (type) => {
+  if (type.includes('image')) return 'i-lucide-image'
+  if (type.includes('pdf')) return 'i-lucide-file-text'
+  if (type.includes('document')) return 'i-lucide-file-type'
+  return 'i-lucide-file'
+}
+
+// Meta info
+useHead({
+  title: 'Form Components - Showcase'
+})
 </script>

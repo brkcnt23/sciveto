@@ -1,107 +1,19 @@
 <template>
   <div class="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
     <!-- Header - Full width, fixed position -->
-    <AppHeader 
-      :navigation="headerNavigation"
-      :user="user"
-      :notification-count="notificationCount"
-      :app-name="appName"
-      @open-search="openSearch"
-      @toggle-notifications="toggleNotifications"
-      @sign-out="signOut"
-    />
+    <AppHeader :navigation="headerNavigation" :user="user" :notification-count="notificationCount" :app-name="appName"
+      @open-search="openSearch" @toggle-notifications="toggleNotifications" @sign-out="signOut" />
 
     <!-- Main Layout Container -->
     <div class="flex flex-1 overflow-hidden">
       <!-- Sidebar -->
-      <AppSidebar 
-        :navigation="sidebarNavigation"
-        :user="user"
-        :is-open="sidebarOpen"
-        @close="sidebarOpen = false"
-      />
-
-      <div class="mx-auto max-w-7xl px-6 lg:px-8 py-8 space-y-8">
-        <!-- Welcome Section -->
-        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-          <template #header>
-            <h2 class="text-2xl font-bold text-slate-800">🚀 Component Showcase Dashboard</h2>
-          </template>
-
-          <p class="text-slate-600 mb-6">
-            Bu sayfada projemizde kullanacağımız tüm base component'leri görebilirsiniz.
-            Her component doğal renkler ve modern tasarım prensipleri ile oluşturulmuştur.
-          </p>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-sky-50 p-4 rounded-lg border border-sky-200">
-              <h4 class="font-semibold text-sky-800">🎨 Layout Components</h4>
-              <p class="text-sm text-sky-600 mt-1">Header, Sidebar, Footer, Breadcrumb</p>
-            </div>
-            <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
-              <h4 class="font-semibold text-emerald-800">🔧 Core UI Components</h4>
-              <p class="text-sm text-emerald-600 mt-1">Card, Table, Modal, Button, Badge</p>
-            </div>
-            <div class="bg-violet-50 p-4 rounded-lg border border-violet-200">
-              <h4 class="font-semibold text-violet-800">📊 Data Components</h4>
-              <p class="text-sm text-violet-600 mt-1">ProgressBar, StatusIndicator, Avatar</p>
-            </div>
-          </div>
-        </UCard>
-
-        <!-- Migration Status Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <UCard class="bg-gradient-to-br from-primary-50 to-primary-100 border-primary-200">
-            <template #header>
-              <h4 class="font-bold text-primary-800">✅ Migrated</h4>
-            </template>
-            <ul class="text-sm text-primary-700 space-y-1">
-              <li>🔄 UDropdown → UDropdownMenu</li>
-              <li>🔄 USelect options → items</li>
-              <li>🔄 Added name props</li>
-              <li>🔄 Color system (gray → neutral)</li>
-              <li>🔄 New theming system</li>
-            </ul>
-          </UCard>
-
-          <UCard class="bg-gradient-to-br from-success-50 to-success-100 border-success-200">
-            <template #header>
-              <h4 class="font-bold text-success-800">🎯 Features</h4>
-            </template>
-            <ul class="text-sm text-success-700 space-y-1">
-              <li>✅ Tailwind CSS v4</li>
-              <li>✅ Reka UI Components</li>
-              <li>✅ Better Performance</li>
-              <li>✅ TypeScript Support</li>
-              <li>✅ Accessibility</li>
-            </ul>
-          </UCard>
-
-          <UCard class="bg-gradient-to-br from-warning-50 to-warning-100 border-warning-200">
-            <template #header>
-              <h4 class="font-bold text-warning-800">⚡ Performance</h4>
-            </template>
-            <ul class="text-sm text-warning-700 space-y-1">
-              <li>📦 Smaller Bundle</li>
-              <li>🚀 Faster Loading</li>
-              <li>⚡ Tree Shaking</li>
-              <li>📱 Mobile Optimized</li>
-            </ul>
-          </UCard>
-
-          <UCard class="bg-gradient-to-br from-info-50 to-info-100 border-info-200">
-            <template #header>
-              <h4 class="font-bold text-info-800">🎨 Design</h4>
-            </template>
-            <ul class="text-sm text-info-700 space-y-1">
-              <li>🎯 New Design Tokens</li>
-              <li>🌗 Dark Mode Support</li>
-              <li>🎨 Custom Theming</li>
-              <li>📐 Consistent Spacing</li>
-            </ul>
-          </UCard>
-        </div>
-
+      <AppSidebar :navigation="sidebarNavigation" :user="user" :is-open="sidebarOpen" @close="sidebarOpen = false" />
+      <div class="mx-auto max-w-screen-2xl px-6 lg:px-8 py-8 space-y-8">
+          <!-- Mevcut header/sidebar -->
+            <!-- LayoutShowcase'i ekle -->
+            <LayoutShowcase />
+            <!-- Form Section -->
+             <FormShowcase/>
         <!-- Priority Badge Showcase -->
         <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
           <template #header>
@@ -349,14 +261,7 @@
           </div>
         </UCard>
 
-        <!-- Form Section -->
-        <UCard>
-          <template #header>
-            <h3>📝 Form Components (Nuxt UI v3)</h3>
-          </template>
-          <FormShowcase name="FormShowcase" :default-show-states="true" :default-show-textarea-select="true"
-            :default-show-advanced="true" :default-show-variants="false" :default-show-working-form="true" />
-        </UCard>
+
 
         <!-- Status Indicator Showcase -->
         <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
@@ -512,99 +417,6 @@
               </template>
             </UCard>
           </UModal>
-        </UCard>
-
-        <!-- Form Components Extended Showcase -->
-        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-          <template #header>
-            <h3 class="text-xl font-bold text-slate-800">📋 Extended Form Components</h3>
-          </template>
-
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Form Select -->
-            <div class="space-y-4">
-              <h4 class="font-semibold text-slate-700">Form Select</h4>
-
-              <FormSelect name="FormSelect" v-model="formData.priority" label="Priority Level"
-                placeholder="Select priority" leading-icon="i-heroicons-flag" :options="priorityOptions"
-                help-text="Choose the priority level for this task" />
-
-              <FormSelect name="FormSelect" v-model="formData.category" label="Category" placeholder="Select category"
-                :options="categoryOptions" :option-groups="categoryGroups" show-selected-value />
-
-              <FormSelect name="FormSelect" v-model="formData.status" label="Status" :options="statusOptions"
-                :loading="selectLoading" disabled />
-            </div>
-
-            <!-- Date Picker -->
-            <div class="space-y-4">
-              <h4 class="font-semibold text-slate-700">Date Picker</h4>
-
-              <DatePicker name="DatePicker" v-model="formData.startDate" label="Start Date"
-                placeholder="Select start date" leading-icon="i-heroicons-calendar-days"
-                help-text="Choose the project start date" />
-
-              <DatePicker name="DatePicker" v-model="formData.endDate" label="End Date" placeholder="Select end date"
-                :min-date="formData.startDate" type="datetime-local" />
-
-              <DatePicker name="DatePicker" v-model="formData.time" label="Meeting Time" type="time"
-                placeholder="Select time" />
-            </div>
-          </div>
-        </UCard>
-
-        <!-- File Upload Showcase -->
-        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-          <template #header>
-            <h3 class="text-xl font-bold text-slate-800">📎 File Upload Component</h3>
-          </template>
-
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Single File Upload -->
-            <div>
-              <h4 class="font-semibold text-slate-700 mb-4">Single File Upload</h4>
-              <FileUpload name="FileUpload" v-model="uploadedFiles.single" label="Profile Picture" accept="image/*"
-                :max-size="2 * 1024 * 1024" help-text="Upload a profile picture (max 2MB)"
-                @upload-success="handleUploadSuccess" @upload-error="handleUploadError" />
-            </div>
-
-            <!-- Multiple File Upload -->
-            <div>
-              <h4 class="font-semibold text-slate-700 mb-4">Multiple File Upload</h4>
-              <FileUpload name="FileUpload" v-model="uploadedFiles.multiple" label="Project Documents"
-                accept=".pdf,.doc,.docx,.jpg,.png" :multiple="true" :max-files="5" :max-size="10 * 1024 * 1024"
-                help-text="Upload project documents (max 5 files, 10MB each)" auto-upload
-                @upload-success="handleUploadSuccess" @upload-error="handleUploadError" />
-            </div>
-          </div>
-        </UCard>
-
-        <!-- Pagination Showcase -->
-        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-          <template #header>
-            <h3 class="text-xl font-bold text-slate-800">📄 Pagination Component</h3>
-          </template>
-
-          <div class="space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div class="bg-blue-50 p-4 rounded-lg">
-                <h5 class="font-semibold text-blue-800">Total Items</h5>
-                <p class="text-2xl font-bold text-blue-600">{{ paginationData.total }}</p>
-              </div>
-              <div class="bg-green-50 p-4 rounded-lg">
-                <h5 class="font-semibold text-green-800">Current Page</h5>
-                <p class="text-2xl font-bold text-green-600">{{ paginationData.currentPage }}</p>
-              </div>
-              <div class="bg-purple-50 p-4 rounded-lg">
-                <h5 class="font-semibold text-purple-800">Per Page</h5>
-                <p class="text-2xl font-bold text-purple-600">{{ paginationData.perPage }}</p>
-              </div>
-            </div>
-
-            <Pagination name="Pagination" :current-page="paginationData.currentPage"
-              :total-pages="paginationData.totalPages" :total="paginationData.total" :per-page="paginationData.perPage"
-              @page-change="handlePageChange" />
-          </div>
         </UCard>
 
 
@@ -789,64 +601,10 @@
           <ProjectTable name="ProjectTable" v-else :projects="sampleProjects" @view="handleProjectView"
             @edit="handleProjectEdit" @delete="handleProjectDelete" />
         </UCard>
-
-        <!-- Component Library Summary -->
-        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-          <template #header>
-            <h3 class="text-xl font-bold text-slate-800">📚 Component Library</h3>
-          </template>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-gradient-to-br from-sky-50 to-sky-100 p-4 rounded-lg border border-sky-200">
-              <h4 class="font-bold text-sky-800 mb-2">Base Components</h4>
-              <ul class="text-sm text-sky-700 space-y-1">
-                <li>✅ PriorityBadge</li>
-                <li>✅ ProgressBar</li>
-                <li>✅ Avatar</li>
-                <li>✅ StatusIndicator</li>
-                <li>✅ Modal</li>
-              </ul>
-            </div>
-
-            <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-4 rounded-lg border border-emerald-200">
-              <h4 class="font-bold text-emerald-800 mb-2">UI Components</h4>
-              <ul class="text-sm text-emerald-700 space-y-1">
-                <li>✅ SkeletonLoader</li>
-                <li>✅ LoadingSpinner</li>
-                <li>✅ EmptyState</li>
-                <li>✅ Toast</li>
-                <li>✅ Tabs</li>
-                <li>✅ Pagination</li>
-                <li>✅ Tooltip</li>
-              </ul>
-            </div>
-
-            <div class="bg-gradient-to-br from-violet-50 to-violet-100 p-4 rounded-lg border border-violet-200">
-              <h4 class="font-bold text-violet-800 mb-2">Business Components</h4>
-              <ul class="text-sm text-violet-700 space-y-1">
-                <li>✅ ProjectCard</li>
-                <li>✅ ProjectTable</li>
-                <li>✅ StockItemCard</li>
-                <li>✅ CategoryCard</li>
-                <li>⏳ UserCard</li>
-              </ul>
-            </div>
-
-            <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-lg border border-orange-200">
-              <h4 class="font-bold text-orange-800 mb-2">Form Components</h4>
-              <ul class="text-sm text-orange-700 space-y-1">
-                <li>✅ SearchBox</li>
-                <li>✅ FormInput</li>
-                <li>✅ FormSelect</li>
-                <li>✅ DatePicker</li>
-                <li>✅ FileUpload</li>
-              </ul>
-            </div>
-          </div>
-        </UCard>
+        <AppFooter :app-name="appName" />
       </div>
       <!-- Footer -->
-      <AppFooter :app-name="appName" />
+
     </div>
   </div>
 </template>
@@ -858,8 +616,16 @@ import { useAuthStore } from '~/stores/auth'
 import FileUpload from '~/components/forms/FileUpload.vue'
 import Pagination from '~/components/ui/Pagination.vue'
 import StatusShowcase from '~/showcase/forms/StatusShowcase.vue'
-import StatusIndicator from '~/components/base/StatusIndicator.vue'
+import LayoutShowcase from '~/showcase/layout/LayoutShowcase.vue'
 import WorldMap from '@/components/WorldMap.vue'
+import FormShowcase from '~/showcase/forms/FormShowcase.vue'
+import AppHeader from '@/components/layout/AppHeader.vue'
+import AppSidebar from '@/components/layout/AppSidebar.vue'
+import AppFooter from '~/components/layout/AppFooter.vue'
+import SkeletonLoader from '~/components/ui/SkeletonLoader.vue'
+import EmptyState from '~/components/ui/EmptyState.vue'
+import LoadingSpinner from '~/components/ui/LoadingSpinner.vue'
+
 const dualToast = useDualToast()
 const authStore = useAuthStore()
 
@@ -1230,7 +996,24 @@ const showInfo = () => {
     icon: 'i-heroicons-information-circle'
   })
 }
+const headerNavigation = ref([
+  { label: 'Dashboard', to: '/dashboard', icon: 'i-lucide-home' },
+  { label: 'Showcase', to: '/showcase', icon: 'i-lucide-layout' }
+])
 
+const sidebarNavigation = ref([
+  { label: 'Dashboard', to: '/dashboard', icon: 'i-lucide-home' },
+  { label: 'Showcase', to: '/showcase', icon: 'i-lucide-layout' }
+])
+
+const sidebarOpen = ref(false)
+const notificationCount = ref(3)
+const appName = ref('Sciveto')
+
+// Function'lar
+const openSearch = () => console.log('Search opened')
+const toggleNotifications = () => console.log('Notifications toggled') 
+const signOut = () => console.log('User signed out')
 
 // Fix: Use dualToast instead of undefined variable
 const simulateWebSocketMessage = () => {
