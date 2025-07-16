@@ -366,10 +366,26 @@ const roleItems: SelectItem[] = [
 
 // Table data
 const tableColumns = [
-  { key: 'name', label: 'Name' },
-  { key: 'email', label: 'Email' },
-  { key: 'role', label: 'Role' },
-  { key: 'status', label: 'Status' }
+  { 
+    id: 'name',
+    key: 'name', 
+    label: 'Name' 
+  },
+  { 
+    id: 'email',
+    key: 'email', 
+    label: 'Email' 
+  },
+  { 
+    id: 'role',
+    key: 'role', 
+    label: 'Role' 
+  },
+  { 
+    id: 'status',
+    key: 'status', 
+    label: 'Status' 
+  }
 ]
 
 const tableData = [

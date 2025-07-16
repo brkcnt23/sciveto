@@ -355,12 +355,12 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
 // Import showcase components
 import MigrationShowcase from '~/components/showcase/MigrationShowcase.vue'
 import CoreUIShowcase from '~/components/showcase/CoreUIShowcase.vue'
 import LayoutShowcase from '~/components/showcase/LayoutShowcase.vue'
+import { useHead } from 'nuxt/app'
 
 // Toast composable
 const toast = useToast()
@@ -412,4 +412,5 @@ useHead({
     }
   ]
 })
+
 </script>
