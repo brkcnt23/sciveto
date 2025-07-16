@@ -27,6 +27,10 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
     {
+      path: '~/showcase', // New showcase components
+      pathPrefix: false,
+    },
+    {
       path: '~/components',
       pathPrefix: false,
     }

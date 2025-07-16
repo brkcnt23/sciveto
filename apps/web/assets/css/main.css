@@ -2,19 +2,19 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-/* Custom design system variables for Nuxt UI v3 */
+/* Design system variables for Nuxt UI v3 */
 :root {
-  /* Color aliases following Nuxt UI v3 design system */
-  --color-primary: theme(colors.green.500);
-  --color-secondary: theme(colors.blue.500);
-  --color-success: theme(colors.green.500);
-  --color-info: theme(colors.blue.500);
-  --color-warning: theme(colors.yellow.500);
-  --color-error: theme(colors.red.500);
-  --color-neutral: theme(colors.slate.500);
+  /* Color aliases following v3 design system */
+  --ui-primary: theme(colors.green.500);
+  --ui-secondary: theme(colors.blue.500);
+  --ui-success: theme(colors.green.500);
+  --ui-info: theme(colors.blue.500);
+  --ui-warning: theme(colors.yellow.500);
+  --ui-error: theme(colors.red.500);
+  --ui-neutral: theme(colors.slate.500);
 }
 
-/* Custom component styles */
+/* Modern utility classes */
 .dashboard-card {
   @apply bg-white/80 backdrop-blur-sm border-0 shadow-xl rounded-xl;
 }
@@ -23,75 +23,24 @@
   @apply bg-white/10 backdrop-blur-md border border-white/20;
 }
 
-/* Modern gradient backgrounds */
-.gradient-primary {
-  background: linear-gradient(135deg, theme(colors.green.400) 0%, theme(colors.blue.500) 100%);
-}
-
-.gradient-secondary {
-  background: linear-gradient(135deg, theme(colors.blue.400) 0%, theme(colors.purple.500) 100%);
-}
-
-.gradient-success {
-  background: linear-gradient(135deg, theme(colors.green.400) 0%, theme(colors.emerald.500) 100%);
-}
-
-/* Smooth animations */
+/* Smooth transitions */
 .smooth-transition {
   @apply transition-all duration-300 ease-in-out;
-}
-
-/* Custom scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  @apply bg-neutral-100;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-neutral-300 rounded-full;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  @apply bg-neutral-400;
-}
-
-/* Loading skeleton animation */
-@keyframes skeleton {
-  0% {
-    background-position: -200px 0;
-  }
-  100% {
-    background-position: calc(200px + 100%) 0;
-  }
-}
-
-.skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200px 100%;
-  animation: skeleton 1.5s infinite;
 }
 
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-primary: theme(colors.green.400);
-    --color-secondary: theme(colors.blue.400);
-    --color-success: theme(colors.green.400);
-    --color-info: theme(colors.blue.400);
-    --color-warning: theme(colors.yellow.400);
-    --color-error: theme(colors.red.400);
-    --color-neutral: theme(colors.slate.400);
+    --ui-primary: theme(colors.green.400);
+    --ui-secondary: theme(colors.blue.400);
+    --ui-success: theme(colors.green.400);
+    --ui-info: theme(colors.blue.400);
+    --ui-warning: theme(colors.yellow.400);
+    --ui-error: theme(colors.red.400);
+    --ui-neutral: theme(colors.slate.400);
   }
   
   .dashboard-card {
     @apply bg-slate-800/80 border border-slate-700/50;
-  }
-  
-  .skeleton {
-    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
-    background-size: 200px 100%;
   }
 }
