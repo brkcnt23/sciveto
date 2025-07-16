@@ -44,3 +44,31 @@
     @apply bg-slate-800/80 border border-slate-700/50;
   }
 }
+.main-content-wrapper {
+  margin-left: 280px; /* Sidebar genişliği kadar margin */
+  transition: margin-left 0.3s ease;
+}
+
+/* Mobile için sidebar kapalıyken */
+@media (max-width: 1024px) {
+  .main-content-wrapper {
+    margin-left: 0;
+  }
+}
+
+/* Sidebar açıkken mobile */
+.sidebar-open .main-content-wrapper {
+  margin-left: 280px;
+}
+.showcase-card {
+  @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700;
+}
+
+.showcase-section {
+  @apply bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700;
+}
+
+/* Progress bar showcase specific fixes */
+.progress-showcase-card {
+  @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700;
+}

@@ -5,22 +5,22 @@
       <template #header>
         <div class="flex items-center gap-3">
           <UIcon name="i-lucide-database" class="w-6 h-6 text-primary" />
-          <h2 class="text-2xl font-bold text-highlighted">Data Display Components</h2>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Data Display Components</h2>
         </div>
       </template>
 
-      <p class="text-muted mb-6">
-        Data gösterim component'leri: Tables, Cards, Progress, Avatar, Badge ve loading states.
-        Nuxt UI v3 ile UTable, UCard, UProgressBar ve UAvatar component'leri.
+      <p class="text-gray-600 dark:text-gray-400 mb-6">
+        Data gösterim component'leri: Tables, Cards, Badge ve loading states.
+        Nuxt UI v3 ile UTable, UCard ve UBadge component'leri.
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         <UCard variant="soft" color="primary">
           <div class="flex items-start gap-3">
             <UIcon name="i-lucide-table" class="w-5 h-5 text-primary mt-0.5" />
             <div>
-              <h4 class="font-semibold text-highlighted">Tables</h4>
-              <p class="text-sm text-muted mt-1">UTable, sorting, filtering</p>
+              <h4 class="font-semibold text-gray-900 dark:text-white">Tables</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">UTable, sorting, filtering</p>
             </div>
           </div>
         </UCard>
@@ -29,427 +29,386 @@
           <div class="flex items-start gap-3">
             <UIcon name="i-lucide-credit-card" class="w-5 h-5 text-success mt-0.5" />
             <div>
-              <h4 class="font-semibold text-highlighted">Cards</h4>
-              <p class="text-sm text-muted mt-1">UCard variants, layouts</p>
+              <h4 class="font-semibold text-gray-900 dark:text-white">Cards</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">UCard variants, layouts</p>
             </div>
           </div>
         </UCard>
         
         <UCard variant="soft" color="secondary">
           <div class="flex items-start gap-3">
-            <UIcon name="i-lucide-bar-chart-3" class="w-5 h-5 text-secondary mt-0.5" />
+            <UIcon name="i-lucide-tag" class="w-5 h-5 text-secondary mt-0.5" />
             <div>
-              <h4 class="font-semibold text-highlighted">Progress</h4>
-              <p class="text-sm text-muted mt-1">UProgressBar, indicators</p>
-            </div>
-          </div>
-        </UCard>
-
-        <UCard variant="soft" color="warning">
-          <div class="flex items-start gap-3">
-            <UIcon name="i-lucide-user-circle" class="w-5 h-5 text-warning mt-0.5" />
-            <div>
-              <h4 class="font-semibold text-highlighted">Avatars</h4>
-              <p class="text-sm text-muted mt-1">UAvatar, user display</p>
+              <h4 class="font-semibold text-gray-900 dark:text-white">Badges</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">UBadge, status indicators</p>
             </div>
           </div>
         </UCard>
       </div>
     </UCard>
 
-    <!-- Progress Components -->
+    <!-- Avatar & Progress Bar Showcases using our updated components -->
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+      <!-- Avatar Showcase Section -->
+      <UCard class="border-0 shadow-xl bg-white dark:bg-gray-800 backdrop-blur-sm">
+        <template #header>
+          <div class="flex items-center gap-3">
+            <UIcon name="i-lucide-user-circle" class="w-5 h-5 text-secondary" />
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white">👤 Avatar Components</h3>
+          </div>
+        </template>
+        <AvatarShowcase />
+      </UCard>
+
+      <!-- Progress Bar Showcase Section -->
+      <UCard class="border-0 shadow-xl bg-white dark:bg-gray-800 backdrop-blur-sm">
+        <template #header>
+          <div class="flex items-center gap-3">
+            <UIcon name="i-lucide-bar-chart-3" class="w-5 h-5 text-primary" />
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white">📊 Progress Components</h3>
+          </div>
+        </template>
+        <ProgressBarShowcase />
+      </UCard>
+    </div>
+
+    <!-- Table Components -->
     <UCard>
       <template #header>
         <div class="flex items-center gap-3">
-          <UIcon name="i-lucide-activity" class="w-5 h-5 text-primary" />
-          <h3 class="text-xl font-bold text-highlighted">Progress Components</h3>
+          <UIcon name="i-lucide-table" class="w-5 h-5 text-primary" />
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Table Components</h3>
         </div>
       </template>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div class="space-y-6">
-          <div class="space-y-3">
-            <div class="flex justify-between text-sm">
-              <span class="text-highlighted">Project Progress</span>
-              <span class="text-muted">{{ projectProgress }}%</span>
-            </div>
-            <div class="w-full bg-elevated rounded-full h-2">
-              <div class="bg-primary h-2 rounded-full transition-all duration-500" 
-                   :style="`width: ${projectProgress}%`"></div>
+      <div class="space-y-6">
+        <p class="text-gray-600 dark:text-gray-400">
+          UTable component'i ile data tabloları oluşturun. 
+          Sorting, filtering ve pagination özellikleri ile güçlü data gösterimi.
+        </p>
+
+        <!-- Sample Table -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="font-semibold text-gray-900 dark:text-white">Sample Data Table</h4>
+            <UButton size="sm" variant="outline" @click="toggleLoading">
+              {{ isLoading ? 'Stop Loading' : 'Toggle Loading' }}
+            </UButton>
+          </div>
+
+          <!-- Loading State -->
+          <div v-if="isLoading" class="space-y-3">
+            <div v-for="i in 5" :key="i" class="animate-pulse">
+              <div class="h-12 bg-gray-200 dark:bg-gray-700 rounded"></div>
             </div>
           </div>
 
-          <div class="space-y-3">
-            <div class="flex justify-between text-sm">
-              <span class="text-highlighted">Team Capacity</span>
-              <span class="text-muted">{{ teamCapacity }}%</span>
-            </div>
-            <div class="w-full bg-elevated rounded-full h-2">
-              <div class="bg-success h-2 rounded-full transition-all duration-500" 
-                   :style="`width: ${teamCapacity}%`"></div>
+          <!-- Loaded Table -->
+          <div v-else class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead class="bg-gray-50 dark:bg-gray-800">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    User
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Role
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Progress
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+                <tr v-for="user in sampleUsers" :key="user.id" class="hover:bg-gray-50 dark:hover:bg-gray-800">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                      <Avatar 
+                        :user="user" 
+                        size="sm" 
+                        :show-online-status="true"
+                        class="mr-3"
+                      />
+                      <div>
+                        <div class="text-sm font-medium text-gray-900 dark:text-white">{{ user.name }}</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">{{ user.email }}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <UBadge :color="getRoleColor(user.role)" variant="soft" size="sm">
+                      {{ user.role }}
+                    </UBadge>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <StatusIndicator 
+                      variant="badge"
+                      :status="user.status" 
+                      :label="user.status"
+                      size="sm"
+                      :icon="getStatusIcon(user.status)"
+                    />
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                      <div class="w-16 mr-2">
+                        <ProgressBar
+                          :value="user.progress"
+                          :show-percentage="false"
+                          size="sm"
+                        />
+                      </div>
+                      <span class="text-sm text-gray-500 dark:text-gray-400">{{ user.progress }}%</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <div class="flex space-x-2">
+                      <UButton size="xs" variant="ghost" @click="viewUser(user.id)">
+                        <UIcon name="i-lucide-eye" class="w-3 h-3" />
+                      </UButton>
+                      <UButton size="xs" variant="ghost" @click="editUser(user.id)">
+                        <UIcon name="i-lucide-edit" class="w-3 h-3" />
+                      </UButton>
+                      <UButton size="xs" variant="ghost" color="error" @click="deleteUser(user.id)">
+                        <UIcon name="i-lucide-trash-2" class="w-3 h-3" />
+                      </UButton>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </UCard>
+
+    <!-- Badge Components with StatusIndicator -->
+    <UCard>
+      <template #header>
+        <div class="flex items-center gap-3">
+          <UIcon name="i-lucide-tag" class="w-5 h-5 text-primary" />
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Badge & Status Components</h3>
+        </div>
+      </template>
+
+      <div class="space-y-6">
+        <p class="text-gray-600 dark:text-gray-400">
+          StatusIndicator ve UBadge component'leri ile status gösterimi, kategorileme ve etiketleme yapın.
+          Farklı renk ve variant'larla mesaj tipini belirtin.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+          <!-- Priority Badges -->
+          <div class="space-y-4">
+            <h4 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+              <UIcon name="i-lucide-alert-triangle" class="w-4 h-4 text-warning" />
+              Priority Levels
+            </h4>
+            <div class="space-y-3">
+              <StatusIndicator variant="badge" status="low" label="LOW" icon="i-lucide-arrow-down" />
+              <StatusIndicator variant="badge" status="medium" label="MEDIUM" icon="i-lucide-minus" />
+              <StatusIndicator variant="badge" status="high" label="HIGH" icon="i-lucide-arrow-up" />
+              <StatusIndicator variant="badge" status="urgent" label="URGENT" icon="i-lucide-alert-triangle" pulse />
             </div>
           </div>
 
-          <div class="space-y-3">
-            <div class="flex justify-between text-sm">
-              <span class="text-highlighted">Budget Usage</span>
-              <span class="text-muted">{{ budgetUsage }}%</span>
-            </div>
-            <div class="w-full bg-elevated rounded-full h-2">
-              <div class="bg-warning h-2 rounded-full transition-all duration-500" 
-                   :style="`width: ${budgetUsage}%`"></div>
+          <!-- Status Types -->
+          <div class="space-y-4">
+            <h4 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+              <UIcon name="i-lucide-activity" class="w-4 h-4 text-primary" />
+              Status Types
+            </h4>
+            <div class="space-y-3">
+              <StatusIndicator variant="badge" status="active" label="Active" pulse />
+              <StatusIndicator variant="badge" status="pending" label="Pending" />
+              <StatusIndicator variant="badge" status="inactive" label="Inactive" />
+              <StatusIndicator variant="badge" status="failed" label="Failed" />
             </div>
           </div>
 
-          <UButton @click="updateProgress" color="primary" variant="outline" size="sm">
-            <UIcon name="i-lucide-refresh-cw" class="w-4 h-4" />
-            Update Progress
-          </UButton>
+          <!-- Project Status -->
+          <div class="space-y-4">
+            <h4 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+              <UIcon name="i-lucide-folder" class="w-4 h-4 text-secondary" />
+              Project Status
+            </h4>
+            <div class="space-y-3">
+              <StatusIndicator variant="badge" status="planning" label="Planning" icon="i-lucide-calendar" />
+              <StatusIndicator variant="badge" status="in-progress" label="In Progress" icon="i-lucide-play" />
+              <StatusIndicator variant="badge" status="review" label="Review" icon="i-lucide-eye" />
+              <StatusIndicator variant="badge" status="done" label="Completed" icon="i-lucide-check-circle" />
+            </div>
+          </div>
+
+          <!-- System Status -->
+          <div class="space-y-4">
+            <h4 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+              <UIcon name="i-lucide-server" class="w-4 h-4 text-info" />
+              System Status
+            </h4>
+            <div class="space-y-3">
+              <StatusIndicator variant="badge" status="operational" label="Operational" icon="i-lucide-check-circle" />
+              <StatusIndicator variant="badge" status="maintenance" label="Maintenance" icon="i-lucide-wrench" pulse />
+              <StatusIndicator variant="badge" status="degraded" label="Degraded" icon="i-lucide-alert-triangle" />
+              <StatusIndicator variant="badge" status="outage" label="Outage" icon="i-lucide-x-circle" pulse />
+            </div>
+          </div>
         </div>
 
+        <!-- Classic Dot Style -->
         <div class="space-y-4">
-          <UAlert color="info" variant="soft">
-            <template #title>Progress Features</template>
-            <template #description>
-              <ul class="mt-2 space-y-1">
-                <li class="flex items-center gap-2">
-                  <UIcon name="i-lucide-check" class="w-4 h-4 text-success" />
-                  <span>Smooth animations</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <UIcon name="i-lucide-check" class="w-4 h-4 text-success" />
-                  <span>Color-coded progress</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <UIcon name="i-lucide-check" class="w-4 h-4 text-success" />
-                  <span>Percentage display</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <UIcon name="i-lucide-check" class="w-4 h-4 text-success" />
-                  <span>Responsive design</span>
-                </li>
-              </ul>
-            </template>
-          </UAlert>
-
-          <UCard variant="outline" color="success">
-            <template #header>
-              <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-target" class="w-4 h-4 text-success" />
-                <h4 class="font-semibold text-highlighted">Progress Stats</h4>
-              </div>
-            </template>
-            
-            <div class="space-y-3">
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-highlighted">Completed Tasks</span>
-                <UBadge color="success" variant="soft" size="sm">{{ Math.round(projectProgress / 10) }}/10</UBadge>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-highlighted">Team Members</span>
-                <UBadge color="info" variant="soft" size="sm">{{ Math.round(teamCapacity / 20) }}/5</UBadge>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-highlighted">Budget Remaining</span>
-                <UBadge color="warning" variant="soft" size="sm">${{ (100 - budgetUsage) * 100 }}</UBadge>
+          <h4 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+            <UIcon name="i-lucide-circle-dot" class="w-4 h-4 text-primary" />
+            Classic Dot Style
+          </h4>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- User Status -->
+            <div class="space-y-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+              <h5 class="text-sm font-medium text-gray-600 dark:text-gray-400">User Status</h5>
+              <div class="space-y-2">
+                <StatusIndicator status="online" label="Online" pulse />
+                <StatusIndicator status="away" label="Away" />
+                <StatusIndicator status="busy" label="Busy" />
+                <StatusIndicator status="offline" label="Offline" />
               </div>
             </div>
+
+            <!-- Task Status -->
+            <div class="space-y-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+              <h5 class="text-sm font-medium text-gray-600 dark:text-gray-400">Task Status</h5>
+              <div class="space-y-2">
+                <StatusIndicator status="pending" label="To Do" />
+                <StatusIndicator status="in-progress" label="In Progress" pulse />
+                <StatusIndicator status="review" label="Review" />
+                <StatusIndicator status="completed" label="Done" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </UCard>
+
+    <!-- Card Components -->
+    <UCard>
+      <template #header>
+        <div class="flex items-center gap-3">
+          <UIcon name="i-lucide-credit-card" class="w-5 h-5 text-primary" />
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Card Components</h3>
+        </div>
+      </template>
+
+      <div class="space-y-6">
+        <p class="text-gray-600 dark:text-gray-400">
+          UCard component'i ile content container'ları oluşturun.
+          Header, body ve footer slot'ları ile esnek yapı.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Basic Card -->
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-layout" class="w-4 h-4 text-primary" />
+                <h4 class="font-semibold text-gray-900 dark:text-white">Basic Card</h4>
+              </div>
+            </template>
+            <p class="text-gray-600 dark:text-gray-400">
+              This is a basic card with header and content. 
+              Perfect for displaying information in organized sections.
+            </p>
+          </UCard>
+
+          <!-- Card with Footer -->
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-star" class="w-4 h-4 text-warning" />
+                <h4 class="font-semibold text-gray-900 dark:text-white">With Footer</h4>
+              </div>
+            </template>
+            <p class="text-gray-600 dark:text-gray-400">
+              Card with footer section for actions or additional information.
+            </p>
+            <template #footer>
+              <div class="flex justify-end gap-2">
+                <UButton size="xs" variant="outline">Cancel</UButton>
+                <UButton size="xs">Save</UButton>
+              </div>
+            </template>
+          </UCard>
+
+          <!-- Variant Card -->
+          <UCard variant="soft" color="success">
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-palette" class="w-4 h-4 text-success" />
+                <h4 class="font-semibold text-gray-900 dark:text-white">Variant Card</h4>
+              </div>
+            </template>
+            <p class="text-gray-600 dark:text-gray-400">
+              Card with soft variant and success color.
+              Great for highlighting positive information.
+            </p>
           </UCard>
         </div>
       </div>
     </UCard>
 
-    <!-- Avatar Components -->
+    <!-- Data Visualization Preview -->
     <UCard>
       <template #header>
         <div class="flex items-center gap-3">
-          <UIcon name="i-lucide-users" class="w-5 h-5 text-primary" />
-          <h3 class="text-xl font-bold text-highlighted">Avatar Components</h3>
-        </div>
-      </template>
-
-      <div class="space-y-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <!-- Avatar Sizes -->
-          <div class="space-y-4">
-            <h4 class="font-semibold text-highlighted">Avatar Sizes</h4>
-            <div class="flex items-center gap-4">
-              <div class="text-center space-y-2">
-                <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                  <span class="text-xs font-medium text-white">XS</span>
-                </div>
-                <span class="text-xs text-muted">xs</span>
-              </div>
-              <div class="text-center space-y-2">
-                <div class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
-                  <span class="text-sm font-medium text-white">SM</span>
-                </div>
-                <span class="text-xs text-muted">sm</span>
-              </div>
-              <div class="text-center space-y-2">
-                <div class="w-12 h-12 rounded-full bg-success flex items-center justify-center">
-                  <span class="text-sm font-medium text-white">MD</span>
-                </div>
-                <span class="text-xs text-muted">md</span>
-              </div>
-              <div class="text-center space-y-2">
-                <div class="w-16 h-16 rounded-full bg-warning flex items-center justify-center">
-                  <span class="text-lg font-medium text-white">LG</span>
-                </div>
-                <span class="text-xs text-muted">lg</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Avatar States -->
-          <div class="space-y-4">
-            <h4 class="font-semibold text-highlighted">Avatar States</h4>
-            <div class="space-y-3">
-              <div class="flex items-center gap-3">
-                <div class="relative">
-                  <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
-                    <UIcon name="i-lucide-user" class="w-6 h-6 text-white" />
-                  </div>
-                  <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-success rounded-full border-2 border-white"></div>
-                </div>
-                <span class="text-sm text-highlighted">Online</span>
-              </div>
-              
-              <div class="flex items-center gap-3">
-                <div class="relative">
-                  <div class="w-12 h-12 rounded-full bg-neutral flex items-center justify-center">
-                    <UIcon name="i-lucide-user" class="w-6 h-6 text-white" />
-                  </div>
-                  <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-warning rounded-full border-2 border-white"></div>
-                </div>
-                <span class="text-sm text-highlighted">Away</span>
-              </div>
-              
-              <div class="flex items-center gap-3">
-                <div class="relative">
-                  <div class="w-12 h-12 rounded-full bg-muted flex items-center justify-center opacity-75">
-                    <UIcon name="i-lucide-user" class="w-6 h-6 text-white" />
-                  </div>
-                  <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-error rounded-full border-2 border-white"></div>
-                </div>
-                <span class="text-sm text-highlighted">Offline</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Avatar Groups -->
-          <div class="space-y-4">
-            <h4 class="font-semibold text-highlighted">Avatar Groups</h4>
-            <div class="flex -space-x-2">
-              <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center border-2 border-white">
-                <span class="text-sm font-medium text-white">AB</span>
-              </div>
-              <div class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center border-2 border-white">
-                <span class="text-sm font-medium text-white">CD</span>
-              </div>
-              <div class="w-10 h-10 rounded-full bg-success flex items-center justify-center border-2 border-white">
-                <span class="text-sm font-medium text-white">EF</span>
-              </div>
-              <div class="w-10 h-10 rounded-full bg-warning flex items-center justify-center border-2 border-white">
-                <span class="text-sm font-medium text-white">+3</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <UAlert color="success" variant="soft">
-          <template #title>Avatar Best Practices</template>
-          <template #description>
-            Avatar component'leri kullanıcı temsili, team member'ları gösterme ve status indication için optimize edilmiştir.
-          </template>
-        </UAlert>
-      </div>
-    </UCard>
-
-    <!-- Badge Components -->
-    <UCard>
-      <template #header>
-        <div class="flex items-center gap-3">
-          <UIcon name="i-lucide-tag" class="w-5 h-5 text-primary" />
-          <h3 class="text-xl font-bold text-highlighted">Badge Components</h3>
+          <UIcon name="i-lucide-bar-chart" class="w-5 h-5 text-primary" />
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Data Visualization Preview</h3>
         </div>
       </template>
 
       <div class="space-y-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-          <!-- Priority Badges -->
-          <div class="space-y-4">
-            <h4 class="font-semibold text-highlighted">Priority Levels</h4>
-            <div class="space-y-3">
-              <UBadge label="LOW" color="success" variant="solid" size="sm" />
-              <UBadge label="MEDIUM" color="warning" variant="solid" size="sm" />
-              <UBadge label="HIGH" color="error" variant="solid" size="sm" />
-              <UBadge label="URGENT" color="error" variant="solid" size="sm" class="animate-pulse" />
-            </div>
+        <p class="text-gray-600 dark:text-gray-400">
+          Data görselleştirme component'leri ile metriklerinizi etkili şekilde sunun.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Metric Cards -->
+          <div class="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-800">
+            <div class="text-2xl font-bold text-primary">1,234</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Total Users</div>
+            <UBadge color="success" variant="soft" size="xs" class="mt-2">
+              +12%
+            </UBadge>
           </div>
 
-          <!-- Status Badges -->
-          <div class="space-y-4">
-            <h4 class="font-semibold text-highlighted">Status Types</h4>
-            <div class="space-y-3">
-              <UBadge label="Active" color="success" variant="soft" size="sm" />
-              <UBadge label="Pending" color="warning" variant="soft" size="sm" />
-              <UBadge label="Inactive" color="neutral" variant="soft" size="sm" />
-              <UBadge label="Error" color="error" variant="soft" size="sm" />
-            </div>
+          <div class="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-100 dark:border-green-800">
+            <div class="text-2xl font-bold text-success">98.5%</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Uptime</div>
+            <UBadge color="success" variant="soft" size="xs" class="mt-2">
+              +0.3%
+            </UBadge>
           </div>
 
-          <!-- Badge Variants -->
-          <div class="space-y-4">
-            <h4 class="font-semibold text-highlighted">Badge Variants</h4>
-            <div class="space-y-3">
-              <UBadge label="Solid" color="primary" variant="solid" size="sm" />
-              <UBadge label="Soft" color="primary" variant="soft" size="sm" />
-              <UBadge label="Outline" color="primary" variant="outline" size="sm" />
-              <UBadge label="Subtle" color="primary" variant="subtle" size="sm" />
-            </div>
+          <div class="text-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-100 dark:border-yellow-800">
+            <div class="text-2xl font-bold text-warning">42</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Open Issues</div>
+            <UBadge color="error" variant="soft" size="xs" class="mt-2">
+              +5
+            </UBadge>
           </div>
 
-          <!-- Badge Sizes -->
-          <div class="space-y-4">
-            <h4 class="font-semibold text-highlighted">Badge Sizes</h4>
-            <div class="space-y-3">
-              <UBadge label="Extra Small" color="info" variant="solid" size="xs" />
-              <UBadge label="Small" color="info" variant="solid" size="sm" />
-              <UBadge label="Medium" color="info" variant="solid" size="md" />
-              <UBadge label="Large" color="info" variant="solid" size="lg" />
-            </div>
+          <div class="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-100 dark:border-purple-800">
+            <div class="text-2xl font-bold text-secondary">$12.4K</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Revenue</div>
+            <UBadge color="success" variant="soft" size="xs" class="mt-2">
+              +18%
+            </UBadge>
           </div>
         </div>
-      </div>
-    </UCard>
-
-    <!-- Loading States -->
-    <UCard>
-      <template #header>
-        <div class="flex items-center gap-3">
-          <UIcon name="i-lucide-loader" class="w-5 h-5 text-primary" />
-          <h3 class="text-xl font-bold text-highlighted">Loading States</h3>
-        </div>
-      </template>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <!-- Skeleton Loaders -->
-        <div class="space-y-4">
-          <h4 class="font-semibold text-highlighted">Skeleton Loaders</h4>
-          <div class="space-y-4">
-            <!-- Card Skeleton -->
-            <div class="border border-accented rounded-lg p-4 space-y-3">
-              <div class="flex items-center space-x-4">
-                <div class="rounded-full bg-muted h-12 w-12 animate-pulse"></div>
-                <div class="space-y-2 flex-1">
-                  <div class="h-4 bg-muted rounded animate-pulse w-3/4"></div>
-                  <div class="h-3 bg-muted rounded animate-pulse w-1/2"></div>
-                </div>
-              </div>
-              <div class="space-y-2">
-                <div class="h-3 bg-muted rounded animate-pulse"></div>
-                <div class="h-3 bg-muted rounded animate-pulse w-5/6"></div>
-              </div>
-            </div>
-
-            <!-- List Skeleton -->
-            <div class="space-y-2">
-              <div v-for="i in 3" :key="i" class="flex items-center space-x-3 p-3 border border-accented rounded">
-                <div class="rounded-full bg-muted h-8 w-8 animate-pulse"></div>
-                <div class="space-y-1 flex-1">
-                  <div class="h-3 bg-muted rounded animate-pulse w-2/3"></div>
-                  <div class="h-2 bg-muted rounded animate-pulse w-1/3"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Loading Spinners -->
-        <div class="space-y-4">
-          <h4 class="font-semibold text-highlighted">Loading Spinners</h4>
-          <div class="space-y-6">
-            <div class="flex items-center gap-4">
-              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-              <span class="text-sm text-muted">Loading...</span>
-            </div>
-
-            <div class="flex items-center gap-4">
-              <div class="animate-pulse flex space-x-1">
-                <div class="rounded-full bg-primary h-2 w-2"></div>
-                <div class="rounded-full bg-primary h-2 w-2 animation-delay-75"></div>
-                <div class="rounded-full bg-primary h-2 w-2 animation-delay-150"></div>
-              </div>
-              <span class="text-sm text-muted">Processing...</span>
-            </div>
-
-            <UButton :loading="isLoading" @click="toggleLoading" color="primary">
-              {{ isLoading ? 'Loading...' : 'Start Loading' }}
-            </UButton>
-          </div>
-        </div>
-      </div>
-    </UCard>
-
-    <!-- Data Table Preview -->
-    <UCard>
-      <template #header>
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <UIcon name="i-lucide-table" class="w-5 h-5 text-primary" />
-            <h3 class="text-xl font-bold text-highlighted">Data Table Preview</h3>
-          </div>
-          <UBadge label="UTable Component" color="info" variant="soft" size="sm" />
-        </div>
-      </template>
-
-      <div class="overflow-x-auto">
-        <table class="w-full">
-          <thead class="border-b border-accented">
-            <tr>
-              <th class="text-left py-3 px-4 font-semibold text-highlighted">User</th>
-              <th class="text-left py-3 px-4 font-semibold text-highlighted">Status</th>
-              <th class="text-left py-3 px-4 font-semibold text-highlighted">Role</th>
-              <th class="text-left py-3 px-4 font-semibold text-highlighted">Progress</th>
-              <th class="text-left py-3 px-4 font-semibold text-highlighted">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="user in sampleUsers" :key="user.id" class="border-b border-accented">
-              <td class="py-3 px-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                    <span class="text-xs font-medium text-white">{{ user.initials }}</span>
-                  </div>
-                  <div>
-                    <div class="font-medium text-highlighted">{{ user.name }}</div>
-                    <div class="text-sm text-muted">{{ user.email }}</div>
-                  </div>
-                </div>
-              </td>
-              <td class="py-3 px-4">
-                <UBadge :label="user.status" :color="getStatusColor(user.status)" variant="soft" size="xs" />
-              </td>
-              <td class="py-3 px-4 text-muted">{{ user.role }}</td>
-              <td class="py-3 px-4">
-                <div class="w-20 bg-elevated rounded-full h-2">
-                  <div class="bg-primary h-2 rounded-full" :style="`width: ${user.progress}%`"></div>
-                </div>
-              </td>
-              <td class="py-3 px-4">
-                <div class="flex gap-1">
-                  <UButton size="xs" color="neutral" variant="ghost">
-                    <UIcon name="i-lucide-eye" class="w-3 h-3" />
-                  </UButton>
-                  <UButton size="xs" color="neutral" variant="ghost">
-                    <UIcon name="i-lucide-edit" class="w-3 h-3" />
-                  </UButton>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </UCard>
   </div>
@@ -461,50 +420,64 @@ defineOptions({
   name: 'DataShowcase'
 })
 
+// Import our updated components
+import Avatar from '~/components/base/Avatar.vue'
+import ProgressBar from '~/components/base/ProgressBar.vue'
+import StatusIndicator from '~/components/base/StatusIndicator.vue'
+import AvatarShowcase from './AvatarShowcase.vue'
+import ProgressBarShowcase from './ProgressBarShowcase.vue'
+
+// Composables
+const toast = useToast()
+
 // Reactive data
-const projectProgress = ref(75)
-const teamCapacity = ref(60)
-const budgetUsage = ref(45)
 const isLoading = ref(false)
 
-// Sample data
+// Sample data with updated user objects for Avatar component
 const sampleUsers = ref([
   {
     id: 1,
     name: 'Alice Johnson',
     email: 'alice@example.com',
-    initials: 'AJ',
+    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b03c?w=150',
     status: 'online',
     role: 'Designer',
-    progress: 85
+    progress: 85,
+    isOnline: true
   },
   {
     id: 2,
     name: 'Bob Smith',
     email: 'bob@example.com',
-    initials: 'BS',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150',
     status: 'away',
     role: 'Developer',
-    progress: 92
+    progress: 92,
+    isOnline: true
   },
   {
     id: 3,
     name: 'Carol Wilson',
     email: 'carol@example.com',
-    initials: 'CW',
-    status: 'offline',
+    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150',
+    status: 'busy',
     role: 'Manager',
-    progress: 68
+    progress: 68,
+    isOnline: true
+  },
+  {
+    id: 4,
+    name: 'David Brown',
+    email: 'david@example.com',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150',
+    status: 'offline',
+    role: 'QA Engineer',
+    progress: 45,
+    isOnline: false
   }
 ])
 
 // Methods
-const updateProgress = () => {
-  projectProgress.value = Math.floor(Math.random() * 100)
-  teamCapacity.value = Math.floor(Math.random() * 100)
-  budgetUsage.value = Math.floor(Math.random() * 100)
-}
-
 const toggleLoading = () => {
   isLoading.value = true
   setTimeout(() => {
@@ -512,13 +485,51 @@ const toggleLoading = () => {
   }, 2000)
 }
 
-const getStatusColor = (status) => {
+const getRoleColor = (role) => {
   const colors = {
-    online: 'success',
-    away: 'warning',
-    offline: 'neutral'
+    Designer: 'secondary',
+    Developer: 'primary',
+    Manager: 'warning',
+    'QA Engineer': 'info'
   }
-  return colors[status] || 'neutral'
+  return colors[role] || 'neutral'
+}
+
+const getStatusIcon = (status) => {
+  const icons = {
+    online: 'i-lucide-wifi',
+    away: 'i-lucide-clock',
+    busy: 'i-lucide-minus-circle',
+    offline: 'i-lucide-wifi-off'
+  }
+  return icons[status]
+}
+
+const viewUser = (id) => {
+  toast.add({
+    title: 'View User',
+    description: `Opening user profile ${id}`,
+    color: 'info',
+    icon: 'i-lucide-eye'
+  })
+}
+
+const editUser = (id) => {
+  toast.add({
+    title: 'Edit User',
+    description: `Editing user ${id}`,
+    color: 'primary',
+    icon: 'i-lucide-edit'
+  })
+}
+
+const deleteUser = (id) => {
+  toast.add({
+    title: 'Delete User',
+    description: `User ${id} deleted successfully`,
+    color: 'error',
+    icon: 'i-lucide-trash-2'
+  })
 }
 
 // Meta info

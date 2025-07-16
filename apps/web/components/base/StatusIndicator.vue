@@ -85,18 +85,22 @@ const props = defineProps({
       // User status
       'online', 'offline', 'away', 'busy', 'dnd',
       // General status
-      'active', 'inactive', 'pending', 'completed', 'paused',
-      // Semantic status
-      'success', 'error', 'warning', 'info', 'neutral',
-      // System status
-      'live', 'maintenance', 'down', 'degraded',
+      'active', 'inactive', 'pending', 'completed', 'cancelled', 'failed',
       // Project status
-      'planning', 'in-progress', 'review', 'done', 'cancelled',
+      'planning', 'in-progress', 'review', 'testing', 'done',
+      // System status
+      'operational', 'maintenance', 'degraded', 'outage', 'unknown',
+      // Priority status
+      'low', 'medium', 'high', 'urgent', 'critical',
       // Custom status
-      'operational', 'connected', 'disconnected'
+      'success', 'warning', 'error', 'info', 'neutral'
     ].includes(value)
   },
   label: {
+    type: String,
+    default: ''
+  },
+  icon: {
     type: String,
     default: ''
   },
@@ -107,16 +111,12 @@ const props = defineProps({
   },
   variant: {
     type: String,
-    default: 'dot', // dot, badge
+    default: 'dot',
     validator: (value) => ['dot', 'badge'].includes(value)
   },
   pulse: {
     type: Boolean,
     default: false
-  },
-  icon: {
-    type: String,
-    default: ''
   },
   customClass: {
     type: String,
@@ -124,10 +124,10 @@ const props = defineProps({
   }
 })
 
-// Size mappings
+// Size classes
 const dotSizeClasses = {
   xs: 'w-1.5 h-1.5',
-  sm: 'w-2 h-2', 
+  sm: 'w-2 h-2',
   md: 'w-2.5 h-2.5',
   lg: 'w-3 h-3',
   xl: 'w-4 h-4'
@@ -135,7 +135,7 @@ const dotSizeClasses = {
 
 const textSizeClasses = {
   xs: 'text-xs',
-  sm: 'text-xs',
+  sm: 'text-sm',
   md: 'text-sm',
   lg: 'text-base',
   xl: 'text-lg'
@@ -143,130 +143,79 @@ const textSizeClasses = {
 
 const iconSizeClasses = {
   xs: 'w-3 h-3',
-  sm: 'w-3 h-3',
-  md: 'w-4 h-4', 
-  lg: 'w-5 h-5',
-  xl: 'w-6 h-6'
+  sm: 'w-3.5 h-3.5',
+  md: 'w-4 h-4',
+  lg: 'w-4 h-4',
+  xl: 'w-5 h-5'
 }
 
-// Status color mappings
-const dotColorClasses = {
+// Status color mapping with dark theme support
+const statusColorMap = {
   // User status
-  online: 'bg-green-500',
-  offline: 'bg-gray-400',
-  away: 'bg-yellow-500',
-  busy: 'bg-red-500',
-  dnd: 'bg-red-600',
+  'online': { dot: 'bg-success-500 dark:bg-success-400', text: 'text-success-600 dark:text-success-400', badge: 'success' },
+  'offline': { dot: 'bg-neutral-400 dark:bg-neutral-500', text: 'text-neutral-600 dark:text-neutral-400', badge: 'neutral' },
+  'away': { dot: 'bg-warning-500 dark:bg-warning-400', text: 'text-warning-600 dark:text-warning-400', badge: 'warning' },
+  'busy': { dot: 'bg-error-500 dark:bg-error-400', text: 'text-error-600 dark:text-error-400', badge: 'error' },
+  'dnd': { dot: 'bg-error-500 dark:bg-error-400', text: 'text-error-600 dark:text-error-400', badge: 'error' },
   
   // General status
-  active: 'bg-green-500',
-  inactive: 'bg-gray-400', 
-  pending: 'bg-yellow-500',
-  completed: 'bg-blue-500',
-  paused: 'bg-orange-500',
-  
-  // Semantic status
-  success: 'bg-green-500',
-  error: 'bg-red-500',
-  warning: 'bg-yellow-500',
-  info: 'bg-blue-500',
-  neutral: 'bg-gray-400',
-  
-  // System status
-  live: 'bg-green-500',
-  maintenance: 'bg-orange-500',
-  down: 'bg-red-500',
-  degraded: 'bg-yellow-500',
+  'active': { dot: 'bg-success-500 dark:bg-success-400', text: 'text-success-600 dark:text-success-400', badge: 'success' },
+  'inactive': { dot: 'bg-neutral-400 dark:bg-neutral-500', text: 'text-neutral-600 dark:text-neutral-400', badge: 'neutral' },
+  'pending': { dot: 'bg-warning-500 dark:bg-warning-400', text: 'text-warning-600 dark:text-warning-400', badge: 'warning' },
+  'completed': { dot: 'bg-success-500 dark:bg-success-400', text: 'text-success-600 dark:text-success-400', badge: 'success' },
+  'cancelled': { dot: 'bg-neutral-400 dark:bg-neutral-500', text: 'text-neutral-600 dark:text-neutral-400', badge: 'neutral' },
+  'failed': { dot: 'bg-error-500 dark:bg-error-400', text: 'text-error-600 dark:text-error-400', badge: 'error' },
   
   // Project status
-  planning: 'bg-blue-500',
-  'in-progress': 'bg-green-500',
-  review: 'bg-yellow-500',
-  done: 'bg-green-600',
-  cancelled: 'bg-gray-500',
-  
-  // Custom status
-  operational: 'bg-green-500',
-  connected: 'bg-green-500',
-  disconnected: 'bg-red-500'
-}
-
-const textColorClasses = {
-  // User status  
-  online: 'text-green-700',
-  offline: 'text-gray-600',
-  away: 'text-yellow-700',
-  busy: 'text-red-700',
-  dnd: 'text-red-800',
-  
-  // General status
-  active: 'text-green-700',
-  inactive: 'text-gray-600',
-  pending: 'text-yellow-700', 
-  completed: 'text-blue-700',
-  paused: 'text-orange-700',
-  
-  // Semantic status
-  success: 'text-green-700',
-  error: 'text-red-700',
-  warning: 'text-yellow-700',
-  info: 'text-blue-700',
-  neutral: 'text-gray-600',
+  'planning': { dot: 'bg-info-500 dark:bg-info-400', text: 'text-info-600 dark:text-info-400', badge: 'info' },
+  'in-progress': { dot: 'bg-primary-500 dark:bg-primary-400', text: 'text-primary-600 dark:text-primary-400', badge: 'primary' },
+  'review': { dot: 'bg-secondary-500 dark:bg-secondary-400', text: 'text-secondary-600 dark:text-secondary-400', badge: 'secondary' },
+  'testing': { dot: 'bg-warning-500 dark:bg-warning-400', text: 'text-warning-600 dark:text-warning-400', badge: 'warning' },
+  'done': { dot: 'bg-success-500 dark:bg-success-400', text: 'text-success-600 dark:text-success-400', badge: 'success' },
   
   // System status
-  live: 'text-green-700',
-  maintenance: 'text-orange-700',
-  down: 'text-red-700',
-  degraded: 'text-yellow-700',
+  'operational': { dot: 'bg-success-500 dark:bg-success-400', text: 'text-success-600 dark:text-success-400', badge: 'success' },
+  'maintenance': { dot: 'bg-warning-500 dark:bg-warning-400', text: 'text-warning-600 dark:text-warning-400', badge: 'warning' },
+  'degraded': { dot: 'bg-warning-500 dark:bg-warning-400', text: 'text-warning-600 dark:text-warning-400', badge: 'warning' },
+  'outage': { dot: 'bg-error-500 dark:bg-error-400', text: 'text-error-600 dark:text-error-400', badge: 'error' },
+  'unknown': { dot: 'bg-neutral-400 dark:bg-neutral-500', text: 'text-neutral-600 dark:text-neutral-400', badge: 'neutral' },
   
-  // Project status
-  planning: 'text-blue-700',
-  'in-progress': 'text-green-700',
-  review: 'text-yellow-700',
-  done: 'text-green-800',
-  cancelled: 'text-gray-600',
+  // Priority status
+  'low': { dot: 'bg-success-500 dark:bg-success-400', text: 'text-success-600 dark:text-success-400', badge: 'success' },
+  'medium': { dot: 'bg-warning-500 dark:bg-warning-400', text: 'text-warning-600 dark:text-warning-400', badge: 'warning' },
+  'high': { dot: 'bg-error-500 dark:bg-error-400', text: 'text-error-600 dark:text-error-400', badge: 'error' },
+  'urgent': { dot: 'bg-error-500 dark:bg-error-400', text: 'text-error-600 dark:text-error-400', badge: 'error' },
+  'critical': { dot: 'bg-error-500 dark:bg-error-400', text: 'text-error-600 dark:text-error-400', badge: 'error' },
   
-  // Custom status
-  operational: 'text-green-700',
-  connected: 'text-green-700',
-  disconnected: 'text-red-700'
+  // Generic status
+  'success': { dot: 'bg-success-500 dark:bg-success-400', text: 'text-success-600 dark:text-success-400', badge: 'success' },
+  'warning': { dot: 'bg-warning-500 dark:bg-warning-400', text: 'text-warning-600 dark:text-warning-400', badge: 'warning' },
+  'error': { dot: 'bg-error-500 dark:bg-error-400', text: 'text-error-600 dark:text-error-400', badge: 'error' },
+  'info': { dot: 'bg-info-500 dark:bg-info-400', text: 'text-info-600 dark:text-info-400', badge: 'info' },
+  'neutral': { dot: 'bg-neutral-400 dark:bg-neutral-500', text: 'text-neutral-600 dark:text-neutral-400', badge: 'neutral' }
 }
 
-// Badge color mapping for UBadge
-const badgeColor = computed(() => {
-  const mapping = {
-    online: 'success',
-    offline: 'neutral',
-    away: 'warning',
-    busy: 'error',
-    dnd: 'error',
-    active: 'success',
-    inactive: 'neutral',
-    pending: 'warning',
-    completed: 'info',
-    paused: 'warning',
-    success: 'success',
-    error: 'error',
-    warning: 'warning',
-    info: 'info',
-    neutral: 'neutral',
-    live: 'success',
-    maintenance: 'warning',
-    down: 'error',
-    degraded: 'warning',
-    planning: 'info',
-    'in-progress': 'success',
-    review: 'warning',
-    done: 'success',
-    cancelled: 'neutral',
-    operational: 'success',
-    connected: 'success',
-    disconnected: 'error'
-  }
-  return mapping[props.status] || 'neutral'
+// Computed color classes
+const dotColorClasses = computed(() => {
+  return { [statusColorMap[props.status]?.dot || 'bg-neutral-400 dark:bg-neutral-500']: true }
 })
 
+const textColorClasses = computed(() => {
+  return { [statusColorMap[props.status]?.text || 'text-neutral-600 dark:text-neutral-400']: true }
+})
+
+const badgeColor = computed(() => {
+  return statusColorMap[props.status]?.badge || 'neutral'
+})
+
+// Badge variant based on status
 const badgeVariant = computed(() => {
-  return 'soft' // Always use soft variant for better visibility
+  if (['completed', 'done', 'operational', 'active', 'online'].includes(props.status)) {
+    return 'solid'
+  }
+  if (['failed', 'error', 'outage', 'critical', 'urgent'].includes(props.status)) {
+    return 'solid'
+  }
+  return 'soft'
 })
 </script>

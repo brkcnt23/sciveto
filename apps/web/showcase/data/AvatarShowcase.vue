@@ -1,322 +1,723 @@
-<!-- components/showcase/AvatarShowcase.vue -->
+<!-- showcase/data/AvatarShowcase.vue -->
 <template>
   <div class="space-y-8">
-    <!-- Size Variations -->
-    <div class="space-y-4">
-      <h4 class="font-semibold text-slate-700 text-lg border-b border-slate-200 pb-2">
-        Size Variations
+    <!-- Header with Modern Badge -->
+    <div class="flex items-center justify-between">
+      <h4 class="font-semibold text-gray-900 dark:text-white text-lg">
+        👤 Avatar Showcase
       </h4>
-      <div class="flex items-end space-x-6 justify-center">
-        <div v-for="size in sizes" :key="size" class="text-center space-y-2">
-          <Avatar :user="sampleUser" :size="size" />
-          <p class="text-xs text-slate-600 uppercase">{{ size }}</p>
+      <UBadge color="secondary" variant="soft" size="sm" class="gap-1.5">
+        <div class="w-2 h-2 bg-secondary rounded-full animate-pulse"></div>
+        Updated Component
+      </UBadge>
+    </div>
+
+    <!-- Avatar Sizes using our Avatar component -->
+    <div class="space-y-6">
+      <div class="flex items-center gap-3 border-b border-gray-200 dark:border-gray-700 pb-2">
+        <UIcon name="i-lucide-users" class="w-5 h-5 text-primary" />
+        <h4 class="font-semibold text-gray-900 dark:text-white text-lg">Avatar Sizes</h4>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Extra Small -->
+        <div class="text-center space-y-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+          <UBadge color="neutral" variant="outline" size="xs">XS</UBadge>
+          <div class="flex justify-center">
+            <Avatar 
+              :user="{ 
+                name: 'John Doe', 
+                avatar: 'https://avatars.githubusercontent.com/u/739984?v=4' 
+              }" 
+              size="xs"
+            />
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400">16x16px</p>
+        </div>
+
+        <!-- Small -->
+        <div class="text-center space-y-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+          <UBadge color="neutral" variant="outline" size="xs">SM</UBadge>
+          <div class="flex justify-center">
+            <Avatar 
+              :user="{ 
+                name: 'John Doe', 
+                avatar: 'https://avatars.githubusercontent.com/u/739984?v=4' 
+              }" 
+              size="sm"
+            />
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400">24x24px</p>
+        </div>
+
+        <!-- Medium -->
+        <div class="text-center space-y-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+          <UBadge color="neutral" variant="outline" size="xs">MD</UBadge>
+          <div class="flex justify-center">
+            <Avatar 
+              :user="{ 
+                name: 'John Doe', 
+                avatar: 'https://avatars.githubusercontent.com/u/739984?v=4' 
+              }" 
+              size="md"
+            />
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400">32x32px</p>
+        </div>
+
+        <!-- Large -->
+        <div class="text-center space-y-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+          <UBadge color="neutral" variant="outline" size="xs">LG</UBadge>
+          <div class="flex justify-center">
+            <Avatar 
+              :user="{ 
+                name: 'John Doe', 
+                avatar: 'https://avatars.githubusercontent.com/u/739984?v=4' 
+              }" 
+              size="lg"
+            />
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400">48x48px</p>
         </div>
       </div>
     </div>
 
-    <!-- Background Color Variations (Avatar Fill) -->
-    <div v-if="showBgColors" class="space-y-4">
-      <h4 class="font-semibold text-slate-700 text-lg border-b border-slate-200 pb-2">
-        Background Color Variations (Full Fill)
-      </h4>
-      <div class="grid grid-cols-3 md:grid-cols-6 gap-6 justify-items-center">
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="red" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Red</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="blue" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Blue</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="green" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Green</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="yellow" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Yellow</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="purple" size="lg" :show-image="false" text-color="white" />
-          <p class="text-xs text-slate-600">Purple</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="pink" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Pink</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="indigo" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Indigo</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="orange" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Orange</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="teal" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Teal</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="cyan" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Cyan</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="emerald" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Emerald</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="violet" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Violet</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="fuchsia" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Fuchsia</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="rose" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Rose</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="sky" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Sky</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" bg-color="amber" size="lg" :show-image="false" />
-          <p class="text-xs text-slate-600">Amber</p>
-        </div>
+    <!-- Avatar with Status Indicators -->
+    <div class="space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-2">
+        <UIcon name="i-lucide-activity" class="w-5 h-5 text-success" />
+        <h4 class="font-semibold text-slate-700 text-lg">Status Indicators</h4>
       </div>
-    </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Online Status -->
+        <div class="text-center space-y-3 p-4 bg-green-50 rounded-lg border border-green-100">
+          <UBadge color="success" variant="solid" size="xs" class="gap-1">
+            <div class="w-2 h-2 bg-white rounded-full"></div>
+            Online
+          </UBadge>
+          <div class="flex justify-center">
+            <Avatar 
+              :user="{ 
+                name: 'Sarah Wilson', 
+                avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b03c?w=150',
+                status: 'online',
+                isOnline: true
+              }" 
+              size="lg"
+              :show-online-status="true"
+            />
+          </div>
+          <div class="text-sm">
+            <p class="font-medium text-slate-700">Sarah Wilson</p>
+            <p class="text-xs text-success">Available</p>
+          </div>
+        </div>
 
-    <!-- Different Color Variations -->
-    <div v-if="showColors" class="space-y-4">
-      <h4 class="font-semibold text-slate-700 text-lg border-b border-slate-200 pb-2">
-        Color Variations
-      </h4>
-      <div class="flex items-center space-x-6 justify-center flex-wrap gap-4">
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" color="none" size="lg" />
-          <p class="text-xs text-slate-600">Default</p>
+        <!-- Away Status -->
+        <div class="text-center space-y-3 p-4 bg-yellow-50 rounded-lg border border-yellow-100">
+          <UBadge color="warning" variant="solid" size="xs" class="gap-1">
+            <UIcon name="i-lucide-clock" class="w-3 h-3" />
+            Away
+          </UBadge>
+          <div class="flex justify-center">
+            <Avatar 
+              :user="{ 
+                name: 'Mike Johnson', 
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150',
+                status: 'away',
+                isOnline: true
+              }" 
+              size="lg"
+              :show-online-status="true"
+            />
+          </div>
+          <div class="text-sm">
+            <p class="font-medium text-slate-700">Mike Johnson</p>
+            <p class="text-xs text-warning">Away - Back in 15 min</p>
+          </div>
         </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" color="primary" size="lg" />
-          <p class="text-xs text-slate-600">Primary</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" color="secondary" size="lg" />
-          <p class="text-xs text-slate-600">Secondary</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" color="success" size="lg" />
-          <p class="text-xs text-slate-600">Success</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" color="info" size="lg" />
-          <p class="text-xs text-slate-600">Info</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" color="warning" size="lg" />
-          <p class="text-xs text-slate-600">Warning</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" color="error" size="lg" />
-          <p class="text-xs text-slate-600">Error</p>
-        </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="sampleUser" color="neutral" size="lg" />
-          <p class="text-xs text-slate-600">Neutral</p>
-        </div>
-      </div>
-    </div>
 
-    <!-- Different Users -->
-    <div class="space-y-4">
-      <h4 class="font-semibold text-slate-700 text-lg border-b border-slate-200 pb-2">
-        Team Members
-      </h4>
-      <div class="flex items-center space-x-4 justify-center flex-wrap gap-4">
-        <div v-for="user in teamMembers" :key="user.id" class="text-center space-y-2">
-          <Avatar :user="user" size="lg" show-online-status />
-          <div class="space-y-1">
-            <p class="text-sm font-medium text-slate-700">{{ user.name }}</p>
-            <p class="text-xs text-slate-500">{{ user.email }}</p>
+        <!-- Busy Status -->
+        <div class="text-center space-y-3 p-4 bg-red-50 rounded-lg border border-red-100">
+          <UBadge color="error" variant="solid" size="xs" class="gap-1">
+            <UIcon name="i-lucide-minus-circle" class="w-3 h-3" />
+            Busy
+          </UBadge>
+          <div class="flex justify-center">
+            <Avatar 
+              :user="{ 
+                name: 'Alex Chen', 
+                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150',
+                status: 'busy',
+                isOnline: true
+              }" 
+              size="lg"
+              :show-online-status="true"
+            />
+          </div>
+          <div class="text-sm">
+            <p class="font-medium text-slate-700">Alex Chen</p>
+            <p class="text-xs text-error">In a meeting</p>
+          </div>
+        </div>
+
+        <!-- Offline Status -->
+        <div class="text-center space-y-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <UBadge color="neutral" variant="solid" size="xs" class="gap-1">
+            <UIcon name="i-lucide-wifi-off" class="w-3 h-3" />
+            Offline
+          </UBadge>
+          <div class="flex justify-center">
+            <Avatar 
+              :user="{ 
+                name: 'Emma Davis', 
+                avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150',
+                status: 'offline',
+                isOnline: false
+              }" 
+              size="lg"
+              :show-online-status="true"
+              avatar-class="opacity-75 grayscale"
+            />
+          </div>
+          <div class="text-sm">
+            <p class="font-medium text-slate-700">Emma Davis</p>
+            <p class="text-xs text-neutral">Last seen 2h ago</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- With Notifications -->
-    <div v-if="showNotifications" class="space-y-4">
-      <h4 class="font-semibold text-slate-700 text-lg border-b border-slate-200 pb-2">
-        With Notifications
-      </h4>
-      <div class="flex items-center space-x-6 justify-center">
-        <div class="text-center space-y-2">
-          <Avatar :user="teamMembers[0]" size="lg" :notification-count="3" />
-          <p class="text-xs text-slate-600">3 notifications</p>
+    <!-- Avatar Fallbacks & Initials -->
+    <div class="space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-2">
+        <UIcon name="i-lucide-user-circle" class="w-5 h-5 text-secondary" />
+        <h4 class="font-semibold text-slate-700 text-lg">Fallbacks & Initials</h4>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Initials with Colors -->
+        <div class="space-y-4 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h5 class="text-sm font-medium text-slate-600 dark:text-slate-400 flex items-center gap-2">
+            <UIcon name="i-lucide-type" class="w-4 h-4" />
+            Initial Avatars
+          </h5>
+          <div class="flex justify-center gap-3">
+            <div class="text-center space-y-2">
+              <Avatar 
+                :user="{ name: 'John Doe' }" 
+                size="lg"
+                bg-color="primary"
+                :show-image="false"
+              />
+              <UBadge size="xs" variant="outline">Primary</UBadge>
+            </div>
+            <div class="text-center space-y-2">
+              <Avatar 
+                :user="{ name: 'Sarah Wilson' }" 
+                size="lg"
+                bg-color="success"
+                :show-image="false"
+              />
+              <UBadge size="xs" variant="outline">Success</UBadge>
+            </div>
+            <div class="text-center space-y-2">
+              <Avatar 
+                :user="{ name: 'Mike Johnson' }" 
+                size="lg"
+                bg-color="warning"
+                :show-image="false"
+              />
+              <UBadge size="xs" variant="outline">Warning</UBadge>
+            </div>
+          </div>
         </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="teamMembers[1]" size="lg" :notification-count="27" />
-          <p class="text-xs text-slate-600">27 notifications</p>
+
+        <!-- Gradient Avatars -->
+        <div class="space-y-4 p-4 bg-slate-50 rounded-lg">
+          <h5 class="text-sm font-medium text-slate-600 flex items-center gap-2">
+            <UIcon name="i-lucide-palette" class="w-4 h-4" />
+            Gradient Avatars
+          </h5>
+          <div class="flex justify-center gap-3">
+            <div class="text-center space-y-2">
+              <Avatar 
+                :user="{ name: 'Alice Cooper' }" 
+                size="lg"
+                bg-color="gradient-blue"
+                :show-image="false"
+              />
+              <UBadge size="xs" variant="outline">Blue</UBadge>
+            </div>
+            <div class="text-center space-y-2">
+              <Avatar 
+                :user="{ name: 'Bob Dylan' }" 
+                size="lg"
+                bg-color="gradient-green"
+                :show-image="false"
+              />
+              <UBadge size="xs" variant="outline">Green</UBadge>
+            </div>
+            <div class="text-center space-y-2">
+              <Avatar 
+                :user="{ name: 'Carol Evans' }" 
+                size="lg"
+                bg-color="gradient-pink"
+                :show-image="false"
+              />
+              <UBadge size="xs" variant="outline">Pink</UBadge>
+            </div>
+          </div>
         </div>
-        <div class="text-center space-y-2">
-          <Avatar :user="teamMembers[2]" size="lg" :notification-count="150" />
-          <p class="text-xs text-slate-600">99+ notifications</p>
+
+        <!-- Role Badges -->
+        <div class="space-y-4 p-4 bg-slate-50 rounded-lg">
+          <h5 class="text-sm font-medium text-slate-600 flex items-center gap-2">
+            <UIcon name="i-lucide-crown" class="w-4 h-4" />
+            Role Badges
+          </h5>
+          <div class="flex justify-center gap-3">
+            <div class="text-center space-y-2">
+              <Avatar 
+                :user="{ 
+                  name: 'Admin User', 
+                  avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b03c?w=150',
+                  role: 'admin'
+                }" 
+                size="lg"
+                :show-role="true"
+              />
+              <UBadge size="xs" variant="outline">Admin</UBadge>
+            </div>
+            <div class="text-center space-y-2">
+              <Avatar 
+                :user="{ 
+                  name: 'Premium User', 
+                  avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150',
+                  role: 'premium'
+                }" 
+                size="lg"
+                :show-role="true"
+              />
+              <UBadge size="xs" variant="outline">Premium</UBadge>
+            </div>
+            <div class="text-center space-y-2">
+              <Avatar 
+                :user="{ 
+                  name: 'VIP User', 
+                  avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150',
+                  role: 'vip'
+                }" 
+                size="lg"
+                :show-role="true"
+              />
+              <UBadge size="xs" variant="outline">VIP</UBadge>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Avatar Group -->
-    <div v-if="showAvatarGroup" class="space-y-4">
-      <h4 class="font-semibold text-slate-700 text-lg border-b border-slate-200 pb-2">
-        Avatar Groups
-      </h4>
-
-      <div class="space-y-6">
-        <!-- Normal Group -->
-        <div class="text-center space-y-2">
-          <UAvatarGroup size="lg">
-            <UAvatar v-for="user in teamMembers.slice(0, 3)" :key="user.id" :src="user.avatar" :alt="user.name" />
-          </UAvatarGroup>
-          <p class="text-xs text-slate-600">Team Collaboration</p>
+    <!-- Avatar Groups -->
+    <div class="space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-2">
+        <UIcon name="i-lucide-users-2" class="w-5 h-5 text-warning" />
+        <h4 class="font-semibold text-slate-700 text-lg">Avatar Groups</h4>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Team Members -->
+        <div class="space-y-4 p-4 bg-blue-50 rounded-lg border border-blue-100">
+          <div class="flex items-center justify-between">
+            <h5 class="text-sm font-medium text-slate-600">Frontend Team</h5>
+            <UBadge color="primary" variant="soft" size="xs">5 members</UBadge>
+          </div>
+          <div class="flex -space-x-2">
+            <Avatar 
+              :user="{ 
+                name: 'Sarah Wilson', 
+                avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b03c?w=150' 
+              }" 
+              size="md"
+              avatar-class="border-2 border-white shadow-sm"
+            />
+            <Avatar 
+              :user="{ 
+                name: 'Mike Johnson', 
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150' 
+              }" 
+              size="md"
+              avatar-class="border-2 border-white shadow-sm"
+            />
+            <Avatar 
+              :user="{ 
+                name: 'Alex Chen', 
+                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150' 
+              }" 
+              size="md"
+              avatar-class="border-2 border-white shadow-sm"
+            />
+            <Avatar 
+              :user="{ name: 'Emma Davis' }" 
+              size="md"
+              bg-color="success"
+              :show-image="false"
+              avatar-class="border-2 border-white shadow-sm"
+            />
+            <Avatar 
+              :user="{ name: '+1' }" 
+              size="md"
+              bg-color="neutral"
+              :show-image="false"
+              avatar-class="border-2 border-white shadow-sm"
+            />
+          </div>
+          <p class="text-xs text-slate-600">Working on dashboard redesign</p>
         </div>
 
-        <!-- With Max -->
-        <div class="text-center space-y-2">
-          <UAvatarGroup size="lg" :max="3">
-            <UAvatar v-for="user in teamMembers" :key="user.id" :src="user.avatar" :alt="user.name" />
-          </UAvatarGroup>
-          <p class="text-xs text-slate-600">Max 3 Avatars (+1 more)</p>
+        <!-- Project Collaborators -->
+        <div class="space-y-4 p-4 bg-green-50 rounded-lg border border-green-100">
+          <div class="flex items-center justify-between">
+            <h5 class="text-sm font-medium text-slate-600">Project Alpha</h5>
+            <UBadge color="success" variant="soft" size="xs">8 collaborators</UBadge>
+          </div>
+          <div class="flex -space-x-2">
+            <Avatar 
+              :user="{ 
+                name: 'User 1', 
+                avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' 
+              }" 
+              size="sm"
+              avatar-class="border-2 border-white"
+            />
+            <Avatar 
+              :user="{ name: 'John Doe' }" 
+              size="sm"
+              bg-color="primary"
+              :show-image="false"
+              avatar-class="border-2 border-white"
+            />
+            <Avatar 
+              :user="{ name: 'Anna Brown' }" 
+              size="sm"
+              bg-color="secondary"
+              :show-image="false"
+              avatar-class="border-2 border-white"
+            />
+            <Avatar 
+              :user="{ name: 'Chris Davis' }" 
+              size="sm"
+              bg-color="warning"
+              :show-image="false"
+              avatar-class="border-2 border-white"
+            />
+            <Avatar 
+              :user="{ name: '+4' }" 
+              size="sm"
+              bg-color="neutral"
+              :show-image="false"
+              avatar-class="border-2 border-white text-xs"
+            />
+          </div>
+          <p class="text-xs text-slate-600">Mobile app development team</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Avatar with Notifications -->
+    <div class="space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-2">
+        <UIcon name="i-lucide-bell" class="w-5 h-5 text-error" />
+        <h4 class="font-semibold text-slate-700 text-lg">Notifications & Badges</h4>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Message Notification -->
+        <div class="text-center space-y-3 p-4 bg-blue-50 rounded-lg">
+          <UBadge color="primary" variant="soft" size="xs" class="gap-1">
+            <UIcon name="i-lucide-message-circle" class="w-3 h-3" />
+            Messages
+          </UBadge>
+          <div class="flex justify-center">
+            <Avatar 
+              :user="{ 
+                name: 'Sarah Wilson', 
+                avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b03c?w=150' 
+              }" 
+              size="lg"
+              :notification-count="3"
+            />
+          </div>
+          <p class="text-xs text-slate-600">3 unread messages</p>
         </div>
 
-        <!-- Different Sizes -->
-        <div class="flex items-center justify-center space-x-8">
-          <div class="text-center space-y-2">
-            <UAvatarGroup size="sm">
-              <UAvatar v-for="user in teamMembers.slice(0, 3)" :key="user.id" :src="user.avatar" :alt="user.name" />
-            </UAvatarGroup>
-            <p class="text-xs text-slate-600">Small</p>
+        <!-- Task Notification -->
+        <div class="text-center space-y-3 p-4 bg-yellow-50 rounded-lg">
+          <UBadge color="warning" variant="soft" size="xs" class="gap-1">
+            <UIcon name="i-lucide-calendar" class="w-3 h-3" />
+            Tasks
+          </UBadge>
+          <div class="flex justify-center">
+            <Avatar 
+              :user="{ 
+                name: 'Mike Johnson', 
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150' 
+              }" 
+              size="lg"
+              :notification-count="7"
+            />
           </div>
+          <p class="text-xs text-slate-600">7 pending tasks</p>
+        </div>
 
-          <div class="text-center space-y-2">
-            <UAvatarGroup size="md">
-              <UAvatar v-for="user in teamMembers.slice(0, 3)" :key="user.id" :src="user.avatar" :alt="user.name" />
-            </UAvatarGroup>
-            <p class="text-xs text-slate-600">Medium</p>
+        <!-- High Notification Count -->
+        <div class="text-center space-y-3 p-4 bg-red-50 rounded-lg">
+          <UBadge color="error" variant="soft" size="xs" class="gap-1">
+            <UIcon name="i-lucide-mail" class="w-3 h-3" />
+            Emails
+          </UBadge>
+          <div class="flex justify-center">
+            <Avatar 
+              :user="{ 
+                name: 'Alex Chen', 
+                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150' 
+              }" 
+              size="lg"
+              :notification-count="150"
+            />
           </div>
+          <p class="text-xs text-slate-600">99+ unread emails</p>
+        </div>
 
-          <div class="text-center space-y-2">
-            <UAvatarGroup size="xl">
-              <UAvatar v-for="user in teamMembers.slice(0, 3)" :key="user.id" :src="user.avatar" :alt="user.name" />
-            </UAvatarGroup>
-            <p class="text-xs text-slate-600">Extra Large</p>
+        <!-- Custom Badge Slot -->
+        <div class="text-center space-y-3 p-4 bg-purple-50 rounded-lg">
+          <UBadge color="secondary" variant="soft" size="xs" class="gap-1">
+            <UIcon name="i-lucide-trophy" class="w-3 h-3" />
+            Achievement
+          </UBadge>
+          <div class="flex justify-center">
+            <Avatar 
+              :user="{ 
+                name: 'Emma Davis', 
+                avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' 
+              }" 
+              size="lg"
+              badge-position="top-right"
+            >
+              <template #badge>
+                <div class="w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-2 border-white">
+                  <UIcon name="i-lucide-crown" class="w-3 h-3 text-white" />
+                </div>
+              </template>
+            </Avatar>
+          </div>
+          <p class="text-xs text-slate-600">Top performer</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Demo Section -->
+    <div class="space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-2">
+        <UIcon name="i-lucide-play" class="w-5 h-5 text-info" />
+        <h4 class="font-semibold text-slate-700 text-lg">Interactive Demo</h4>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Status Simulator -->
+        <div class="space-y-4 p-4 showcase-card">
+          <h5 class="text-sm font-medium text-slate-600 dark:text-slate-400 flex items-center gap-2">
+            <UIcon name="i-lucide-settings" class="w-4 h-4" />
+            Status Simulator
+          </h5>
+          <div class="flex justify-center">
+            <Avatar 
+              :user="demoAvatar" 
+              size="xl"
+              :show-online-status="true"
+            />
+          </div>
+          <div class="text-center">
+            <p class="font-medium text-slate-700">{{ demoAvatar.name }}</p>
+            <UBadge 
+              :color="getStatusBadgeColor(demoAvatar.status)" 
+              variant="soft" 
+              size="xs"
+              :class="{ 'animate-pulse': demoAvatar.status === 'busy' }"
+            >
+              {{ demoAvatar.status }}
+            </UBadge>
+          </div>
+          <div class="flex flex-wrap gap-2 justify-center">
+            <UButton size="xs" @click="setDemoStatus('online')">
+              Online
+            </UButton>
+            <UButton size="xs" @click="setDemoStatus('away')">
+              Away
+            </UButton>
+            <UButton size="xs" @click="setDemoStatus('busy')">
+              Busy
+            </UButton>
+            <UButton size="xs" @click="setDemoStatus('offline')">
+              Offline
+            </UButton>
+          </div>
+        </div>
+
+        <!-- Avatar Generator -->
+        <div class="space-y-4 p-4 bg-slate-50 rounded-lg">
+          <h5 class="text-sm font-medium text-slate-600 flex items-center gap-2">
+            <UIcon name="i-lucide-shuffle" class="w-4 h-4" />
+            Random Avatar Generator
+          </h5>
+          <div class="flex justify-center">
+            <Avatar 
+              :user="randomAvatar" 
+              size="xl"
+              :bg-color="randomAvatar.bgColor"
+              :show-image="false"
+            />
+          </div>
+          <div class="text-center">
+            <p class="font-medium text-slate-700">{{ randomAvatar.name }}</p>
+            <p class="text-xs text-slate-500">{{ randomAvatar.role }}</p>
+          </div>
+          <div class="flex justify-center">
+            <UButton size="sm" @click="generateRandomAvatar">
+              <UIcon name="i-lucide-refresh-cw" class="w-4 h-4 mr-1" />
+              Generate New
+            </UButton>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Toggle Controls -->
-    <div v-if="showControls" class="pt-6 border-t border-slate-200">
-      <h4 class="font-semibold text-slate-700 mb-4">Show/Hide Sections</h4>
-      <div class="flex flex-wrap gap-2">
-        <UButton :variant="showColors ? 'solid' : 'outline'" color="primary" size="sm"
-          @click="showColors = !showColors">
-          Border Colors
-        </UButton>
-        <UButton :variant="showBgColors ? 'solid' : 'outline'" color="primary" size="sm"
-          @click="showBgColors = !showBgColors">
-          Background Colors
-        </UButton>
-        <UButton :variant="showNotifications ? 'solid' : 'outline'" color="primary" size="sm"
-          @click="showNotifications = !showNotifications">
-          Notifications
-        </UButton>
-        <UButton :variant="showAvatarGroup ? 'solid' : 'outline'" color="primary" size="sm"
-          @click="showAvatarGroup = !showAvatarGroup">
-          Avatar Groups
-        </UButton>
-      </div>
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-3 pt-4 border-t border-slate-200">
+      <UButton size="sm" @click="cycleStatus">
+        <UIcon name="i-lucide-repeat" class="w-4 h-4 mr-1" />
+        Cycle Status
+      </UButton>
+      
+      <UButton size="sm" variant="outline" @click="generateRandomAvatar">
+        <UIcon name="i-lucide-user-plus" class="w-4 h-4 mr-1" />
+        Random User
+      </UButton>
+      
+      <UButton size="sm" variant="outline" @click="resetDemo">
+        <UIcon name="i-lucide-rotate-ccw" class="w-4 h-4 mr-1" />
+        Reset Demo
+      </UButton>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, Text } from 'vue'
+// Import our updated component
+import Avatar from '~/components/base/Avatar.vue'
 
-// Props for controlling what sections to show
-const props = defineProps({
-  showControls: {
-    type: Boolean,
-    default: true
-  },
-  defaultShowColors: {
-    type: Boolean,
-    default: true
-  },
-  defaultShowBgColors: {
-    type: Boolean,
-    default: true
-  },
-  defaultShowNotifications: {
-    type: Boolean,
-    default: true
-  },
-  defaultShowAvatarGroup: {
-    type: Boolean,
-    default: true
-  },
-  textColor: {
-    type: String,
-    default: 'white' // varsayılan beyaz
-  },
+// Component name for debugging
+defineOptions({
+  name: 'AvatarShowcase'
 })
 
-// Reactive state for showing/hiding sections
-const showColors = ref(props.defaultShowColors)
-const showBgColors = ref(props.defaultShowBgColors)
-const showNotifications = ref(props.defaultShowNotifications)
-const showAvatarGroup = ref(props.defaultShowAvatarGroup)
-
-// Available sizes
-const sizes = ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']
-
-// Sample user for size demonstration
-const sampleUser = {
-  id: 1,
-  name: 'Alice Johnson',
-  email: 'alice@example.com',
-  avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+// Demo avatar state
+const demoAvatar = ref({
+  name: 'Sarah Wilson',
+  avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b03c?w=150',
+  status: 'online',
   isOnline: true
+})
+
+// Random avatar state
+const randomAvatar = ref({
+  name: 'John Doe',
+  role: 'Frontend Developer',
+  bgColor: 'primary'
+})
+
+// Sample names and roles for random generation
+const sampleNames = [
+  'Alice Johnson', 'Bob Smith', 'Carol Wilson', 'David Brown', 'Emma Davis',
+  'Frank Miller', 'Grace Taylor', 'Henry Moore', 'Ivy Chen', 'Jack Wilson'
+]
+
+const sampleRoles = [
+  'Frontend Developer', 'Backend Developer', 'UI/UX Designer', 'Product Manager',
+  'DevOps Engineer', 'Data Scientist', 'QA Engineer', 'Marketing Specialist'
+]
+
+const backgroundColors = [
+  'primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral',
+  'gradient-blue', 'gradient-green', 'gradient-purple', 'gradient-pink'
+]
+
+// Status cycling
+const statuses = ['online', 'away', 'busy', 'offline']
+let currentStatusIndex = 0
+
+// Methods
+const setDemoStatus = (status) => {
+  demoAvatar.value.status = status
+  demoAvatar.value.isOnline = status !== 'offline'
 }
 
-// Team members data
-const teamMembers = [
-  {
-    id: 1,
-    name: 'Alice Johnson',
-    email: 'alice@example.com',
-    avatar: 'https://www.shutterstock.com/editorial/image-editorial/M2TcQex9M6jck55eNjM3MDQ=/alice-johnson-swim-school-performing-trnsmt-2023-440nw-14002564i.jpg',
-    isOnline: true
-  },
-  {
-    id: 2,
-    name: 'Bob Smith',
-    email: 'bob@example.com',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-    isOnline: true
-  },
-  {
-    id: 3,
-    name: 'Charlie Brown',
-    email: 'charlie@example.com',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
-    isOnline: false
-  },
-  {
-    id: 4,
-    name: 'Diana Prince',
-    email: 'diana@example.com',
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
+const getStatusBadgeColor = (status) => {
+  const colors = {
+    online: 'success',
+    away: 'warning',
+    busy: 'error',
+    offline: 'neutral'
+  }
+  return colors[status] || 'neutral'
+}
+
+const cycleStatus = () => {
+  currentStatusIndex = (currentStatusIndex + 1) % statuses.length
+  setDemoStatus(statuses[currentStatusIndex])
+}
+
+const generateRandomAvatar = () => {
+  const randomName = sampleNames[Math.floor(Math.random() * sampleNames.length)]
+  const randomRole = sampleRoles[Math.floor(Math.random() * sampleRoles.length)]
+  const randomBg = backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
+  
+  randomAvatar.value = {
+    name: randomName,
+    role: randomRole,
+    bgColor: randomBg
+  }
+}
+
+const resetDemo = () => {
+  demoAvatar.value = {
+    name: 'Sarah Wilson',
+    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b03c?w=150',
+    status: 'online',
     isOnline: true
   }
-]
+  
+  randomAvatar.value = {
+    name: 'John Doe',
+    role: 'Frontend Developer',
+    bgColor: 'primary'
+  }
+  
+  currentStatusIndex = 0
+}
+
+// Auto-cycle demo every 4 seconds
+onMounted(() => {
+  const interval = setInterval(() => {
+    cycleStatus()
+  }, 4000)
+
+  // Initialize with random avatar on mount
+  generateRandomAvatar()
+
+  onUnmounted(() => {
+    clearInterval(interval)
+  })
+})
 </script>
