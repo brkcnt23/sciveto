@@ -2,36 +2,19 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-/* Nuxt UI v3 Design Tokens */
+/* Custom design system variables for Nuxt UI v3 */
 :root {
   /* Color aliases following Nuxt UI v3 design system */
-  --color-primary: #10b981;
-  --color-secondary: #3b82f6;
-  --color-success: #10b981;
-  --color-info: #3b82f6;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-  --color-neutral: #64748b;
+  --color-primary: theme(colors.green.500);
+  --color-secondary: theme(colors.blue.500);
+  --color-success: theme(colors.green.500);
+  --color-info: theme(colors.blue.500);
+  --color-warning: theme(colors.yellow.500);
+  --color-error: theme(colors.red.500);
+  --color-neutral: theme(colors.slate.500);
 }
 
-/* Modern design tokens for light/dark mode */
-.text-muted {
-  @apply text-neutral-500 dark:text-neutral-400;
-}
-
-.text-highlighted {
-  @apply text-neutral-900 dark:text-white;
-}
-
-.bg-elevated {
-  @apply bg-white dark:bg-neutral-900;
-}
-
-.bg-surface {
-  @apply bg-neutral-50 dark:bg-neutral-800;
-}
-
-/* Modern component styles */
+/* Custom component styles */
 .dashboard-card {
   @apply bg-white/80 backdrop-blur-sm border-0 shadow-xl rounded-xl;
 }
@@ -40,39 +23,22 @@
   @apply bg-white/10 backdrop-blur-md border border-white/20;
 }
 
-/* Modern gradient backgrounds - Fixed syntax */
+/* Modern gradient backgrounds */
 .gradient-primary {
-  background: linear-gradient(135deg, #34d399 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, theme(colors.green.400) 0%, theme(colors.blue.500) 100%);
 }
 
 .gradient-secondary {
-  background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
+  background: linear-gradient(135deg, theme(colors.blue.400) 0%, theme(colors.purple.500) 100%);
 }
 
 .gradient-success {
-  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  background: linear-gradient(135deg, theme(colors.green.400) 0%, theme(colors.emerald.500) 100%);
 }
 
-/* Smooth transitions */
+/* Smooth animations */
 .smooth-transition {
   @apply transition-all duration-300 ease-in-out;
-}
-
-/* Priority badge styles */
-.priority-low {
-  @apply bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300;
-}
-
-.priority-medium {
-  @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200;
-}
-
-.priority-high {
-  @apply bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200;
-}
-
-.priority-urgent {
-  @apply bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200;
 }
 
 /* Custom scrollbar */
@@ -111,13 +77,13 @@
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-primary: #34d399;
-    --color-secondary: #60a5fa;
-    --color-success: #34d399;
-    --color-info: #60a5fa;
-    --color-warning: #fbbf24;
-    --color-error: #f87171;
-    --color-neutral: #94a3b8;
+    --color-primary: theme(colors.green.400);
+    --color-secondary: theme(colors.blue.400);
+    --color-success: theme(colors.green.400);
+    --color-info: theme(colors.blue.400);
+    --color-warning: theme(colors.yellow.400);
+    --color-error: theme(colors.red.400);
+    --color-neutral: theme(colors.slate.400);
   }
   
   .dashboard-card {
