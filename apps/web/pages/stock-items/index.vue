@@ -1,20 +1,29 @@
 <template>
-  <div class="min-h-screen bg- ral-50">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Header -->
-    <div class="bg-white shadow">
-      <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="flex h-16 justify-between items-center">
-          <div class="flex items-center space-x-4">
-            <NuxtLink to="/dashboard" class="text-neutral-500 hover:text-neutral-700">
-              <Icon name="i-heroicons-arrow-left" class="h-5 w-5" />
-            </NuxtLink>
-            <h1 class="text-xl font-semibold text-neutral-900">Stock Items</h1>
+    <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      <div class="px-4 py-6 sm:px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <!-- Title Section -->
+          <div class="flex items-center gap-4">
+            <div class="p-3 rounded-xl bg-success-100 dark:bg-success-900">
+              <UIcon name="i-lucide-package" class="w-6 h-6 text-success-600 dark:text-success-400" />
+            </div>
+            <div>
+              <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+                Stock Items
+              </h1>
+              <p class="text-gray-600 dark:text-gray-400 mt-1">
+                Manage your inventory and stock levels
+              </p>
+            </div>
           </div>
           
+          <!-- Actions -->
           <UButton 
             to="/stock-items/create"
-            icon="i-heroicons-plus"
-            color="green"
+            icon="i-lucide-plus"
+            color="primary"
           >
             Add Stock Item
           </UButton>
@@ -23,7 +32,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="mx-auto max-w-7xl px-6 lg:px-8 py-8">
+    <div class="px-4 py-6 sm:px-6 lg:px-8">
       <!-- Search & Filters -->
       <UCard class="mb-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">

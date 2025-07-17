@@ -1,8 +1,27 @@
-<!-- app.vue - TEMİZ VE ÇALIŞAN VERSİYON -->
+<!-- app.vue - GLOBAL LAYOUT WITH SIDEBAR -->
 <template>
   <UApp>
-    <!-- Ana App Content -->
-    <NuxtPage />
+    <!-- Global Layout with Sidebar -->
+    <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <!-- Sidebar - Always visible -->
+      <AppSidebar
+        v-model:collapsed="sidebarCollapsed"
+        :user="user"
+        :notification-count="notificationCount"
+        @sign-out="handleSignOut"
+      />
+
+      <!-- Main Content Area -->
+      <div
+        :class="[
+          'transition-all duration-300 ease-in-out',
+          'ml-16' // Always leave space for collapsed sidebar
+        ]"
+      >
+        <!-- Page Content -->
+        <NuxtPage />
+      </div>
+    </div>
 
     <!-- Custom Toast System -->
     <Toast />
@@ -28,6 +47,22 @@ const handleError = (error) => {
 
 // Provide error handler
 provide('error-handler', handleError)
+
+// Global sidebar state
+const sidebarCollapsed = ref(true) // Default collapsed
+const notificationCount = ref(3)
+
+// User data (should come from auth store)
+const user = ref({
+  name: 'John Doe',
+  email: 'john@example.com'
+})
+
+// Sign out handler
+const handleSignOut = () => {
+  // Handle sign out logic
+  console.log('Signing out...')
+}
 </script>
 
 <style>

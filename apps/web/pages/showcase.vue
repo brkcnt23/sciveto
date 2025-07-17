@@ -1,14 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col bg-neutral-50 dark:bg-neutral-900">
-    <!-- Header - Full width, fixed position -->
-    <AppHeader :navigation="headerNavigation" :user="user" :notification-count="notificationCount" :app-name="appName"
-      @open-search="openSearch" @toggle-notifications="toggleNotifications" @sign-out="signOut" />
-
-    <!-- Main Layout Container -->
-    <div class="flex flex-1 overflow-hidden">
-      <!-- Sidebar -->
-      <AppSidebar :navigation="sidebarNavigation" :user="user" :is-open="sidebarOpen" @close="sidebarOpen = false" />
-      <div class="main-content-wrapper flex-1 overflow-auto">
+    <!-- Main Content -->
+    <div class="flex-1 overflow-auto p-6">
         <!-- World Map Section -->
         <UCard>
           <template #header>
@@ -104,11 +97,15 @@
             @edit="handleProjectEdit" @delete="handleProjectDelete" />
         </UCard>
         <AppFooter :app-name="appName" />
+        <!-- Footer -->
+        <UCard class="mt-8">
+          <template #header>
+            <h3 class="text-xl font-bold">🎉 Showcase Complete</h3>
+          </template>
+          <p class="text-gray-600">This is the end of the component showcase. All components are fully functional and ready to use!</p>
+        </UCard>
       </div>
-      <!-- Footer -->
-
     </div>
-  </div>
 </template>
 
 <script setup>
@@ -135,7 +132,7 @@ import AppSidebar from '@/components/layout/AppSidebar.vue'
 import AppFooter from '~/components/layout/AppFooter.vue'
 
 import SkeletonLoader from '~/components/ui/SkeletonLoader.vue'
-
+import ProjectCard from '~/components/projects/ProjectCard.vue'
 
 const dualToast = useDualToast()
 
