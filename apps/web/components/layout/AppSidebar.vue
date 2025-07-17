@@ -1,7 +1,8 @@
 <template>
   <aside 
     :class="[
-      'fixed inset-y-0 left-0 z-50 bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800 shadow-lg',
+      'fixed inset-y-0 left-0 z-50 bg-white dark:bg-neutral-900',
+      'border-r border-neutral-200 dark:border-neutral-800 shadow-lg',
       'transition-all duration-300 ease-in-out',
       showExpandedContent ? 'w-64' : 'w-16'
     ]"
@@ -9,12 +10,12 @@
     @mouseleave="onMouseLeave"
   >
     <div class="flex h-full flex-col">
-      <!-- Header Section (Fixed) - ORTAK MODÜL -->
-      <div class="flex items-center justify-center p-4 border-b border-neutral-200 dark:border-neutral-800">
-        <!-- Logo - ORTAK container -->
+      
+      <!-- Header Section - CONSISTENT HEIGHT -->
+      <div class="flex items-center justify-center h-16 px-4 border-b border-neutral-200 dark:border-neutral-800">
         <div class="relative w-full h-8 flex items-center">
           <div class="flex items-center w-full h-full">
-            <!-- Icon - her zaman var -->
+            <!-- Logo Icon - FIXED SIZE -->
             <div :class="[
               'h-8 w-8 rounded-lg bg-primary flex items-center justify-center shrink-0',
               showExpandedContent ? 'mr-3' : 'mx-auto'
@@ -22,12 +23,12 @@
               <span class="text-white font-bold text-sm">S</span>
             </div>
             
-            <!-- Text - sadece expanded'da -->
-            <div v-if="showExpandedContent" class="flex flex-col">
-              <span class="font-semibold text-sm text-neutral-900 dark:text-neutral-100">
+            <!-- Logo Text - SAME HEIGHT CONTAINER -->
+            <div v-if="showExpandedContent" class="flex flex-col h-8 justify-center">
+              <span class="font-semibold text-sm text-highlighted leading-none">
                 Sciveto
               </span>
-              <span class="text-xs text-neutral-500 dark:text-neutral-400">
+              <span class="text-xs text-muted leading-none">
                 Stock Manager
               </span>
             </div>
@@ -35,218 +36,153 @@
         </div>
       </div>
 
-      <!-- Navigation Section (Scrollable) -->
-      <nav class="flex-1 overflow-y-auto px-2 py-4">
-        <!-- COLLAPSED STATE: Sadece iconlar, TAM ORTADA -->
-        <div v-if="!showExpandedContent" class="flex flex-col items-center space-y-2">
-          <!-- Dashboard -->
-          <NuxtLink 
-            to="/dashboard" 
-            class="relative group"
-          >
-            <div :class="[
-              'flex items-center justify-center w-10 h-10 rounded-lg',
-              isCurrentRoute('/dashboard') 
-                ? 'bg-primary text-white' 
-                : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
-            ]">
-              <UIcon name="i-lucide-home" class="w-5 h-5" />
-            </div>
-            <div v-if="navigationSections[0].items[0].badge" class="absolute -top-1 -right-1 w-4 h-4 bg-emerald-600 text-white text-xs rounded-full flex items-center justify-center">{{ navigationSections[0].items[0].badge }}</div>
-            <UTooltip text="Dashboard" :popper="{ placement: 'right' }">
-              <template #default="{ open, close: closeTooltip }">
-                <div class="absolute inset-0 rounded-lg" @mouseenter="open" @mouseleave="closeTooltip"></div>
-              </template>
-            </UTooltip>
-          </NuxtLink>
-          
-          <!-- Den Dashboard -->
-          <NuxtLink 
-            to="/denDashboard" 
-            class="relative group"
-          >
-            <div :class="[
-              'flex items-center justify-center w-10 h-10 rounded-lg',
-              isCurrentRoute('/denDashboard') 
-                ? 'bg-primary text-white' 
-                : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
-            ]">
-              <UIcon name="i-lucide-activity" class="w-5 h-5" />
-            </div>
-            <UTooltip text="Den Dashboard" :popper="{ placement: 'right' }">
-              <template #default="{ open, close: closeTooltip }">
-                <div class="absolute inset-0 rounded-lg" @mouseenter="open" @mouseleave="closeTooltip"></div>
-              </template>
-            </UTooltip>
-          </NuxtLink>
-          
-          <!-- Projects -->
-          <NuxtLink 
-            to="/projects" 
-            class="relative group"
-          >
-            <div :class="[
-              'flex items-center justify-center w-10 h-10 rounded-lg',
-              isCurrentRoute('/projects') 
-                ? 'bg-primary text-white' 
-                : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
-            ]">
-              <UIcon name="i-lucide-briefcase" class="w-5 h-5" />
-            </div>
-            <UTooltip text="Projects" :popper="{ placement: 'right' }">
-              <template #default="{ open, close: closeTooltip }">
-                <div class="absolute inset-0 rounded-lg" @mouseenter="open" @mouseleave="closeTooltip"></div>
-              </template>
-            </UTooltip>
-          </NuxtLink>
-          
-          <!-- Stock Items -->
-          <NuxtLink 
-            to="/stock-items" 
-            class="relative group"
-          >
-            <div :class="[
-              'flex items-center justify-center w-10 h-10 rounded-lg',
-              isCurrentRoute('/stock-items') 
-                ? 'bg-primary text-white' 
-                : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
-            ]">
-              <UIcon name="i-lucide-package" class="w-5 h-5" />
-            </div>
-            <div v-if="navigationSections[0].items[3]?.children?.find(child => child.badge)" class="absolute -top-1 -right-1 w-4 h-4 bg-red-600 text-white text-xs rounded-full flex items-center justify-center">{{ navigationSections[0].items[3]?.children?.find(child => child.badge)?.badge }}</div>
-            <UTooltip text="Stock Items" :popper="{ placement: 'right' }">
-              <template #default="{ open, close: closeTooltip }">
-                <div class="absolute inset-0 rounded-lg" @mouseenter="open" @mouseleave="closeTooltip"></div>
-              </template>
-            </UTooltip>
-          </NuxtLink>
-          
-          <!-- Divider -->
-          <div class="w-6 h-px bg-neutral-300 dark:bg-neutral-600 my-2"></div>
-          
-          <!-- Showcase -->
-          <NuxtLink 
-            to="/showcase" 
-            class="relative group"
-          >
-            <div :class="[
-              'flex items-center justify-center w-10 h-10 rounded-lg',
-              isCurrentRoute('/showcase') 
-                ? 'bg-primary text-white' 
-                : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
-            ]">
-              <UIcon name="i-lucide-eye" class="w-5 h-5" />
-            </div>
-            <UTooltip text="Showcase" :popper="{ placement: 'right' }">
-              <template #default="{ open, close: closeTooltip }">
-                <div class="absolute inset-0 rounded-lg" @mouseenter="open" @mouseleave="closeTooltip"></div>
-              </template>
-            </UTooltip>
-          </NuxtLink>
-          
-          <!-- Test Page -->
-          <NuxtLink 
-            to="/tst" 
-            class="relative group"
-          >
-            <div :class="[
-              'flex items-center justify-center w-10 h-10 rounded-lg',
-              isCurrentRoute('/tst') 
-                ? 'bg-primary text-white' 
-                : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
-            ]">
-              <UIcon name="i-lucide-flask" class="w-5 h-5" />
-            </div>
-            <UTooltip text="Test Page" :popper="{ placement: 'right' }">
-              <template #default="{ open, close: closeTooltip }">
-                <div class="absolute inset-0 rounded-lg" @mouseenter="open" @mouseleave="closeTooltip"></div>
-              </template>
-            </UTooltip>
-          </NuxtLink>
-          
-          <!-- Settings -->
-          <NuxtLink 
-            to="/settings" 
-            class="relative group"
-          >
-            <div :class="[
-              'flex items-center justify-center w-10 h-10 rounded-lg',
-              isCurrentRoute('/settings') 
-                ? 'bg-primary text-white' 
-                : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
-            ]">
-              <UIcon name="i-lucide-settings" class="w-5 h-5" />
-            </div>
-            <UTooltip text="Settings" :popper="{ placement: 'right' }">
-              <template #default="{ open, close: closeTooltip }">
-                <div class="absolute inset-0 rounded-lg" @mouseenter="open" @mouseleave="closeTooltip"></div>
-              </template>
-            </UTooltip>
-          </NuxtLink>
-        </div>
+      <!-- Navigation Section - SCROLLABLE -->
+      <nav class="flex-1 overflow-y-auto px-2 py-4 scrollbar-thin">
         
-        <!-- EXPANDED STATE: Tam detay -->
-        <div v-else class="space-y-1">
-          <!-- Dynamic Sections -->
-          <div v-for="section in navigationSections" :key="section.id" class="space-y-1">
-            <!-- Section Title - ORTAK MODÜL, sadece görünüm değişiyor -->
-            <div class="flex items-center px-3 py-2.5 mb-1 h-10">
-              <div class="relative w-full h-8 flex items-center">
-                <!-- Her zaman aynı content, sadece layout değişiyor -->
-                <div class="flex items-center w-full h-full">
-                  <!-- Icon - her zaman var -->
-                  <div class="flex items-center justify-center w-8 h-8 rounded-lg shrink-0 mr-3"
-                       :class="getSectionColorClasses(section.color).bg">
-                    <UIcon 
-                      :name="section.icon" 
-                      :class="[
-                        'w-4 h-4',
-                        getSectionColorClasses(section.color).text
-                      ]" 
-                    />
+        <!-- COLLAPSED STATE: Fixed Heights -->
+        <div v-if="!showExpandedContent" class="flex flex-col items-center space-y-2">
+          
+          <!-- Navigation Items - FIXED HEIGHT: 40px -->
+          <template v-for="(section, sectionIndex) in navigationSections" :key="section.id">
+            <template v-for="item in section.items" :key="item.to">
+              
+              <!-- Single Item - 40px HEIGHT -->
+              <div v-if="!item.children" class="relative">
+                <NuxtLink :to="item.to" class="relative group">
+                  <div :class="[
+                    'flex items-center justify-center w-10 h-10 rounded-lg transition-colors',
+                    isCurrentRoute(item.to) 
+                      ? 'bg-primary text-white' 
+                      : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                  ]">
+                    <UIcon :name="item.icon" class="w-5 h-5" />
                   </div>
                   
-                  <!-- Text - sadece expanded'da görünür -->
-                  <p class="text-xs font-semibold text-muted uppercase tracking-wider flex-1">
-                    {{ section.label }}
-                  </p>
+                  <!-- Badge - ABSOLUTE POSITIONED -->
+                  <UBadge 
+                    v-if="item.badge" 
+                    :label="item.badge.toString()" 
+                    color="error" 
+                    size="xs" 
+                    class="absolute -top-1 -right-1"
+                  />
+                </NuxtLink>
+                
+                <!-- Tooltip -->
+                <UTooltip :text="item.label" :popper="{ placement: 'right' }">
+                  <template #default="{ open, close: closeTooltip }">
+                    <div class="absolute inset-0 rounded-lg" @mouseenter="open" @mouseleave="closeTooltip"></div>
+                  </template>
+                </UTooltip>
+              </div>
+              
+              <!-- Parent Item - 40px HEIGHT -->
+              <div v-else class="relative">
+                <div :class="[
+                  'flex items-center justify-center w-10 h-10 rounded-lg cursor-pointer transition-colors',
+                  hasActiveChild(item.children)
+                    ? 'bg-primary/10 text-primary dark:bg-primary/20'
+                    : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                ]">
+                  <UIcon :name="item.icon" class="w-5 h-5" />
                 </div>
+                
+                <!-- Tooltip with Children -->
+                <UTooltip :popper="{ placement: 'right' }">
+                  <template #default="{ open, close: closeTooltip }">
+                    <div class="absolute inset-0 rounded-lg" @mouseenter="open" @mouseleave="closeTooltip"></div>
+                  </template>
+                  
+                  <template #content>
+                    <div class="py-2 min-w-48">
+                      <div class="font-medium text-sm mb-2 text-highlighted">{{ item.label }}</div>
+                      <div class="space-y-1">
+                        <NuxtLink
+                          v-for="child in item.children"
+                          :key="child.to"
+                          :to="child.to"
+                          class="flex items-center gap-2 px-3 py-1.5 text-sm rounded hover:bg-neutral-100 dark:hover:bg-neutral-800 text-muted hover:text-highlighted transition-colors"
+                        >
+                          <div class="h-1.5 w-1.5 rounded-full bg-current opacity-60"></div>
+                          <span>{{ child.label }}</span>
+                          <UBadge 
+                            v-if="child.badge" 
+                            :label="child.badge.toString()" 
+                            color="error" 
+                            size="xs" 
+                            class="ml-auto"
+                          />
+                        </NuxtLink>
+                      </div>
+                    </div>
+                  </template>
+                </UTooltip>
+              </div>
+              
+            </template>
+            
+            <!-- Section Divider -->
+            <div v-if="sectionIndex < navigationSections.length - 1" class="w-6 h-px bg-neutral-300 dark:bg-neutral-600 my-2"></div>
+          </template>
+        </div>
+        
+        <!-- EXPANDED STATE: Consistent Heights -->
+        <div v-else class="space-y-1">
+          <template v-for="(section, sectionIndex) in navigationSections" :key="section.id">
+            
+            <!-- Section Header - FIXED HEIGHT: 32px -->
+            <div class="flex items-center px-3 py-2 mb-1 h-8">
+              <div class="flex items-center w-full">
+                <div :class="[
+                  'flex items-center justify-center w-6 h-6 rounded-md shrink-0 mr-3',
+                  getSectionColorClasses(section.color).bg
+                ]">
+                  <UIcon 
+                    :name="section.icon" 
+                    :class="['w-3 h-3', getSectionColorClasses(section.color).text]" 
+                  />
+                </div>
+                <p class="text-xs font-semibold text-muted uppercase tracking-wider">
+                  {{ section.label }}
+                </p>
               </div>
             </div>
             
             <!-- Section Items -->
             <template v-for="item in section.items" :key="item.to">
-              <!-- Single Level Item - ORTAK MODÜL -->
+              
+              <!-- Single Item - FIXED HEIGHT: 40px -->
               <div v-if="!item.children" class="relative">
                 <NuxtLink
                   :to="item.to"
                   :class="[
-                    'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 relative',
+                    'group flex items-center px-3 py-2.5 h-10 text-sm font-medium rounded-lg transition-colors',
+                    'hover:bg-neutral-100 dark:hover:bg-neutral-800 relative',
                     isCurrentRoute(item.to)
                       ? 'bg-primary text-white shadow-sm'
                       : 'text-neutral-700 dark:text-neutral-300 hover:text-highlighted'
                   ]"
                 >
-                  <!-- Icon - her zaman var -->
+                  <!-- Icon Container - FIXED SIZE -->
                   <div class="flex items-center justify-center w-5 h-5 shrink-0 mr-3">
                     <UIcon :name="item.icon" class="h-5 w-5" />
                   </div>
                   
-                  <!-- Label + Badge - sadece expanded'da -->
-                  <div class="flex items-center justify-between flex-1">
+                  <!-- Label + Badge Container -->
+                  <div class="flex items-center justify-between flex-1 min-w-0">
                     <span class="truncate">{{ item.label }}</span>
                     <UBadge 
                       v-if="item.badge" 
                       :label="item.badge.toString()" 
-                      :color="isCurrentRoute(item.to) ? 'white' : 'primary'" 
+                      :color="isCurrentRoute(item.to) ? 'white' : 'error'" 
                       size="xs" 
-                      class="ml-auto"
+                      class="ml-2 shrink-0"
                     />
                   </div>
                 </NuxtLink>
               </div>
               
-              <!-- Parent Item with Children - ORTAK MODÜL -->
+              <!-- Parent Item with Children -->
               <UCollapsible 
                 v-else
                 :default-open="hasActiveChild(item.children)"
@@ -256,23 +192,23 @@
                   <div
                     @click="toggle"
                     :class="[
-                      'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg cursor-pointer',
+                      'group flex items-center px-3 py-2.5 h-10 text-sm font-medium rounded-lg cursor-pointer transition-colors',
                       hasActiveChild(item.children)
                         ? 'bg-primary/10 text-primary dark:bg-primary/20'
                         : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-highlighted'
                     ]"
                   >
-                    <!-- Icon - her zaman var -->
+                    <!-- Icon Container - FIXED SIZE -->
                     <div class="flex items-center justify-center w-5 h-5 shrink-0 mr-3">
                       <UIcon :name="item.icon" class="h-5 w-5" />
                     </div>
                     
-                    <!-- Label + Arrow - sadece expanded'da -->
+                    <!-- Label + Arrow Container -->
                     <div class="flex items-center justify-between flex-1">
                       <span class="truncate">{{ item.label }}</span>
                       <UIcon 
-                        name="i-heroicons-chevron-down" 
-                        class="h-4 w-4 shrink-0 text-neutral-500 dark:text-neutral-400"
+                        name="i-lucide-chevron-down" 
+                        class="h-4 w-4 shrink-0 text-neutral-500 dark:text-neutral-400 transition-transform"
                         :class="{ 'rotate-180': open }"
                       />
                     </div>
@@ -286,45 +222,85 @@
                       :key="child.to"
                       :to="child.to"
                       :class="[
-                        'flex items-center gap-3 px-3 py-2 text-sm rounded-lg',
+                        'flex items-center gap-3 px-3 py-2 h-9 text-sm rounded-lg transition-colors',
                         isCurrentRoute(child.to)
                           ? 'bg-primary text-white shadow-sm'
                           : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-highlighted'
                       ]"
                     >
-                      <div class="h-1.5 w-1.5 rounded-full bg-current opacity-60"></div>
-                      <span class="truncate">{{ child.label }}</span>
+                      <div class="h-1.5 w-1.5 rounded-full bg-current opacity-60 shrink-0"></div>
+                      <span class="truncate flex-1">{{ child.label }}</span>
                       <UBadge 
                         v-if="child.badge" 
                         :label="child.badge.toString()" 
-                        :color="isCurrentRoute(child.to) ? 'white' : 'primary'" 
+                        :color="isCurrentRoute(child.to) ? 'white' : 'error'" 
                         size="xs" 
-                        class="ml-auto"
+                        class="shrink-0"
                       />
                     </NuxtLink>
                   </div>
                 </template>
               </UCollapsible>
+              
             </template>
             
-            <!-- Add spacing between sections -->
-            <div class="pt-6"></div>
+            <!-- Section Spacing -->
+            <div v-if="sectionIndex < navigationSections.length - 1" class="pt-6"></div>
+          </template>
+        </div>
+      </nav>
+
+      <!-- Quick Actions Section - FIXED HEIGHTS -->
+      <div class="border-t border-neutral-200 dark:border-neutral-700 px-2 py-4">
+        
+        <!-- Quick Actions Header - CONSISTENT HEIGHT -->
+        <div class="flex items-center px-3 py-2 mb-2 h-8">
+          <div class="flex items-center w-full">
+            <div :class="[
+              'flex items-center justify-center w-6 h-6 rounded-md bg-success-100 dark:bg-success-900 shrink-0',
+              showExpandedContent ? 'mr-3' : 'mx-auto'
+            ]">
+              <UIcon name="i-lucide-zap" class="w-3 h-3 text-success-600 dark:text-success-400" />
+            </div>
+            <p 
+              v-if="showExpandedContent"
+              class="text-xs font-semibold text-muted uppercase tracking-wider"
+            >
+              Quick Actions
+            </p>
           </div>
         </div>
-      </nav> 
-                    v-if="item.badge" 
-                    :label="item.badge.toString()" 
-                    :color="isCurrentRoute(item.to) ? 'white' : 'primary'" 
-                    size="xs" 
-                    class="ml-auto"
-                  />
+        
+        <!-- Quick Actions Buttons - FIXED HEIGHT: 40px -->
+        <div :class="showExpandedContent ? 'space-y-1' : 'space-y-2'">
+          <template v-for="action in quickActions" :key="action.id">
+            <div class="relative">
+              <button
+                @click="action.action"
+                :class="[
+                  'w-full flex items-center px-3 py-2.5 h-10 text-sm font-medium rounded-lg transition-colors',
+                  showExpandedContent ? 'justify-start' : 'justify-center',
+                  action.color === 'primary' 
+                    ? 'bg-primary text-white hover:bg-primary-600 shadow-sm' 
+                    : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700'
+                ]"
+              >
+                <!-- Icon Container - FIXED SIZE -->
+                <div :class="[
+                  'flex items-center justify-center w-5 h-5 shrink-0',
+                  showExpandedContent ? 'mr-3' : 'mx-auto'
+                ]">
+                  <UIcon :name="action.icon" class="h-5 w-5" />
                 </div>
-              </NuxtLink>
+                
+                <!-- Label -->
+                <span v-if="showExpandedContent" class="truncate">{{ action.label }}</span>
+              </button>
               
               <!-- Tooltip for collapsed state -->
               <UTooltip
                 v-if="!showExpandedContent"
-                :text="item.label"
+                :text="action.label"
                 :popper="{ placement: 'right' }"
               >
                 <template #default="{ open, close: closeTooltip }">
@@ -332,181 +308,21 @@
                 </template>
               </UTooltip>
             </div>
-
-            <!-- Multi Level Item (Collapsible) - Only show when expanded -->
-            <UCollapsible v-else-if="showExpandedContent" class="space-y-1">
-              <template #trigger>
-                <div
-                  :class="[
-                    'flex items-center justify-between w-full px-3 py-2.5 text-sm font-medium rounded-lg cursor-pointer',
-                    hasActiveChild(item.children)
-                      ? 'bg-primary/10 text-primary dark:bg-primary/20'
-                      : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-highlighted'
-                  ]"
-                >
-                  <div class="flex items-center gap-3">
-                    <UIcon :name="item.icon" class="h-5 w-5 shrink-0" />
-                    <span class="truncate">{{ item.label }}</span>
-                  </div>
-                  <UIcon
-                    name="i-lucide-chevron-down"
-                    class="h-4 w-4 ui-open:rotate-180"
-                  />
-                </div>
-              </template>
-
-              <template #content>
-                <div class="ml-8 space-y-1 pt-1">
-                  <NuxtLink
-                    v-for="child in item.children"
-                    :key="child.to"
-                    :to="child.to"
-                    :class="[
-                      'flex items-center gap-3 px-3 py-2 text-sm rounded-lg',
-                      isCurrentRoute(child.to)
-                        ? 'bg-primary text-white shadow-sm'
-                        : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-highlighted'
-                    ]"
-                  >
-                    <div class="h-1.5 w-1.5 rounded-full bg-current opacity-60"></div>
-                    <span class="truncate">{{ child.label }}</span>
-                    <UBadge 
-                      v-if="child.badge" 
-                      :label="child.badge.toString()" 
-                      :color="isCurrentRoute(child.to) ? 'white' : 'primary'" 
-                      size="xs" 
-                      class="ml-auto"
-                    />
-                  </NuxtLink>
-                </div>
-              </template>
-            </UCollapsible>
-            
-            <!-- Collapsed state for parent items with children -->
-            <div v-else-if="!showExpandedContent" class="relative">
-              <div
-                :class="[
-                  'group flex items-center justify-center px-3 py-2.5 text-sm font-medium rounded-lg cursor-pointer',
-                  hasActiveChild(item.children)
-                    ? 'bg-primary/10 text-primary dark:bg-primary/20'
-                    : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-highlighted'
-                ]"
-              >
-                <UIcon :name="item.icon" class="h-5 w-5 shrink-0" />
-              </div>
-              
-              <!-- Tooltip with children -->
-              <UTooltip :popper="{ placement: 'right' }">
-                <template #default="{ open, close: closeTooltip }">
-                  <div class="absolute inset-0 rounded-lg" @mouseenter="open" @mouseleave="closeTooltip"></div>
-                </template>
-                
-                <template #content>
-                  <div class="py-2">
-                    <div class="font-medium text-sm mb-2">{{ item.label }}</div>
-                    <div class="space-y-1">
-                      <NuxtLink
-                        v-for="child in item.children"
-                        :key="child.to"
-                        :to="child.to"
-                        class="block px-3 py-1 text-sm rounded hover:bg-neutral-100 dark:hover:bg-neutral-800"
-                      >
-                        {{ child.label }}
-                      </NuxtLink>
-                    </div>
-                  </div>
-                </template>
-              </UTooltip>
-            </div>
           </template>
-          
-          <!-- Add spacing between sections -->
-          <div class="pt-6"></div>
-        </div>
-      </nav>
-
-      <!-- Bottom Section (Fixed) -->
-      <div class="border-t border-neutral-200 dark:border-neutral-700 px-2 py-4 space-y-2">
-        <!-- Quick Actions - ORTAK MODÜL -->
-        <div class="space-y-1">
-          <!-- Section Title - ORTAK MODÜL -->
-          <div class="flex items-center px-3 py-2.5 mb-1 h-10">
-            <div class="relative w-full h-8 flex items-center">
-              <div class="flex items-center w-full h-full">
-                <!-- Icon - her zaman var -->
-                <div :class="[
-                  'flex items-center justify-center w-8 h-8 rounded-lg bg-success-100 dark:bg-success-900 shrink-0',
-                  showExpandedContent ? 'mr-3' : 'mx-auto'
-                ]">
-                  <UIcon name="i-lucide-zap" class="w-4 h-4 text-success-600 dark:text-success-400" />
-                </div>
-                
-                <!-- Text - sadece expanded'da -->
-                <p 
-                  v-if="showExpandedContent"
-                  class="text-xs font-semibold text-muted uppercase tracking-wider flex-1"
-                >
-                  Quick Actions
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Quick Actions Layout - ORTAK MODÜL -->
-          <div :class="showExpandedContent ? 'space-y-1' : 'space-y-2'">
-            <template v-for="action in quickActions" :key="action.id">
-              <div class="relative">
-                <button
-                  @click="action.action"
-                  :class="[
-                    'w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-lg',
-                    showExpandedContent 
-                      ? 'justify-start' 
-                      : 'justify-center',
-                    action.color === 'primary' 
-                      ? 'bg-primary text-white hover:bg-primary-600' 
-                      : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700'
-                  ]"
-                >
-                  <!-- Icon - her zaman var -->
-                  <div :class="[
-                    'flex items-center justify-center w-5 h-5 shrink-0',
-                    showExpandedContent ? 'mr-3' : 'mx-auto'
-                  ]">
-                    <UIcon :name="action.icon" class="h-5 w-5" />
-                  </div>
-                  
-                  <!-- Label - sadece expanded'da -->
-                  <span v-if="showExpandedContent" class="truncate">{{ action.label }}</span>
-                </button>
-                
-                <!-- Tooltip for collapsed state -->
-                <UTooltip
-                  v-if="!showExpandedContent"
-                  :text="action.label"
-                  :popper="{ placement: 'right' }"
-                >
-                  <template #default="{ open, close: closeTooltip }">
-                    <div class="absolute inset-0 rounded-lg" @mouseenter="open" @mouseleave="closeTooltip"></div>
-                  </template>
-                </UTooltip>
-              </div>
-            </template>
-          </div>
         </div>
         
-        <!-- User Profile - ORTAK MODÜL -->
-        <div class="pt-2">
+        <!-- User Profile - FIXED HEIGHT: 48px -->
+        <div class="pt-3">
           <div class="relative">
             <div
               :class="[
-                'flex items-center px-3 py-2.5 rounded-lg cursor-pointer',
+                'flex items-center px-3 py-2.5 h-12 rounded-lg cursor-pointer transition-colors',
                 'bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700',
                 showExpandedContent ? 'justify-start' : 'justify-center'
               ]"
               @click="handleUserMenuClick"
             >
-              <!-- Avatar - her zaman var -->
+              <!-- Avatar Container - FIXED SIZE -->
               <div :class="[
                 'flex items-center justify-center shrink-0',
                 showExpandedContent ? 'mr-3' : 'mx-auto'
@@ -518,12 +334,12 @@
                 />
               </div>
               
-              <!-- User info - sadece expanded'da -->
-              <div v-if="showExpandedContent" class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate">
+              <!-- User Info - SAME HEIGHT CONTAINER -->
+              <div v-if="showExpandedContent" class="flex-1 min-w-0 h-8 flex flex-col justify-center">
+                <p class="text-sm font-medium text-highlighted truncate leading-none">
                   {{ userStore.user?.name || 'User' }}
                 </p>
-                <p class="text-xs text-neutral-500 dark:text-neutral-400 truncate">
+                <p class="text-xs text-muted truncate leading-none mt-1">
                   {{ userStore.user?.email || 'user@example.com' }}
                 </p>
               </div>
@@ -588,12 +404,11 @@ const emit = defineEmits<{
 // Reactive state
 const route = useRoute()
 const isHovered = ref(false)
-const isMobileOpen = ref(false)
 
 // Computed properties
 const showExpandedContent = computed(() => isHovered.value)
 
-// Color mapping helper
+// Color mapping helper - Updated for Nuxt UI v3
 const getSectionColorClasses = (color: string) => {
   const colorMap: Record<string, { bg: string; text: string }> = {
     primary: {
@@ -620,7 +435,7 @@ const getSectionColorClasses = (color: string) => {
   return colorMap[color] || colorMap.primary
 }
 
-// Navigation data
+// Navigation data - Updated with v3 design system
 const navigationSections: NavigationSection[] = [
   {
     id: 'main',
@@ -665,7 +480,7 @@ const navigationSections: NavigationSection[] = [
   }
 ]
 
-// Quick actions
+// Quick actions - Updated with modern actions
 const quickActions: QuickAction[] = [
   {
     id: 'new-project',
@@ -687,7 +502,7 @@ const quickActions: QuickAction[] = [
     icon: 'i-lucide-search',
     color: 'secondary',
     action: () => {
-      // Open search modal
+      // TODO: Open command palette
       console.log('Open search modal')
     }
   }
@@ -703,7 +518,7 @@ const hasActiveChild = (children: NavigationItem[]) => {
 }
 
 const handleUserMenuClick = () => {
-  // Handle user menu click
+  // TODO: Open user menu
   console.log('User menu clicked')
 }
 
@@ -718,29 +533,41 @@ const onMouseLeave = () => {
 </script>
 
 <style scoped>
-/* Custom scrollbar for the navigation */
-nav::-webkit-scrollbar {
+/* Modern scrollbar - Nuxt UI v3 compatible */
+.scrollbar-thin::-webkit-scrollbar {
   width: 4px;
 }
 
-nav::-webkit-scrollbar-track {
+.scrollbar-thin::-webkit-scrollbar-track {
   background: transparent;
 }
 
-nav::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: theme('colors.neutral.300');
   border-radius: 2px;
 }
 
-nav::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.2);
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: theme('colors.neutral.400');
 }
 
-.dark nav::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: theme('colors.neutral.600');
 }
 
-.dark nav::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: theme('colors.neutral.500');
 }
+
+/* Smooth transitions for all interactive elements */
+.transition-colors {
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+/* Ensure consistent heights across all states */
+.h-8 { height: 2rem !important; }
+.h-9 { height: 2.25rem !important; }
+.h-10 { height: 2.5rem !important; }
+.h-12 { height: 3rem !important; }
+.h-16 { height: 4rem !important; }
 </style>
