@@ -1,79 +1,91 @@
 <!-- components/base/Avatar.vue -->
 <template>
   <div class="relative inline-block">
-    <!-- Ana Avatar with Chip for border colors -->
+    <!-- UAvatar with Chip integration for enhanced styling -->
     <UChip 
-      v-if="color && color !== 'none' && bgColor === 'none'"
-      :color="color" 
+      v-if="chipColor && chipColor !== 'none'"
+      :color="chipColor" 
       :inset="true"
       :class="chipSizeClasses[size]"
     >
       <UAvatar 
-        :src="user?.avatar || user?.image" 
-        :alt="user?.name || user?.username || 'User'"
+        :src="avatarSrc" 
+        :alt="avatarAlt"
         :size="size"
-        :class="avatarClass"
-      >
-        <template v-if="!user?.avatar && !user?.image">
-          {{ getInitials(user?.name || user?.username) }}
-        </template>
-      </UAvatar>
+        :icon="fallbackIcon"
+        :text="fallbackText"
+        :class="[
+          'transition-all duration-200',
+          avatarClass,
+          {
+            'opacity-75 grayscale': isOffline,
+            'ring-2 ring-white dark:ring-neutral-800': showRing,
+            'hover:scale-105': interactive,
+            'cursor-pointer': interactive
+          }
+        ]"
+        :ui="avatarUiOverrides"
+        v-bind="$attrs"
+      />
     </UChip>
     
-    <!-- Avatar with background color fill -->
-    <UAvatar 
-      v-else-if="bgColor && bgColor !== 'none'"
-      :src="showImage ? (user?.avatar || user?.image) : undefined"
-      :alt="user?.name || user?.username || 'User'"
-      :size="size"
-      :class="[
-        bgColorClasses[bgColor],
-        'ring-2 ring-white dark:ring-neutral-800 shadow-lg text-white font-medium',
-        avatarClass
-      ]"
-    >
-      <template v-if="!showImage || (!user?.avatar && !user?.image)">
-        {{ getInitials(user?.name || user?.username) }}
-      </template>
-    </UAvatar>
-    
-    <!-- Avatar without any special styling (default) -->
+    <!-- Enhanced UAvatar with custom background colors -->
     <UAvatar 
       v-else
-      :src="user?.avatar || user?.image" 
-      :alt="user?.name || user?.username || 'User'"
+      :src="shouldShowImage ? avatarSrc : undefined"
+      :alt="avatarAlt"
       :size="size"
+      :icon="fallbackIcon"
+      :text="fallbackText || initials"
       :class="[
-        'ring-2 ring-white dark:ring-neutral-800 shadow-lg',
-        sizeClasses[size],
+        'transition-all duration-200',
+        backgroundColorClass,
+        {
+          'opacity-75 grayscale': isOffline,
+          'ring-2 ring-white dark:ring-neutral-800 shadow-lg': showRing,
+          'hover:scale-105': interactive,
+          'cursor-pointer': interactive,
+          'text-white font-medium': hasCustomBackground
+        },
         avatarClass
       ]"
-    >
-      <template v-if="!user?.avatar && !user?.image">
-        {{ getInitials(user?.name || user?.username) }}
-      </template>
-    </UAvatar>
+      :ui="avatarUiOverrides"
+      v-bind="$attrs"
+      @click="handleClick"
+    />
     
-    <!-- Modern Status Badge with Icons -->
+    <!-- Modern Status Indicator -->
     <div 
-      v-if="showOnlineStatus && user?.isOnline !== undefined"
+      v-if="showOnlineStatus && hasStatus"
       :class="[
-        'absolute bottom-0 right-0 rounded-full ring-2 ring-white dark:ring-neutral-800 flex items-center justify-center',
-        getStatusColor(user.status || (user.isOnline ? 'online' : 'offline')),
-        statusSizeClasses[size],
-        { 'animate-pulse': user.status === 'busy' || user.status === 'away' }
+        'absolute rounded-full ring-2 ring-white dark:ring-neutral-800',
+        'flex items-center justify-center transition-all duration-200',
+        statusPositionClass[size],
+        statusColorClass,
+        statusSizeClass[size],
+        {
+          'animate-pulse': status === 'busy' || status === 'away',
+          'animate-bounce': status === 'online' && pulseOnline
+        }
       ]"
     >
       <!-- Status Icon -->
       <UIcon 
-        v-if="getStatusIcon(user.status || (user.isOnline ? 'online' : 'offline'))"
-        :name="getStatusIcon(user.status || (user.isOnline ? 'online' : 'offline'))" 
-        :class="statusIconSizeClasses[size]"
-        class="text-white"
+        v-if="statusIcon"
+        :name="statusIcon" 
+        :class="statusIconSizeClass[size]"
+        class="text-white drop-shadow-sm"
+      />
+      <div
+        v-else
+        :class="[
+          'rounded-full bg-white shadow-inner',
+          statusDotSizeClass[size]
+        ]"
       />
     </div>
     
-    <!-- Notification Badge with Modern Style -->
+    <!-- Notification Badge -->
     <UBadge
       v-if="notificationCount && notificationCount > 0"
       :label="notificationCount > 99 ? '99+' : notificationCount.toString()"
@@ -81,228 +93,337 @@
       variant="solid"
       size="xs"
       :class="[
-        'absolute -top-1 -right-1 ring-2 ring-white dark:ring-neutral-800',
-        badgePositionClasses[size]
+        'absolute -top-1 -right-1 min-w-[18px] h-[18px]',
+        'flex items-center justify-center text-[10px] font-bold',
+        'ring-2 ring-white dark:ring-neutral-800',
+        'animate-pulse'
       ]"
     />
     
-    <!-- Role/Achievement Badge -->
-    <div 
-      v-if="showRole && user?.role"
+    <!-- Role Badge -->
+    <div
+      v-if="showRole && roleConfig"
       :class="[
-        'absolute -top-1 -left-1 rounded-full ring-2 ring-white dark:ring-neutral-800 flex items-center justify-center',
-        getRoleColor(user.role),
-        roleBadgeSizeClasses[size]
+        'absolute -bottom-1 -right-1 rounded-full',
+        'ring-2 ring-white dark:ring-neutral-800',
+        'flex items-center justify-center',
+        roleBadgeSizeClass[size],
+        roleConfig.bgClass
       ]"
     >
       <UIcon 
-        :name="getRoleIcon(user.role)" 
-        :class="roleIconSizeClasses[size]"
-        class="text-white"
+        :name="roleConfig.icon"
+        :class="[
+          roleIconSizeClass[size],
+          'text-white drop-shadow-sm'
+        ]"
       />
     </div>
-
-    <!-- Custom Badge Slot -->
-    <div 
-      v-if="$slots.badge"
+    
+    <!-- Activity Indicator (Typing, Recording, etc.) -->
+    <div
+      v-if="activityType"
       :class="[
-        'absolute',
-        badgePosition === 'top-right' ? '-top-1 -right-1' : '',
-        badgePosition === 'top-left' ? '-top-1 -left-1' : '',
-        badgePosition === 'bottom-right' ? '-bottom-1 -right-1' : '',
-        badgePosition === 'bottom-left' ? '-bottom-1 -left-1' : ''
+        'absolute -top-1 -left-1 rounded-full',
+        'bg-info-500 ring-2 ring-white dark:ring-neutral-800',
+        'flex items-center justify-center animate-pulse',
+        activitySizeClass[size]
       ]"
     >
-      <slot name="badge" />
+      <UIcon 
+        :name="activityIcon"
+        :class="activityIconSizeClass[size]"
+        class="text-white"
+      />
     </div>
   </div>
 </template>
 
-<script setup>
-import { computed } from 'vue'
+<script setup lang="ts">
+interface User {
+  id?: string | number
+  name?: string
+  username?: string
+  email?: string
+  avatar?: string
+  image?: string
+  initials?: string
+  status?: 'online' | 'away' | 'busy' | 'offline'
+  isOnline?: boolean
+  role?: 'admin' | 'premium' | 'vip' | 'moderator' | 'user'
+}
 
-const props = defineProps({
-  user: {
-    type: Object,
-    default: () => ({})
-  },
-  size: {
-    type: String,
-    default: 'md',
-    validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl', '2xl'].includes(value)
-  },
-  color: {
-    type: String,
-    default: 'none',
-    validator: (value) => ['none', 'primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'].includes(value)
-  },
-  bgColor: {
-    type: String,
-    default: 'none',
-    validator: (value) => ['none', 'primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral', 'gradient-blue', 'gradient-green', 'gradient-purple', 'gradient-pink'].includes(value)
-  },
-  showOnlineStatus: {
-    type: Boolean,
-    default: false
-  },
-  showImage: {
-    type: Boolean,
-    default: true
-  },
-  notificationCount: {
-    type: Number,
-    default: 0
-  },
-  showRole: {
-    type: Boolean,
-    default: false
-  },
-  badgePosition: {
-    type: String,
-    default: 'top-right',
-    validator: (value) => ['top-right', 'top-left', 'bottom-right', 'bottom-left'].includes(value)
-  },
-  avatarClass: {
-    type: String,
-    default: ''
-  }
+interface Props {
+  // User data - can be undefined for simple usage
+  user?: User
+  
+  // Direct props (override user data)
+  src?: string
+  alt?: string
+  name?: string
+  
+  // Visual props
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
+  bgColor?: 'none' | 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' | 
+           'gradient-blue' | 'gradient-green' | 'gradient-purple' | 'gradient-pink' | 'gradient-orange'
+  chipColor?: 'none' | 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral'
+  
+  // Feature toggles
+  showOnlineStatus?: boolean
+  showRole?: boolean
+  showImage?: boolean
+  showRing?: boolean
+  interactive?: boolean
+  pulseOnline?: boolean
+  
+  // Additional props
+  notificationCount?: number
+  activityType?: 'typing' | 'recording' | 'uploading'
+  fallbackIcon?: string
+  fallbackText?: string
+  avatarClass?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 'md',
+  bgColor: 'none',
+  chipColor: 'none',
+  showImage: true,
+  showRing: true,
+  interactive: false,
+  pulseOnline: false
 })
 
-// Size classes for different elements
-const sizeClasses = {
-  xs: 'w-6 h-6',
-  sm: 'w-8 h-8', 
-  md: 'w-10 h-10',
+const emit = defineEmits<{
+  click: [event: MouseEvent]
+}>()
+
+// Computed properties
+const avatarSrc = computed(() => 
+  props.src || props.user?.avatar || props.user?.image
+)
+
+const avatarAlt = computed(() => 
+  props.alt || props.name || props.user?.name || props.user?.username || 'User Avatar'
+)
+
+const shouldShowImage = computed(() => 
+  props.showImage && !!avatarSrc.value
+)
+
+const initials = computed(() => {
+  const name = props.name || props.user?.name || props.user?.username
+  if (!name) return ''
+  
+  return name
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('')
+    .substring(0, 2)
+    .toUpperCase()
+})
+
+const status = computed(() => 
+  props.user?.status || (props.user?.isOnline ? 'online' : 'offline')
+)
+
+const hasStatus = computed(() => 
+  props.user?.isOnline !== undefined || props.user?.status !== undefined
+)
+
+const isOffline = computed(() => 
+  status.value === 'offline' || props.user?.isOnline === false
+)
+
+const hasCustomBackground = computed(() => 
+  props.bgColor && props.bgColor !== 'none'
+)
+
+// Style classes
+const chipSizeClasses = {
+  xs: 'w-4 h-4',
+  sm: 'w-6 h-6', 
+  md: 'w-8 h-8',
   lg: 'w-12 h-12',
   xl: 'w-16 h-16',
-  '2xl': 'w-20 h-20'
+  '2xl': 'w-20 h-20',
+  '3xl': 'w-24 h-24'
 }
 
-const chipSizeClasses = {
-  xs: 'p-0.5',
-  sm: 'p-0.5',
-  md: 'p-1',
-  lg: 'p-1',
-  xl: 'p-1.5',
-  '2xl': 'p-2'
+const statusPositionClass = {
+  xs: 'bottom-0 right-0',
+  sm: 'bottom-0 right-0',
+  md: 'bottom-0 right-0', 
+  lg: 'bottom-1 right-1',
+  xl: 'bottom-1 right-1',
+  '2xl': 'bottom-2 right-2',
+  '3xl': 'bottom-2 right-2'
 }
 
-const statusSizeClasses = {
+const statusSizeClass = {
   xs: 'w-2 h-2',
   sm: 'w-2.5 h-2.5',
   md: 'w-3 h-3',
   lg: 'w-4 h-4',
   xl: 'w-5 h-5',
-  '2xl': 'w-6 h-6'
+  '2xl': 'w-6 h-6',
+  '3xl': 'w-7 h-7'
 }
 
-const statusIconSizeClasses = {
+const statusIconSizeClass = {
   xs: 'w-1 h-1',
-  sm: 'w-1.5 h-1.5',
+  sm: 'w-1.5 h-1.5', 
   md: 'w-2 h-2',
   lg: 'w-2.5 h-2.5',
   xl: 'w-3 h-3',
-  '2xl': 'w-4 h-4'
+  '2xl': 'w-4 h-4',
+  '3xl': 'w-5 h-5'
 }
 
-const roleBadgeSizeClasses = {
+const statusDotSizeClass = {
+  xs: 'w-1 h-1',
+  sm: 'w-1.5 h-1.5',
+  md: 'w-2 h-2', 
+  lg: 'w-2.5 h-2.5',
+  xl: 'w-3 h-3',
+  '2xl': 'w-4 h-4',
+  '3xl': 'w-5 h-5'
+}
+
+const roleBadgeSizeClass = {
   xs: 'w-3 h-3',
   sm: 'w-4 h-4',
   md: 'w-5 h-5',
-  lg: 'w-6 h-6',
+  lg: 'w-6 h-6', 
   xl: 'w-7 h-7',
-  '2xl': 'w-8 h-8'
+  '2xl': 'w-8 h-8',
+  '3xl': 'w-9 h-9'
 }
 
-const roleIconSizeClasses = {
+const roleIconSizeClass = {
   xs: 'w-2 h-2',
   sm: 'w-2.5 h-2.5',
   md: 'w-3 h-3',
   lg: 'w-3.5 h-3.5',
   xl: 'w-4 h-4',
-  '2xl': 'w-5 h-5'
+  '2xl': 'w-5 h-5', 
+  '3xl': 'w-6 h-6'
 }
 
-const badgePositionClasses = {
-  xs: 'min-w-[16px] h-4',
-  sm: 'min-w-[18px] h-4',
-  md: 'min-w-[20px] h-5',
-  lg: 'min-w-[22px] h-5',
-  xl: 'min-w-[24px] h-6',
-  '2xl': 'min-w-[28px] h-7'
+const activitySizeClass = {
+  xs: 'w-3 h-3',
+  sm: 'w-4 h-4',
+  md: 'w-5 h-5',
+  lg: 'w-6 h-6',
+  xl: 'w-7 h-7',
+  '2xl': 'w-8 h-8',
+  '3xl': 'w-9 h-9'
 }
 
-// Background color classes with Nuxt UI v3 colors + dark theme support
-const bgColorClasses = {
+const activityIconSizeClass = {
+  xs: 'w-2 h-2',
+  sm: 'w-2.5 h-2.5', 
+  md: 'w-3 h-3',
+  lg: 'w-3.5 h-3.5',
+  xl: 'w-4 h-4',
+  '2xl': 'w-5 h-5',
+  '3xl': 'w-6 h-6'
+}
+
+// Background colors with enhanced gradients
+const backgroundColorClasses = {
+  none: '',
   primary: 'bg-primary-500 dark:bg-primary-400',
-  secondary: 'bg-secondary-500 dark:bg-secondary-400', 
+  secondary: 'bg-secondary-500 dark:bg-secondary-400',
   success: 'bg-success-500 dark:bg-success-400',
   info: 'bg-info-500 dark:bg-info-400',
   warning: 'bg-warning-500 dark:bg-warning-400',
   error: 'bg-error-500 dark:bg-error-400',
   neutral: 'bg-neutral-500 dark:bg-neutral-400',
-  'gradient-blue': 'bg-gradient-to-br from-blue-400 to-purple-600 dark:from-blue-300 dark:to-purple-500',
-  'gradient-green': 'bg-gradient-to-br from-green-400 to-blue-600 dark:from-green-300 dark:to-blue-500',
-  'gradient-purple': 'bg-gradient-to-br from-purple-400 to-pink-600 dark:from-purple-300 dark:to-pink-500',
-  'gradient-pink': 'bg-gradient-to-br from-pink-400 to-red-600 dark:from-pink-300 dark:to-red-500'
+  'gradient-blue': 'bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-600',
+  'gradient-green': 'bg-gradient-to-br from-emerald-400 via-green-500 to-teal-600',
+  'gradient-purple': 'bg-gradient-to-br from-purple-400 via-violet-500 to-purple-600',
+  'gradient-pink': 'bg-gradient-to-br from-pink-400 via-rose-500 to-red-500',
+  'gradient-orange': 'bg-gradient-to-br from-orange-400 via-amber-500 to-yellow-500'
 }
 
-// Status colors with modern badge style + dark theme support
-const getStatusColor = (status) => {
-  const colors = {
-    online: 'bg-success-500 dark:bg-success-400',
-    away: 'bg-warning-500 dark:bg-warning-400',
-    busy: 'bg-error-500 dark:bg-error-400',
-    dnd: 'bg-error-500 dark:bg-error-400',
-    offline: 'bg-neutral-500 dark:bg-neutral-400'
+const backgroundColorClass = computed(() => 
+  backgroundColorClasses[props.bgColor] || ''
+)
+
+// Status colors and icons
+const statusColors = {
+  online: 'bg-success-500',
+  away: 'bg-warning-500', 
+  busy: 'bg-error-500',
+  offline: 'bg-neutral-400'
+}
+
+const statusIcons = {
+  online: '',
+  away: 'i-lucide-clock',
+  busy: 'i-lucide-minus-circle',
+  offline: 'i-lucide-wifi-off'
+}
+
+const statusColorClass = computed(() => 
+  statusColors[status.value] || statusColors.offline
+)
+
+const statusIcon = computed(() => 
+  statusIcons[status.value]
+)
+
+// Role configurations
+const roleConfigs = {
+  admin: {
+    icon: 'i-lucide-crown',
+    bgClass: 'bg-error-500'
+  },
+  premium: {
+    icon: 'i-lucide-star',
+    bgClass: 'bg-warning-500'
+  },
+  vip: {
+    icon: 'i-lucide-gem',
+    bgClass: 'bg-purple-500'
+  },
+  moderator: {
+    icon: 'i-lucide-shield',
+    bgClass: 'bg-info-500'
+  },
+  user: {
+    icon: 'i-lucide-user',
+    bgClass: 'bg-neutral-500'
   }
-  return colors[status] || 'bg-neutral-500 dark:bg-neutral-400'
 }
 
-// Status icons with Lucide icons
-const getStatusIcon = (status) => {
-  const icons = {
-    online: 'i-lucide-wifi',
-    away: 'i-lucide-clock',
-    busy: 'i-lucide-minus-circle',
-    dnd: 'i-lucide-do-not-disturb-sign',
-    offline: 'i-lucide-wifi-off'
+const roleConfig = computed(() => 
+  props.user?.role ? roleConfigs[props.user.role] : null
+)
+
+// Activity configurations
+const activityIcons = {
+  typing: 'i-lucide-type',
+  recording: 'i-lucide-mic',
+  uploading: 'i-lucide-upload'
+}
+
+const activityIcon = computed(() => 
+  props.activityType ? activityIcons[props.activityType] : 'i-lucide-activity'
+)
+
+// UI overrides for UAvatar
+const avatarUiOverrides = computed(() => ({
+  root: 'relative inline-flex items-center justify-center flex-shrink-0 font-medium overflow-hidden',
+  image: 'object-cover w-full h-full',
+  fallback: 'flex items-center justify-center w-full h-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400'
+}))
+
+// Methods
+const handleClick = (event: MouseEvent) => {
+  if (props.interactive) {
+    emit('click', event)
   }
-  return icons[status] || null
-}
-
-// Role colors + dark theme support
-const getRoleColor = (role) => {
-  const colors = {
-    admin: 'bg-error-500 dark:bg-error-400',
-    moderator: 'bg-warning-500 dark:bg-warning-400',
-    premium: 'bg-secondary-500 dark:bg-secondary-400',
-    verified: 'bg-success-500 dark:bg-success-400',
-    vip: 'bg-gradient-to-br from-yellow-400 to-orange-500 dark:from-yellow-300 dark:to-orange-400'
-  }
-  return colors[role?.toLowerCase()] || 'bg-info-500 dark:bg-info-400'
-}
-
-// Role icons
-const getRoleIcon = (role) => {
-  const icons = {
-    admin: 'i-lucide-crown',
-    moderator: 'i-lucide-shield',
-    premium: 'i-lucide-star',
-    verified: 'i-lucide-check',
-    vip: 'i-lucide-gem'
-  }
-  return icons[role?.toLowerCase()] || 'i-lucide-user'
-}
-
-// Generate initials from name
-const getInitials = (name) => {
-  if (!name) return '?'
-  
-  return name
-    .split(' ')
-    .map(part => part.charAt(0).toUpperCase())
-    .slice(0, 2)
-    .join('')
 }
 </script>
