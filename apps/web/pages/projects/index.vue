@@ -46,7 +46,7 @@
               
               <select 
                 v-model="filters.status"
-                class="px-4 py-3 border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
+                class="px-4 py-3 border border-neutral-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
                 @change="fetchProjects"
               >
                 <option value="">All Status</option>
@@ -61,7 +61,7 @@
               
               <select 
                 v-model="filters.priority"
-                class="px-4 py-3 border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
+                class="px-4 py-3 border border-neutral-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
                 @change="fetchProjects"
               >
                 <option value="">All Priority</option>
@@ -75,7 +75,7 @@
                 variant="outline"
                 icon="i-heroicons-arrow-path"
                 @click="resetFilters"
-                class="border-gray-200 hover:bg-gray-50"
+                class="border-neutral-200 hover:bg-neutral-50"
               >
                 Reset
               </UButton>
@@ -84,7 +84,7 @@
                 variant="outline"
                 icon="i-heroicons-view-columns"
                 @click="toggleView"
-                class="border-gray-200 hover:bg-gray-50"
+                class="border-neutral-200 hover:bg-neutral-50"
               >
                 {{ viewMode === 'cards' ? '📊 Table' : '🎴 Cards' }}
               </UButton>
@@ -103,8 +103,8 @@
           <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6">
             <Icon name="i-heroicons-briefcase" class="h-10 w-10 text-white" />
           </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-3">No projects found</h3>
-          <p class="text-gray-600 mb-6">Get started by creating your first project.</p>
+          <h3 class="text-xl font-bold text-neutral-900 mb-3">No projects found</h3>
+          <p class="text-neutral-600 mb-6">Get started by creating your first project.</p>
           <UButton 
             to="/projects/create" 
             icon="i-heroicons-plus"
@@ -154,7 +154,7 @@
           <h3 class="text-lg font-semibold">Delete Project</h3>
         </template>
         
-        <p class="text-gray-600">
+        <p class="text-neutral-600">
           Are you sure you want to delete "{{ itemToDelete?.name }}"? This action cannot be undone.
         </p>
         

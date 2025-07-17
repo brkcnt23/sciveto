@@ -38,13 +38,13 @@
           
           <div class="flex-1 min-w-0">
             <!-- Item Name -->
-            <h3 class="font-bold text-gray-900 text-lg group-hover:text-blue-600 transition-colors line-clamp-2">
+            <h3 class="font-bold text-neutral-900 text-lg group-hover:text-blue-600 transition-colors line-clamp-2">
               {{ stockItem.name }}
             </h3>
             
             <!-- SKU and Category -->
             <div class="flex items-center space-x-3 mt-1">
-              <span class="text-sm text-gray-500 font-mono">{{ stockItem.sku }}</span>
+              <span class="text-sm text-neutral-500 font-mono">{{ stockItem.sku }}</span>
               <UBadge 
                 v-if="stockItem.category"
                 color="blue" 
@@ -68,23 +68,23 @@
           </UBadge>
           
           <div class="text-right">
-            <p class="text-lg font-bold text-gray-900">
+            <p class="text-lg font-bold text-neutral-900">
               ${{ formatPrice(stockItem.price) }}
             </p>
-            <p class="text-xs text-gray-500">per unit</p>
+            <p class="text-xs text-neutral-500">per unit</p>
           </div>
         </div>
       </div>
 
       <!-- Description -->
-      <p v-if="stockItem.description" class="text-sm text-gray-600 line-clamp-2 leading-relaxed">
+      <p v-if="stockItem.description" class="text-sm text-neutral-600 line-clamp-2 leading-relaxed">
         {{ stockItem.description }}
       </p>
 
       <!-- Stock Level Section -->
-      <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-4 space-y-3">
+      <div class="bg-gradient-to-r from-neutral-50 to-neutral-100 rounded-lg p-4 space-y-3">
         <div class="flex justify-between items-center">
-          <span class="text-sm font-medium text-gray-700">Stock Level</span>
+          <span class="text-sm font-medium text-neutral-700">Stock Level</span>
           <div class="flex items-center space-x-2">
             <Icon 
               :name="getStockLevelIcon(stockItem.stock)" 
@@ -98,7 +98,7 @@
         </div>
         
         <!-- Stock Level Bar -->
-        <div class="w-full bg-gray-200 rounded-full h-2 shadow-inner">
+        <div class="w-full bg-neutral-200 rounded-full h-2 shadow-inner">
           <div 
             class="h-2 rounded-full transition-all duration-500 shadow-sm"
             :class="getStockLevelBarColor(stockItem.stock)"
@@ -149,7 +149,7 @@
       </div>
 
       <!-- Actions -->
-      <div class="flex items-center justify-between pt-2 border-t border-gray-200">
+      <div class="flex items-center justify-between pt-2 border-t border-neutral-200">
         <div class="flex space-x-2">
           <Tooltip content="View details">
             <UButton 
@@ -229,11 +229,11 @@ const HIGH_STOCK_THRESHOLD = 100
 const getStatusColor = (status) => {
   const colors = {
     ACTIVE: 'green',
-    DRAFT: 'gray', 
+    DRAFT: 'neutral', 
     INACTIVE: 'orange',
     ARCHIVED: 'red'
   }
-  return colors[status] || 'gray'
+  return colors[status] || 'neutral'
 }
 
 // Card border color based on stock level
@@ -256,7 +256,7 @@ const stockLevelGradient = computed(() => {
 const categoryGradient = computed(() => {
   const category = props.stockItem.category?.name || 'default'
   const gradients = {
-    'Hardware': 'bg-gradient-to-br from-gray-500 to-gray-600',
+    'Hardware': 'bg-gradient-to-br from-neutral-500 to-neutral-600',
     'Software': 'bg-gradient-to-br from-blue-500 to-blue-600',
     'Electronics': 'bg-gradient-to-br from-purple-500 to-purple-600',
     'Materials': 'bg-gradient-to-br from-brown-500 to-brown-600',

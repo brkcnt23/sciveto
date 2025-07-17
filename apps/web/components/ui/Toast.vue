@@ -191,7 +191,7 @@ const getToastClasses = (toast) => {
     error: 'border-red-200 bg-red-50/95 text-red-900 border-l-4 border-l-red-500',
     warning: 'border-yellow-200 bg-yellow-50/95 text-yellow-900 border-l-4 border-l-yellow-500',
     info: 'border-blue-200 bg-blue-50/95 text-blue-900',
-    neutral: 'border-gray-200 bg-white/95 text-gray-900'
+    neutral: 'border-neutral-200 bg-white/95 text-neutral-900'
   }
   
   return colorClasses[toast.type] || colorClasses.neutral
@@ -203,7 +203,7 @@ const getIconClasses = (type) => {
     error: 'text-red-600',
     warning: 'text-yellow-600',
     info: 'text-blue-600',
-    neutral: 'text-gray-600'
+    neutral: 'text-neutral-600'
   }
   return classes[type] || classes.neutral
 }

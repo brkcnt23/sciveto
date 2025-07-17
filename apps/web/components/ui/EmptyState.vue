@@ -1,71 +1,74 @@
 <template>
-  <div class="text-center py-12">
+  <div class="flex flex-col items-center justify-center text-center py-12 px-6">
     <!-- Icon -->
-    <div class="mb-6">
-      <slot name="icon">
-        <div class="w-16 h-16 mx-auto rounded-full bg-gray-100 flex items-center justify-center">
-          <Icon :name="icon" class="w-8 h-8 text-gray-400" />
-        </div>
-      </slot>
+    <div class="mb-4">
+      <UIcon 
+        :name="icon" 
+        class="w-16 h-16 text-neutral-400 dark:text-neutral-500"
+      />
     </div>
 
     <!-- Title -->
-    <h3 class="text-lg font-semibold text-gray-900 mb-2">
+    <h3 class="text-lg font-semibold text-highlighted mb-2">
       {{ title }}
     </h3>
 
     <!-- Description -->
-    <p class="text-gray-500 mb-6 max-w-sm mx-auto">
+    <p class="text-muted max-w-md mb-6">
       {{ description }}
     </p>
 
-    <!-- Primary Action -->
-    <div v-if="actionText || $slots.action" class="space-y-3">
-      <slot name="action">
-        <UButton 
-          v-if="actionText"
-          :to="actionLink"
-          :icon="actionIcon"
-          :color="actionColor"
-          :variant="actionVariant"
-          @click="$emit('action')"
-        >
-          {{ actionText }}
-        </UButton>
-      </slot>
-    </div>
+    <!-- Action Button -->
+    <UButton 
+      v-if="actionText"
+      :color="actionColor"
+      :variant="actionVariant"
+      @click="handleAction"
+    >
+      <UIcon 
+        v-if="actionIcon" 
+        :name="actionIcon" 
+        class="w-4 h-4 mr-2" 
+      />
+      {{ actionText }}
+    </UButton>
 
-    <!-- Secondary Actions -->
-    <div v-if="$slots.secondary" class="mt-4">
-      <slot name="secondary"></slot>
-    </div>
-
-    <!-- Help Text -->
-    <div v-if="helpText" class="mt-6">
-      <p class="text-sm text-gray-400">
-        {{ helpText }}
-      </p>
-    </div>
+    <!-- Secondary Action -->
+    <UButton 
+      v-if="secondaryActionText"
+      color="neutral"
+      variant="ghost"
+      size="sm"
+      class="mt-3"
+      @click="handleSecondaryAction"
+    >
+      {{ secondaryActionText }}
+    </UButton>
   </div>
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   icon: {
     type: String,
-    default: 'i-heroicons-inbox'
+    default: 'i-lucide-inbox'
   },
   title: {
     type: String,
-    default: 'No data available'
+    required: true
   },
   description: {
     type: String,
-    default: 'There are no items to display at the moment.'
+    required: true
   },
-  actionText: String,
-  actionLink: String,
-  actionIcon: String,
+  actionText: {
+    type: String,
+    default: null
+  },
+  actionIcon: {
+    type: String,
+    default: null
+  },
   actionColor: {
     type: String,
     default: 'primary'
@@ -74,8 +77,19 @@ const props = defineProps({
     type: String,
     default: 'solid'
   },
-  helpText: String
+  secondaryActionText: {
+    type: String,
+    default: null
+  }
 })
 
-defineEmits(['action'])
+const emit = defineEmits(['action', 'secondary-action'])
+
+const handleAction = () => {
+  emit('action')
+}
+
+const handleSecondaryAction = () => {
+  emit('secondary-action')
+}
 </script>

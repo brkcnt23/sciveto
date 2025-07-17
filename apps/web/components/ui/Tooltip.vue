@@ -94,8 +94,8 @@ let showTimeout = null
 // Computed properties
 const tooltipClasses = computed(() => {
   const themes = {
-    dark: 'bg-gray-900 text-white border border-gray-700',
-    light: 'bg-white text-gray-900 border border-gray-200 shadow-md',
+    dark: 'bg-neutral-900 text-white border border-neutral-700',
+    light: 'bg-white text-neutral-900 border border-neutral-200 shadow-md',
     error: 'bg-red-600 text-white border border-red-700',
     warning: 'bg-yellow-500 text-white border border-yellow-600',
     success: 'bg-green-600 text-white border border-green-700'
@@ -105,8 +105,8 @@ const tooltipClasses = computed(() => {
 
 const arrowClasses = computed(() => {
   const themes = {
-    dark: 'bg-gray-900 border-gray-700',
-    light: 'bg-white border-gray-200',
+    dark: 'bg-neutral-900 border-neutral-700',
+    light: 'bg-white border-neutral-200',
     error: 'bg-red-600 border-red-700',
     warning: 'bg-yellow-500 border-yellow-600',
     success: 'bg-green-600 border-green-700'

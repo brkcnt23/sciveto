@@ -79,10 +79,14 @@
             <UInput 
               v-model="formData.budget" 
               placeholder="0.00"
-              icon="i-lucide-dollar-sign"
               type="number"
-              leading="$"
-            />
+              step="0.01"
+              min="0"
+            >
+              <template #leading>
+                <span class="text-muted">$</span>
+              </template>
+            </UInput>
           </UFormField>
 
           <UFormField label="Priority Level" help="Select project priority">
@@ -208,7 +212,20 @@
               <UIcon name="i-lucide-image" class="w-8 h-8 text-muted mx-auto mb-2" />
               <p class="text-sm text-highlighted mb-2">Drop your image here or click to browse</p>
               <p class="text-xs text-muted">PNG, JPG up to 2MB</p>
-              <UButton size="sm" color="primary" variant="outline" class="mt-3">
+              <input 
+                type="file" 
+                ref="singleFileInput"
+                @change="handleSingleFileUpload"
+                accept="image/*"
+                class="hidden"
+              />
+              <UButton 
+                size="sm" 
+                color="primary" 
+                variant="outline" 
+                class="mt-3"
+                @click="$refs.singleFileInput.click()"
+              >
                 <UIcon name="i-lucide-plus" class="w-4 h-4" />
                 Choose File
               </UButton>
@@ -237,7 +254,21 @@
               <UIcon name="i-lucide-files" class="w-8 h-8 text-muted mx-auto mb-2" />
               <p class="text-sm text-highlighted mb-2">Drop multiple files here</p>
               <p class="text-xs text-muted">PDF, DOC, Images up to 10MB each</p>
-              <UButton size="sm" color="secondary" variant="outline" class="mt-3">
+              <input 
+                type="file" 
+                ref="multipleFileInput"
+                @change="handleMultipleFileUpload"
+                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif"
+                multiple
+                class="hidden"
+              />
+              <UButton 
+                size="sm" 
+                color="secondary" 
+                variant="outline" 
+                class="mt-3"
+                @click="$refs.multipleFileInput.click()"
+              >
                 <UIcon name="i-lucide-folder-plus" class="w-4 h-4" />
                 Choose Files
               </UButton>
@@ -515,6 +546,37 @@ const handleReset = () => {
   Object.keys(formData).forEach(key => {
     formData[key] = typeof formData[key] === 'string' ? '' : null
   })
+}
+
+const handleSingleFileUpload = (event) => {
+  const file = event.target.files[0]
+  if (file) {
+    if (file.size > 2 * 1024 * 1024) { // 2MB limit
+      console.error('File size exceeds 2MB limit')
+      return
+    }
+    uploadedFiles.single = [file]
+    console.log('Single file uploaded:', file.name)
+  }
+}
+
+const handleMultipleFileUpload = (event) => {
+  const files = Array.from(event.target.files)
+  if (files.length > 5) {
+    console.error('Maximum 5 files allowed')
+    return
+  }
+  
+  const validFiles = files.filter(file => {
+    if (file.size > 10 * 1024 * 1024) { // 10MB limit
+      console.error(`File ${file.name} exceeds 10MB limit`)
+      return false
+    }
+    return true
+  })
+  
+  uploadedFiles.multiple = validFiles
+  console.log('Multiple files uploaded:', validFiles.map(f => f.name))
 }
 
 const removeFile = (type, file) => {

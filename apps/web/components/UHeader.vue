@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-white/90 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40">
+  <header class="bg-white/90 backdrop-blur-sm border-b border-neutral-200 sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <!-- Logo and Navigation -->
@@ -10,13 +10,13 @@
               class="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
               <Icon name="i-heroicons-building-office" class="w-5 h-5 text-white" />
             </div>
-            <span class="text-xl font-bold text-gray-900">Sciveto</span>
+            <span class="text-xl font-bold text-neutral-900">Sciveto</span>
           </NuxtLink>
 
           <!-- Main Navigation -->
           <nav class="hidden md:flex items-center space-x-1">
             <UButton v-for="item in navigationItems" :key="item.name" :to="item.href" variant="ghost"
-              :color="isActivePath(item.href) ? 'primary' : 'gray'" :icon="item.icon">
+              :color="isActivePath(item.href) ? 'primary' : 'neutral'" :icon="item.icon">
               {{ item.name }}
             </UButton>
           </nav>
@@ -25,7 +25,7 @@
         <!-- Right side items -->
         <div class="flex items-center space-x-4">
           <!-- Dark mode toggle -->
-          <UButton variant="ghost" color="gray" size="sm" :icon="isDark ? 'i-heroicons-moon' : 'i-heroicons-sun'"
+          <UButton variant="ghost" color="neutral" size="sm" :icon="isDark ? 'i-heroicons-moon' : 'i-heroicons-sun'"
             @click="toggleDarkMode" />
           <!-- Search -->
           <div class="hidden md:block">
@@ -34,7 +34,7 @@
           </div>
 
           <!-- Notifications -->
-          <UButton variant="ghost" color="gray" size="sm" icon="i-heroicons-bell"
+          <UButton variant="ghost" color="neutral" size="sm" icon="i-heroicons-bell"
             :badge="unreadNotifications > 0 ? unreadNotifications : null"
             @click="showNotifications = !showNotifications" />
 
@@ -51,16 +51,16 @@
           </UDropdown>
 
           <!-- Mobile menu button -->
-          <UButton variant="ghost" color="gray" size="sm" icon="i-heroicons-bars-3" class="md:hidden"
+          <UButton variant="ghost" color="neutral" size="sm" icon="i-heroicons-bars-3" class="md:hidden"
             @click="showMobileMenu = !showMobileMenu" />
         </div>
       </div>
 
       <!-- Mobile Navigation -->
-      <div v-if="showMobileMenu" class="md:hidden border-t border-gray-200 py-4">
+      <div v-if="showMobileMenu" class="md:hidden border-t border-neutral-200 py-4">
         <div class="space-y-1">
           <UButton v-for="item in navigationItems" :key="item.name" :to="item.href" variant="ghost"
-            :color="isActivePath(item.href) ? 'primary' : 'gray'" :icon="item.icon" block justify="start"
+            :color="isActivePath(item.href) ? 'primary' : 'neutral'" :icon="item.icon" block justify="start"
             @click="showMobileMenu = false">
             {{ item.name }}
           </UButton>
@@ -79,26 +79,26 @@
       <template #header>
         <div class="flex items-center justify-between">
           <h3 class="font-semibold">Notifications</h3>
-          <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark" size="sm"
+          <UButton color="neutral" variant="ghost" icon="i-heroicons-x-mark" size="sm"
             @click="showNotifications = false" />
         </div>
       </template>
 
       <div class="space-y-3">
         <div v-if="notifications.length === 0" class="text-center py-4">
-          <p class="text-gray-500">No notifications</p>
+          <p class="text-neutral-500">No notifications</p>
         </div>
 
         <div v-for="notification in notifications" :key="notification.id"
-          class="p-3 rounded-lg border hover:bg-gray-50 cursor-pointer" @click="markAsRead(notification.id)">
+          class="p-3 rounded-lg border hover:bg-neutral-50 cursor-pointer" @click="markAsRead(notification.id)">
           <div class="flex space-x-3">
             <div class="flex-shrink-0">
               <Icon :name="notification.icon" class="w-5 h-5 text-blue-500" />
             </div>
             <div class="flex-1">
-              <p class="text-sm font-medium text-gray-900">{{ notification.title }}</p>
-              <p class="text-sm text-gray-500">{{ notification.message }}</p>
-              <p class="text-xs text-gray-400 mt-1">{{ notification.time }}</p>
+              <p class="text-sm font-medium text-neutral-900">{{ notification.title }}</p>
+              <p class="text-sm text-neutral-500">{{ notification.message }}</p>
+              <p class="text-xs text-neutral-400 mt-1">{{ notification.time }}</p>
             </div>
           </div>
         </div>

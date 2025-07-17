@@ -1,14 +1,14 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-neutral-50">
     <!-- Header -->
     <div class="bg-white shadow">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="flex h-16 justify-between items-center">
           <div class="flex items-center space-x-4">
-            <NuxtLink :to="`/stock-items/${route.params.id}`" class="text-gray-500 hover:text-gray-700">
+            <NuxtLink :to="`/stock-items/${route.params.id}`" class="text-neutral-500 hover:text-neutral-700">
               <Icon name="i-heroicons-arrow-left" class="h-5 w-5" />
             </NuxtLink>
-            <h1 class="text-xl font-semibold text-gray-900">
+            <h1 class="text-xl font-semibold text-neutral-900">
               Edit Stock Item
             </h1>
           </div>
@@ -27,7 +27,7 @@
     <div v-else class="mx-auto max-w-3xl px-6 lg:px-8 py-8">
       <UCard>
         <template #header>
-          <h2 class="text-lg font-semibold text-gray-900">Edit Stock Item Information</h2>
+          <h2 class="text-lg font-semibold text-neutral-900">Edit Stock Item Information</h2>
         </template>
 
         <form @submit.prevent="updateStockItem" class="space-y-6">
@@ -117,8 +117,8 @@
 
           <!-- Image Preview -->
           <div v-if="form.imageUrl" class="space-y-2">
-            <label class="block text-sm font-medium text-gray-700">Image Preview</label>
-            <div class="w-32 h-32 border-2 border-gray-200 rounded-lg overflow-hidden">
+            <label class="block text-sm font-medium text-neutral-700">Image Preview</label>
+            <div class="w-32 h-32 border-2 border-neutral-200 rounded-lg overflow-hidden">
               <img 
                 :src="form.imageUrl" 
                 :alt="form.name"
@@ -162,7 +162,7 @@
         :color="notification.type"
         :title="notification.title"
         :description="notification.message"
-        :close-button="{ icon: 'i-heroicons-x-mark', color: 'gray', variant: 'link' }"
+        :close-button="{ icon: 'i-heroicons-x-mark', color: 'neutral', variant: 'link' }"
         @close="notification.show = false"
       />
     </div>

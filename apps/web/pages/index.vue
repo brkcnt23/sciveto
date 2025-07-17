@@ -3,10 +3,10 @@
     <div class="max-w-4xl mx-auto text-center">
       <!-- Logo/Brand -->
       <div class="mb-8">
-        <h1 class="text-6xl font-bold text-gray-900 mb-4">
+        <h1 class="text-6xl font-bold text-neutral-900 mb-4">
           Sciveto
         </h1>
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        <p class="text-xl text-neutral-600 max-w-2xl mx-auto">
           Modern product management platform for teams that want to build amazing products together.
         </p>
       </div>
@@ -38,10 +38,10 @@
         <UCard>
           <div class="p-6 text-center">
             <Icon name="i-heroicons-cube" class="h-12 w-12 text-blue-600 mx-auto mb-4" />
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+            <h3 class="text-lg font-semibold text-neutral-900 mb-2">
               Product Management
             </h3>
-            <p class="text-gray-600">
+            <p class="text-neutral-600">
               Organize and manage your products with advanced categorization and search capabilities.
             </p>
           </div>
@@ -50,10 +50,10 @@
         <UCard>
           <div class="p-6 text-center">
             <Icon name="i-heroicons-users" class="h-12 w-12 text-green-600 mx-auto mb-4" />
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+            <h3 class="text-lg font-semibold text-neutral-900 mb-2">
               Team Collaboration
             </h3>
-            <p class="text-gray-600">
+            <p class="text-neutral-600">
               Work together with your team in a secure, multi-tenant environment.
             </p>
           </div>
@@ -62,10 +62,10 @@
         <UCard>
           <div class="p-6 text-center">
             <Icon name="i-heroicons-chart-bar" class="h-12 w-12 text-purple-600 mx-auto mb-4" />
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+            <h3 class="text-lg font-semibold text-neutral-900 mb-2">
               Analytics & Insights
             </h3>
-            <p class="text-gray-600">
+            <p class="text-neutral-600">
               Get detailed insights and analytics about your products and team performance.
             </p>
           </div>
@@ -73,8 +73,8 @@
       </div>
 
       <!-- Footer -->
-      <div class="mt-16 pt-8 border-t border-gray-200">
-        <p class="text-gray-500 text-sm">
+      <div class="mt-16 pt-8 border-t border-neutral-200">
+        <p class="text-neutral-500 text-sm">
           © 2025 Sciveto. Built with NestJS and Nuxt 3.
         </p>
       </div>

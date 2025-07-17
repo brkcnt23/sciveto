@@ -1,14 +1,14 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg- ral-50">
     <!-- Header -->
     <div class="bg-white shadow">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="flex h-16 justify-between items-center">
           <div class="flex items-center space-x-4">
-            <NuxtLink to="/dashboard" class="text-gray-500 hover:text-gray-700">
+            <NuxtLink to="/dashboard" class="text-neutral-500 hover:text-neutral-700">
               <Icon name="i-heroicons-arrow-left" class="h-5 w-5" />
             </NuxtLink>
-            <h1 class="text-xl font-semibold text-gray-900">Stock Items</h1>
+            <h1 class="text-xl font-semibold text-neutral-900">Stock Items</h1>
           </div>
           
           <UButton 
@@ -83,17 +83,17 @@
                 v-if="item.imageUrl"
                 :src="item.imageUrl" 
                 :alt="item.name"
-                class="w-full h-48 object-cover rounded-lg bg-gray-100"
+                class="w-full h-48 object-cover rounded-lg bg-neutral-100"
               />
-              <div v-else class="w-full h-48 bg-gray-100 rounded-lg flex items-center justify-center">
-                <Icon name="i-heroicons-cube" class="w-12 h-12 text-gray-400" />
+              <div v-else class="w-full h-48 bg-neutral-100 rounded-lg flex items-center justify-center">
+                <Icon name="i-heroicons-cube" class="w-12 h-12 text-neutral-400" />
               </div>
             </div>
 
             <!-- Content -->
             <div class="space-y-3">
               <div class="flex items-start justify-between">
-                <h3 class="font-semibold text-gray-900 line-clamp-2">{{ item.name }}</h3>
+                <h3 class="font-semibold text-neutral-900 line-clamp-2">{{ item.name }}</h3>
                 <UBadge 
                   :color="getStatusColor(item.status)"
                   size="sm"
@@ -102,16 +102,16 @@
                 </UBadge>
               </div>
 
-              <p v-if="item.description" class="text-sm text-gray-600 line-clamp-2">
+              <p v-if="item.description" class="text-sm text-neutral-600 line-clamp-2">
                 {{ item.description }}
               </p>
 
               <div class="flex items-center justify-between">
                 <div class="space-y-1">
-                  <p class="text-lg font-bold text-gray-900">
+                  <p class="text-lg font-bold text-neutral-900">
                     {{ item.price ? `$${item.price.toFixed(2)}` : 'No price' }}
                   </p>
-                  <p class="text-sm text-gray-500">
+                  <p class="text-sm text-neutral-500">
                     Stock: {{ item.stock }} units
                   </p>
                 </div>
@@ -158,12 +158,12 @@
                 :alt="row.name"
                 class="w-10 h-10 rounded object-cover"
               />
-              <div v-else class="w-10 h-10 bg-gray-100 rounded flex items-center justify-center">
-                <Icon name="i-heroicons-cube" class="w-5 h-5 text-gray-400" />
+              <div v-else class="w-10 h-10 bg-neutral-100 rounded flex items-center justify-center">
+                <Icon name="i-heroicons-cube" class="w-5 h-5 text-neutral-400" />
               </div>
               <div>
-                <p class="font-medium text-gray-900">{{ row.name }}</p>
-                <p v-if="row.sku" class="text-sm text-gray-500">{{ row.sku }}</p>
+                <p class="font-medium text-neutral-900">{{ row.name }}</p>
+                <p v-if="row.sku" class="text-sm text-neutral-500">{{ row.sku }}</p>
               </div>
             </div>
           </template>
@@ -320,12 +320,12 @@ const statusOptions = [
 ]
 
 const tableColumns = [
-  { key: 'name', label: 'Name' },
-  { key: 'category', label: 'Category' },
-  { key: 'status', label: 'Status' },
-  { key: 'price', label: 'Price' },
-  { key: 'stock', label: 'Stock' },
-  { key: 'actions', label: 'Actions' }
+  { id: 'name', key: 'name', label: 'Name' },
+  { id: 'category', key: 'category', label: 'Category' },
+  { id: 'status', key: 'status', label: 'Status' },
+  { id: 'price', key: 'price', label: 'Price' },
+  { id: 'stock', key: 'stock', label: 'Stock' },
+  { id: 'actions', key: 'actions', label: 'Actions' }
 ]
 
 // Computed
@@ -388,10 +388,10 @@ const resetFilters = () => {
 const getStatusColor = (status) => {
   const colors = {
     active: 'green',
-    inactive: 'gray',
+    inactive: 'neutral',
     out_of_stock: 'red'
   }
-  return colors[status] || 'gray'
+  return colors[status] || 'neutral'
 }
 
 const getStockColorClass = (stock) => {

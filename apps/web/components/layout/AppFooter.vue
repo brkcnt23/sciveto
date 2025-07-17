@@ -1,5 +1,5 @@
 <template>
-  <footer class="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+  <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
     <div class="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
       <div class="flex justify-center space-x-6 md:order-2">
         <UButton
@@ -10,7 +10,7 @@
           variant="ghost"
           size="sm"
           :icon="social.icon"
-          class="text-gray-400 hover:text-gray-500"
+          class="text-neutral-400 hover:text-neutral-500"
         />
       </div>
       <div class="mt-8 md:order-1 md:mt-0">
@@ -18,7 +18,7 @@
           <UIcon name="i-lucide-zap" class="h-5 w-5 text-primary-600 mr-2" />
           <span class="text-sm font-semibold">{{ appName || 'Sciveto' }}</span>
         </div>
-        <p class="text-center text-xs leading-5 text-gray-500 md:text-left mt-2">
+        <p class="text-center text-xs leading-5 text-neutral-500 md:text-left mt-2">
           &copy; {{ currentYear }} {{ appName || 'Sciveto' }}. All rights reserved.
         </p>
         <div class="flex justify-center md:justify-start space-x-4 mt-2">
@@ -26,7 +26,7 @@
             v-for="link in legalLinks"
             :key="link.label"
             :to="link.to"
-            class="text-xs text-gray-500 hover:text-gray-600"
+            class="text-xs text-neutral-500 hover:text-neutral-600"
           >
             {{ link.label }}
           </NuxtLink>

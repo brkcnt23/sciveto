@@ -21,11 +21,11 @@
           </div>
           
           <div class="flex-1 min-w-0">
-            <h3 class="font-bold text-gray-900 text-lg group-hover:text-blue-600 transition-colors line-clamp-2">
+            <h3 class="font-bold text-neutral-900 text-lg group-hover:text-blue-600 transition-colors line-clamp-2">
               {{ project.name }}
             </h3>
             <div class="flex items-center space-x-2 mt-1">
-              <span class="text-sm text-gray-500 font-mono">{{ project.projectCode }}</span>
+              <span class="text-sm text-neutral-500 font-mono">{{ project.projectCode }}</span>
               <!-- Use custom PriorityBadge -->
               <PriorityBadge :priority="project.priority" size="xs" />
             </div>
@@ -44,19 +44,19 @@
       </div>
 
       <!-- Description -->
-      <p class="text-sm text-gray-600 line-clamp-2 leading-relaxed">
+      <p class="text-sm text-neutral-600 line-clamp-2 leading-relaxed">
         {{ project.description }}
       </p>
 
       <!-- Progress Section -->
-      <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-4 space-y-3">
+      <div class="bg-gradient-to-r from-neutral-50 to-neutral-100 rounded-lg p-4 space-y-3">
         <div class="flex justify-between items-center">
-          <span class="text-sm font-medium text-gray-700">Project Progress</span>
+          <span class="text-sm font-medium text-neutral-700">Project Progress</span>
           <span class="text-lg font-bold" :class="getProgressColor(project.completionPercentage)">
             {{ project.completionPercentage }}%
           </span>
         </div>
-        <div class="w-full bg-gray-200 rounded-full h-3 shadow-inner">
+        <div class="w-full bg-neutral-200 rounded-full h-3 shadow-inner">
           <div 
             class="h-3 rounded-full transition-all duration-500 shadow-sm"
             :class="getProgressBarColor(project.completionPercentage)"

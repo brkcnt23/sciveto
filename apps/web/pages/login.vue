@@ -5,10 +5,10 @@
         <div class="flex justify-center">
           <UIcon name="i-lucide-rocket" class="w-12 h-12 text-primary-600" />
         </div>
-        <h2 class="mt-6 text-center text-3xl font-bold text-gray-900">
+        <h2 class="mt-6 text-center text-3xl font-bold text-neutral-900">
           Sign in to Sciveto
         </h2>
-        <p class="mt-2 text-center text-sm text-gray-600">
+        <p class="mt-2 text-center text-sm text-neutral-600">
           Welcome back! Please sign in to your account.
         </p>
       </div>
@@ -59,10 +59,10 @@
         <div class="mt-6">
           <div class="relative">
             <div class="absolute inset-0 flex items-center">
-              <div class="w-full border-t border-gray-300" />
+              <div class="w-full border-t border-neutral-300" />
             </div>
             <div class="relative flex justify-center text-sm">
-              <span class="px-2 bg-white text-gray-500">Don't have an account?</span>
+              <span class="px-2 bg-white text-neutral-500">Don't have an account?</span>
             </div>
           </div>
 

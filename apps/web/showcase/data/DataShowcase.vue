@@ -5,11 +5,11 @@
       <template #header>
         <div class="flex items-center gap-3">
           <UIcon name="i-lucide-database" class="w-6 h-6 text-primary" />
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Data Display Components</h2>
+          <h2 class="text-2xl font-bold text-neutral-900 dark:text-white">Data Display Components</h2>
         </div>
       </template>
 
-      <p class="text-gray-600 dark:text-gray-400 mb-6">
+      <p class="text-neutral-600 dark:text-neutral-400 mb-6">
         Data gösterim component'leri: Tables, Cards, Badge ve loading states.
         Nuxt UI v3 ile UTable, UCard ve UBadge component'leri.
       </p>
@@ -19,8 +19,8 @@
           <div class="flex items-start gap-3">
             <UIcon name="i-lucide-table" class="w-5 h-5 text-primary mt-0.5" />
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">Tables</h4>
-              <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">UTable, sorting, filtering</p>
+              <h4 class="font-semibold text-neutral-900 dark:text-white">Tables</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">UTable, sorting, filtering</p>
             </div>
           </div>
         </UCard>
@@ -29,8 +29,8 @@
           <div class="flex items-start gap-3">
             <UIcon name="i-lucide-credit-card" class="w-5 h-5 text-success mt-0.5" />
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">Cards</h4>
-              <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">UCard variants, layouts</p>
+              <h4 class="font-semibold text-neutral-900 dark:text-white">Cards</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">UCard variants, layouts</p>
             </div>
           </div>
         </UCard>
@@ -39,8 +39,8 @@
           <div class="flex items-start gap-3">
             <UIcon name="i-lucide-tag" class="w-5 h-5 text-secondary mt-0.5" />
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">Badges</h4>
-              <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">UBadge, status indicators</p>
+              <h4 class="font-semibold text-neutral-900 dark:text-white">Badges</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">UBadge, status indicators</p>
             </div>
           </div>
         </UCard>
@@ -50,22 +50,22 @@
     <!-- Avatar & Progress Bar Showcases using our updated components -->
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
       <!-- Avatar Showcase Section -->
-      <UCard class="border-0 shadow-xl bg-white dark:bg-gray-800 backdrop-blur-sm">
+      <UCard class="border-0 shadow-xl bg-white dark:bg-neutral-800 backdrop-blur-sm">
         <template #header>
           <div class="flex items-center gap-3">
             <UIcon name="i-lucide-user-circle" class="w-5 h-5 text-secondary" />
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white">👤 Avatar Components</h3>
+            <h3 class="text-xl font-bold text-neutral-900 dark:text-white">👤 Avatar Components</h3>
           </div>
         </template>
         <AvatarShowcase />
       </UCard>
 
       <!-- Progress Bar Showcase Section -->
-      <UCard class="border-0 shadow-xl bg-white dark:bg-gray-800 backdrop-blur-sm">
+      <UCard class="border-0 shadow-xl bg-white dark:bg-neutral-800 backdrop-blur-sm">
         <template #header>
           <div class="flex items-center gap-3">
             <UIcon name="i-lucide-bar-chart-3" class="w-5 h-5 text-primary" />
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white">📊 Progress Components</h3>
+            <h3 class="text-xl font-bold text-neutral-900 dark:text-white">📊 Progress Components</h3>
           </div>
         </template>
         <ProgressBarShowcase />
@@ -77,12 +77,12 @@
       <template #header>
         <div class="flex items-center gap-3">
           <UIcon name="i-lucide-table" class="w-5 h-5 text-primary" />
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Table Components</h3>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-white">Table Components</h3>
         </div>
       </template>
 
       <div class="space-y-6">
-        <p class="text-gray-600 dark:text-gray-400">
+        <p class="text-neutral-600 dark:text-neutral-400">
           UTable component'i ile data tabloları oluşturun. 
           Sorting, filtering ve pagination özellikleri ile güçlü data gösterimi.
         </p>
@@ -90,7 +90,7 @@
         <!-- Sample Table -->
         <div class="space-y-4">
           <div class="flex items-center justify-between">
-            <h4 class="font-semibold text-gray-900 dark:text-white">Sample Data Table</h4>
+            <h4 class="font-semibold text-neutral-900 dark:text-white">Sample Data Table</h4>
             <UButton size="sm" variant="outline" @click="toggleLoading">
               {{ isLoading ? 'Stop Loading' : 'Toggle Loading' }}
             </UButton>
@@ -99,34 +99,34 @@
           <!-- Loading State -->
           <div v-if="isLoading" class="space-y-3">
             <div v-for="i in 5" :key="i" class="animate-pulse">
-              <div class="h-12 bg-gray-200 dark:bg-gray-700 rounded"></div>
+              <div class="h-12 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
             </div>
           </div>
 
           <!-- Loaded Table -->
           <div v-else class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead class="bg-gray-50 dark:bg-gray-800">
+            <table class="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
+              <thead class="bg-neutral-50 dark:bg-neutral-800">
                 <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                     User
                   </th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                     Role
                   </th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                     Status
                   </th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                     Progress
                   </th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                <tr v-for="user in sampleUsers" :key="user.id" class="hover:bg-gray-50 dark:hover:bg-gray-800">
+              <tbody class="bg-white dark:bg-neutral-900 divide-y divide-neutral-200 dark:divide-neutral-700">
+                <tr v-for="user in sampleUsers" :key="user.id" class="hover:bg-neutral-50 dark:hover:bg-neutral-800">
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                       <Avatar 
@@ -136,8 +136,8 @@
                         class="mr-3"
                       />
                       <div>
-                        <div class="text-sm font-medium text-gray-900 dark:text-white">{{ user.name }}</div>
-                        <div class="text-sm text-gray-500 dark:text-gray-400">{{ user.email }}</div>
+                        <div class="text-sm font-medium text-neutral-900 dark:text-white">{{ user.name }}</div>
+                        <div class="text-sm text-neutral-500 dark:text-neutral-400">{{ user.email }}</div>
                       </div>
                     </div>
                   </td>
@@ -164,7 +164,7 @@
                           size="sm"
                         />
                       </div>
-                      <span class="text-sm text-gray-500 dark:text-gray-400">{{ user.progress }}%</span>
+                      <span class="text-sm text-neutral-500 dark:text-neutral-400">{{ user.progress }}%</span>
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -193,12 +193,12 @@
       <template #header>
         <div class="flex items-center gap-3">
           <UIcon name="i-lucide-tag" class="w-5 h-5 text-primary" />
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Badge & Status Components</h3>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-white">Badge & Status Components</h3>
         </div>
       </template>
 
       <div class="space-y-6">
-        <p class="text-gray-600 dark:text-gray-400">
+        <p class="text-neutral-600 dark:text-neutral-400">
           StatusIndicator ve UBadge component'leri ile status gösterimi, kategorileme ve etiketleme yapın.
           Farklı renk ve variant'larla mesaj tipini belirtin.
         </p>
@@ -206,7 +206,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
           <!-- Priority Badges -->
           <div class="space-y-4">
-            <h4 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+            <h4 class="font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
               <UIcon name="i-lucide-alert-triangle" class="w-4 h-4 text-warning" />
               Priority Levels
             </h4>
@@ -220,7 +220,7 @@
 
           <!-- Status Types -->
           <div class="space-y-4">
-            <h4 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+            <h4 class="font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
               <UIcon name="i-lucide-activity" class="w-4 h-4 text-primary" />
               Status Types
             </h4>
@@ -234,7 +234,7 @@
 
           <!-- Project Status -->
           <div class="space-y-4">
-            <h4 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+            <h4 class="font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
               <UIcon name="i-lucide-folder" class="w-4 h-4 text-secondary" />
               Project Status
             </h4>
@@ -248,7 +248,7 @@
 
           <!-- System Status -->
           <div class="space-y-4">
-            <h4 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+            <h4 class="font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
               <UIcon name="i-lucide-server" class="w-4 h-4 text-info" />
               System Status
             </h4>
@@ -263,15 +263,15 @@
 
         <!-- Classic Dot Style -->
         <div class="space-y-4">
-          <h4 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+          <h4 class="font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
             <UIcon name="i-lucide-circle-dot" class="w-4 h-4 text-primary" />
             Classic Dot Style
           </h4>
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- User Status -->
-            <div class="space-y-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-              <h5 class="text-sm font-medium text-gray-600 dark:text-gray-400">User Status</h5>
+            <div class="space-y-3 p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
+              <h5 class="text-sm font-medium text-neutral-600 dark:text-neutral-400">User Status</h5>
               <div class="space-y-2">
                 <StatusIndicator status="online" label="Online" pulse />
                 <StatusIndicator status="away" label="Away" />
@@ -281,8 +281,8 @@
             </div>
 
             <!-- Task Status -->
-            <div class="space-y-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-              <h5 class="text-sm font-medium text-gray-600 dark:text-gray-400">Task Status</h5>
+            <div class="space-y-3 p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
+              <h5 class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Task Status</h5>
               <div class="space-y-2">
                 <StatusIndicator status="pending" label="To Do" />
                 <StatusIndicator status="in-progress" label="In Progress" pulse />
@@ -300,12 +300,12 @@
       <template #header>
         <div class="flex items-center gap-3">
           <UIcon name="i-lucide-credit-card" class="w-5 h-5 text-primary" />
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Card Components</h3>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-white">Card Components</h3>
         </div>
       </template>
 
       <div class="space-y-6">
-        <p class="text-gray-600 dark:text-gray-400">
+        <p class="text-neutral-600 dark:text-neutral-400">
           UCard component'i ile content container'ları oluşturun.
           Header, body ve footer slot'ları ile esnek yapı.
         </p>
@@ -316,10 +316,10 @@
             <template #header>
               <div class="flex items-center gap-2">
                 <UIcon name="i-lucide-layout" class="w-4 h-4 text-primary" />
-                <h4 class="font-semibold text-gray-900 dark:text-white">Basic Card</h4>
+                <h4 class="font-semibold text-neutral-900 dark:text-white">Basic Card</h4>
               </div>
             </template>
-            <p class="text-gray-600 dark:text-gray-400">
+            <p class="text-neutral-600 dark:text-neutral-400">
               This is a basic card with header and content. 
               Perfect for displaying information in organized sections.
             </p>
@@ -330,10 +330,10 @@
             <template #header>
               <div class="flex items-center gap-2">
                 <UIcon name="i-lucide-star" class="w-4 h-4 text-warning" />
-                <h4 class="font-semibold text-gray-900 dark:text-white">With Footer</h4>
+                <h4 class="font-semibold text-neutral-900 dark:text-white">With Footer</h4>
               </div>
             </template>
-            <p class="text-gray-600 dark:text-gray-400">
+            <p class="text-neutral-600 dark:text-neutral-400">
               Card with footer section for actions or additional information.
             </p>
             <template #footer>
@@ -349,10 +349,10 @@
             <template #header>
               <div class="flex items-center gap-2">
                 <UIcon name="i-lucide-palette" class="w-4 h-4 text-success" />
-                <h4 class="font-semibold text-gray-900 dark:text-white">Variant Card</h4>
+                <h4 class="font-semibold text-neutral-900 dark:text-white">Variant Card</h4>
               </div>
             </template>
-            <p class="text-gray-600 dark:text-gray-400">
+            <p class="text-neutral-600 dark:text-neutral-400">
               Card with soft variant and success color.
               Great for highlighting positive information.
             </p>
@@ -366,12 +366,12 @@
       <template #header>
         <div class="flex items-center gap-3">
           <UIcon name="i-lucide-bar-chart" class="w-5 h-5 text-primary" />
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Data Visualization Preview</h3>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-white">Data Visualization Preview</h3>
         </div>
       </template>
 
       <div class="space-y-6">
-        <p class="text-gray-600 dark:text-gray-400">
+        <p class="text-neutral-600 dark:text-neutral-400">
           Data görselleştirme component'leri ile metriklerinizi etkili şekilde sunun.
         </p>
 
@@ -379,7 +379,7 @@
           <!-- Metric Cards -->
           <div class="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-800">
             <div class="text-2xl font-bold text-primary">1,234</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400">Total Users</div>
+            <div class="text-sm text-neutral-600 dark:text-neutral-400">Total Users</div>
             <UBadge color="success" variant="soft" size="xs" class="mt-2">
               +12%
             </UBadge>
@@ -387,7 +387,7 @@
 
           <div class="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-100 dark:border-green-800">
             <div class="text-2xl font-bold text-success">98.5%</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400">Uptime</div>
+            <div class="text-sm text-neutral-600 dark:text-neutral-400">Uptime</div>
             <UBadge color="success" variant="soft" size="xs" class="mt-2">
               +0.3%
             </UBadge>
@@ -395,7 +395,7 @@
 
           <div class="text-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-100 dark:border-yellow-800">
             <div class="text-2xl font-bold text-warning">42</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400">Open Issues</div>
+            <div class="text-sm text-neutral-600 dark:text-neutral-400">Open Issues</div>
             <UBadge color="error" variant="soft" size="xs" class="mt-2">
               +5
             </UBadge>
@@ -403,7 +403,7 @@
 
           <div class="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-100 dark:border-purple-800">
             <div class="text-2xl font-bold text-secondary">$12.4K</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400">Revenue</div>
+            <div class="text-sm text-neutral-600 dark:text-neutral-400">Revenue</div>
             <UBadge color="success" variant="soft" size="xs" class="mt-2">
               +18%
             </UBadge>

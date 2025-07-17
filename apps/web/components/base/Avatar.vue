@@ -28,7 +28,7 @@
       :size="size"
       :class="[
         bgColorClasses[bgColor],
-        'ring-2 ring-white dark:ring-gray-800 shadow-lg text-white font-medium',
+        'ring-2 ring-white dark:ring-neutral-800 shadow-lg text-white font-medium',
         avatarClass
       ]"
     >
@@ -44,7 +44,7 @@
       :alt="user?.name || user?.username || 'User'"
       :size="size"
       :class="[
-        'ring-2 ring-white dark:ring-gray-800 shadow-lg',
+        'ring-2 ring-white dark:ring-neutral-800 shadow-lg',
         sizeClasses[size],
         avatarClass
       ]"
@@ -58,7 +58,7 @@
     <div 
       v-if="showOnlineStatus && user?.isOnline !== undefined"
       :class="[
-        'absolute bottom-0 right-0 rounded-full ring-2 ring-white dark:ring-gray-800 flex items-center justify-center',
+        'absolute bottom-0 right-0 rounded-full ring-2 ring-white dark:ring-neutral-800 flex items-center justify-center',
         getStatusColor(user.status || (user.isOnline ? 'online' : 'offline')),
         statusSizeClasses[size],
         { 'animate-pulse': user.status === 'busy' || user.status === 'away' }
@@ -81,7 +81,7 @@
       variant="solid"
       size="xs"
       :class="[
-        'absolute -top-1 -right-1 ring-2 ring-white dark:ring-gray-800',
+        'absolute -top-1 -right-1 ring-2 ring-white dark:ring-neutral-800',
         badgePositionClasses[size]
       ]"
     />
@@ -90,7 +90,7 @@
     <div 
       v-if="showRole && user?.role"
       :class="[
-        'absolute -top-1 -left-1 rounded-full ring-2 ring-white dark:ring-gray-800 flex items-center justify-center',
+        'absolute -top-1 -left-1 rounded-full ring-2 ring-white dark:ring-neutral-800 flex items-center justify-center',
         getRoleColor(user.role),
         roleBadgeSizeClasses[size]
       ]"

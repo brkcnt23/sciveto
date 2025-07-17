@@ -1,319 +1,550 @@
 <template>
   <div class="space-y-8">
     <!-- Feedback Components Header -->
-    <UCard>
+    <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm dark:bg-neutral-800/80">
       <template #header>
         <div class="flex items-center gap-3">
           <UIcon name="i-lucide-message-circle" class="w-6 h-6 text-primary" />
           <h2 class="text-2xl font-bold text-highlighted">Feedback Components</h2>
         </div>
       </template>
+
+      <p class="text-muted mb-6">
+        Kullanıcı geri bildirim component'leri: Toast notifications, Alerts, Status indicators ve loading states.
+        Nuxt UI v3 ile modern feedback patterns ve dark mode desteği.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <UCard variant="soft" color="primary">
+          <div class="flex items-start gap-3">
+            <UIcon name="i-lucide-bell" class="w-5 h-5 text-primary mt-0.5" />
+            <div>
+              <h4 class="font-semibold text-highlighted">Toast Notifications</h4>
+              <p class="text-sm text-muted mt-1">Real-time user feedback</p>
+            </div>
+          </div>
+        </UCard>
+        
+        <UCard variant="soft" color="warning">
+          <div class="flex items-start gap-3">
+            <UIcon name="i-lucide-alert-triangle" class="w-5 h-5 text-warning mt-0.5" />
+            <div>
+              <h4 class="font-semibold text-highlighted">Alert Messages</h4>
+              <p class="text-sm text-muted mt-1">Important notifications</p>
+            </div>
+          </div>
+        </UCard>
+        
+        <UCard variant="soft" color="success">
+          <div class="flex items-start gap-3">
+            <UIcon name="i-lucide-check-circle" class="w-5 h-5 text-success mt-0.5" />
+            <div>
+              <h4 class="font-semibold text-highlighted">Status Indicators</h4>
+              <p class="text-sm text-muted mt-1">State visualization</p>
+            </div>
+          </div>
+        </UCard>
+
+        <UCard variant="soft" color="secondary">
+          <div class="flex items-start gap-3">
+            <UIcon name="i-lucide-loader" class="w-5 h-5 text-secondary mt-0.5" />
+            <div>
+              <h4 class="font-semibold text-highlighted">Loading States</h4>
+              <p class="text-sm text-muted mt-1">Progress feedback</p>
+            </div>
+          </div>
+        </UCard>
+      </div>
     </UCard>
 
-    <!-- Alert Components -->
-    <UCard>
+    <!-- Toast Notifications Showcase -->
+    <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm dark:bg-neutral-800/80">
       <template #header>
-        <div class="flex items-center gap-3">
-          <UIcon name="i-lucide-alert-circle" class="w-5 h-5 text-primary" />
-          <h3 class="text-xl font-bold text-highlighted">Alert Components</h3>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <UIcon name="i-lucide-bell" class="w-5 h-5 text-primary" />
+            <h3 class="text-xl font-bold text-highlighted">Toast Notifications (Nuxt UI v3)</h3>
+          </div>
+          <UBadge color="primary" variant="solid">Updated</UBadge>
         </div>
       </template>
 
       <div class="space-y-6">
-        <p class="text-muted">
-          UAlert component'i ile önemli bilgileri vurgulayın. 
-          Farklı renk ve variant'lar ile mesaj tipini belirtin.
-        </p>
-
-        <div class="grid gap-4">
-          <UAlert color="success" variant="soft">
-            <template #title>Success Alert</template>
-            <template #description>
-              Your changes have been saved successfully.
-            </template>
-          </UAlert>
-
-          <UAlert color="error" variant="soft">
-            <template #title>Error Alert</template>
-            <template #description>
-              There was an error processing your request. Please try again.
-            </template>
-          </UAlert>
-
-          <UAlert color="warning" variant="soft">
-            <template #title>Warning Alert</template>
-            <template #description>
-              This action cannot be undone. Please proceed with caution.
-            </template>
-          </UAlert>
-
-          <UAlert color="info" variant="soft">
-            <template #title>Information Alert</template>
-            <template #description>
-              New features are available. Check out the latest updates.
-            </template>
-          </UAlert>
+        <!-- Basic Toast Examples -->
+        <div>
+          <h4 class="font-semibold text-highlighted mb-4">Basic Toast Examples</h4>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <UButton color="success" @click="showSuccessToast" block>
+              <UIcon name="i-lucide-check" class="w-4 h-4 mr-2" />
+              Success Toast
+            </UButton>
+            <UButton color="error" @click="showErrorToast" block>
+              <UIcon name="i-lucide-x" class="w-4 h-4 mr-2" />
+              Error Toast
+            </UButton>
+            <UButton color="warning" @click="showWarningToast" block>
+              <UIcon name="i-lucide-alert-triangle" class="w-4 h-4 mr-2" />
+              Warning Toast
+            </UButton>
+            <UButton color="info" @click="showInfoToast" block>
+              <UIcon name="i-lucide-info" class="w-4 h-4 mr-2" />
+              Info Toast
+            </UButton>
+          </div>
         </div>
 
-        <!-- Alert Variants -->
-        <div class="space-y-4">
-          <h4 class="font-semibold text-highlighted">Alert Variants</h4>
-          <div class="grid gap-3">
-            <UAlert color="primary" variant="solid" title="Solid Variant" description="Solid background alert" />
-            <UAlert color="primary" variant="outline" title="Outline Variant" description="Outlined alert" />
-            <UAlert color="primary" variant="subtle" title="Subtle Variant" description="Subtle background alert" />
+        <!-- Toast Component Preview -->
+        <div>
+          <h4 class="font-semibold text-highlighted mb-4">Toast Component Preview</h4>
+          <UCard variant="outline" class="bg-neutral-50 dark:bg-neutral-900/50">
+            <p class="text-sm text-muted mb-4">Preview of Toast components (not functional, just visual):</p>
+            
+            <div class="space-y-3">
+              <!-- Success Toast Preview -->
+              <div class="flex items-center gap-3 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-success-200 dark:border-success-800 border-l-4 border-l-success-500">
+                <UIcon name="i-lucide-check-circle" class="w-5 h-5 text-success-600 flex-shrink-0" />
+                <div class="flex-1">
+                  <h5 class="text-sm font-semibold text-highlighted">Success!</h5>
+                  <p class="text-sm text-muted mt-1">Your data has been saved successfully.</p>
+                </div>
+                <UButton color="neutral" variant="ghost" size="xs">
+                  <UIcon name="i-lucide-x" class="w-4 h-4" />
+                </UButton>
+              </div>
+
+              <!-- Error Toast Preview -->
+              <div class="flex items-center gap-3 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-error-200 dark:border-error-800 border-l-4 border-l-error-500">
+                <UIcon name="i-lucide-alert-circle" class="w-5 h-5 text-error-600 flex-shrink-0" />
+                <div class="flex-1">
+                  <h5 class="text-sm font-semibold text-highlighted">Error!</h5>
+                  <p class="text-sm text-muted mt-1">Something went wrong. Please try again.</p>
+                </div>
+                <div class="flex gap-2">
+                  <UButton color="error" variant="ghost" size="xs">Retry</UButton>
+                  <UButton color="neutral" variant="ghost" size="xs">
+                    <UIcon name="i-lucide-x" class="w-4 h-4" />
+                  </UButton>
+                </div>
+              </div>
+
+              <!-- Warning Toast Preview -->
+              <div class="flex items-center gap-3 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-warning-200 dark:border-warning-800 border-l-4 border-l-warning-500">
+                <UIcon name="i-lucide-alert-triangle" class="w-5 h-5 text-warning-600 flex-shrink-0" />
+                <div class="flex-1">
+                  <h5 class="text-sm font-semibold text-highlighted">Warning!</h5>
+                  <p class="text-sm text-muted mt-1">Please review your settings before continuing.</p>
+                </div>
+                <UButton color="neutral" variant="ghost" size="xs">
+                  <UIcon name="i-lucide-x" class="w-4 h-4" />
+                </UButton>
+              </div>
+
+              <!-- Info Toast Preview -->
+              <div class="flex items-center gap-3 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-info-200 dark:border-info-800 border-l-4 border-l-info-500">
+                <UIcon name="i-lucide-info" class="w-5 h-5 text-info-600 flex-shrink-0" />
+                <div class="flex-1">
+                  <h5 class="text-sm font-semibold text-highlighted">Information</h5>
+                  <p class="text-sm text-muted mt-1">Here is some important information for you.</p>
+                </div>
+                <UButton color="neutral" variant="ghost" size="xs">
+                  <UIcon name="i-lucide-x" class="w-4 h-4" />
+                </UButton>
+              </div>
+            </div>
+          </UCard>
+        </div>
+
+        <!-- Advanced Toast Features -->
+        <div>
+          <h4 class="font-semibold text-highlighted mb-4">Advanced Toast Features</h4>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <UButton variant="outline" @click="showToastWithActions" block>
+              <UIcon name="i-lucide-zap" class="w-4 h-4 mr-2" />
+              Toast with Actions
+            </UButton>
+            <UButton variant="outline" @click="showPersistentToast" block>
+              <UIcon name="i-lucide-clock" class="w-4 h-4 mr-2" />
+              Persistent Toast
+            </UButton>
+            <UButton variant="outline" @click="showToastWithAvatar" block>
+              <UIcon name="i-lucide-user" class="w-4 h-4 mr-2" />
+              Toast with Avatar
+            </UButton>
           </div>
         </div>
       </div>
     </UCard>
 
-    <!-- Modal Components -->
-    <UCard>
+    <!-- Alert Messages Showcase -->
+    <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm dark:bg-neutral-800/80">
       <template #header>
         <div class="flex items-center gap-3">
-          <UIcon name="i-lucide-square" class="w-5 h-5 text-primary" />
-          <h3 class="text-xl font-bold text-highlighted">Modal Components</h3>
+          <UIcon name="i-lucide-alert-triangle" class="w-5 h-5 text-primary" />
+          <h3 class="text-xl font-bold text-highlighted">Alert Messages</h3>
         </div>
       </template>
 
       <div class="space-y-6">
-        <p class="text-muted">
-          UModal component'i ile dialog'lar oluşturun. 
-          Nuxt UI v3'te v-model:open directive kullanılır.
-        </p>
+        <!-- Alert Types -->
+        <div>
+          <h4 class="font-semibold text-highlighted mb-4">Alert Types</h4>
+          <div class="space-y-4">
+            <UAlert 
+              v-if="showSuccessAlert"
+              color="success" 
+              variant="soft"
+              title="Success Alert"
+              description="This is a success alert message with proper dark mode support."
+              :close-button="{ icon: 'i-lucide-x', color: 'neutral', variant: 'link', padded: false }"
+              @close="showSuccessAlert = false"
+            />
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <UButton @click="showBasicModal = true">
-            <UIcon name="i-lucide-square" class="w-4 h-4 mr-2" />
-            Basic Modal
-          </UButton>
-          
-          <UButton @click="showConfirmModal = true">
-            <UIcon name="i-lucide-help-circle" class="w-4 h-4 mr-2" />
-            Confirm Modal
-          </UButton>
-          
-          <UButton @click="showFormModal = true">
-            <UIcon name="i-lucide-edit" class="w-4 h-4 mr-2" />
-            Form Modal
-          </UButton>
+            <UAlert 
+              v-if="showErrorAlert"
+              color="error" 
+              variant="soft"
+              title="Error Alert"
+              description="This is an error alert message. Something went wrong and needs attention."
+              :close-button="{ icon: 'i-lucide-x', color: 'neutral', variant: 'link', padded: false }"
+              @close="showErrorAlert = false"
+            />
+
+            <UAlert 
+              v-if="showWarningAlert"
+              color="warning" 
+              variant="soft"
+              title="Warning Alert"
+              description="This is a warning alert. Please review before proceeding."
+              :close-button="{ icon: 'i-lucide-x', color: 'neutral', variant: 'link', padded: false }"
+              @close="showWarningAlert = false"
+            />
+
+            <UAlert 
+              v-if="showInfoAlert"
+              color="info" 
+              variant="soft"
+              title="Info Alert"
+              description="This is an informational alert with helpful information."
+              :close-button="{ icon: 'i-lucide-x', color: 'neutral', variant: 'link', padded: false }"
+              @close="showInfoAlert = false"
+            />
+          </div>
         </div>
 
-        <!-- Basic Modal -->
-        <UModal v-model:open="showBasicModal" title="Basic Modal" description="This is a basic modal example">
-          <template #body>
-            <div class="space-y-4">
-              <p class="text-muted">
-                This is the modal content. You can put any content here.
-              </p>
-              <div class="bg-neutral-50 p-4 rounded-lg">
-                <h4 class="font-semibold text-highlighted mb-2">Modal Features</h4>
-                <ul class="space-y-1 text-sm text-muted">
-                  <li>• Overlay backdrop</li>
-                  <li>• ESC key to close</li>
-                  <li>• Click outside to close</li>
-                  <li>• Focus management</li>
-                </ul>
-              </div>
-            </div>
-          </template>
-          <template #footer>
-            <div class="flex justify-end gap-3">
-              <UButton variant="outline" @click="showBasicModal = false">Cancel</UButton>
-              <UButton @click="showBasicModal = false">OK</UButton>
-            </div>
-          </template>
-        </UModal>
-
-        <!-- Confirm Modal -->
-        <UModal v-model:open="showConfirmModal" title="Confirm Action" description="Are you sure you want to proceed?">
-          <template #body>
-            <div class="space-y-4">
-              <UAlert color="warning" variant="soft">
-                <template #title>Warning</template>
-                <template #description>
-                  This action cannot be undone. Please confirm that you want to proceed.
-                </template>
-              </UAlert>
-            </div>
-          </template>
-          <template #footer>
-            <div class="flex justify-end gap-3">
-              <UButton variant="outline" @click="showConfirmModal = false">Cancel</UButton>
-              <UButton color="error" @click="handleConfirm">Confirm</UButton>
-            </div>
-          </template>
-        </UModal>
-
-        <!-- Form Modal -->
-        <UModal v-model:open="showFormModal" title="Create Project" description="Fill in the project details">
-          <template #body>
-            <div class="space-y-4">
-              <div>
-                <label class="block text-sm font-medium text-highlighted mb-2">Project Name</label>
-                <UInput v-model="modalForm.name" placeholder="Enter project name" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-highlighted mb-2">Description</label>
-                <UTextarea v-model="modalForm.description" placeholder="Enter project description" />
-              </div>
-            </div>
-          </template>
-          <template #footer>
-            <div class="flex justify-end gap-3">
-              <UButton variant="outline" @click="showFormModal = false">Cancel</UButton>
-              <UButton @click="handleFormSubmit">Create Project</UButton>
-            </div>
-          </template>
-        </UModal>
+        <!-- Alert Controls -->
+        <div>
+          <h4 class="font-semibold text-highlighted mb-4">Alert Controls</h4>
+          <div class="flex flex-wrap gap-2">
+            <UButton v-if="!showSuccessAlert" color="success" variant="outline" size="sm" @click="showSuccessAlert = true">
+              Show Success
+            </UButton>
+            <UButton v-if="!showErrorAlert" color="error" variant="outline" size="sm" @click="showErrorAlert = true">
+              Show Error
+            </UButton>
+            <UButton v-if="!showWarningAlert" color="warning" variant="outline" size="sm" @click="showWarningAlert = true">
+              Show Warning
+            </UButton>
+            <UButton v-if="!showInfoAlert" color="info" variant="outline" size="sm" @click="showInfoAlert = true">
+              Show Info
+            </UButton>
+            <UButton color="neutral" variant="soft" size="sm" @click="showAllAlerts">
+              Show All
+            </UButton>
+          </div>
+        </div>
       </div>
     </UCard>
 
-    <!-- Loading States -->
-    <UCard>
+    <!-- Status Indicators Showcase -->
+    <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm dark:bg-neutral-800/80">
+      <template #header>
+        <div class="flex items-center gap-3">
+          <UIcon name="i-lucide-check-circle" class="w-5 h-5 text-primary" />
+          <h3 class="text-xl font-bold text-highlighted">Status Indicators (Nuxt UI v3)</h3>
+        </div>
+      </template>
+
+      <StatusShowcase />
+    </UCard>
+
+    <!-- Loading States Showcase -->
+    <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm dark:bg-neutral-800/80">
       <template #header>
         <div class="flex items-center gap-3">
           <UIcon name="i-lucide-loader" class="w-5 h-5 text-primary" />
-          <h3 class="text-xl font-bold text-highlighted">Loading States</h3>
+          <h3 class="text-xl font-bold text-highlighted">Loading Components</h3>
         </div>
       </template>
 
       <div class="space-y-6">
-        <p class="text-muted">
-          Loading state'leri ile kullanıcıya işlem durumu hakkında bilgi verin.
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="space-y-4">
-            <h4 class="font-semibold text-highlighted">Button Loading States</h4>
-            <div class="space-y-3">
-              <UButton :loading="isLoading" @click="toggleLoading">
-                {{ isLoading ? 'Loading...' : 'Click to Load' }}
-              </UButton>
-              
-              <UButton :loading="isSubmitting" color="success" @click="simulateSubmit">
-                {{ isSubmitting ? 'Submitting...' : 'Submit Form' }}
-              </UButton>
-              
-              <UButton :loading="isDeleting" color="error" @click="simulateDelete">
-                {{ isDeleting ? 'Deleting...' : 'Delete Item' }}
-              </UButton>
+        <!-- Skeleton Loading -->
+        <div>
+          <h4 class="font-semibold text-highlighted mb-4">Skeleton Loading</h4>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <h5 class="font-medium text-muted">Card Skeleton</h5>
+              <SkeletonLoader type="card" />
+            </div>
+            <div class="space-y-4">
+              <h5 class="font-medium text-muted">List Skeleton</h5>
+              <SkeletonLoader type="list" />
             </div>
           </div>
+          
+          <div class="mt-6 space-y-4">
+            <h5 class="font-medium text-muted">Text Skeleton</h5>
+            <SkeletonLoader type="text" :lines="4" />
+          </div>
+        </div>
 
-          <div class="space-y-4">
-            <h4 class="font-semibold text-highlighted">Skeleton Loaders</h4>
-            <div class="space-y-3">
-              <div class="animate-pulse">
-                <div class="h-4 bg-neutral-200 rounded w-3/4 mb-2"></div>
-                <div class="h-4 bg-neutral-200 rounded w-1/2 mb-2"></div>
-                <div class="h-4 bg-neutral-200 rounded w-5/6"></div>
-              </div>
+        <!-- Spinner Loading -->
+        <div>
+          <h4 class="font-semibold text-highlighted mb-4">Spinner Loading</h4>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="text-center space-y-3">
+              <h5 class="font-medium text-muted">Small Spinner</h5>
+              <LoadingSpinner size="sm" text="Loading..." />
             </div>
+            <div class="text-center space-y-3">
+              <h5 class="font-medium text-muted">Medium Spinner</h5>
+              <LoadingSpinner size="md" color="primary" text="Processing..." />
+            </div>
+            <div class="text-center space-y-3">
+              <h5 class="font-medium text-muted">Large Spinner</h5>
+              <LoadingSpinner size="lg" color="success" text="Uploading..." />
+            </div>
+          </div>
+        </div>
+
+        <!-- Loading States in Action -->
+        <div>
+          <h4 class="font-semibold text-highlighted mb-4">Loading States in Action</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <UCard variant="outline">
+              <template #header>
+                <div class="flex items-center justify-between">
+                  <h5 class="font-semibold text-highlighted">Data Table</h5>
+                  <UButton 
+                    :loading="isTableLoading" 
+                    :disabled="isTableLoading"
+                    @click="toggleTableLoading"
+                    size="sm"
+                  >
+                    {{ isTableLoading ? 'Loading...' : 'Reload Data' }}
+                  </UButton>
+                </div>
+              </template>
+
+              <div v-if="isTableLoading" class="space-y-3">
+                <SkeletonLoader type="table-row" v-for="n in 3" :key="n" />
+              </div>
+              <div v-else class="space-y-3">
+                <div class="flex items-center justify-between p-3 bg-neutral-50 dark:bg-neutral-800/50 rounded">
+                  <span class="text-highlighted">Sample Data 1</span>
+                  <UBadge color="success">Active</UBadge>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-neutral-50 dark:bg-neutral-800/50 rounded">
+                  <span class="text-highlighted">Sample Data 2</span>
+                  <UBadge color="warning">Pending</UBadge>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-neutral-50 dark:bg-neutral-800/50 rounded">
+                  <span class="text-highlighted">Sample Data 3</span>
+                  <UBadge color="error">Inactive</UBadge>
+                </div>
+              </div>
+            </UCard>
+
+            <UCard variant="outline">
+              <template #header>
+                <div class="flex items-center justify-between">
+                  <h5 class="font-semibold text-highlighted">Form Submission</h5>
+                  <UButton 
+                    :loading="isFormLoading" 
+                    :disabled="isFormLoading"
+                    @click="toggleFormLoading"
+                    size="sm"
+                    color="primary"
+                  >
+                    {{ isFormLoading ? 'Submitting...' : 'Submit Form' }}
+                  </UButton>
+                </div>
+              </template>
+
+              <div class="space-y-4">
+                <UFormGroup label="Name">
+                  <UInput :disabled="isFormLoading" placeholder="Enter your name" />
+                </UFormGroup>
+                <UFormGroup label="Email">
+                  <UInput :disabled="isFormLoading" type="email" placeholder="Enter your email" />
+                </UFormGroup>
+                <UFormGroup label="Message">
+                  <UTextarea :disabled="isFormLoading" placeholder="Your message" rows="3" />
+                </UFormGroup>
+              </div>
+            </UCard>
           </div>
         </div>
       </div>
     </UCard>
+
+    <!-- Empty State Showcase -->
+    <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm dark:bg-neutral-800/80">
+      <template #header>
+        <div class="flex items-center gap-3">
+          <UIcon name="i-lucide-inbox" class="w-5 h-5 text-primary" />
+          <h3 class="text-xl font-bold text-highlighted">Empty State Component</h3>
+        </div>
+      </template>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div>
+          <h4 class="font-semibold text-highlighted mb-4">No Projects</h4>
+          <EmptyState 
+            icon="i-lucide-briefcase" 
+            title="No Projects Found"
+            description="You haven't created any projects yet. Get started by creating your first project."
+            action-text="Create Project" 
+            action-icon="i-lucide-plus" 
+            @action="handleCreateProject" 
+          />
+        </div>
+
+        <div>
+          <h4 class="font-semibold text-highlighted mb-4">No Stock Items</h4>
+          <EmptyState 
+            icon="i-lucide-package" 
+            title="No Stock Items"
+            description="Your inventory is empty. Add some stock items to get started." 
+            action-text="Add Stock Item"
+            action-icon="i-lucide-plus" 
+            @action="handleAddStock" 
+          />
+        </div>
+      </div>
+    </UCard>
+
   </div>
 </template>
 
 <script setup>
-// Component name for debugging
-defineOptions({
-  name: 'FeedbackShowcase'
-})
+import { ref } from 'vue'
+import { useDualToast } from '~/composables/useDualToast'
 
+// Components
+import StatusShowcase from '~/showcase/forms/StatusShowcase.vue'
+import SkeletonLoader from '~/components/ui/SkeletonLoader.vue'
+import LoadingSpinner from '~/components/ui/LoadingSpinner.vue'
+import EmptyState from '~/components/ui/EmptyState.vue'
 
-// Reactive state
-const showBasicModal = ref(false)
-const showConfirmModal = ref(false)
-const showFormModal = ref(false)
-const isLoading = ref(false)
-const isSubmitting = ref(false)
-const isDeleting = ref(false)
+const toast = useDualToast()
 
-const modalForm = ref({
-  name: '',
-  description: ''
-})
+// Alert states
+const showSuccessAlert = ref(false)
+const showErrorAlert = ref(false)
+const showWarningAlert = ref(false)
+const showInfoAlert = ref(false)
 
+// Loading states
+const isTableLoading = ref(false)
+const isFormLoading = ref(false)
 
-// Modal handlers
-const handleConfirm = () => {
-  showConfirmModal.value = false
+// Toast functions
+const showSuccessToast = () => {
+  toast.success('Operation completed successfully!')
+}
+
+const showErrorToast = () => {
+  toast.error('Something went wrong. Please try again.')
+}
+
+const showWarningToast = () => {
+  toast.warning('Please review your settings before continuing.')
+}
+
+const showInfoToast = () => {
+  toast.info('Here is some important information for you.')
+}
+
+const showToastWithActions = () => {
   toast.add({
-    title: 'Confirmed',
-    description: 'Action has been confirmed.',
-    color: 'success',
-    icon: 'i-lucide-check'
+    title: 'Action Required',
+    description: 'Your session will expire soon. Would you like to extend it?',
+    color: 'warning',
+    icon: 'i-lucide-clock',
+    timeout: 0, // Persistent
+    actions: [
+      {
+        label: 'Extend Session',
+        color: 'primary',
+        click: () => {
+          toast.success('Session extended!')
+        }
+      },
+      {
+        label: 'Sign Out',
+        color: 'neutral',
+        variant: 'outline',
+        click: () => {
+          toast.info('Signing out...')
+        }
+      }
+    ]
   })
 }
 
-const handleFormSubmit = () => {
-  if (!modalForm.value.name) {
-    toast.add({
-      title: 'Validation Error',
-      description: 'Project name is required.',
-      color: 'error',
-      icon: 'i-lucide-alert-circle'
-    })
-    return
-  }
-  
-  showFormModal.value = false
+const showPersistentToast = () => {
   toast.add({
-    title: 'Project Created',
-    description: `Project "${modalForm.value.name}" has been created.`,
-    color: 'success',
-    icon: 'i-lucide-check'
+    title: 'Persistent Notification',
+    description: 'This notification will stay until you dismiss it.',
+    color: 'info',
+    icon: 'i-lucide-info',
+    timeout: 0 // Never auto-close
   })
-  
-  // Reset form
-  modalForm.value = { name: '', description: '' }
 }
 
-// Loading state handlers
-const toggleLoading = () => {
-  isLoading.value = true
+const showToastWithAvatar = () => {
+  toast.add({
+    title: 'John Doe mentioned you',
+    description: 'In the "Website Redesign" project discussion.',
+    color: 'primary',
+    avatar: {
+      src: null,
+      alt: 'John Doe'
+    }
+  })
+}
+
+// Alert functions
+const showAllAlerts = () => {
+  showSuccessAlert.value = true
+  showErrorAlert.value = true
+  showWarningAlert.value = true
+  showInfoAlert.value = true
+}
+
+// Loading functions
+const toggleTableLoading = () => {
+  isTableLoading.value = true
   setTimeout(() => {
-    isLoading.value = false
-    toast.add({
-      title: 'Loaded',
-      description: 'Data has been loaded successfully.',
-      color: 'success',
-      icon: 'i-lucide-check'
-    })
+    isTableLoading.value = false
+    toast.success('Data reloaded successfully!')
   }, 2000)
 }
 
-const simulateSubmit = () => {
-  isSubmitting.value = true
+const toggleFormLoading = () => {
+  isFormLoading.value = true
   setTimeout(() => {
-    isSubmitting.value = false
-    toast.add({
-      title: 'Form Submitted',
-      description: 'Your form has been submitted successfully.',
-      color: 'success',
-      icon: 'i-lucide-check'
-    })
-  }, 1500)
+    isFormLoading.value = false
+    toast.success('Form submitted successfully!')
+  }, 2000)
 }
 
-const simulateDelete = () => {
-  isDeleting.value = true
-  setTimeout(() => {
-    isDeleting.value = false
-    toast.add({
-      title: 'Item Deleted',
-      description: 'The item has been deleted permanently.',
-      color: 'success',
-      icon: 'i-lucide-trash'
-    })
-  }, 1000)
+// Empty state functions
+const handleCreateProject = () => {
+  toast.success('Redirecting to project creation...')
 }
 
-// Meta info
-useHead({
-  title: 'Feedback Components - Showcase'
-})
+const handleAddStock = () => {
+  toast.success('Redirecting to stock item creation...')
+}
 </script>

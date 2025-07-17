@@ -1,245 +1,292 @@
 <template>
-  <div class="min-h-screen flex flex-col bg-white dark:bg-gray-900">
+  <div class="min-h-screen flex flex-col bg-neutral-50 dark:bg-neutral-900">
     <!-- Header - Full width, fixed position -->
-    <AppHeader 
-      :navigation="headerNavigation" 
-      :user="user" 
-      :notification-count="notificationCount" 
-      :app-name="appName"
-      @open-search="openSearch" 
-      @toggle-notifications="toggleNotifications" 
-      @sign-out="signOut" 
-    />
+    <AppHeader :navigation="headerNavigation" :user="user" :notification-count="notificationCount" :app-name="appName"
+      @open-search="openSearch" @toggle-notifications="toggleNotifications" @sign-out="signOut" />
 
     <!-- Main Layout Container -->
     <div class="flex flex-1 overflow-hidden">
       <!-- Sidebar -->
-      <AppSidebar 
-        :navigation="sidebarNavigation" 
-        :user="user" 
-        :is-open="sidebarOpen" 
-        @close="sidebarOpen = false" 
-      />
+      <AppSidebar :navigation="sidebarNavigation" :user="user" :is-open="sidebarOpen" @close="sidebarOpen = false" />
+      <div class="main-content-wrapper flex-1 overflow-auto">
+        <!-- World Map Section -->
+        <UCard>
+          <template #header>
+            🌍 Global Project Map
+          </template>
 
-      <!-- Main Content Area -->
-      <div class="flex-1 overflow-auto">
-        <div class="mx-auto max-w-screen-2xl px-6 lg:px-8 py-8 space-y-8">
-          
-          <!-- Welcome Section -->
-          <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-            <template #header>
-              <div class="flex items-center justify-between">
-                <div>
-                  <h1 class="text-3xl font-bold text-neutral-800">🎨 Component Showcase</h1>
-                  <p class="text-neutral-600 mt-2">
-                    Explore our beautiful UI components with Nuxt UI v3 updates
-                  </p>
-                </div>
-                <UBadge color="primary" variant="solid" size="lg">
-                  Nuxt UI v3
-                </UBadge>
-              </div>
-            </template>
+          <WorldMap name="world-map" />
+        </UCard>
 
-            <!-- Quick Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div class="text-center p-4">
-                <div class="text-2xl font-bold text-primary">{{ componentCategories.length }}</div>
-                <div class="text-sm text-muted">Categories</div>
-              </div>
-              <div class="text-center p-4">
-                <div class="text-2xl font-bold text-success">50+</div>
-                <div class="text-sm text-muted">Components</div>
-              </div>
-              <div class="text-center p-4">
-                <div class="text-2xl font-bold text-warning">100%</div>
-                <div class="text-sm text-muted">Responsive</div>
-              </div>
-              <div class="text-center p-4">
-                <div class="text-2xl font-bold text-info">v3</div>
-                <div class="text-sm text-muted">Nuxt UI</div>
+        <!-- Mevcut header/sidebar -->
+        <NavigationShowcase />
+        <!-- LayoutShowcase'i ekle -->
+        <LayoutShowcase />
+        <!-- Form Section -->
+        <FormShowcase />
+        <DataShowcase />
+        <FeedbackShowcase />
+
+
+
+        <!-- Business Components Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <h3 class="text-xl font-bold text-slate-800">🏢 Business Components</h3>
+          </template>
+
+          <div class="space-y-8">
+            <!-- Stock Item Cards -->
+            <div>
+              <h4 class="font-semibold text-slate-700 mb-4">Stock Item Cards</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <StockItemCard name="StockItemCard" v-for="stockItem in sampleStockItems" :key="stockItem.id"
+                  :stock-item="stockItem" @click="handleStockItemClick(stockItem.id)" @view="handleStockItemView"
+                  @edit="handleStockItemEdit" @delete="handleStockItemDelete" @adjust-stock="handleStockAdjust"
+                  @add-to-project="handleAddToProject" />
               </div>
             </div>
-          </UCard>
 
-          <!-- Component Categories Navigation -->
-          <UCard>
-            <template #header>
-              <div class="flex items-center gap-3">
-                <UIcon name="i-lucide-layout-grid" class="w-6 h-6 text-primary" />
-                <h2 class="text-2xl font-bold text-highlighted">Component Categories</h2>
-              </div>
-            </template>
-
-            <!-- Category Tabs -->
-            <UTabs v-model="activeCategory" :items="componentCategories" @change="handleCategoryChange">
-              
-              <!-- Layout Components Tab -->
-              <template #layout="{ item }">
-                <LayoutShowcase />
-              </template>
-
-              <!-- Form Components Tab -->
-              <template #forms="{ item }">
-                <FormShowcase />
-              </template>
-
-              <!-- Data Components Tab -->
-              <template #data="{ item }">
-                <DataShowcase />
-              </template>
-
-              <!-- Feedback Components Tab -->
-              <template #feedback="{ item }">
-                <FeedbackShowcase />
-              </template>
-
-              <!-- Navigation Components Tab -->
-              <template #navigation="{ item }">
-                <NavigationShowcase />
-              </template>
-
-            </UTabs>
-          </UCard>
-
-          <!-- Quick Actions -->
-          <UCard>
-            <template #header>
-              <div class="flex items-center gap-3">
-                <UIcon name="i-lucide-zap" class="w-5 h-5 text-primary" />
-                <h3 class="text-xl font-bold text-highlighted">Quick Actions</h3>
-              </div>
-            </template>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <UButton variant="outline" @click="showAllToasts" block>
-                <UIcon name="i-lucide-bell" class="w-4 h-4 mr-2" />
-                Show All Toasts
-              </UButton>
-              
-              <UButton variant="outline" @click="toggleDemoMode" block>
-                <UIcon name="i-lucide-play" class="w-4 h-4 mr-2" />
-                {{ demoMode ? 'Stop Demo' : 'Start Demo' }}
-              </UButton>
-              
-              <UButton variant="outline" @click="exportShowcase" block>
-                <UIcon name="i-lucide-download" class="w-4 h-4 mr-2" />
-                Export Components
-              </UButton>
-              
-              <UButton variant="outline" @click="openDocumentation" block>
-                <UIcon name="i-lucide-book-open" class="w-4 h-4 mr-2" />
-                Documentation
-              </UButton>
-            </div>
-          </UCard>
-
-          <!-- Legacy Components Section (for backward compatibility) -->
-          <UCard v-if="showLegacyComponents">
-            <template #header>
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <UIcon name="i-lucide-archive" class="w-5 h-5 text-warning" />
-                  <h3 class="text-xl font-bold text-highlighted">Legacy Components</h3>
-                </div>
-                <UButton variant="ghost" size="sm" @click="showLegacyComponents = false">
-                  <UIcon name="i-lucide-x" class="w-4 h-4" />
-                </UButton>
-              </div>
-            </template>
-
-            <div class="space-y-4">
-              <UAlert color="warning" variant="soft">
-                <template #title>Migration Notice</template>
-                <template #description>
-                  These components are being migrated to Nuxt UI v3. 
-                  Some functionality may be deprecated.
-                </template>
-              </UAlert>
-
-              <!-- World Map Section -->
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <UCard variant="outline">
-                  <template #header>
-                    🌍 World Map Component
-                  </template>
-                  <WorldMap />
-                </UCard>
-
-                <!-- Sample Projects Preview -->
-                <UCard variant="outline">
-                  <template #header>
-                    📊 Sample Data Preview
-                  </template>
-                  <div class="space-y-3">
-                    <div v-for="project in sampleProjects.slice(0, 3)" :key="project.id" 
-                         class="flex items-center gap-3 p-3 bg-neutral-50 rounded-lg">
-                      <UAvatar :alt="project.name" size="sm" />
-                      <div class="flex-1">
-                        <div class="font-medium text-highlighted">{{ project.name }}</div>
-                        <div class="text-sm text-muted">{{ project.description }}</div>
-                      </div>
-                      <UBadge :color="project.status === 'active' ? 'success' : 'neutral'" size="xs">
-                        {{ project.status }}
-                      </UBadge>
-                    </div>
-                  </div>
-                </UCard>
+            <!-- Category Cards -->
+            <div>
+              <h4 class="font-semibold text-slate-700 mb-4">Category Cards</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <CategoryCard name="CategoryCard" v-for="category in sampleCategories" :key="category.id"
+                  :category="category" @click="handleCategoryClick(category.id)" @view="handleCategoryView"
+                  @edit="handleCategoryEdit" @delete="handleCategoryDelete" @add-item="handleCategoryAddItem"
+                  @view-items="handleCategoryViewItems" />
               </div>
             </div>
-          </UCard>
+          </div>
+        </UCard>
 
-        </div>
+        <!-- Project Cards Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-bold text-slate-800">🎴 Project Cards</h3>
+              <UButton variant="outline" size="sm" :loading="projectsLoading" @click="toggleProjectsLoading">
+                {{ projectsLoading ? 'Loading...' : 'Toggle Loading' }}
+              </UButton>
+            </div>
+          </template>
 
-        <!-- Footer -->
+          <!-- Loading State -->
+          <div v-if="projectsLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <SkeletonLoader name="SkeletonLoader" v-for="n in 3" :key="n" type="card" />
+          </div>
+
+          <!-- Loaded State -->
+          <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <ProjectCard name="ProjectCard" v-for="project in sampleProjects" :key="project.id" :project="project"
+              @click="handleProjectClick(project.id)" />
+          </div>
+        </UCard>
+
+        <!-- Project Table Showcase -->
+        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <template #header>
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-bold text-slate-800">📊 Project Table</h3>
+              <UButton variant="outline" size="sm" :loading="tableLoading" @click="toggleTableLoading">
+                {{ tableLoading ? 'Loading...' : 'Toggle Loading' }}
+              </UButton>
+            </div>
+          </template>
+
+          <!-- Loading State -->
+          <div v-if="tableLoading" class="space-y-0 bg-white rounded-lg border overflow-hidden">
+            <SkeletonLoader name="SkeletonLoader" v-for="n in 5" :key="n" type="table-row" />
+          </div>
+
+          <!-- Loaded State -->
+          <ProjectTable name="ProjectTable" v-else :projects="sampleProjects" @view="handleProjectView"
+            @edit="handleProjectEdit" @delete="handleProjectDelete" />
+        </UCard>
         <AppFooter :app-name="appName" />
       </div>
+      <!-- Footer -->
+
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref } from 'vue'
 import { useDualToast } from '~/composables/useDualToast'
-import { useAuthStore } from '~/stores/auth'
 
-// Component imports
-import LayoutShowcase from '~/showcase/layout/LayoutShowcase.vue'
+import DataShowcase from '@/showcase/data/DataShowcase.vue'
+
+import FeedbackShowcase from '@/showcase/feedback/FeedbackShowcase.vue'
+import ToastShowcase from '@/showcase/feedback/ToastShowcase.vue'
+
 import FormShowcase from '~/showcase/forms/FormShowcase.vue'
-import DataShowcase from '~/showcase/data/DataShowcase.vue'
-import FeedbackShowcase from '~/showcase/feedback/FeedbackShowcase.vue'
+//import InputShowcase from '~/showcase/forms/InputShowcase.vue'
+import StatusShowcase from '~/showcase/forms/StatusShowcase.vue'
+
+import LayoutShowcase from '~/showcase/layout/LayoutShowcase.vue'
+
 import NavigationShowcase from '~/showcase/navigation/NavigationShowcase.vue'
+
 import WorldMap from '@/components/WorldMap.vue'
+
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
 import AppFooter from '~/components/layout/AppFooter.vue'
 
-// Composables
-const dualToast = useDualToast()
-const authStore = useAuthStore()
-const toast = useToast()
+import SkeletonLoader from '~/components/ui/SkeletonLoader.vue'
 
-// Page meta
+
+const dualToast = useDualToast()
+
 definePageMeta({
   middleware: 'auth'
 })
 
-// Reactive state
-const activeCategory = ref('layout')
-const demoMode = ref(false)
-const showLegacyComponents = ref(false)
-const sidebarOpen = ref(false)
-const notificationCount = ref(3)
-const appName = ref('Sciveto')
+// Fix: Update these functions to use dualToast consistently
+const success = (message) => dualToast.success(message)
+const error = (message) => dualToast.error(message)
+const warning = (message, options) => dualToast.warning(message, options)
+const info = (message) => dualToast.info(message)
 
-// User data
+let simulationInterval = null
+
+const projectsLoading = ref(false)
+const tableLoading = ref(false)
+
+
+const sampleStockItems = ref([
+  {
+    id: '1',
+    name: 'Safety Helmet',
+    sku: 'SH-001',
+    category: 'Safety Equipment',
+    currentStock: 45,
+    minStock: 10,
+    maxStock: 100,
+    unitPrice: 24.99,
+    totalValue: 1124.55,
+    supplier: 'SafetyFirst Co.',
+    lastRestocked: '2024-01-15T10:30:00Z',
+    status: 'IN_STOCK',
+    location: 'Warehouse A, Shelf 12',
+    description: 'High-quality construction safety helmet'
+  },
+  {
+    id: '2',
+    name: 'Work Gloves',
+    sku: 'WG-002',
+    category: 'Safety Equipment',
+    currentStock: 8,
+    minStock: 15,
+    maxStock: 50,
+    unitPrice: 12.99,
+    totalValue: 103.92,
+    supplier: 'WorkGear Ltd.',
+    lastRestocked: '2024-01-10T14:20:00Z',
+    status: 'LOW_STOCK',
+    location: 'Warehouse B, Shelf 5',
+    description: 'Durable work gloves for construction'
+  }
+])
+
+const sampleCategories = ref([
+  {
+    id: '1',
+    name: 'Safety Equipment',
+    description: 'Personal protective equipment and safety gear',
+    color: 'blue',
+    icon: 'i-heroicons-shield-check',
+    status: 'Active',
+    itemCount: 32,
+    totalValue: 8500,
+    lowStockItems: 8,
+    activeProjects: 15,
+    popularItems: [
+      { id: '1', name: 'Safety Helmet', price: 24.99 },
+      { id: '2', name: 'Safety Vest', price: 19.99 },
+      { id: '3', name: 'Safety Gloves', price: 12.99 }
+    ],
+    parentCategory: null,
+    lastActivity: '2024-01-15T16:45:00Z',
+    lastActivityDescription: 'Safety helmets restocked'
+  },
+  {
+    id: '2',
+    name: 'Tools',
+    description: 'Construction and maintenance tools',
+    color: 'green',
+    icon: 'i-heroicons-wrench-screwdriver',
+    status: 'Active',
+    itemCount: 45,
+    totalValue: 12750,
+    lowStockItems: 3,
+    activeProjects: 8,
+    popularItems: [
+      { id: '4', name: 'Power Drill', price: 89.99 },
+      { id: '5', name: 'Hammer', price: 25.99 },
+      { id: '6', name: 'Screwdriver Set', price: 34.99 }
+    ],
+    parentCategory: { name: 'Equipment' },
+    lastActivity: '2024-01-12T10:30:00Z',
+    lastActivityDescription: 'New power tools added'
+  }
+])
+
 const user = ref({
+  id: '1',
   name: 'John Doe',
   email: 'john@example.com',
-  avatar: 'https://avatars.githubusercontent.com/u/739984?v=4'
+  avatar: null
 })
+const sampleProjects = ref([
+  {
+    id: '1',
+    name: 'Modern Website Redesign',
+    projectCode: 'WEB-2024-001',
+    description: 'Complete website redesign with modern UI/UX principles and responsive design for better user experience.',
+    status: 'designing',
+    priority: 'HIGH',
+    completionPercentage: 65,
+    clientName: 'Tech Solutions Inc.',
+    manager: { name: 'Sarah Connor', email: 'sarah@techsolutions.com' },
+    estimatedCost: 25000,
+    actualCost: 15000,
+    deadline: '2024-12-15',
+    createdAt: '2024-10-01'
+  },
+  {
+    id: '2',
+    name: 'Mobile App Development',
+    projectCode: 'APP-2024-002',
+    description: 'Native mobile application development for iOS and Android platforms with cross-platform compatibility.',
+    status: 'manufacturing',
+    priority: 'URGENT',
+    completionPercentage: 40,
+    clientName: 'StartupX',
+    manager: { name: 'John Matrix', email: 'john@startupx.com' },
+    estimatedCost: 45000,
+    actualCost: 20000,
+    deadline: '2024-11-30',
+    createdAt: '2024-09-15'
+  },
+  {
+    id: '3',
+    name: 'E-commerce Platform',
+    projectCode: 'ECOM-2024-003',
+    description: 'Full-featured e-commerce platform with payment integration, inventory management, and analytics.',
+    status: 'planning',
+    priority: 'MEDIUM',
+    completionPercentage: 15,
+    clientName: 'Retail Masters',
+    manager: { name: 'Lisa Wong', email: 'lisa@retailmasters.com' },
+    estimatedCost: 60000,
+    actualCost: 8000,
+    deadline: '2025-02-28',
+    createdAt: '2024-10-10'
+  }
+])
 
-// Navigation data with Nuxt UI v3 syntax
 const headerNavigation = ref([
   { label: 'Dashboard', to: '/dashboard', icon: 'i-lucide-home' },
   { label: 'Showcase', to: '/showcase', icon: 'i-lucide-layout' }
@@ -247,247 +294,152 @@ const headerNavigation = ref([
 
 const sidebarNavigation = ref([
   { label: 'Dashboard', to: '/dashboard', icon: 'i-lucide-home' },
-  { label: 'Showcase', to: '/showcase', icon: 'i-lucide-layout' },
-  { label: 'Settings', to: '/settings', icon: 'i-lucide-settings' }
+  { label: 'Showcase', to: '/showcase', icon: 'i-lucide-layout' }
 ])
 
-// Component categories for tabs
-const componentCategories = ref([
-  { 
-    key: 'layout', 
-    label: 'Layout', 
-    icon: 'i-lucide-layout-dashboard',
-    description: 'Headers, Sidebars, Footers'
-  },
-  { 
-    key: 'forms', 
-    label: 'Forms', 
-    icon: 'i-lucide-edit',
-    description: 'Inputs, Buttons, Validation'
-  },
-  { 
-    key: 'data', 
-    label: 'Data', 
-    icon: 'i-lucide-database',
-    description: 'Tables, Cards, Progress'
-  },
-  { 
-    key: 'feedback', 
-    label: 'Feedback', 
-    icon: 'i-lucide-message-circle',
-    description: 'Toasts, Alerts, Modals'
-  },
-  { 
-    key: 'navigation', 
-    label: 'Navigation', 
-    icon: 'i-lucide-navigation',
-    description: 'Menus, Breadcrumbs, Tabs'
-  }
-])
+const sidebarOpen = ref(false)
+const notificationCount = ref(3)
+const appName = ref('Sciveto')
 
-// Sample projects data
-const sampleProjects = ref([
-  {
-    id: 1,
-    name: 'E-commerce Platform',
-    description: 'Modern online shopping experience',
-    status: 'active',
-    progress: 85
-  },
-  {
-    id: 2,
-    name: 'Dashboard Analytics',
-    description: 'Real-time data visualization',
-    status: 'active',
-    progress: 92
-  },
-  {
-    id: 3,
-    name: 'Mobile App',
-    description: 'Cross-platform mobile solution',
-    status: 'pending',
-    progress: 45
-  }
-])
+// Function'lar
+const openSearch = () => console.log('Search opened')
+const toggleNotifications = () => console.log('Notifications toggled')
+const signOut = () => console.log('User signed out')
 
-// Event handlers
-const openSearch = () => {
-  toast.add({
-    title: 'Search',
-    description: 'Opening global search...',
-    color: 'info',
-    icon: 'i-lucide-search'
-  })
-}
-
-const toggleNotifications = () => {
-  toast.add({
-    title: 'Notifications',
-    description: 'Toggle notifications panel',
-    color: 'info',
-    icon: 'i-lucide-bell'
-  })
-}
-
-const signOut = () => {
-  authStore.logout()
-  toast.add({
-    title: 'Signed Out',
-    description: 'You have been signed out successfully',
-    color: 'success',
-    icon: 'i-lucide-log-out'
-  })
-}
-
-const handleCategoryChange = ({ index, tab }) => {
-  toast.add({
-    title: 'Category Changed',
-    description: `Switched to ${tab.label} components`,
-    color: 'info',
-    icon: tab.icon
-  })
-}
-
-// Quick actions
-const showAllToasts = () => {
-  const toastTypes = [
-    { color: 'success', title: 'Success', description: 'Operation completed successfully', icon: 'i-lucide-check' },
-    { color: 'error', title: 'Error', description: 'Something went wrong', icon: 'i-lucide-x' },
-    { color: 'warning', title: 'Warning', description: 'Please check your input', icon: 'i-lucide-alert-triangle' },
-    { color: 'info', title: 'Info', description: 'Here is some information', icon: 'i-lucide-info' }
-  ]
-
-  toastTypes.forEach((toastData, index) => {
+const toggleProjectsLoading = () => {
+  projectsLoading.value = !projectsLoading.value
+  if (projectsLoading.value) {
     setTimeout(() => {
-      toast.add(toastData)
-    }, index * 500)
-  })
-}
-
-const toggleDemoMode = () => {
-  demoMode.value = !demoMode.value
-  toast.add({
-    title: 'Demo Mode',
-    description: demoMode.value ? 'Demo mode activated' : 'Demo mode deactivated',
-    color: demoMode.value ? 'success' : 'neutral',
-    icon: demoMode.value ? 'i-lucide-play' : 'i-lucide-pause'
-  })
-}
-
-const exportShowcase = () => {
-  toast.add({
-    title: 'Export Started',
-    description: 'Generating component documentation...',
-    color: 'info',
-    icon: 'i-lucide-download'
-  })
-  
-  // Simulate export process
-  setTimeout(() => {
-    toast.add({
-      title: 'Export Complete',
-      description: 'Component documentation has been generated',
-      color: 'success',
-      icon: 'i-lucide-check'
-    })
-  }, 2000)
-}
-
-const openDocumentation = () => {
-  window.open('https://ui.nuxt.com', '_blank')
-  toast.add({
-    title: 'Documentation',
-    description: 'Opening Nuxt UI documentation',
-    color: 'info',
-    icon: 'i-lucide-external-link'
-  })
-}
-
-// Auto-demo functionality
-let demoInterval = null
-
-const startAutoDemo = () => {
-  if (demoInterval) return
-  
-  demoInterval = setInterval(() => {
-    const categories = componentCategories.value
-    const currentIndex = categories.findIndex(cat => cat.key === activeCategory.value)
-    const nextIndex = (currentIndex + 1) % categories.length
-    activeCategory.value = categories[nextIndex].key
-  }, 5000) // Switch category every 5 seconds
-}
-
-const stopAutoDemo = () => {
-  if (demoInterval) {
-    clearInterval(demoInterval)
-    demoInterval = null
+      projectsLoading.value = false
+    }, 3000)
   }
 }
 
-// Watch demo mode changes
-watch(demoMode, (newValue) => {
-  if (newValue) {
-    startAutoDemo()
-  } else {
-    stopAutoDemo()
+const toggleTableLoading = () => {
+  tableLoading.value = !tableLoading.value
+  if (tableLoading.value) {
+    setTimeout(() => {
+      tableLoading.value = false
+    }, 3000)
   }
-})
+}
+
+const handleProjectClick = (projectId) => {
+  console.log('Project clicked:', projectId)
+  info(`Viewing project: ${projectId}`)
+}
+
+const handleProjectView = (projectId) => {
+  console.log('View project:', projectId)
+  info(`Opening project details: ${projectId}`)
+}
+
+const handleProjectEdit = (projectId) => {
+  console.log('Edit project:', projectId)
+  info(`Editing project: ${projectId}`)
+}
+
+const handleProjectDelete = (projectId) => {
+  console.log('Delete project:', projectId)
+  warning(`Are you sure you want to delete project: ${projectId}?`, {
+    autoClose: false,
+    action: {
+      text: 'Confirm Delete',
+      handler: () => {
+        success('Project deleted successfully!')
+      }
+    }
+  })
+}
+
+// Stock item handlers
+const handleStockItemClick = (stockItemId) => {
+  console.log('Stock item clicked:', stockItemId)
+  info(`Viewing stock item: ${stockItemId}`)
+}
+
+const handleStockItemView = (stockItemId) => {
+  console.log('View stock item:', stockItemId)
+  success(`Opening stock item details: ${stockItemId}`)
+}
+
+const handleStockItemEdit = (stockItemId) => {
+  console.log('Edit stock item:', stockItemId)
+  info(`Editing stock item: ${stockItemId}`)
+}
+
+const handleStockItemDelete = (stockItemId) => {
+  console.log('Delete stock item:', stockItemId)
+  warning(`Are you sure you want to delete stock item: ${stockItemId}?`, {
+    autoClose: false,
+    action: {
+      text: 'Confirm Delete',
+      handler: () => {
+        success('Stock item deleted successfully!')
+      }
+    }
+  })
+}
+
+const handleStockAdjust = (stockItemId) => {
+  console.log('Adjust stock:', stockItemId)
+  info(`Opening stock adjustment for: ${stockItemId}`)
+}
+
+const handleAddToProject = (stockItemId) => {
+  console.log('Add to project:', stockItemId)
+  success(`Added stock item ${stockItemId} to project`)
+}
+
+// Category handlers
+const handleCategoryClick = (categoryId) => {
+  console.log('Category clicked:', categoryId)
+  info(`Viewing category: ${categoryId}`)
+}
+
+const handleCategoryView = (categoryId) => {
+  console.log('View category:', categoryId)
+  success(`Opening category details: ${categoryId}`)
+}
+
+const handleCategoryEdit = (categoryId) => {
+  console.log('Edit category:', categoryId)
+  info(`Editing category: ${categoryId}`)
+}
+
+const handleCategoryDelete = (categoryId) => {
+  console.log('Delete category:', categoryId)
+  warning(`Are you sure you want to delete category: ${categoryId}?`, {
+    autoClose: false,
+    action: {
+      text: 'Confirm Delete',
+      handler: () => {
+        success('Category deleted successfully!')
+      }
+    }
+  })
+}
+
+const handleCategoryAddItem = (categoryId) => {
+  console.log('Add item to category:', categoryId)
+  success(`Adding new item to category: ${categoryId}`)
+}
+
+const handleCategoryViewItems = (categoryId) => {
+  console.log('View category items:', categoryId)
+  info(`Viewing items in category: ${categoryId}`)
+}
+
 
 // Set page title
 useHead({
-  title: 'Component Showcase - Nuxt UI v3'
+  title: 'Component Showcase - Dashboard'
 })
 
-// Clean up on unmount
+// Clean up interval on unmount
 onUnmounted(() => {
-  stopAutoDemo()
-})
-
-// Show legacy components after 3 seconds (optional)
-onMounted(() => {
-  setTimeout(() => {
-    showLegacyComponents.value = true
-  }, 3000)
+  if (simulationInterval) {
+    clearInterval(simulationInterval)
+  }
 })
 </script>
-
-<style scoped>
-/* Custom transitions for category switching */
-.showcase-transition-enter-active,
-.showcase-transition-leave-active {
-  transition: all 0.3s ease-in-out;
-}
-
-.showcase-transition-enter-from {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.showcase-transition-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
-/* Smooth scroll behavior */
-.overflow-auto {
-  scroll-behavior: smooth;
-}
-
-/* Custom scrollbar for main content */
-.overflow-auto::-webkit-scrollbar {
-  width: 6px;
-}
-
-.overflow-auto::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.overflow-auto::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
-}
-
-.overflow-auto::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.2);
-}
-</style>

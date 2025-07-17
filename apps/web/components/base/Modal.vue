@@ -16,10 +16,10 @@
             
             <!-- Title -->
             <div>
-              <h3 class="text-lg font-semibold text-gray-900">
+              <h3 class="text-lg font-semibold text-neutral-900">
                 {{ title }}
               </h3>
-              <p v-if="subtitle" class="text-sm text-gray-500">
+              <p v-if="subtitle" class="text-sm text-neutral-500">
                 {{ subtitle }}
               </p>
             </div>
@@ -27,7 +27,7 @@
           
           <!-- Close button -->
           <UButton
-            color="gray"
+            color="neutral"
             variant="ghost"
             icon="i-heroicons-x-mark"
             @click="close"
@@ -38,7 +38,7 @@
       <!-- Body -->
       <div class="space-y-4">
         <!-- Description -->
-        <p v-if="description" class="text-gray-600">
+        <p v-if="description" class="text-neutral-600">
           {{ description }}
         </p>
         
@@ -57,7 +57,7 @@
             <!-- Cancel button -->
             <UButton
               v-if="showCancel"
-              color="gray"
+              color="neutral"
               variant="outline"
               @click="cancel"
             >
@@ -135,7 +135,7 @@ const isOpen = computed({
 
 const iconClasses = computed(() => {
   const typeClasses = {
-    default: 'bg-gray-100 text-gray-600',
+    default: 'bg-neutral-100 text-neutral-600',
     danger: 'bg-red-100 text-red-600',
     warning: 'bg-yellow-100 text-yellow-600',
     success: 'bg-green-100 text-green-600',

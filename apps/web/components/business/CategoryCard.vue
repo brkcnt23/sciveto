@@ -27,13 +27,13 @@
           
           <div class="flex-1 min-w-0">
             <!-- Category Name -->
-            <h3 class="font-bold text-gray-900 text-xl group-hover:text-blue-600 transition-colors line-clamp-1">
+            <h3 class="font-bold text-neutral-900 text-xl group-hover:text-blue-600 transition-colors line-clamp-1">
               {{ category.name }}
             </h3>
             
             <!-- Category Code -->
             <div class="flex items-center space-x-2 mt-1">
-              <span class="text-sm text-gray-500 font-mono">{{ category.code || 'N/A' }}</span>
+              <span class="text-sm text-neutral-500 font-mono">{{ category.code || 'N/A' }}</span>
               <UBadge 
                 :color="getStatusColor(category.status)"
                 size="xs"
@@ -48,15 +48,15 @@
         <!-- Item Count -->
         <div class="text-right ml-4">
           <div class="flex items-center space-x-1">
-            <Icon name="i-heroicons-cube" class="h-4 w-4 text-gray-500" />
-            <span class="text-2xl font-bold text-gray-900">{{ category.itemCount || 0 }}</span>
+            <Icon name="i-heroicons-cube" class="h-4 w-4 text-neutral-500" />
+            <span class="text-2xl font-bold text-neutral-900">{{ category.itemCount || 0 }}</span>
           </div>
-          <p class="text-xs text-gray-500">items</p>
+          <p class="text-xs text-neutral-500">items</p>
         </div>
       </div>
 
       <!-- Description -->
-      <p v-if="category.description" class="text-sm text-gray-600 line-clamp-2 leading-relaxed">
+      <p v-if="category.description" class="text-sm text-neutral-600 line-clamp-2 leading-relaxed">
         {{ category.description }}
       </p>
 
@@ -92,7 +92,7 @@
 
       <!-- Popular Items -->
       <div v-if="category.popularItems && category.popularItems.length > 0" class="space-y-2">
-        <h4 class="text-sm font-semibold text-gray-700 flex items-center">
+        <h4 class="text-sm font-semibold text-neutral-700 flex items-center">
           <Icon name="i-heroicons-star" class="h-4 w-4 text-yellow-500 mr-1" />
           Popular Items
         </h4>
@@ -100,10 +100,10 @@
           <div 
             v-for="item in category.popularItems.slice(0, 3)" 
             :key="item.id"
-            class="flex items-center justify-between p-2 bg-gray-50 rounded text-sm"
+            class="flex items-center justify-between p-2 bg-neutral-50 rounded text-sm"
           >
-            <span class="font-medium text-gray-900 truncate">{{ item.name }}</span>
-            <span class="text-gray-600">${{ formatPrice(item.price) }}</span>
+            <span class="font-medium text-neutral-900 truncate">{{ item.name }}</span>
+            <span class="text-neutral-600">${{ formatPrice(item.price) }}</span>
           </div>
         </div>
       </div>
@@ -112,7 +112,7 @@
       <div class="flex flex-wrap gap-2">
         <!-- Parent Category -->
         <div v-if="category.parentCategory" class="flex items-center">
-          <span class="text-xs text-gray-500 mr-1">Parent:</span>
+          <span class="text-xs text-neutral-500 mr-1">Parent:</span>
           <UBadge color="purple" variant="soft" size="xs">
             {{ category.parentCategory.name }}
           </UBadge>
@@ -120,8 +120,8 @@
         
         <!-- Subcategories -->
         <div v-if="category.subcategories && category.subcategories.length > 0" class="flex items-center space-x-1">
-          <span class="text-xs text-gray-500">Subcategories:</span>
-          <span class="text-xs font-semibold text-gray-700">{{ category.subcategories.length }}</span>
+          <span class="text-xs text-neutral-500">Subcategories:</span>
+          <span class="text-xs font-semibold text-neutral-700">{{ category.subcategories.length }}</span>
         </div>
       </div>
 
@@ -142,7 +142,7 @@
       </div>
 
       <!-- Actions -->
-      <div class="flex items-center justify-between pt-2 border-t border-gray-200">
+      <div class="flex items-center justify-between pt-2 border-t border-neutral-200">
         <div class="flex space-x-2">
           <Tooltip content="View category">
             <UButton 
@@ -219,7 +219,7 @@ defineEmits(['click', 'view', 'edit', 'delete', 'add-item', 'view-items'])
 const categoryGradient = computed(() => {
   const categoryName = props.category.name || 'default'
   const gradients = {
-    'Hardware': 'bg-gradient-to-br from-gray-500 to-gray-600',
+    'Hardware': 'bg-gradient-to-br from-neutral-500 to-neutral-600',
     'Software': 'bg-gradient-to-br from-blue-500 to-blue-600',
     'Electronics': 'bg-gradient-to-br from-purple-500 to-purple-600',
     'Materials': 'bg-gradient-to-br from-amber-500 to-amber-600',
@@ -237,7 +237,7 @@ const categoryGradient = computed(() => {
 const cardBorderColor = computed(() => {
   const categoryName = props.category.name || 'default'
   const colors = {
-    'Hardware': 'border-l-gray-500',
+    'Hardware': 'border-l-neutral-500',
     'Software': 'border-l-blue-500',
     'Electronics': 'border-l-purple-500',
     'Materials': 'border-l-amber-500',
@@ -274,7 +274,7 @@ const getStatusColor = (status) => {
     'Active': 'green',
     'Inactive': 'orange',
     'Archived': 'red',
-    'Draft': 'gray'
+    'Draft': 'neutral'
   }
   return colors[status] || 'green'
 }

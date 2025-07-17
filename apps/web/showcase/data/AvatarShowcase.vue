@@ -3,7 +3,7 @@
   <div class="space-y-8">
     <!-- Header with Modern Badge -->
     <div class="flex items-center justify-between">
-      <h4 class="font-semibold text-gray-900 dark:text-white text-lg">
+      <h4 class="font-semibold text-neutral-900 dark:text-white text-lg">
         👤 Avatar Showcase
       </h4>
       <UBadge color="secondary" variant="soft" size="sm" class="gap-1.5">
@@ -14,14 +14,14 @@
 
     <!-- Avatar Sizes using our Avatar component -->
     <div class="space-y-6">
-      <div class="flex items-center gap-3 border-b border-gray-200 dark:border-gray-700 pb-2">
+      <div class="flex items-center gap-3 border-b border-neutral-200 dark:border-neutral-700 pb-2">
         <UIcon name="i-lucide-users" class="w-5 h-5 text-primary" />
-        <h4 class="font-semibold text-gray-900 dark:text-white text-lg">Avatar Sizes</h4>
+        <h4 class="font-semibold text-neutral-900 dark:text-white text-lg">Avatar Sizes</h4>
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Extra Small -->
-        <div class="text-center space-y-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div class="text-center space-y-3 p-4 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
           <UBadge color="neutral" variant="outline" size="xs">XS</UBadge>
           <div class="flex justify-center">
             <Avatar 
@@ -36,7 +36,7 @@
         </div>
 
         <!-- Small -->
-        <div class="text-center space-y-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div class="text-center space-y-3 p-4 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
           <UBadge color="neutral" variant="outline" size="xs">SM</UBadge>
           <div class="flex justify-center">
             <Avatar 
@@ -51,7 +51,7 @@
         </div>
 
         <!-- Medium -->
-        <div class="text-center space-y-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div class="text-center space-y-3 p-4 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
           <UBadge color="neutral" variant="outline" size="xs">MD</UBadge>
           <div class="flex justify-center">
             <Avatar 
@@ -66,7 +66,7 @@
         </div>
 
         <!-- Large -->
-        <div class="text-center space-y-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div class="text-center space-y-3 p-4 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
           <UBadge color="neutral" variant="outline" size="xs">LG</UBadge>
           <div class="flex justify-center">
             <Avatar 
@@ -84,14 +84,14 @@
 
     <!-- Avatar with Status Indicators -->
     <div class="space-y-6">
-      <div class="flex items-center gap-3 border-b border-slate-200 pb-2">
+      <div class="flex items-center gap-3 border-b border-neutral-200 dark:border-neutral-700 pb-2">
         <UIcon name="i-lucide-activity" class="w-5 h-5 text-success" />
-        <h4 class="font-semibold text-slate-700 text-lg">Status Indicators</h4>
+        <h4 class="font-semibold text-highlighted text-lg">Status Indicators</h4>
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Online Status -->
-        <div class="text-center space-y-3 p-4 bg-green-50 rounded-lg border border-green-100">
+        <div class="text-center space-y-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700">
           <UBadge color="success" variant="solid" size="xs" class="gap-1">
             <div class="w-2 h-2 bg-white rounded-full"></div>
             Online
@@ -109,13 +109,13 @@
             />
           </div>
           <div class="text-sm">
-            <p class="font-medium text-slate-700">Sarah Wilson</p>
+            <p class="font-medium text-highlighted">Sarah Wilson</p>
             <p class="text-xs text-success">Available</p>
           </div>
         </div>
 
         <!-- Away Status -->
-        <div class="text-center space-y-3 p-4 bg-yellow-50 rounded-lg border border-yellow-100">
+        <div class="text-center space-y-3 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-700">
           <UBadge color="warning" variant="solid" size="xs" class="gap-1">
             <UIcon name="i-lucide-clock" class="w-3 h-3" />
             Away
@@ -133,13 +133,13 @@
             />
           </div>
           <div class="text-sm">
-            <p class="font-medium text-slate-700">Mike Johnson</p>
+            <p class="font-medium text-highlighted">Mike Johnson</p>
             <p class="text-xs text-warning">Away - Back in 15 min</p>
           </div>
         </div>
 
         <!-- Busy Status -->
-        <div class="text-center space-y-3 p-4 bg-red-50 rounded-lg border border-red-100">
+        <div class="text-center space-y-3 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-700">
           <UBadge color="error" variant="solid" size="xs" class="gap-1">
             <UIcon name="i-lucide-minus-circle" class="w-3 h-3" />
             Busy
@@ -157,13 +157,13 @@
             />
           </div>
           <div class="text-sm">
-            <p class="font-medium text-slate-700">Alex Chen</p>
+            <p class="font-medium text-highlighted">Alex Chen</p>
             <p class="text-xs text-error">In a meeting</p>
           </div>
         </div>
 
         <!-- Offline Status -->
-        <div class="text-center space-y-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <div class="text-center space-y-3 p-4 bg-neutral-50 dark:bg-neutral-800/50 rounded-lg border border-neutral-200 dark:border-neutral-700">
           <UBadge color="neutral" variant="solid" size="xs" class="gap-1">
             <UIcon name="i-lucide-wifi-off" class="w-3 h-3" />
             Offline
@@ -178,12 +178,12 @@
               }" 
               size="lg"
               :show-online-status="true"
-              avatar-class="opacity-75 grayscale"
+              avatar-class="opacity-75 neutralscale"
             />
           </div>
           <div class="text-sm">
-            <p class="font-medium text-slate-700">Emma Davis</p>
-            <p class="text-xs text-neutral">Last seen 2h ago</p>
+            <p class="font-medium text-highlighted">Emma Davis</p>
+            <p class="text-xs text-muted">Last seen 2h ago</p>
           </div>
         </div>
       </div>
@@ -198,7 +198,7 @@
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Initials with Colors -->
-        <div class="space-y-4 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div class="space-y-4 p-4 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
           <h5 class="text-sm font-medium text-slate-600 dark:text-slate-400 flex items-center gap-2">
             <UIcon name="i-lucide-type" class="w-4 h-4" />
             Initial Avatars
@@ -235,8 +235,8 @@
         </div>
 
         <!-- Gradient Avatars -->
-        <div class="space-y-4 p-4 bg-slate-50 rounded-lg">
-          <h5 class="text-sm font-medium text-slate-600 flex items-center gap-2">
+        <div class="space-y-4 p-4 bg-slate-50 dark:bg-neutral-800 rounded-lg">
+          <h5 class="text-sm font-medium text-slate-600 dark:text-slate-400 flex items-center gap-2">
             <UIcon name="i-lucide-palette" class="w-4 h-4" />
             Gradient Avatars
           </h5>
@@ -272,8 +272,8 @@
         </div>
 
         <!-- Role Badges -->
-        <div class="space-y-4 p-4 bg-slate-50 rounded-lg">
-          <h5 class="text-sm font-medium text-slate-600 flex items-center gap-2">
+        <div class="space-y-4 p-4 bg-slate-50 dark:bg-neutral-800 rounded-lg">
+          <h5 class="text-sm font-medium text-slate-600 dark:text-slate-400 flex items-center gap-2">
             <UIcon name="i-lucide-crown" class="w-4 h-4" />
             Role Badges
           </h5>

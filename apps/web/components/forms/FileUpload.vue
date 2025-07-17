@@ -14,7 +14,7 @@
       <div 
         :class="[
           'relative border-2 border-dashed rounded-lg p-6 transition-colors duration-200',
-          dragActive ? 'border-primary-500 bg-primary-50' : 'border-gray-300 hover:border-gray-400',
+          dragActive ? 'border-primary-500 bg-primary-50' : 'border-neutral-300 hover:border-neutral-400',
           disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer',
           error ? 'border-red-300 bg-red-50' : ''
         ]"
@@ -39,16 +39,16 @@
         <!-- Upload Content -->
         <div class="text-center">
           <!-- Upload Icon -->
-          <div class="mx-auto w-12 h-12 text-gray-400 mb-4">
+          <div class="mx-auto w-12 h-12 text-neutral-400 mb-4">
             <UIcon :name="uploadIcon" class="w-full h-full" />
           </div>
 
           <!-- Upload Text -->
           <div class="space-y-2">
-            <p class="text-sm font-medium text-gray-900">
+            <p class="text-sm font-medium text-neutral-900">
               {{ uploadText || 'Click to upload or drag and drop' }}
             </p>
-            <p class="text-xs text-gray-500">
+            <p class="text-xs text-neutral-500">
               {{ uploadSubtext || getUploadSubtext() }}
             </p>
           </div>
@@ -57,10 +57,10 @@
           <div v-if="uploading" class="mt-4">
             <div class="flex items-center justify-center space-x-2">
               <UIcon name="i-lucide-loader-2" class="w-4 h-4 animate-spin" />
-              <span class="text-sm text-gray-600">Uploading...</span>
+              <span class="text-sm text-neutral-600">Uploading...</span>
             </div>
             <div v-if="uploadProgress !== null" class="mt-2">
-              <div class="w-full bg-gray-200 rounded-full h-2">
+              <div class="w-full bg-neutral-200 rounded-full h-2">
                 <div 
                   class="bg-primary-600 h-2 rounded-full transition-all duration-300"
                   :style="{ width: `${uploadProgress}%` }"
@@ -73,7 +73,7 @@
 
       <!-- File List -->
       <div v-if="fileList.length > 0" class="space-y-2">
-        <h4 class="text-sm font-medium text-gray-900">
+        <h4 class="text-sm font-medium text-neutral-900">
           {{ multiple ? 'Selected Files' : 'Selected File' }}
         </h4>
         
@@ -81,18 +81,18 @@
           <div
             v-for="(file, index) in fileList"
             :key="`${file.name}-${index}`"
-            class="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+            class="flex items-center justify-between p-3 bg-neutral-50 rounded-lg"
           >
             <div class="flex items-center space-x-3 flex-1 min-w-0">
               <!-- File Icon -->
-              <UIcon :name="getFileIcon(file)" class="w-5 h-5 text-gray-500 flex-shrink-0" />
+              <UIcon :name="getFileIcon(file)" class="w-5 h-5 text-neutral-500 flex-shrink-0" />
               
               <!-- File Info -->
               <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-gray-900 truncate">
+                <p class="text-sm font-medium text-neutral-900 truncate">
                   {{ file.name }}
                 </p>
-                <p class="text-xs text-gray-500">
+                <p class="text-xs text-neutral-500">
                   {{ formatFileSize(file.size) }}
                 </p>
               </div>
@@ -122,7 +122,7 @@
               :name="`${name}-remove-${index}`"
               icon="i-lucide-x"
               size="xs"
-              color="gray"
+              color="neutral"
               variant="ghost"
               class="ml-2"
               @click="removeFile(index)"
@@ -144,7 +144,7 @@
       </div>
 
       <!-- File Constraints Info -->
-      <div v-if="showConstraints" class="text-xs text-gray-500 space-y-1">
+      <div v-if="showConstraints" class="text-xs text-neutral-500 space-y-1">
         <p v-if="maxSize">
           Maximum file size: {{ formatFileSize(maxSize) }}
         </p>

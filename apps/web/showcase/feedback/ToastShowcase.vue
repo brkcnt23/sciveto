@@ -52,8 +52,8 @@
         Toast Component Preview
       </h4>
       
-      <div class="bg-gray-50 p-6 rounded-lg border">
-        <p class="text-sm text-gray-600 mb-4">Preview of Toast components (not functional, just visual):</p>
+      <div class="bg-neutral-50 p-6 rounded-lg border">
+        <p class="text-sm text-neutral-600 mb-4">Preview of Toast components (not functional, just visual):</p>
         
         <div class="space-y-4 max-w-md">
           <!-- Success Toast Preview -->

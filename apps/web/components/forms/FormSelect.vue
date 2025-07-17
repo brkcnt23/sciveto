@@ -98,7 +98,7 @@
         <span v-if="selectedOptions.length" class="truncate">
           {{ displayValue }}
         </span>
-        <span v-else class="text-gray-500">{{ placeholder }}</span>
+        <span v-else class="text-neutral-500">{{ placeholder }}</span>
       </UButton>
 
       <template #content>
@@ -139,7 +139,7 @@
           </div>
 
           <!-- No options message -->
-          <div v-if="filteredOptions.length === 0" class="text-center text-gray-500 text-sm py-2">
+          <div v-if="filteredOptions.length === 0" class="text-center text-neutral-500 text-sm py-2">
             No options found
           </div>
         </div>
@@ -160,7 +160,7 @@
           :name="`${name}-remove-${getOptionValue(option)}`"
           icon="i-lucide-x" 
           size="2xs" 
-          color="gray" 
+          color="neutral" 
           variant="ghost" 
           class="ml-1 -mr-1" 
           @click="removeOption(option)"

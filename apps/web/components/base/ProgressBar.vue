@@ -1,4 +1,3 @@
-<!-- components/base/ProgressBar.vue -->
 <template>
   <div class="space-y-2">
     <!-- Label and Percentage with Modern Badges -->
@@ -21,7 +20,7 @@
         </UBadge>
         
         <!-- Label -->
-        <span v-if="label" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+        <span v-if="label" class="text-sm font-medium text-highlighted">
           {{ label }}
         </span>
       </div>
@@ -40,7 +39,7 @@
             :name="trendIcon" 
             class="w-3 h-3" 
           />
-          {{ value }}%
+          {{ Math.round(value) }}%
         </UBadge>
         
         <!-- Estimated Time Badge -->
@@ -59,23 +58,41 @@
     
     <!-- Progress Bar with Enhanced Styling -->
     <div class="relative">
-      <UProgress 
-        :model-value="value" 
-        :color="progressColor"
-        :size="size"
-        :status="showStatus"
-        :max="max"
-        :animation="animation"
-        :orientation="orientation"
+      <div 
         :class="[
-          'transition-all duration-300 ease-in-out',
+          'w-full bg-neutral-200 dark:bg-neutral-700 rounded-full overflow-hidden',
+          sizeClasses,
           customClass,
           {
             'shadow-sm': size === 'lg' || size === 'xl',
-            'animate-pulse': isLoading
+            'animate-pulse': isLoading && !value
           }
         ]"
-      />
+      >
+        <!-- Progress Fill -->
+        <div 
+          v-if="!isLoading || value !== null"
+          :class="[
+            'h-full rounded-full transition-all duration-500 ease-out',
+            progressColorClasses,
+            {
+              'animate-pulse': isLoading
+            }
+          ]"
+          :style="{ width: `${Math.min(100, Math.max(0, value || 0))}%` }"
+        />
+        
+        <!-- Indeterminate Loading Animation -->
+        <div 
+          v-else
+          :class="[
+            'h-full rounded-full',
+            progressColorClasses,
+            'animate-pulse'
+          ]"
+          style="width: 60%; animation: progress-slide 2s infinite;"
+        />
+      </div>
       
       <!-- Overlay Icon for Loading State -->
       <div 
@@ -92,7 +109,7 @@
     <!-- Description and Details -->
     <div v-if="description || showSteps || errorMessage" class="space-y-1">
       <!-- Description with Icon -->
-      <div v-if="description" class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+      <div v-if="description" class="flex items-center gap-2 text-xs text-muted">
         <UIcon 
           v-if="descriptionIcon" 
           :name="descriptionIcon" 
@@ -102,17 +119,17 @@
       </div>
       
       <!-- Step Indicators -->
-      <div v-if="showSteps && Array.isArray(max)" class="flex items-center gap-1 text-xs">
+      <div v-if="showSteps && Array.isArray(max)" class="flex flex-wrap items-center gap-1 text-xs">
         <span 
           v-for="(step, index) in max" 
           :key="index"
           :class="[
-            'px-2 py-1 rounded text-xs font-medium transition-colors',
+            'px-2 py-1 rounded text-xs font-medium transition-colors flex-shrink-0',
             index < value 
               ? 'bg-success-500 dark:bg-success-400 text-white' 
               : index === value 
                 ? 'bg-primary-500 dark:bg-primary-400 text-white' 
-                : 'bg-neutral-200 dark:bg-neutral-700 text-gray-600 dark:text-gray-400'
+                : 'bg-neutral-200 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400'
           ]"
         >
           {{ step }}
@@ -161,15 +178,11 @@ const props = defineProps({
   size: {
     type: String,
     default: 'md',
-    validator: (value) => ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'].includes(value)
+    validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl'].includes(value)
   },
   showPercentage: {
     type: Boolean,
     default: true
-  },
-  showStatus: {
-    type: Boolean,
-    default: false
   },
   showSteps: {
     type: Boolean,
@@ -191,11 +204,6 @@ const props = defineProps({
     type: [Number, Array],
     default: 100
   },
-  animation: {
-    type: String,
-    default: 'carousel',
-    validator: (value) => ['carousel', 'carousel-inverse', 'swing', 'elastic'].includes(value)
-  },
   orientation: {
     type: String,
     default: 'horizontal',
@@ -209,6 +217,18 @@ const props = defineProps({
     type: String,
     default: ''
   }
+})
+
+// Size classes for progress bar height
+const sizeClasses = computed(() => {
+  const sizes = {
+    xs: 'h-1',
+    sm: 'h-2',
+    md: 'h-3',
+    lg: 'h-4',
+    xl: 'h-6'
+  }
+  return sizes[props.size] || sizes.md
 })
 
 // Auto color based on progress value
@@ -225,6 +245,20 @@ const progressColor = computed(() => {
   if (props.value <= 75) return 'info'
   if (props.value < 100) return 'primary'
   return 'success'
+})
+
+// Progress color classes with dark mode support
+const progressColorClasses = computed(() => {
+  const colors = {
+    primary: 'bg-primary-500 dark:bg-primary-400',
+    secondary: 'bg-secondary-500 dark:bg-secondary-400',
+    success: 'bg-success-500 dark:bg-success-400',
+    info: 'bg-info-500 dark:bg-info-400',
+    warning: 'bg-warning-500 dark:bg-warning-400',
+    error: 'bg-error-500 dark:bg-error-400',
+    neutral: 'bg-neutral-500 dark:bg-neutral-400'
+  }
+  return colors[progressColor.value] || colors.primary
 })
 
 // Status color mapping with Nuxt UI v3 colors
@@ -283,3 +317,17 @@ const trendIcon = computed(() => {
   return 'i-lucide-trending-down'
 })
 </script>
+
+<style scoped>
+@keyframes progress-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+</style>
