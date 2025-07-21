@@ -543,20 +543,20 @@ const onMouseLeave = () => {
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: theme('colors.neutral.300');
+  background: rgb(212 212 212); /* neutral-300 */
   border-radius: 2px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: theme('colors.neutral.400');
+  background: rgb(163 163 163); /* neutral-400 */
 }
 
 .dark .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: theme('colors.neutral.600');
+  background: rgb(82 82 82); /* neutral-600 */
 }
 
 .dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: theme('colors.neutral.500');
+  background: rgb(115 115 115); /* neutral-500 */
 }
 
 /* Smooth transitions for all interactive elements */

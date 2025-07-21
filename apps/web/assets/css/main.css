@@ -133,26 +133,53 @@
 
 /* Modern Component Classes */
 .dashboard-card {
-  @apply bg-white/80 dark:bg-neutral-800/80 backdrop-blur-sm border-0 shadow-xl rounded-xl;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  box-shadow: var(--ui-shadow-xl);
+  border-radius: var(--ui-radius-xl);
+}
+
+.dark .dashboard-card {
+  background-color: rgba(38, 38, 38, 0.8);
+}
+
+.dashboard-card {
+  backdrop-filter: blur(8px);
 }
 
 .glass-effect {
-  @apply bg-white/10 dark:bg-neutral-900/10 backdrop-blur-md border border-white/20 dark:border-neutral-800/20;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass-effect {
+  background-color: rgba(23, 23, 23, 0.1);
+  border-color: rgba(38, 38, 38, 0.2);
 }
 
 .sidebar-item {
   height: var(--nav-item-height);
-  @apply flex items-center transition-colors rounded-lg;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  border-radius: var(--ui-radius-md);
 }
 
 .sidebar-child-item {
   height: var(--nav-child-height);
-  @apply flex items-center transition-colors rounded-lg;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  border-radius: var(--ui-radius-md);
 }
 
 .quick-action-item {
   height: var(--quick-action-height);
-  @apply flex items-center transition-colors rounded-lg;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  border-radius: var(--ui-radius-md);
 }
 
 /* Enhanced Transitions */
@@ -233,25 +260,33 @@
 }
 
 .toast-item {
-  @apply shadow-lg ring-1 ring-neutral-200 dark:ring-neutral-800;
+  box-shadow: var(--ui-shadow-lg);
+  border: 1px solid var(--ui-border-accented);
 }
 
 /* Modal & Slideover Backdrop */
 .modal-backdrop,
 .slideover-backdrop {
-  @apply bg-neutral-900/50 backdrop-blur-sm;
+  background-color: rgba(23, 23, 23, 0.5);
+  backdrop-filter: blur(8px);
 }
 
 /* Command Palette Styling */
 .command-palette {
-  @apply bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md;
-  @apply shadow-2xl ring-1 ring-neutral-200 dark:ring-neutral-800;
-  @apply rounded-lg;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--ui-shadow-xl);
+  border: 1px solid var(--ui-border-accented);
+  border-radius: var(--ui-radius-lg);
+}
+
+.dark .command-palette {
+  background-color: rgba(23, 23, 23, 0.95);
+  border-color: var(--ui-border-default);
 }
 
 /* Badge Enhancements */
 .badge-glow {
-  @apply shadow-sm;
   box-shadow: 0 0 0 1px currentColor, var(--ui-shadow-sm);
 }
 
@@ -369,10 +404,15 @@
 
 /* Glassmorphism for cards */
 .glass-card {
-  @apply bg-white/70 dark:bg-neutral-900/70;
-  @apply backdrop-blur-xl backdrop-saturate-150;
-  @apply border border-white/20 dark:border-neutral-800/50;
-  @apply shadow-xl;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--ui-shadow-xl);
+}
+
+.dark .glass-card {
+  background-color: rgba(23, 23, 23, 0.7);
+  border-color: rgba(38, 38, 38, 0.5);
 }
 
 /* Subtle glow effects for interactive elements */

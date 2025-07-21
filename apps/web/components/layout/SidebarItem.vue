@@ -1,0 +1,153 @@
+<!-- components/layout/SidebarItem.vue -->
+<template>
+  <div
+    :class="[
+      'group relative flex items-center rounded-lg transition-all duration-200 ease-in-out',
+      'cursor-pointer hover:scale-[1.02] active:scale-[0.98]',
+      {
+        'px-3 py-2': !collapsed,
+        'px-2 py-2 justify-center': collapsed,
+        'bg-primary-500 text-white shadow-sm hover:bg-primary-600': active,
+        'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-primary-600 dark:hover:text-primary-400': !active
+      }
+    ]"
+    @click="handleClick"
+  >
+    <!-- Icon -->
+    <div
+      :class="[
+        'flex items-center justify-center shrink-0',
+        {
+          'mr-3': !collapsed,
+          'mr-0': collapsed
+        }
+      ]"
+    >
+      <UIcon
+        :name="item.icon"
+        :class="[
+          'transition-colors duration-200 w-5 h-5',
+          {
+            'text-white': active,
+            'text-neutral-600 dark:text-neutral-400 group-hover:text-primary-600 dark:group-hover:text-primary-400': !active
+          }
+        ]"
+      />
+    </div>
+
+    <!-- Label & Badge (only when not collapsed) -->
+    <div v-if="!collapsed" class="flex items-center justify-between flex-1 min-w-0">
+      <span
+        :class="[
+          'truncate text-sm font-medium transition-colors duration-200',
+          {
+            'text-white': active,
+            'text-neutral-700 dark:text-neutral-300 group-hover:text-primary-600 dark:group-hover:text-primary-400': !active
+          }
+        ]"
+      >
+        {{ item.label }}
+      </span>
+
+      <!-- Badge -->
+      <UBadge
+        v-if="badgeData"
+        :label="badgeData.label"
+        :color="active ? 'white' : badgeData.color"
+        :variant="active ? 'outline' : 'soft'"
+        size="xs"
+        class="shrink-0 ml-2"
+      />
+    </div>
+
+    <!-- Tooltip for collapsed state -->
+    <UTooltip
+      v-if="collapsed"
+      :text="item.label"
+      :delay-duration="500"
+    >
+      <div class="absolute inset-0" />
+    </UTooltip>
+
+    <!-- Active indicator -->
+    <div
+      v-if="active"
+      class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-white rounded-r-full"
+    />
+
+    <!-- Hover effect -->
+    <div
+      :class="[
+        'absolute inset-0 rounded-lg transition-opacity duration-200',
+        'bg-gradient-to-r from-primary-500/10 to-secondary-500/10',
+        'opacity-0 group-hover:opacity-100',
+        { 'opacity-0': active }
+      ]"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+interface NavigationItem {
+  id: string
+  label: string
+  to: string
+  icon: string
+  badge?: {
+    label: string
+    color: string
+  }
+}
+
+interface Props {
+  item: NavigationItem
+  collapsed?: boolean
+  active?: boolean
+  badge?: {
+    label: string
+    color: string
+  }
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  collapsed: false,
+  active: false
+})
+
+const emit = defineEmits<{
+  click: []
+}>()
+
+// Use badge from props or item
+const badgeData = computed(() => {
+  return props.badge || props.item.badge
+})
+
+// Handle click event
+const handleClick = () => {
+  emit('click')
+}
+</script>
+
+<style scoped>
+/* Enhanced hover effects */
+.group:hover .group-hover\:text-primary-600 {
+  color: rgb(34 197 94);
+}
+
+.dark .group:hover .dark\:group-hover\:text-primary-400 {
+  color: rgb(74 222 128);
+}
+
+/* Smooth badge animations */
+.badge-enter-active,
+.badge-leave-active {
+  transition: all 0.2s ease-in-out;
+}
+
+.badge-enter-from,
+.badge-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
+}
+</style>
