@@ -1,442 +1,348 @@
+<!-- pages/showcase.vue - Enhanced with Advanced Theme System -->
 <template>
-  <div class="min-h-screen flex flex-col bg-neutral-50 dark:bg-neutral-900">
+  <div class="min-h-screen bg-default theme-transition">
+    <!-- Header with Theme Toggle -->
+    <AppHeader 
+      :navigation="headerNavigation"
+      :user="currentUser"
+      :notification-count="5"
+      app-name="Sciveto Showcase"
+      @open-search="openSearch"
+      @toggle-notifications="toggleNotifications"
+      @toggle-sidebar="toggleSidebar"
+      @sign-out="handleSignOut"
+    />
+
+    <!-- Sidebar -->
+    <AppSidebar 
+      :collapsed="sidebarCollapsed"
+      @update:collapsed="sidebarCollapsed = $event"
+      @sign-out="handleSignOut"
+    />
+
     <!-- Main Content -->
-    <div class="flex-1 overflow-auto p-6">
-        <!-- World Map Section -->
-        <UCard>
-          <template #header>
-            🌍 Global Project Map
-          </template>
-
-          <WorldMap name="world-map" />
-        </UCard>
-
-        <!-- Mevcut header/sidebar -->
-        <NavigationShowcase />
-        <!-- LayoutShowcase'i ekle -->
-        <LayoutShowcase />
-        <!-- Form Section -->
-        <FormShowcase />
-        <DataShowcase />
-        <FeedbackShowcase />
-
-
-
-        <!-- Business Components Showcase -->
-        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-          <template #header>
-            <h3 class="text-xl font-bold text-slate-800">🏢 Business Components</h3>
-          </template>
-
-          <div class="space-y-8">
-            <!-- Stock Item Cards -->
-            <div>
-              <h4 class="font-semibold text-slate-700 mb-4">Stock Item Cards</h4>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <StockItemCard name="StockItemCard" v-for="stockItem in sampleStockItems" :key="stockItem.id"
-                  :stock-item="stockItem" @click="handleStockItemClick(stockItem.id)" @view="handleStockItemView"
-                  @edit="handleStockItemEdit" @delete="handleStockItemDelete" @adjust-stock="handleStockAdjust"
-                  @add-to-project="handleAddToProject" />
+    <div class="lg:pl-64 transition-all duration-300 theme-transition" :class="{ 'lg:pl-16': sidebarCollapsed }">
+      <div class="px-4 sm:px-6 lg:px-8 py-8">
+        <div class="max-w-7xl mx-auto space-y-8">
+          <!-- Welcome Section with Theme Demo -->
+          <div class="dashboard-card p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center gap-3">
+                <UIcon name="i-lucide-palette" class="w-8 h-8 text-primary" />
+                <div>
+                  <h1 class="text-3xl font-bold text-highlighted">🎨 Component Showcase</h1>
+                  <p class="text-muted mt-1">Interactive components with advanced theme system</p>
+                </div>
+              </div>
+              
+              <!-- Theme Controls Demo -->
+              <div class="flex items-center gap-2">
+                <div class="hidden md:block text-sm text-muted">
+                  Current: <span class="font-medium text-highlighted capitalize">{{ themeState.current }}</span>
+                </div>
+                <ThemeToggle 
+                  show-options 
+                  show-label 
+                  variant="outline" 
+                  color="primary"
+                  size="md"
+                />
               </div>
             </div>
 
-            <!-- Category Cards -->
-            <div>
-              <h4 class="font-semibold text-slate-700 mb-4">Category Cards</h4>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <CategoryCard name="CategoryCard" v-for="category in sampleCategories" :key="category.id"
-                  :category="category" @click="handleCategoryClick(category.id)" @view="handleCategoryView"
-                  @edit="handleCategoryEdit" @delete="handleCategoryDelete" @add-item="handleCategoryAddItem"
-                  @view-items="handleCategoryViewItems" />
+            <!-- Theme Status Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+              <div class="p-4 bg-elevated border border-accented rounded-lg theme-transition" :class="themeState.current === 'dark' ? 'ring-2 ring-primary' : ''">
+                <div class="flex items-center gap-3">
+                  <UIcon 
+                    :name="themeState.current === 'dark' ? 'i-lucide-moon' : 'i-lucide-sun'" 
+                    class="w-6 h-6"
+                    :class="themeState.current === 'dark' ? 'text-primary' : 'text-warning'"
+                  />
+                  <div>
+                    <div class="text-sm font-semibold text-highlighted capitalize">{{ themeState.current }} Mode</div>
+                    <div class="text-xs text-muted">Currently active</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 bg-elevated border border-accented rounded-lg theme-transition" :class="themeState.preference === 'auto' ? 'ring-2 ring-secondary' : ''">
+                <div class="flex items-center gap-3">
+                  <UIcon 
+                    name="i-lucide-monitor" 
+                    class="w-6 h-6"
+                    :class="themeState.preference === 'auto' ? 'text-secondary' : 'text-muted'"
+                  />
+                  <div>
+                    <div class="text-sm font-semibold text-highlighted">{{ themeState.preference === 'auto' ? 'Auto' : 'Manual' }}</div>
+                    <div class="text-xs text-muted">Preference</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 bg-elevated border border-accented rounded-lg theme-transition" :class="themeState.isSystemDark ? 'ring-2 ring-info' : 'ring-2 ring-warning'">
+                <div class="flex items-center gap-3">
+                  <UIcon 
+                    name="i-lucide-laptop" 
+                    class="w-6 h-6"
+                    :class="themeState.isSystemDark ? 'text-info' : 'text-warning'"
+                  />
+                  <div>
+                    <div class="text-sm font-semibold text-highlighted">{{ themeState.isSystemDark ? 'Dark' : 'Light' }}</div>
+                    <div class="text-xs text-muted">System</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 bg-elevated border border-accented rounded-lg theme-transition" :class="themeState.isTransitioning ? 'ring-2 ring-error' : 'ring-2 ring-success'">
+                <div class="flex items-center gap-3">
+                  <UIcon 
+                    :name="themeState.isTransitioning ? 'i-lucide-loader-circle' : 'i-lucide-check-circle'" 
+                    class="w-6 h-6"
+                    :class="[
+                      themeState.isTransitioning ? 'text-error animate-spin' : 'text-success',
+                    ]"
+                  />
+                  <div>
+                    <div class="text-sm font-semibold text-highlighted">{{ themeState.isTransitioning ? 'Changing' : 'Ready' }}</div>
+                    <div class="text-xs text-muted">Status</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-muted">
+              Bu sayfada projemizde kullanacağımız tüm component'leri görebilirsiniz.
+              Artık <strong class="text-highlighted">advanced theme system</strong> ile otomatik dark/light mode desteği,
+              keyboard shortcuts ve smooth transitions dahil!
+            </p>
+          </div>
+
+          <!-- Theme System Demo -->
+          <div class="dashboard-card p-6">
+            <div class="flex items-center gap-3 mb-6">
+              <UIcon name="i-lucide-paintbrush" class="w-6 h-6 text-primary" />
+              <h2 class="text-2xl font-bold text-highlighted">🎨 Theme System Demo</h2>
+            </div>
+
+            <div class="space-y-6">
+              <!-- Manual Theme Controls -->
+              <div>
+                <h3 class="text-lg font-semibold text-highlighted mb-4">Manual Theme Controls</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <UButton 
+                    @click="setTheme('light')" 
+                    :variant="themeState.current === 'light' ? 'solid' : 'outline'"
+                    color="warning"
+                    size="lg"
+                    block
+                  >
+                    <UIcon name="i-lucide-sun" class="w-5 h-5 mr-2" />
+                    Light Mode
+                  </UButton>
+
+                  <UButton 
+                    @click="setTheme('dark')" 
+                    :variant="themeState.current === 'dark' ? 'solid' : 'outline'"
+                    color="info"
+                    size="lg"
+                    block
+                  >
+                    <UIcon name="i-lucide-moon" class="w-5 h-5 mr-2" />
+                    Dark Mode
+                  </UButton>
+
+                  <UButton 
+                    @click="setTheme('auto')" 
+                    :variant="themeState.preference === 'auto' ? 'solid' : 'outline'"
+                    color="neutral"
+                    size="lg"
+                    block
+                  >
+                    <UIcon name="i-lucide-monitor" class="w-5 h-5 mr-2" />
+                    Auto Mode
+                  </UButton>
+                </div>
+              </div>
+
+              <!-- Theme Toggle Variants -->
+              <div>
+                <h3 class="text-lg font-semibold text-highlighted mb-4">Theme Toggle Variants</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div class="space-y-2">
+                    <div class="text-sm font-medium text-highlighted">Simple</div>
+                    <ThemeToggle />
+                  </div>
+                  
+                  <div class="space-y-2">
+                    <div class="text-sm font-medium text-highlighted">With Label</div>
+                    <ThemeToggle show-label />
+                  </div>
+                  
+                  <div class="space-y-2">
+                    <div class="text-sm font-medium text-highlighted">Full Options</div>
+                    <ThemeToggle show-options show-shortcuts variant="outline" color="primary" />
+                  </div>
+                  
+                  <div class="space-y-2">
+                    <div class="text-sm font-medium text-highlighted">Solid Variant</div>
+                    <ThemeToggle show-label variant="solid" color="secondary" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Keyboard Shortcuts Demo -->
+              <div>
+                <h3 class="text-lg font-semibold text-highlighted mb-4">Keyboard Shortcuts</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div class="flex items-center justify-between p-3 bg-elevated rounded-lg border border-accented theme-transition">
+                    <span class="text-sm text-default">Toggle</span>
+                    <kbd class="px-2 py-1 bg-muted text-muted text-xs rounded theme-transition">Ctrl+Shift+T</kbd>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-elevated rounded-lg border border-accented theme-transition">
+                    <span class="text-sm text-default">Light</span>
+                    <kbd class="px-2 py-1 bg-muted text-muted text-xs rounded theme-transition">Ctrl+Shift+L</kbd>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-elevated rounded-lg border border-accented theme-transition">
+                    <span class="text-sm text-default">Dark</span>
+                    <kbd class="px-2 py-1 bg-muted text-muted text-xs rounded theme-transition">Ctrl+Shift+D</kbd>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-elevated rounded-lg border border-accented theme-transition">
+                    <span class="text-sm text-default">Auto</span>
+                    <kbd class="px-2 py-1 bg-muted text-muted text-xs rounded theme-transition">Ctrl+Shift+A</kbd>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </UCard>
 
-        <!-- Project Cards Showcase -->
-        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-          <template #header>
-            <div class="flex items-center justify-between">
-              <h3 class="text-xl font-bold text-slate-800">🎴 Project Cards</h3>
-              <UButton variant="outline" size="sm" :loading="projectsLoading" @click="toggleProjectsLoading">
-                {{ projectsLoading ? 'Loading...' : 'Toggle Loading' }}
-              </UButton>
-            </div>
-          </template>
-
-          <!-- Loading State -->
-          <div v-if="projectsLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <SkeletonLoader name="SkeletonLoader" v-for="n in 3" :key="n" type="card" />
-          </div>
-
-          <!-- Loaded State -->
-          <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <ProjectCard name="ProjectCard" v-for="project in sampleProjects" :key="project.id" :project="project"
-              @click="handleProjectClick(project.id)" />
-          </div>
-        </UCard>
-
-        <!-- Project Table Showcase -->
-        <UCard class="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-          <template #header>
-            <div class="flex items-center justify-between">
-              <h3 class="text-xl font-bold text-slate-800">📊 Project Table</h3>
-              <UButton variant="outline" size="sm" :loading="tableLoading" @click="toggleTableLoading">
-                {{ tableLoading ? 'Loading...' : 'Toggle Loading' }}
-              </UButton>
-            </div>
-          </template>
-
-          <!-- Loading State -->
-          <div v-if="tableLoading" class="space-y-0 bg-white rounded-lg border overflow-hidden">
-            <SkeletonLoader name="SkeletonLoader" v-for="n in 5" :key="n" type="table-row" />
-          </div>
-
-          <!-- Loaded State -->
-          <ProjectTable name="ProjectTable" v-else :projects="sampleProjects" @view="handleProjectView"
-            @edit="handleProjectEdit" @delete="handleProjectDelete" />
-        </UCard>
-        <AppFooter :app-name="appName" />
-        <!-- Footer -->
-        <UCard class="mt-8">
-          <template #header>
-            <h3 class="text-xl font-bold">🎉 Showcase Complete</h3>
-          </template>
-          <p class="text-gray-600">This is the end of the component showcase. All components are fully functional and ready to use!</p>
-        </UCard>
+          <!-- Original Showcase Components -->
+          <DataShowcase />
+          <FeedbackShowcase />
+          <ToastShowcase />
+          <FormShowcase />
+          <StatusShowcase />
+          <LayoutShowcase />
+          <NavigationShowcase />
+        </div>
       </div>
     </div>
+  </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
-import { useDualToast } from '~/composables/useDualToast'
+import { useTheme } from '~/composables/useTheme'
 
+// Import showcase components
 import DataShowcase from '@/showcase/data/DataShowcase.vue'
-
 import FeedbackShowcase from '@/showcase/feedback/FeedbackShowcase.vue'
 import ToastShowcase from '@/showcase/feedback/ToastShowcase.vue'
-
 import FormShowcase from '~/showcase/forms/FormShowcase.vue'
-//import InputShowcase from '~/showcase/forms/InputShowcase.vue'
 import StatusShowcase from '~/showcase/forms/StatusShowcase.vue'
-
 import LayoutShowcase from '~/showcase/layout/LayoutShowcase.vue'
-
 import NavigationShowcase from '~/showcase/navigation/NavigationShowcase.vue'
 
-import WorldMap from '@/components/WorldMap.vue'
-
+// Import layout components
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
-import AppFooter from '~/components/layout/AppFooter.vue'
 
-import SkeletonLoader from '~/components/ui/SkeletonLoader.vue'
-import ProjectCard from '~/components/projects/ProjectCard.vue'
+// Theme system
+const { state: themeState, setTheme } = useTheme()
 
-const dualToast = useDualToast()
+// Page state
+const sidebarCollapsed = ref(false)
 
-definePageMeta({
-  middleware: 'auth'
-})
-
-// Fix: Update these functions to use dualToast consistently
-const success = (message) => dualToast.success(message)
-const error = (message) => dualToast.error(message)
-const warning = (message, options) => dualToast.warning(message, options)
-const info = (message) => dualToast.info(message)
-
-let simulationInterval = null
-
-const projectsLoading = ref(false)
-const tableLoading = ref(false)
-
-
-const sampleStockItems = ref([
-  {
-    id: '1',
-    name: 'Safety Helmet',
-    sku: 'SH-001',
-    category: 'Safety Equipment',
-    currentStock: 45,
-    minStock: 10,
-    maxStock: 100,
-    unitPrice: 24.99,
-    totalValue: 1124.55,
-    supplier: 'SafetyFirst Co.',
-    lastRestocked: '2024-01-15T10:30:00Z',
-    status: 'IN_STOCK',
-    location: 'Warehouse A, Shelf 12',
-    description: 'High-quality construction safety helmet'
-  },
-  {
-    id: '2',
-    name: 'Work Gloves',
-    sku: 'WG-002',
-    category: 'Safety Equipment',
-    currentStock: 8,
-    minStock: 15,
-    maxStock: 50,
-    unitPrice: 12.99,
-    totalValue: 103.92,
-    supplier: 'WorkGear Ltd.',
-    lastRestocked: '2024-01-10T14:20:00Z',
-    status: 'LOW_STOCK',
-    location: 'Warehouse B, Shelf 5',
-    description: 'Durable work gloves for construction'
-  }
-])
-
-const sampleCategories = ref([
-  {
-    id: '1',
-    name: 'Safety Equipment',
-    description: 'Personal protective equipment and safety gear',
-    color: 'blue',
-    icon: 'i-heroicons-shield-check',
-    status: 'Active',
-    itemCount: 32,
-    totalValue: 8500,
-    lowStockItems: 8,
-    activeProjects: 15,
-    popularItems: [
-      { id: '1', name: 'Safety Helmet', price: 24.99 },
-      { id: '2', name: 'Safety Vest', price: 19.99 },
-      { id: '3', name: 'Safety Gloves', price: 12.99 }
-    ],
-    parentCategory: null,
-    lastActivity: '2024-01-15T16:45:00Z',
-    lastActivityDescription: 'Safety helmets restocked'
-  },
-  {
-    id: '2',
-    name: 'Tools',
-    description: 'Construction and maintenance tools',
-    color: 'green',
-    icon: 'i-heroicons-wrench-screwdriver',
-    status: 'Active',
-    itemCount: 45,
-    totalValue: 12750,
-    lowStockItems: 3,
-    activeProjects: 8,
-    popularItems: [
-      { id: '4', name: 'Power Drill', price: 89.99 },
-      { id: '5', name: 'Hammer', price: 25.99 },
-      { id: '6', name: 'Screwdriver Set', price: 34.99 }
-    ],
-    parentCategory: { name: 'Equipment' },
-    lastActivity: '2024-01-12T10:30:00Z',
-    lastActivityDescription: 'New power tools added'
-  }
-])
-
-const user = ref({
-  id: '1',
+// Mock data
+const currentUser = {
   name: 'John Doe',
-  email: 'john@example.com',
-  avatar: null
+  email: 'john@sciveto.com',
+  avatar: '/avatar-placeholder.jpg'
+}
+
+const headerNavigation = [
+  { label: 'Dashboard', to: '/dashboard', icon: 'i-lucide-home' },
+  { label: 'Showcase', to: '/showcase', icon: 'i-lucide-palette' },
+  { label: 'Components', to: '/components', icon: 'i-lucide-component' }
+]
+
+// Event handlers
+const toggleSidebar = () => {
+  sidebarCollapsed.value = !sidebarCollapsed.value
+}
+
+const openSearch = () => {
+  console.log('Search opened')
+}
+
+const toggleNotifications = () => {
+  console.log('Notifications toggled')
+}
+
+const handleSignOut = () => {
+  console.log('User signed out')
+}
+
+// Page meta
+definePageMeta({
+  middleware: 'auth',
+  title: 'Component Showcase'
 })
-const sampleProjects = ref([
-  {
-    id: '1',
-    name: 'Modern Website Redesign',
-    projectCode: 'WEB-2024-001',
-    description: 'Complete website redesign with modern UI/UX principles and responsive design for better user experience.',
-    status: 'designing',
-    priority: 'HIGH',
-    completionPercentage: 65,
-    clientName: 'Tech Solutions Inc.',
-    manager: { name: 'Sarah Connor', email: 'sarah@techsolutions.com' },
-    estimatedCost: 25000,
-    actualCost: 15000,
-    deadline: '2024-12-15',
-    createdAt: '2024-10-01'
-  },
-  {
-    id: '2',
-    name: 'Mobile App Development',
-    projectCode: 'APP-2024-002',
-    description: 'Native mobile application development for iOS and Android platforms with cross-platform compatibility.',
-    status: 'manufacturing',
-    priority: 'URGENT',
-    completionPercentage: 40,
-    clientName: 'StartupX',
-    manager: { name: 'John Matrix', email: 'john@startupx.com' },
-    estimatedCost: 45000,
-    actualCost: 20000,
-    deadline: '2024-11-30',
-    createdAt: '2024-09-15'
-  },
-  {
-    id: '3',
-    name: 'E-commerce Platform',
-    projectCode: 'ECOM-2024-003',
-    description: 'Full-featured e-commerce platform with payment integration, inventory management, and analytics.',
-    status: 'planning',
-    priority: 'MEDIUM',
-    completionPercentage: 15,
-    clientName: 'Retail Masters',
-    manager: { name: 'Lisa Wong', email: 'lisa@retailmasters.com' },
-    estimatedCost: 60000,
-    actualCost: 8000,
-    deadline: '2025-02-28',
-    createdAt: '2024-10-10'
-  }
-])
 
-const headerNavigation = ref([
-  { label: 'Dashboard', to: '/dashboard', icon: 'i-lucide-home' },
-  { label: 'Showcase', to: '/showcase', icon: 'i-lucide-layout' }
-])
-
-const sidebarNavigation = ref([
-  { label: 'Dashboard', to: '/dashboard', icon: 'i-lucide-home' },
-  { label: 'Showcase', to: '/showcase', icon: 'i-lucide-layout' }
-])
-
-const sidebarOpen = ref(false)
-const notificationCount = ref(3)
-const appName = ref('Sciveto')
-
-// Function'lar
-const openSearch = () => console.log('Search opened')
-const toggleNotifications = () => console.log('Notifications toggled')
-const signOut = () => console.log('User signed out')
-
-const toggleProjectsLoading = () => {
-  projectsLoading.value = !projectsLoading.value
-  if (projectsLoading.value) {
-    setTimeout(() => {
-      projectsLoading.value = false
-    }, 3000)
-  }
-}
-
-const toggleTableLoading = () => {
-  tableLoading.value = !tableLoading.value
-  if (tableLoading.value) {
-    setTimeout(() => {
-      tableLoading.value = false
-    }, 3000)
-  }
-}
-
-const handleProjectClick = (projectId) => {
-  console.log('Project clicked:', projectId)
-  info(`Viewing project: ${projectId}`)
-}
-
-const handleProjectView = (projectId) => {
-  console.log('View project:', projectId)
-  info(`Opening project details: ${projectId}`)
-}
-
-const handleProjectEdit = (projectId) => {
-  console.log('Edit project:', projectId)
-  info(`Editing project: ${projectId}`)
-}
-
-const handleProjectDelete = (projectId) => {
-  console.log('Delete project:', projectId)
-  warning(`Are you sure you want to delete project: ${projectId}?`, {
-    autoClose: false,
-    action: {
-      text: 'Confirm Delete',
-      handler: () => {
-        success('Project deleted successfully!')
-      }
-    }
-  })
-}
-
-// Stock item handlers
-const handleStockItemClick = (stockItemId) => {
-  console.log('Stock item clicked:', stockItemId)
-  info(`Viewing stock item: ${stockItemId}`)
-}
-
-const handleStockItemView = (stockItemId) => {
-  console.log('View stock item:', stockItemId)
-  success(`Opening stock item details: ${stockItemId}`)
-}
-
-const handleStockItemEdit = (stockItemId) => {
-  console.log('Edit stock item:', stockItemId)
-  info(`Editing stock item: ${stockItemId}`)
-}
-
-const handleStockItemDelete = (stockItemId) => {
-  console.log('Delete stock item:', stockItemId)
-  warning(`Are you sure you want to delete stock item: ${stockItemId}?`, {
-    autoClose: false,
-    action: {
-      text: 'Confirm Delete',
-      handler: () => {
-        success('Stock item deleted successfully!')
-      }
-    }
-  })
-}
-
-const handleStockAdjust = (stockItemId) => {
-  console.log('Adjust stock:', stockItemId)
-  info(`Opening stock adjustment for: ${stockItemId}`)
-}
-
-const handleAddToProject = (stockItemId) => {
-  console.log('Add to project:', stockItemId)
-  success(`Added stock item ${stockItemId} to project`)
-}
-
-// Category handlers
-const handleCategoryClick = (categoryId) => {
-  console.log('Category clicked:', categoryId)
-  info(`Viewing category: ${categoryId}`)
-}
-
-const handleCategoryView = (categoryId) => {
-  console.log('View category:', categoryId)
-  success(`Opening category details: ${categoryId}`)
-}
-
-const handleCategoryEdit = (categoryId) => {
-  console.log('Edit category:', categoryId)
-  info(`Editing category: ${categoryId}`)
-}
-
-const handleCategoryDelete = (categoryId) => {
-  console.log('Delete category:', categoryId)
-  warning(`Are you sure you want to delete category: ${categoryId}?`, {
-    autoClose: false,
-    action: {
-      text: 'Confirm Delete',
-      handler: () => {
-        success('Category deleted successfully!')
-      }
-    }
-  })
-}
-
-const handleCategoryAddItem = (categoryId) => {
-  console.log('Add item to category:', categoryId)
-  success(`Adding new item to category: ${categoryId}`)
-}
-
-const handleCategoryViewItems = (categoryId) => {
-  console.log('View category items:', categoryId)
-  info(`Viewing items in category: ${categoryId}`)
-}
-
-
-// Set page title
+// SEO
 useHead({
-  title: 'Component Showcase - Dashboard'
-})
-
-// Clean up interval on unmount
-onUnmounted(() => {
-  if (simulationInterval) {
-    clearInterval(simulationInterval)
-  }
+  title: 'Component Showcase - Advanced Theme System',
+  meta: [
+    { name: 'description', content: 'Interactive component showcase with advanced theme management system' }
+  ]
 })
 </script>
+
+<style scoped>
+/* Enhanced transitions for sidebar and theme changes */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Theme transition class for smooth color changes */
+.theme-transition {
+  transition: 
+    color 0.25s ease-in-out,
+    background-color 0.25s ease-in-out,
+    border-color 0.25s ease-in-out,
+    box-shadow 0.25s ease-in-out;
+}
+
+/* Custom scrollbar for main content */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ui-background-muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ui-border-default);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ui-neutral);
+}
+
+/* Force light mode fixes */
+html:not(.dark) ::-webkit-scrollbar-track {
+  background: #f1f5f9 !important;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: #cbd5e1 !important;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8 !important;
+}
+</style>

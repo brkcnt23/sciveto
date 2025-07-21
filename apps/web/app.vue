@@ -1,214 +1,164 @@
-<!-- app.vue - GLOBAL LAYOUT WITH SIDEBAR -->
+<!-- app.vue - Updated with Advanced Theme System -->
 <template>
   <UApp>
-    <!-- Global Layout with Sidebar -->
-    <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <!-- Sidebar - Always visible -->
-      <AppSidebar
-        v-model:collapsed="sidebarCollapsed"
-        :user="user"
-        :notification-count="notificationCount"
-        @sign-out="handleSignOut"
-      />
-
-      <!-- Main Content Area -->
-      <div
-        :class="[
-          'transition-all duration-300 ease-in-out',
-          'ml-16' // Always leave space for collapsed sidebar
-        ]"
-      >
-        <!-- Page Content -->
-        <NuxtPage />
-      </div>
-    </div>
-
-    <!-- Custom Toast System -->
-    <Toast />
+    <NuxtPage />
   </UApp>
 </template>
 
-<script setup>
-// App-level configuration
+<script setup lang="ts">
+import { onErrorCaptured, watch } from 'vue'
+import { useTheme } from '~/composables/useTheme'
+
+// SEO and Meta
 useHead({
-  titleTemplate: '%s - Sciveto',
+  title: 'Sciveto - Modern Dashboard',
   meta: [
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    { name: 'description', content: 'Modern dashboard built with Nuxt UI v3' },
+    { name: 'theme-color', content: '#16a34a', media: '(prefers-color-scheme: light)' },
+    { name: 'theme-color', content: '#22c55e', media: '(prefers-color-scheme: dark)' }
+  ],
+  link: [
+    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
   ],
   htmlAttrs: {
-    class: 'light' // ✅ Zorla açık mod
+    lang: 'en'
   }
 })
 
-// Global error handling
-const handleError = (error) => {
-  console.error('Global error:', error)
-}
-
-// Provide error handler
-provide('error-handler', handleError)
-
-// Global sidebar state
-const sidebarCollapsed = ref(true) // Default collapsed
-const notificationCount = ref(3)
-
-// User data (should come from auth store)
-const user = ref({
-  name: 'John Doe',
-  email: 'john@example.com'
+// Initialize theme system with global events
+const { state: themeState } = useTheme({
+  autoMode: 'system',
+  enableTransitions: true,
+  enableKeyboardShortcuts: true,
+  transitionDuration: 250
+}, {
+  onAfterChange: (theme: 'light' | 'dark') => {
+    // Update meta theme-color dynamically
+    const metaTag = document.querySelector('meta[name="theme-color"]')
+    if (metaTag) {
+      const color = theme === 'dark' ? '#22c55e' : '#16a34a'
+      metaTag.setAttribute('content', color)
+    }
+    
+    // Update document color scheme
+    document.documentElement.style.colorScheme = theme
+  }
 })
 
-// Sign out handler
-const handleSignOut = () => {
-  // Handle sign out logic
-  console.log('Signing out...')
+// Global theme state for debugging (development only)
+if (process.env.NODE_ENV === 'development') {
+  watch(themeState, (newState: any) => {
+    console.log('[App] Theme state updated:', newState)
+  }, { deep: true })
 }
+
+// Error handling
+onErrorCaptured((error: Error, instance: any, info: string) => {
+  console.error('[App] Error captured:', error, info)
+  return false
+})
 </script>
 
 <style>
-/* Global styles */
+/* Global styles that work with the theme system */
 html {
-  height: 100%;
+  /* Smooth transitions for theme changes */
+  transition: color-scheme 250ms ease-in-out;
+  scroll-behavior: smooth;
 }
 
 body {
-  min-height: 100%;
-  font-family: 'Inter', system-ui, sans-serif;
+  /* Ensure body inherits the theme correctly */
+  color: rgb(var(--color-gray-900) / var(--tw-text-opacity, 1));
+  background-color: rgb(var(--color-white) / var(--tw-bg-opacity, 1));
+  
+  /* Improve font rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* Ensure smooth transitions for theme switching */
-* {
-  transition-property: color, background-color, border-color;
-  transition-duration: 200ms;
-  transition-timing-function: ease-in-out;
+/* Dark mode body styles */
+html.dark body {
+  color: rgb(var(--color-gray-100) / var(--tw-text-opacity, 1));
+  background-color: rgb(var(--color-gray-900) / var(--tw-bg-opacity, 1));
 }
 
-/* Dark mode improvements */
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* Ensure smooth transitions during theme changes */
+*,
+*::before,
+*::after {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
-/* Focus styles for accessibility - Fixed for Tailwind v4 */
+/* Prevent layout shift during theme transitions */
+img, svg, video {
+  transition: opacity 150ms ease-in-out;
+}
+
+/* Focus styles that work in both themes */
 :focus-visible {
-  outline: 2px solid rgb(34 197 94); /* green-500 equivalent */
+  outline: 2px solid rgb(var(--color-primary-500));
   outline-offset: 2px;
 }
 
-/* Custom scrollbar - Fixed for Tailwind v4 */
+/* Custom scrollbar that adapts to theme */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgb(241 245 249); /* neutral-100 equivalent */
+  background: rgb(var(--color-gray-100));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(203 213 225); /* neutral-300 equivalent */
+  background: rgb(var(--color-gray-300));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(148 163 184); /* neutral-400 equivalent */
+  background: rgb(var(--color-gray-400));
 }
 
-@media (prefers-color-scheme: dark) {
-  ::-webkit-scrollbar-track {
-    background: rgb(30 41 59); /* neutral-800 equivalent */
+/* Dark mode scrollbar */
+html.dark ::-webkit-scrollbar-track {
+  background: rgb(var(--color-gray-800));
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-gray-600));
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--color-gray-500));
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  * {
+    transition: none !important;
+    animation: none !important;
   }
   
-  ::-webkit-scrollbar-thumb {
-    background: rgb(71 85 105); /* neutral-600 equivalent */
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgb(100 116 139); /* neutral-500 equivalent */
-  }
-}
-
-/* Ensure our custom toasts are above everything */
-#top-toasts,
-#bottom-toasts {
-  z-index: 9999 !important;
-}
-
-/* Custom Design Tokens for Components */
-:root {
-  --avatar-primary-bg: rgb(34 197 94);
-  --avatar-secondary-bg: rgb(59 130 246);
-  --avatar-success-bg: rgb(16 185 129);
-  --avatar-info-bg: rgb(59 130 246);
-  --avatar-warning-bg: rgb(245 158 11);
-  --avatar-error-bg: rgb(239 68 68);
-  --avatar-neutral-bg: rgb(100 116 139);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --avatar-primary-bg: rgb(74 222 128);
-    --avatar-secondary-bg: rgb(96 165 250);
-    --avatar-success-bg: rgb(52 211 153);
-    --avatar-info-bg: rgb(96 165 250);
-    --avatar-warning-bg: rgb(251 191 36);
-    --avatar-error-bg: rgb(248 113 113);
-    --avatar-neutral-bg: rgb(148 163 184);
-  }
-}
-
-/* Enhanced gradients for Avatar component */
-.gradient-blue {
-  background: linear-gradient(135deg, rgb(96 165 250), rgb(139 92 246));
-}
-
-.gradient-green {
-  background: linear-gradient(135deg, rgb(52 211 153), rgb(59 130 246));
-}
-
-.gradient-purple {
-  background: linear-gradient(135deg, rgb(168 85 247), rgb(236 72 153));
-}
-
-.gradient-pink {
-  background: linear-gradient(135deg, rgb(244 114 182), rgb(239 68 68));
-}
-
-.gradient-orange {
-  background: linear-gradient(135deg, rgb(251 146 60), rgb(245 158 11));
-}
-
-/* Status indicator animations */
-@keyframes pulse-status {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
-.pulse-status {
-  animation: pulse-status 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Backdrop blur support */
-.backdrop-blur-sm {
-  backdrop-filter: blur(4px);
-}
-
-.backdrop-blur-md {
-  backdrop-filter: blur(12px);
-}
-
-/* Glass effect utility */
-.glass-effect {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-@media (prefers-color-scheme: dark) {
-  .glass-effect {
-    background: rgba(30, 41, 59, 0.3);
-    border: 1px solid rgba(71, 85, 105, 0.3);
+  html {
+    color-scheme: light !important;
   }
 }
 </style>

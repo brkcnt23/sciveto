@@ -1,9 +1,10 @@
+// app.config.ts - Enhanced with Advanced Theme System
 declare global {
   const defineAppConfig: typeof import('nuxt/app')['defineAppConfig']
 }
 
 export default defineAppConfig({
-  // Nuxt UI v3 Color System - Fixed for Tailwind v4
+  // Nuxt UI v3 Color System - Enhanced for theme system
   ui: {
     colors: {
       primary: 'green',
@@ -15,7 +16,7 @@ export default defineAppConfig({
       neutral: 'slate'
     },
 
-    // Global Icons Configuration
+    // Global Icons Configuration - Enhanced with theme icons
     icons: {
       chevronDown: 'i-lucide-chevron-down',
       chevronUp: 'i-lucide-chevron-up',
@@ -26,10 +27,16 @@ export default defineAppConfig({
       check: 'i-lucide-check',
       minus: 'i-lucide-minus',
       search: 'i-lucide-search',
-      external: 'i-lucide-external-link'
+      external: 'i-lucide-external-link',
+      
+      // Theme-specific icons
+      sun: 'i-lucide-sun',
+      moon: 'i-lucide-moon',
+      monitor: 'i-lucide-monitor',
+      palette: 'i-lucide-palette'
     },
 
-    // Sidebar Navigation Theming
+    // Enhanced Sidebar Navigation Theming with Dark Mode Support
     sidebar: {
       slots: {
         root: 'fixed inset-y-0 left-0 z-50 bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800 shadow-lg transition-all duration-300 ease-in-out',
@@ -45,7 +52,7 @@ export default defineAppConfig({
       }
     },
 
-    // Navigation Item Theming
+    // Enhanced Navigation Item Theming with Better Dark Mode
     navigationItem: {
       slots: {
         base: 'group flex items-center rounded-lg transition-colors cursor-pointer',
@@ -57,7 +64,7 @@ export default defineAppConfig({
       variants: {
         state: {
           default: {
-            base: 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-highlighted',
+            base: 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-highlighted transition-colors',
           },
           active: {
             base: 'bg-primary text-white shadow-sm',
@@ -67,235 +74,121 @@ export default defineAppConfig({
           }
         },
         size: {
-          collapsed: {
-            base: 'w-10 h-10 justify-center',
-            icon: 'w-5 h-5'
+          sm: {
+            base: 'px-2 py-1.5',
+            icon: 'w-4 h-4 mr-2',
+            label: 'text-xs'
           },
-          expanded: {
-            base: 'px-3 py-2.5 h-10 justify-start',
-            icon: 'w-5 h-5 mr-3'
+          md: {
+            base: 'px-3 py-2',
+            icon: 'w-5 h-5 mr-3',
+            label: 'text-sm'
           },
-          child: {
-            base: 'px-3 py-2 h-9 justify-start gap-3',
-            icon: 'h-1.5 w-1.5 rounded-full bg-current opacity-60'
+          lg: {
+            base: 'px-4 py-2.5',
+            icon: 'w-6 h-6 mr-3',
+            label: 'text-base'
           }
         }
-      },
-      defaultVariants: {
-        state: 'default',
-        size: 'expanded'
       }
     },
 
-    // Quick Action Button Theming
-    quickAction: {
+    // Enhanced Button Theming for Dark Mode
+    button: {
       slots: {
-        base: 'w-full flex items-center rounded-lg text-sm font-medium transition-colors',
-        icon: 'flex items-center justify-center shrink-0',
+        base: 'focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 flex-shrink-0 font-medium rounded-md text-sm gap-x-1.5 px-2.5 py-1.5 transition-colors'
+      },
+      variants: {
+        color: {
+          primary: {
+            solid: 'shadow-sm text-white dark:text-white bg-primary-500 hover:bg-primary-600 disabled:bg-primary-500 aria-disabled:bg-primary-500 focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
+            outline: 'ring-1 ring-inset ring-primary-500 dark:ring-primary-400 text-primary-500 dark:text-primary-400 hover:bg-primary-50 disabled:bg-transparent aria-disabled:bg-transparent dark:hover:bg-primary-950 focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
+            soft: 'text-primary-500 dark:text-primary-400 bg-primary-50 hover:bg-primary-100 disabled:bg-primary-50 aria-disabled:bg-primary-50 dark:bg-primary-950 dark:hover:bg-primary-900 dark:disabled:bg-primary-950 dark:aria-disabled:bg-primary-950 focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
+            ghost: 'text-primary-500 dark:text-primary-400 hover:bg-primary-50 disabled:bg-transparent aria-disabled:bg-transparent dark:hover:bg-primary-950 focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400'
+          },
+          neutral: {
+            solid: 'shadow-sm text-neutral-900 dark:text-white bg-neutral-50 hover:bg-neutral-100 disabled:bg-neutral-50 aria-disabled:bg-neutral-50 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:disabled:bg-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-500 dark:focus-visible:ring-neutral-400',
+            outline: 'ring-1 ring-inset ring-neutral-300 dark:ring-neutral-700 text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 disabled:bg-transparent aria-disabled:bg-transparent dark:hover:bg-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500 dark:focus-visible:ring-neutral-400',
+            soft: 'text-neutral-500 dark:text-neutral-400 bg-neutral-100 hover:bg-neutral-200 disabled:bg-neutral-100 aria-disabled:bg-neutral-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:disabled:bg-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500 dark:focus-visible:ring-neutral-400',
+            ghost: 'text-neutral-500 dark:text-neutral-400 hover:bg-neutral-100 disabled:bg-transparent aria-disabled:bg-transparent dark:hover:bg-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500 dark:focus-visible:ring-neutral-400'
+          }
+        }
+      }
+    },
+
+    // Enhanced Card Component for Theme System
+    card: {
+      slots: {
+        root: 'overflow-hidden rounded-lg shadow-sm ring-1 ring-neutral-200 dark:ring-neutral-700 bg-white dark:bg-neutral-900 transition-colors',
+        header: 'px-4 py-5 sm:px-6 border-b border-neutral-200 dark:border-neutral-700',
+        body: 'px-4 py-5 sm:p-6',
+        footer: 'px-4 py-4 sm:px-6 border-t border-neutral-200 dark:border-neutral-700'
+      }
+    },
+
+    // Enhanced Input Components
+    input: {
+      slots: {
+        root: 'relative',
+        base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0 placeholder-neutral-400 dark:placeholder-neutral-500 text-sm px-3 py-1.5 shadow-sm bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white ring-1 ring-inset ring-neutral-300 dark:ring-neutral-700 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 rounded-md transition-colors'
+      }
+    },
+
+    // Theme Toggle Component Styling
+    themeToggle: {
+      slots: {
+        base: 'inline-flex items-center gap-1.5 px-2.5 py-1.5 text-sm font-medium rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
+        icon: 'shrink-0 transition-transform duration-200',
         label: 'truncate'
       },
       variants: {
-        color: {
-          primary: {
-            base: 'bg-primary text-white hover:bg-primary-600 shadow-sm'
-          },
-          secondary: {
-            base: 'bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700'
-          }
-        },
-        size: {
-          collapsed: {
-            base: 'px-3 py-2.5 h-10 justify-center',
-            icon: 'w-5 h-5 mx-auto'
-          },
-          expanded: {
-            base: 'px-3 py-2.5 h-10 justify-start',
-            icon: 'w-5 h-5 mr-3'
-          }
-        }
-      },
-      defaultVariants: {
-        color: 'secondary',
-        size: 'expanded'
-      }
-    },
-
-    // Badge Component Theming
-    badge: {
-      slots: {
-        base: 'inline-flex items-center font-medium rounded-full',
-        content: 'text-center leading-none'
-      },
-      variants: {
-        color: {
-          primary: {
-            base: 'bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200'
-          },
-          secondary: {
-            base: 'bg-secondary-100 text-secondary-800 dark:bg-secondary-900 dark:text-secondary-200'
-          },
-          success: {
-            base: 'bg-success-100 text-success-800 dark:bg-success-900 dark:text-success-200'
-          },
-          error: {
-            base: 'bg-error-100 text-error-800 dark:bg-error-900 dark:text-error-200'
-          },
-          warning: {
-            base: 'bg-warning-100 text-warning-800 dark:bg-warning-900 dark:text-warning-200'
-          },
-          info: {
-            base: 'bg-info-100 text-info-800 dark:bg-info-900 dark:text-info-200'
-          },
-          neutral: {
-            base: 'bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200'
-          },
-          white: {
-            base: 'bg-white text-neutral-900 shadow-sm'
-          }
-        },
-        size: {
-          xs: {
-            base: 'px-1.5 py-0.5 text-xs',
-            content: 'text-xs'
-          },
-          sm: {
-            base: 'px-2 py-0.5 text-xs',
-            content: 'text-xs'
-          },
-          md: {
-            base: 'px-2.5 py-0.5 text-sm',
-            content: 'text-sm'
-          }
-        }
-      },
-      defaultVariants: {
-        color: 'neutral',
-        size: 'sm'
-      }
-    },
-
-    // Toast System Enhancement
-    toast: {
-      slots: {
-        root: 'relative overflow-hidden bg-white dark:bg-neutral-900 shadow-lg ring-1 ring-neutral-200 dark:ring-neutral-800 rounded-lg p-4 flex gap-3',
-        wrapper: 'flex-1 flex flex-col',
-        title: 'text-sm font-semibold text-highlighted',
-        description: 'text-sm text-muted mt-1',
-        icon: 'flex-shrink-0 w-5 h-5',
-        avatar: 'flex-shrink-0',
-        actions: 'flex gap-2 mt-3',
-        progress: 'absolute inset-x-0 bottom-0 h-1',
-        close: 'absolute top-2 right-2'
-      },
-      variants: {
-        color: {
-          primary: {
-            root: 'border-l-4 border-primary-500',
-            icon: 'text-primary-600',
-            progress: 'bg-primary-500'
-          },
-          success: {
-            root: 'border-l-4 border-success-500',
-            icon: 'text-success-600', 
-            progress: 'bg-success-500'
-          },
-          warning: {
-            root: 'border-l-4 border-warning-500',
-            icon: 'text-warning-600',
-            progress: 'bg-warning-500'
-          },
-          error: {
-            root: 'border-l-4 border-error-500',
-            icon: 'text-error-600',
-            progress: 'bg-error-500'
-          },
-          info: {
-            root: 'border-l-4 border-info-500',
-            icon: 'text-info-600',
-            progress: 'bg-info-500'
-          },
-          neutral: {
-            root: 'border-l-4 border-neutral-400',
-            icon: 'text-neutral-600',
-            progress: 'bg-neutral-500'
-          }
-        }
-      },
-      defaultVariants: {
-        color: 'neutral'
-      }
-    },
-
-    // Tooltip Enhancement
-    tooltip: {
-      slots: {
-        base: 'relative inline-flex',
-        content: 'z-50 px-3 py-1.5 text-sm text-white bg-neutral-900 dark:bg-neutral-100 dark:text-neutral-900 rounded-md shadow-lg',
-        arrow: 'absolute w-2 h-2 bg-inherit transform rotate-45'
-      },
-      variants: {
-        placement: {
-          top: { arrow: 'bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2' },
-          bottom: { arrow: 'top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2' },
-          left: { arrow: 'right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2' },
-          right: { arrow: 'left-0 top-1/2 transform -translate-x-1/2 -translate-y-1/2' }
-        }
-      },
-      defaultVariants: {
-        placement: 'top'
-      }
-    },
-
-    // Collapsible Enhancement
-    collapsible: {
-      slots: {
-        root: 'space-y-1',
-        trigger: 'w-full',
-        content: 'overflow-hidden',
-        body: 'pt-1'
-      },
-      variants: {
         variant: {
-          default: {},
-          sidebar: {
-            content: 'ml-8 space-y-1'
+          ghost: {
+            base: 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800'
+          },
+          outline: {
+            base: 'ring-1 ring-inset ring-neutral-300 dark:ring-neutral-700 text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-800'
+          },
+          solid: {
+            base: 'bg-primary-500 text-white hover:bg-primary-600 dark:bg-primary-400 dark:hover:bg-primary-500'
           }
         }
-      },
-      defaultVariants: {
-        variant: 'default'
       }
     }
   },
 
-  // Global App Configuration
-  app: {
-    // Toaster Configuration
-    toaster: {
-      position: 'top-right',
-      duration: 4000,
-      expand: true,
-      gap: 8,
-      offset: 16,
-      visibleToasts: 5,
-      closeButton: true,
-      richColors: false,
-      theme: 'light', // 'light' | 'dark' | 'system'
-      className: '',
-      style: {},
-      toastOptions: {
-        className: '',
-        style: {},
-        duration: 4000
-      }
+  // Theme System Configuration
+  theme: {
+    // Default theme settings
+    default: 'system', // 'light' | 'dark' | 'system'
+    
+    // Theme transition settings
+    transitions: {
+      enabled: true,
+      duration: 250, // milliseconds
+      easing: 'ease-in-out'
     },
-
-    // Tooltip Configuration  
-    tooltip: {
-      delay: 700,
-      offset: 8,
-      arrow: true,
-      animation: 'fade'
+    
+    // Keyboard shortcuts
+    shortcuts: {
+      enabled: true,
+      toggle: 'cmd+shift+t',
+      light: 'cmd+shift+l',
+      dark: 'cmd+shift+d',
+      auto: 'cmd+shift+a'
+    },
+    
+    // Persistence settings
+    storage: {
+      key: 'nuxt-color-mode',
+      type: 'localStorage' // 'localStorage' | 'cookie' | 'none'
+    },
+    
+    // Advanced features
+    features: {
+      timeBasedScheduling: false, // Enable time-based auto switching
+      ambientLightSensor: false,  // Enable ambient light sensor (future)
+      perRouteThemes: false       // Enable per-route theme overrides
     }
   }
 })
