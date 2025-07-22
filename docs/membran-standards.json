@@ -1,0 +1,5362 @@
+[
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "86 GL",
+    "type": "",
+    "application": "Dış panjurlar, kış bahçeleri ve ışıklık panjurları",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 45,
+      "weft": 20
+    },
+    "warranty_years": 5.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 380.0,
+    "unit_price": 8.34
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Perform 92 - 92 GL",
+    "type": "",
+    "application": "Dış panjurlar, kış bahçeleri ve ışıklık panjurları",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 45,
+      "weft": 20
+    },
+    "warranty_years": 5.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 420.0,
+    "unit_price": 10.48
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Lounge 96 - 96 GL",
+    "type": "",
+    "application": "Geri çekilebilir kol tenteleri",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 25
+    },
+    "warranty_years": 5.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 400.0,
+    "unit_price": 7.82
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Proof 502 - 502 SATIN PL",
+    "type": "",
+    "application": "Gölge yelkenleri, sabit tenteler",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 20,
+      "weft": 20
+    },
+    "warranty_years": 10.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 570.0,
+    "unit_price": 6.52
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Proof W96 - W96 GL",
+    "type": "",
+    "application": "Pergolalar, dış mekanlar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 20
+    },
+    "warranty_years": 5.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 620.0,
+    "unit_price": 10.93
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Proof 6002 - 6002 GL ",
+    "type": "",
+    "application": "",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 260.0,
+    "weight_g_m2": 630.0,
+    "unit_price": 6.77
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Opaque 6002 - 6002 OP GL",
+    "type": "",
+    "application": "Pergolalar, mekanlar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 20,
+      "weft": 20
+    },
+    "warranty_years": 5.0,
+    "width_cm": 260.0,
+    "weight_g_m2": 730.0,
+    "unit_price": 8.14
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Feel 88 LowE",
+    "type": "",
+    "application": "İç stor perdeler",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 14,
+      "weft": 14
+    },
+    "warranty_years": 5.0,
+    "width_cm": 177.0,
+    "weight_g_m2": 360.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Feel 99 LowE",
+    "type": "",
+    "application": "İç stor perdeler",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 11,
+      "weft": 13
+    },
+    "warranty_years": 5.0,
+    "width_cm": 177.0,
+    "weight_g_m2": 290.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Master 99 & BV99",
+    "type": "",
+    "application": "İç stor perdeler",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 11,
+      "weft": 13
+    },
+    "warranty_years": 5.0,
+    "width_cm": 177.0,
+    "weight_g_m2": 290.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Opaque 622",
+    "type": "",
+    "application": "Pergolalar, mekanlar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 20,
+      "weft": 20
+    },
+    "warranty_years": 5.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 750.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Opaque B92",
+    "type": "",
+    "application": "Dış, iç panjurlar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 45,
+      "weft": 25
+    },
+    "warranty_years": 5.0,
+    "width_cm": 170.0,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Opaque B99",
+    "type": "",
+    "application": "İç stor perdeler",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 11,
+      "weft": 13
+    },
+    "warranty_years": 5.0,
+    "width_cm": 170.0,
+    "weight_g_m2": 540.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Opaque B702",
+    "type": "",
+    "application": "Dış panjurlar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 28
+    },
+    "warranty_years": 5.0,
+    "width_cm": 177.0,
+    "weight_g_m2": 750.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Opaque B990",
+    "type": "",
+    "application": "İç stor perdeler",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 11,
+      "weft": 13
+    },
+    "warranty_years": 5.0,
+    "width_cm": 170.0,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Proof 582",
+    "type": "",
+    "application": "Pergolalar, mekanlar, sabit tenteler",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 590.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Safe SK20",
+    "type": "",
+    "application": "İç stor perdeler",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 20
+    },
+    "warranty_years": 5.0,
+    "width_cm": 262.0,
+    "weight_g_m2": 220.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS ",
+    "name": "Harmony 88",
+    "type": "",
+    "application": "İç stor perdeler",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 14,
+      "weft": 14
+    },
+    "warranty_years": 5.0,
+    "width_cm": 177.0,
+    "weight_g_m2": 360.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Perform 912 S2 - 912S2 GL",
+    "type": 2,
+    "application": "Otoparklar, gölgelendirme elemanları",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 10.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 900.0,
+    "unit_price": 7.51
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Perform 1212 S2 - 1212S2 GL",
+    "type": "",
+    "application": "Kapalı girişler, yürüyüş yolları",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 65
+    },
+    "warranty_years": null,
+    "width_cm": 267.0,
+    "weight_g_m2": 950.0,
+    "unit_price": 9.11
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Advanced 902 S2 - 902S2 GL",
+    "type": 2,
+    "application": "Formül S2 kalibre edilmiş PVDF alaşımı",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 55,
+      "weft": 50
+    },
+    "warranty_years": 15.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 900.0,
+    "unit_price": 9.24
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Advanced 1002 S2 - 1002S2 GL",
+    "type": 2,
+    "application": "Formül S2 kalibre edilmiş PVDF alaşımı",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 55,
+      "weft": 50
+    },
+    "warranty_years": 15.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Advanced 1202 S2 - 1202S2 GL",
+    "type": 3,
+    "application": "Formül S2 kalibre edilmiş PVDF alaşımı",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 65
+    },
+    "warranty_years": 15.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 1050.0,
+    "unit_price": 10.4
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Advanced 1302 S2 - 1302S2 GL",
+    "type": 4,
+    "application": "Formül S2 kalibre edilmiş PVDF alaşımı",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 120,
+      "weft": 110
+    },
+    "warranty_years": 15.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 1350.0,
+    "unit_price": 11.05
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Advanced 1502 S2 - 1502S2 PL",
+    "type": 5,
+    "application": "Formül S2 kalibre edilmiş PVDF alaşımı",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 160,
+      "weft": 140
+    },
+    "warranty_years": 15.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 1500.0,
+    "unit_price": 14.86
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Xtrem TX30-I - TX30-1 PL",
+    "type": 1,
+    "application": "Statik ve kalıcı yapılar, çapraz bağlantı PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 178.0,
+    "weight_g_m2": 850.0,
+    "unit_price": 15.97
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Xtrem TX30-II - TX30-2 PL",
+    "type": 2,
+    "application": "Statik ve kalıcı yapılar, çapraz bağlantı PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 55,
+      "weft": 50
+    },
+    "warranty_years": 20.0,
+    "width_cm": 178.0,
+    "weight_g_m2": 1050.0,
+    "unit_price": 18.42
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Xtrem TX30-III - TX30-3 PL",
+    "type": 3,
+    "application": "Statik ve kalıcı yapılar, çapraz bağlantı PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 65
+    },
+    "warranty_years": 20.0,
+    "width_cm": 178.0,
+    "weight_g_m2": 1050.0,
+    "unit_price": 20.51
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Xtrem TX30-IV - TX30-4 PL",
+    "type": 4,
+    "application": "Statik ve kalıcı yapılar, çapraz bağlantı PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 120,
+      "weft": 110
+    },
+    "warranty_years": 20.0,
+    "width_cm": 178.0,
+    "weight_g_m2": 1350.0,
+    "unit_price": 21.99
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Xtrem TX30-V - TX30-5 PL",
+    "type": 5,
+    "application": "Statik ve kalıcı yapılar, çapraz bağlantı PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 160,
+      "weft": 140
+    },
+    "warranty_years": 20.0,
+    "width_cm": 178.0,
+    "weight_g_m2": 1500.0,
+    "unit_price": 26.12
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Dualtone 702 Opaque",
+    "type": 1,
+    "application": "Sökülebilir sirk, eğlence mekanları, tiyatrolar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 10.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 850.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Dualtone 1002 Opaque",
+    "type": 2,
+    "application": "Sökülebilir sirk, eğlence mekanları, tiyatrolar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 10.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Dualtone 1202 Opaque",
+    "type": 2,
+    "application": "Sökülebilir sirk, eğlence mekanları, tiyatrolar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 10.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 1150.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FRONTSIDE",
+    "name": "Print 371 - 371 GL",
+    "type": "",
+    "application": "Cephe kaplama, gölgeleme ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 10.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 440.0,
+    "unit_price": 10.84
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FRONTSIDE",
+    "name": "View 381 - 381 GL",
+    "type": "",
+    "application": "Termal verimli bina - ön yüz-metalik ya da inci kaplama, arka yüz-mat",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 90
+    },
+    "warranty_years": 10.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 550.0,
+    "unit_price": 13.27
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FRONTSIDE",
+    "name": "Safe P35",
+    "type": "",
+    "application": "Cephe kaplama - Cam PTFE Mesh, PTFE kaplama",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 45,
+      "weft": 55
+    },
+    "warranty_years": 15.0,
+    "width_cm": 270.0,
+    "weight_g_m2": 675.0,
+    "unit_price": 37.48
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FRONTSIDE",
+    "name": "FTD 752 - FTD 752",
+    "type": "",
+    "application": "Cephe kaplama, otoparklar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 180.0,
+    "weight_g_m2": 550.0,
+    "unit_price": 28.84
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FRONTSIDE",
+    "name": "Precontraint 502",
+    "type": "",
+    "application": "Cephe, kanopi, gölge yelkenleri, ışık yapıları - iki taraf vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 20
+    },
+    "warranty_years": null,
+    "width_cm": 180.0,
+    "weight_g_m2": 590.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FRONTSIDE",
+    "name": "FT 371",
+    "type": "",
+    "application": "Cephe kaplama",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 60
+    },
+    "warranty_years": 10.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 440.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI ALPHALIA",
+    "name": "Silent AW  - AW 7005 GL",
+    "type": "",
+    "application": "Akustik çözüm duvar ve tavanlar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 270.0,
+    "weight_g_m2": 600.0,
+    "unit_price": 21.2
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI ALPHALIA",
+    "name": "Silent AW Lux - AW LUX 7005 GL",
+    "type": "",
+    "application": "Akustik ve ışık çözümleri. / B-s2, d0",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 11,
+      "weft": 13
+    },
+    "warranty_years": null,
+    "width_cm": 270.0,
+    "weight_g_m2": 600.0,
+    "unit_price": 24.66
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI ALPHALIA",
+    "name": "Silent Aw",
+    "type": "",
+    "application": "Akustik ve ışık çözümleri / B-s2, d0",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": 10.0,
+    "width_cm": 270.0,
+    "weight_g_m2": 620.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI ALPHALIA",
+    "name": "Silent Aw LUX",
+    "type": "",
+    "application": "Akustik ve ışık çözümleri. / B-s2, d0",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 10.0,
+    "width_cm": 270.0,
+    "weight_g_m2": 620.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI ALPHALIA",
+    "name": "Silent Aw 80",
+    "type": "",
+    "application": "Stadyum akustik tavan ve duvarlar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 10.0,
+    "width_cm": 270.0,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE ",
+    "name": "Iso FR - 7407FR ISO 62 FR",
+    "type": "",
+    "application": "Duvarlar, tavanlar, iç mekan armütürleri . / B-s2, d0",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 500.0,
+    "unit_price": 10.36
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE ",
+    "name": "XP55 - 7437 XP55",
+    "type": "",
+    "application": "Özellikle duvar tahliyeleri için, Gözenek 55%. / B-s1, d0",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 270.0,
+    "weight_g_m2": 300.0,
+    "unit_price": 18.08
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS",
+    "name": "Safe SK20 - SK20 GL",
+    "type": "",
+    "application": "Bağlantı parçaları için yanmaz kumaşlar / M1 / A2",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 267.0,
+    "weight_g_m2": 220.0,
+    "unit_price": 19.52
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI SOLTIS",
+    "name": "Safe SK20 LowE - SK20 LowE GL",
+    "type": "",
+    "application": "Bağlantı parçaları için yanmaz kumaşlar  / M1 / A2",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 267.0,
+    "weight_g_m2": 220.0,
+    "unit_price": 23.16
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Thermic 412 - 412 GL ",
+    "type": "",
+    "application": "Geçici, kalıcı, şişirilebilir yapılar - akrilik vernik ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 20,
+      "weft": 20
+    },
+    "warranty_years": null,
+    "width_cm": 267.0,
+    "weight_g_m2": 400.0,
+    "unit_price": 3.34
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Thermic 412 Opaque - 412 OP GL",
+    "type": "",
+    "application": "Geçici, kalıcı, şişirilebilir yapılar - akrilik vernik ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 20,
+      "weft": 20
+    },
+    "warranty_years": null,
+    "width_cm": 267.0,
+    "weight_g_m2": 500.0,
+    "unit_price": 4.06
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Essential 612 - 612 GL ",
+    "type": "",
+    "application": "",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 267.0,
+    "weight_g_m2": 620.0,
+    "unit_price": 3.25
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Essential Opaque 612 - 612 OP GL",
+    "type": "",
+    "application": "",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 267.0,
+    "weight_g_m2": 750.0,
+    "unit_price": 3.95
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Classic 602 - 602N GL",
+    "type": "",
+    "application": "Yapılar, çerçeve çadırları, direk çadırları - iki tarafı cilalı ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 20,
+      "weft": 20
+    },
+    "warranty_years": null,
+    "width_cm": 267.0,
+    "weight_g_m2": 620.0,
+    "unit_price": 3.55
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Classic Opaque 602 - 602N GL",
+    "type": "",
+    "application": "Opaklık, termal - iki tarafı cilalı ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 20,
+      "weft": 20
+    },
+    "warranty_years": null,
+    "width_cm": 267.0,
+    "weight_g_m2": 750.0,
+    "unit_price": 4.35
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Classic 782S2 - 782S2 GL",
+    "type": "",
+    "application": "Yapılar, çerçeve çadırları, direk çadırları - Formül S2 florlu vernik kaynaklanabilir",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 45,
+      "weft": 40
+    },
+    "warranty_years": 7.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 780.0,
+    "unit_price": 5.2
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Classic Opaque 782S2 - 782S2 OP GL",
+    "type": "",
+    "application": "Isı yalıtımı gerektiren her tür yapı - Formül S2 florlu vernik kaynaklanabilir",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 45,
+      "weft": 40
+    },
+    "warranty_years": 7.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 830.0,
+    "unit_price": 7.76
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Classic 942 - 942 GL",
+    "type": "",
+    "application": "Salon, açıklıklar, şişme yapılar - iki tarafı vernik ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 270.0,
+    "weight_g_m2": 900.0,
+    "unit_price": 5.15
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Perform 502S2 - 502S2 GL",
+    "type": "",
+    "application": "Salonlar, açıklıklar, yüksek yapılar - Formül S2 florlu vernik kaynaklanabilir",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 28,
+      "weft": 28
+    },
+    "warranty_years": 5.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 590.0,
+    "unit_price": 4.59
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Perform 702S2 - 702S2 GL",
+    "type": "",
+    "application": "Salonlar, açıklıklar, yüksek yapılar - Formül S2 florlu vernik kaynaklanabilir",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 28
+    },
+    "warranty_years": 7.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 750.0,
+    "unit_price": 6.34
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Perform Opaque 702S2 - 702S2 OP GL",
+    "type": "",
+    "application": "Yüksek yapılar - Formül S2 florlu vernik kaynaklanabilir",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 28
+    },
+    "warranty_years": 7.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 830.0,
+    "unit_price": 6.48
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Perform Opaque Alu 702S2 ",
+    "type": "",
+    "application": "Yüksek yapılar -  2-yüzü akrilik vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 28
+    },
+    "warranty_years": 5.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 830.0,
+    "unit_price": 6.72
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Perform 832 - 832 GL",
+    "type": "",
+    "application": "Salonlar, açıklıklar, yüksek yapılar - iki taraflı vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": 10.0,
+    "width_cm": 270.0,
+    "weight_g_m2": 850.0,
+    "unit_price": 6.86
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Kedar 709",
+    "type": "",
+    "application": "İki taraflı vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 700.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Kedar 719",
+    "type": "",
+    "application": "iki taraflı vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": 180.0,
+    "weight_g_m2": 580.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Lighting 402 HT",
+    "type": "",
+    "application": "Statik, kalıcı yapılar, şişme yapılar - iki taraflı vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 20,
+      "weft": 20
+    },
+    "warranty_years": 10.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 490.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Lodge 6002 Opaque",
+    "type": "",
+    "application": "Orman evleri, bungolavlar - mat PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 20,
+      "weft": 20
+    },
+    "warranty_years": 5.0,
+    "width_cm": 260.0,
+    "weight_g_m2": 730.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Lodge 6002 - Lodge 6002 Stripes",
+    "type": "",
+    "application": "Orman evleri, bungolavlar - mat PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 20,
+      "weft": 20
+    },
+    "warranty_years": 5.0,
+    "width_cm": 260.0,
+    "weight_g_m2": 630.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Lodge 572",
+    "type": "",
+    "application": "Orman evleri, bungolavlar - iki tarafı vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 20
+    },
+    "warranty_years": null,
+    "width_cm": 180.0,
+    "weight_g_m2": 590.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Lodge 522",
+    "type": "",
+    "application": "Orman evleri, bungolavlar - iki tarafı vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 20
+    },
+    "warranty_years": 5.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 590.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI FLEXLIGHT",
+    "name": "Classic 402",
+    "type": "",
+    "application": "Yapılar, çerçeve çadırları, direk çadırları - iki tarafı vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 20,
+      "weft": 20
+    },
+    "warranty_years": null,
+    "width_cm": 267.0,
+    "weight_g_m2": 490.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Foam dB 4802 - DB 4802 GL",
+    "type": "",
+    "application": "Esnek kapılar - izolasyon perdesi, bir yüzü PVC, arka yüzü izolasyon köpüğü",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 32,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 1550.0,
+    "unit_price": 16.78
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Foam dB 4800 ",
+    "type": "",
+    "application": "Esnek kapılar - izolasyon perdesi, bir yüzü PVC, arka yüzü izolasyon köpüğü",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 32,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": 260.0,
+    "weight_g_m2": 1550.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Foam dB 4802L",
+    "type": "",
+    "application": "Esnek kapılar - izolasyon perdesi, bir yüzü PVC, arka yüzü izolasyon köpüğü",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 23,
+      "weft": 23
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 1250.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Foam dB 4802L - DB 4802L GL",
+    "type": "",
+    "application": "Havuz örtüleri - hava filtrasyonu, böcek koruması",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 1200.0,
+    "unit_price": 13.22
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Mesh 332 - 332 GL",
+    "type": "",
+    "application": "Havuz örtüleri - hava filtrasyonu, böcek koruması",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 15
+    },
+    "warranty_years": null,
+    "width_cm": 267.0,
+    "weight_g_m2": 340.0,
+    "unit_price": 3.61
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Mesh 362 - 362 GL",
+    "type": "",
+    "application": "Havuz örtüleri - hava filtrasyonu, rüzgar siperi-giydirme",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": 267.0,
+    "weight_g_m2": 430.0,
+    "unit_price": 4.71
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Mesh 392S2 - 392 S2 PL",
+    "type": "",
+    "application": "Formül S2 kalibre edilmiş PVDF alaşımı - M2 / DIN 4102-B1",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 60
+    },
+    "warranty_years": null,
+    "width_cm": 180.0,
+    "weight_g_m2": 820.0,
+    "unit_price": 10.63
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Mesh 492S2 - 492 S2 PL",
+    "type": "",
+    "application": "Formül S2 kalibre edilmiş PVDF alaşımı - M2 / DIN 4102-B1",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 180.0,
+    "weight_g_m2": 1050.0,
+    "unit_price": 11.46
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Mesh 330",
+    "type": "",
+    "application": "Havuz örtüleri - hava filtrasyonu, böcek koruması",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 15
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 340.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Mesh 332 ",
+    "type": "",
+    "application": "",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 15
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 340.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Cover 505",
+    "type": "",
+    "application": "Tarım tünelleri - iki tarafı vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 20,
+      "weft": 20
+    },
+    "warranty_years": null,
+    "width_cm": 270.0,
+    "weight_g_m2": 560.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Cover 705 ",
+    "type": "",
+    "application": "Kamyon kapakları - iki tarafı vernik ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": null,
+    "width_cm": 270.0,
+    "weight_g_m2": 670.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Cover 705 LT",
+    "type": "",
+    "application": "Kamyon kapakları - bantları, iki tarafı vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 35,
+      "weft": 35
+    },
+    "warranty_years": null,
+    "width_cm": 270.0,
+    "weight_g_m2": 670.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Cover 905F3",
+    "type": "",
+    "application": "Kamyon kapakları - iki tarafı vernik ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 45,
+      "weft": 45
+    },
+    "warranty_years": null,
+    "width_cm": 300.0,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Secure 7763",
+    "type": "",
+    "application": "koruma",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": null,
+    "width_cm": 180.0,
+    "weight_g_m2": 620.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Secure 7765",
+    "type": "",
+    "application": "Kamyon kapakları..",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 29,
+      "weft": 32
+    },
+    "warranty_years": null,
+    "width_cm": 140.0,
+    "weight_g_m2": 500.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "Secure 7772",
+    "type": "",
+    "application": "Modüler yapılar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": null,
+    "width_cm": 180.0,
+    "weight_g_m2": 620.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "SK 305",
+    "type": "",
+    "application": "Aşırı sıcaklık kapakları - yüksek kimyasal dirençli malzeme",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 14,
+      "weft": 14
+    },
+    "warranty_years": null,
+    "width_cm": 200.0,
+    "weight_g_m2": 350.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "SK 605",
+    "type": "",
+    "application": "Aşırı sıcaklık kapakları - yüksek kimyasal dirençli malzeme",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 40,
+      "weft": 37
+    },
+    "warranty_years": null,
+    "width_cm": 260.0,
+    "weight_g_m2": 600.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "SK 905",
+    "type": "",
+    "application": "Aşırı sıcaklık kapakları - yüksek kimyasal dirençli malzeme",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 75,
+      "weft": 65
+    },
+    "warranty_years": null,
+    "width_cm": 260.0,
+    "weight_g_m2": 860.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "SK 4001",
+    "type": "",
+    "application": "Yangın bariyerleri - aşırı sıcaklık bağlantısı, kablo rakoru",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 10.0,
+    "width_cm": 120.0,
+    "weight_g_m2": 3000.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI PROTECT",
+    "name": "SP 905",
+    "type": "",
+    "application": "Koruyucu, havuz katmanları - bir tarafı silikon diğer tarafı PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 70,
+      "weft": 70
+    },
+    "warranty_years": null,
+    "width_cm": 260.0,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Air 4756 ",
+    "type": "",
+    "application": "Işıklar, kutular, iç mekan dekorasyonları - Mat",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 180.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Decolit Stick 4696",
+    "type": "",
+    "application": "İç dış cephe kaplama - Satin",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 160.0,
+    "weight_g_m2": 510.0,
+    "unit_price": 11.65
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Decolit Stick 4744",
+    "type": "",
+    "application": "İç - dış duvar kaplamaları - Satin",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 440.0,
+    "unit_price": 9.45
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Block B501",
+    "type": "",
+    "application": "Etkinlik ve promosyon tabelaları, afişler - Karartma matı",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 160.0,
+    "weight_g_m2": 530.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Block B652",
+    "type": "",
+    "application": "Etkinlik ve promosyon tabelaları, afişler - Mat",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 110.0,
+    "weight_g_m2": 750.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Master Black 251",
+    "type": "",
+    "application": "İç görüntüler, Roll up - Yarı mat",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 325.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Master 251",
+    "type": "",
+    "application": "AVM ler, araba galerileri, fuarlar - Mat",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 325.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Perform 501",
+    "type": "",
+    "application": "Olay ekranları, hastane gizlilik ekranları (501 Activ) - Satin",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 530.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Perform 501 Active",
+    "type": "",
+    "application": "Olay ekranları, hastane gizlilik ekranları(501 Activ) - Satin",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 160.0,
+    "weight_g_m2": 530.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Reverse 456",
+    "type": "",
+    "application": "Duvar dekorasyonu, ilan panosu - Bir yüz parlak, bir yüz mat",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 500.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Standard 411",
+    "type": "",
+    "application": "Posterler, afişler - Mat",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 340.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Decolit Vision 331",
+    "type": "",
+    "application": "Cephe kaplamaları, iskele dekorasyonları - Parlak",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 340.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Decolit Vision 331 BP",
+    "type": "",
+    "application": "Parlak",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 340.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Vision 221 ",
+    "type": "",
+    "application": "Fuar sergileri,sinema ve tiyatro için sergiler - Yarı mat",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 270.0,
+    "weight_g_m2": 300.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Vision 331 ",
+    "type": "",
+    "application": "Cephe kaplamaları, iskele dekorasyonları - Parlak",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 160.0,
+    "weight_g_m2": 340.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI DECOLIT",
+    "name": "Vision 331 BP",
+    "type": "",
+    "application": "Cephe kaplamaları, iskele dekorasyonları - Parlak",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 340.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Biobrane Activ 902",
+    "type": "",
+    "application": "Gaz tutucu membranlar - S2 PVDF / Aktif",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": 10.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 950.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Biobrane Activ 1002",
+    "type": "",
+    "application": "Gaz tutucu membranlar - S2 PVDF / Aktif",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": 15.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Biobrane Activ 1202 ",
+    "type": "",
+    "application": "Gaz tutucu membranlar - S2 PVDF / Aktif",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": 15.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Biobrane Activ 1302",
+    "type": "",
+    "application": "Gaz tutucu membranlar - S2 PVDF / Aktif",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": 15.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 1350.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Advanced 3739 ",
+    "type": "",
+    "application": "Çift katmanlı gaz muhafazı, kimyasal muhafaza",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 8.0,
+    "width_cm": 260.0,
+    "weight_g_m2": 750.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Advanced 4739",
+    "type": "",
+    "application": "Çift katmanlı gaz muhafazı, kimyasal muhafaza",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": 8.0,
+    "width_cm": 260.0,
+    "weight_g_m2": 950.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Advanced 5739",
+    "type": "",
+    "application": "Çift katmanlı gaz muhafazı, kimyasal muhafaza",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 85,
+      "weft": 70
+    },
+    "warranty_years": 8.0,
+    "width_cm": 260.0,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Advanced 6739",
+    "type": "",
+    "application": "Çift katmanlı gaz muhafazı, kimyasal muhafaza",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 120,
+      "weft": 110
+    },
+    "warranty_years": 8.0,
+    "width_cm": 260.0,
+    "weight_g_m2": 1350.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Aqua 825",
+    "type": "",
+    "application": "Rafting tekneleri, şişme platformlar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": 180.0,
+    "weight_g_m2": 820.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Aqua 1205",
+    "type": "",
+    "application": "Rafting tekneleri, şişme platformlar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 65
+    },
+    "warranty_years": null,
+    "width_cm": 180.0,
+    "weight_g_m2": 1230.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Aqua 2050",
+    "type": "",
+    "application": "Yüksek kapasiteli tatlı su deposu",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 150,
+      "weft": 300
+    },
+    "warranty_years": 3.0,
+    "width_cm": 178.0,
+    "weight_g_m2": 2250.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Liner 745",
+    "type": "",
+    "application": "Yüksek kapasiteli tatlı su deposu",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 23
+    },
+    "warranty_years": 5.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 750.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Liner 915",
+    "type": "",
+    "application": "Yüksek kapasiteli tatlı su deposu",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": 10.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Liner 1115",
+    "type": "",
+    "application": "Yüksek kapasiteli tatlı su deposu",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 55,
+      "weft": 50
+    },
+    "warranty_years": 10.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 1100.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Liner 1215 ",
+    "type": "",
+    "application": "Yüksek kapasiteli tatlı su deposu",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 70
+    },
+    "warranty_years": 10.0,
+    "width_cm": 267.0,
+    "weight_g_m2": 1300.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Liner 4739 OR",
+    "type": "",
+    "application": "Esnek tanklar, kapaklar - Özel son kat hidrokarbona dayanıklı formülasyon",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": 8.0,
+    "width_cm": 260.0,
+    "weight_g_m2": 950.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Perform 785",
+    "type": "",
+    "application": "Gübre kapakları, biyogaz tutucular, geçici agresif kimyasal konteyner",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 40,
+      "weft": 40
+    },
+    "warranty_years": null,
+    "width_cm": 267.0,
+    "weight_g_m2": 880.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BIOBRANE",
+    "name": "Perform 939",
+    "type": "",
+    "application": "Gübre kapakları, biyogaz tutucular, geçici agresif kimyasal konteyner",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI STAMOID ",
+    "name": "Stamoid Easy ",
+    "type": "",
+    "application": "Bağlama, kış örtüleri",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 32,
+      "weft": 28
+    },
+    "warranty_years": 2.0,
+    "width_cm": 260.0,
+    "weight_g_m2": 430.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI STAMOID",
+    "name": "Stamoid Heavy Cover ",
+    "type": "",
+    "application": "Bağlama, kış örtüleri",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 47,
+      "weft": 51
+    },
+    "warranty_years": 5.0,
+    "width_cm": 260.0,
+    "weight_g_m2": 520.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI STAMOID",
+    "name": "Stamoid Light",
+    "type": "",
+    "application": "Bağlama, kış örtüleri",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 7,
+      "weft": 7
+    },
+    "warranty_years": 5.0,
+    "width_cm": 260.0,
+    "weight_g_m2": 300.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI STAMOID",
+    "name": "Stamoid Smart 1",
+    "type": "",
+    "application": "Bağlama kapakları, ekipman kapakları",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 14,
+      "weft": 30
+    },
+    "warranty_years": 7.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 280.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI STAMOID",
+    "name": "Stamoid Smart 2",
+    "type": "",
+    "application": "Bimini üst, kokpit muhafazaları ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 14,
+      "weft": 30
+    },
+    "warranty_years": 10.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 340.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI STAMOID",
+    "name": "Stamoid Top",
+    "type": "",
+    "application": "Bimini üst, kokpit muhafazaları ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 6,
+      "weft": 7
+    },
+    "warranty_years": 5.0,
+    "width_cm": null,
+    "weight_g_m2": 430.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE ",
+    "name": "7190 FR",
+    "type": "",
+    "application": "Sandalyeler, ofis sandalyeleri",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 600.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE ",
+    "name": "7122 FR",
+    "type": "",
+    "application": "Sandalyeler, ofis sandalyeleri",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 580.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE ",
+    "name": "7117FR - 7438FR",
+    "type": "",
+    "application": "Sandalyeler, ofis sandalyeleri",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 560.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE ",
+    "name": "7150FR",
+    "type": "",
+    "application": "Sandalyeler, ofis sandalyeleri",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 880.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE",
+    "name": "Duo FR",
+    "type": "",
+    "application": "Kapalı ofis, konferans koltukları, kamusal kullanım için kapalı koltuklar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 560.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE",
+    "name": "Duo",
+    "type": "",
+    "application": "Şezlonglar, sandalyeler, dış mekan aksesuarları",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 560.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE",
+    "name": "Eden FR",
+    "type": "",
+    "application": "Sandalyeler, ofis sandalyeleri",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 450.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE",
+    "name": "Eden",
+    "type": "",
+    "application": "Şezlonglar, sandalyeler, dış mekan aksesuarları",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 450.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE",
+    "name": "Iso 7407",
+    "type": "",
+    "application": "Şezlonglar, sandalyeler, dış mekan aksesuarları",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 500.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE",
+    "name": "Iso 7406",
+    "type": "",
+    "application": "Şezlonglar, sandalyeler, dış mekan aksesuarları",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 660.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE",
+    "name": "Batyline Keops ",
+    "type": "",
+    "application": "Sandalyeler, kanepeler",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 4.0,
+    "weight_g_m2": 34.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE",
+    "name": "Batyline Keops ",
+    "type": "",
+    "application": "Sandalyeler, kanepeler",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 5.5,
+    "weight_g_m2": 45.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI BATYLINE",
+    "name": "Batyline Eden WP",
+    "type": "",
+    "application": "Dış mekan konut koltukları, kanepe, mobilyalar ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 180.0,
+    "weight_g_m2": 470.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI STAMSKIN",
+    "name": "BRO - Stamskin One ",
+    "type": "",
+    "application": "İç-dış mekan ağırlama sandalyeleri,koltuklar, kanepeler",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 7,
+      "weft": 8
+    },
+    "warranty_years": 7.0,
+    "width_cm": 144.0,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI STAMSKIN",
+    "name": "Stamskin Top Transition",
+    "type": "",
+    "application": "İç-dış mekan ağırlama sandalyeleri,koltuklar, kanepeler",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 2,
+      "weft": 5
+    },
+    "warranty_years": 5.0,
+    "width_cm": 140.0,
+    "weight_g_m2": 780.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI STAMSKIN",
+    "name": "Stamskin One",
+    "type": "",
+    "application": "İç-dış mekan ağırlama sandalyeleri,koltuklar, kanepeler,deniz döşemeleri",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 7.0,
+    "width_cm": 144.0,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI STAMSKIN",
+    "name": "Stamskin Top ",
+    "type": "",
+    "application": "Sandalyeler, koltuklar, kanepeler, genel alanlar için oturma elemanları",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 140.0,
+    "weight_g_m2": 780.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FERRARI",
+    "range": "FERRARI STAMSKIN",
+    "name": "Stamskin Zen ",
+    "type": "",
+    "application": "İç-dış mekan ağırlama sandalyeleri,koltuklar, kanepeler, sağlıklı yaşam merkezleri, spa",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": 5.0,
+    "width_cm": 140.0,
+    "weight_g_m2": 780.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXA 1300 F PURE - B6618",
+    "type": 4,
+    "application": "TiO2 takviyeli PVC, üst kat saf PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 140,
+      "weft": 120
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 1300.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXA 900 F PURE - B6617",
+    "type": 2,
+    "application": "TiO2 takviyeli PVC, üst kat saf PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 52
+    },
+    "warranty_years": 15.0,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXA 1100 F ",
+    "type": 3,
+    "application": "Üst kat PVDF , akrilik çizme kat ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 72
+    },
+    "warranty_years": 10.0,
+    "width_cm": null,
+    "weight_g_m2": 1100.0,
+    "unit_price": 13.08
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXA 650 F - B 4952",
+    "type": 0,
+    "application": "TiO2 takviyeli PVC, üst kat saf PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 25
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXA 900 F",
+    "type": 2,
+    "application": "Üst kat PVDF , akrilik çizme kat ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 52
+    },
+    "warranty_years": 10.0,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": 8.18
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXM 3200 30 ",
+    "type": "MESH",
+    "application": "İki taraflı PVDF, lake PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 32,
+      "weft": 32
+    },
+    "warranty_years": 10.0,
+    "width_cm": null,
+    "weight_g_m2": 480.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXM 4500 40",
+    "type": "MESH",
+    "application": "İki taraflı PVDF, lake PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 50
+    },
+    "warranty_years": 10.0,
+    "width_cm": 320.0,
+    "weight_g_m2": 500.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXC 1050 F - B2191",
+    "type": "MESH",
+    "application": "PVC ve tek taraflı PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 55,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXC 900 F - B2190",
+    "type": 2,
+    "application": "PVC ve tek taraflı PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 45,
+      "weft": 45
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": null,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXB 900 F - B4616",
+    "type": 2,
+    "application": "Çift taraflı lake PVC ve tek taraflı PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 45,
+      "weft": 45
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXB 900 A - B1616",
+    "type": 2,
+    "application": "PVC iki taraflı akrilik lake",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 45,
+      "weft": 45
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXB 550 A - B1905",
+    "type": 0,
+    "application": "PVC iki taraflı ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 20
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 550.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXA 1500 F - B4092",
+    "type": 5,
+    "application": "TiO2 takviyeli PVC kaplama, iki taraflı PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 180,
+      "weft": 160
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 1500.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXA 1300 F - B4618",
+    "type": 4,
+    "application": "İki taraflı PVDF, vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 140,
+      "weft": 120
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 1300.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXA 1100 F - B4915",
+    "type": 3,
+    "application": "İki taraflı PVDF, vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 95,
+      "weft": 85
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 1100.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXA 900 F PURE ",
+    "type": 1,
+    "application": "İki taraflı PVDF, vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 35,
+      "weft": 30
+    },
+    "warranty_years": 15.0,
+    "width_cm": null,
+    "weight_g_m2": 750.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXA 750 F - B4951",
+    "type": 1,
+    "application": "TiO2 takviyeli PVC kaplama, iki taraflı PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 35,
+      "weft": 30
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 750.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXA 900 F - B4617",
+    "type": 2,
+    "application": "TiO2 takviyeli PVC kaplama, iki taraflı PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 52
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "Tidox 160 - B1350 F",
+    "type": 4,
+    "application": "yüksek gümrüklü PVDF üst kat",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 140,
+      "weft": 120
+    },
+    "warranty_years": 25.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 1350.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXM Pilotproduktion Silber",
+    "type": "MESH",
+    "application": "",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 320.0,
+    "weight_g_m2": 860.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "GFM 5000 21 - B18656",
+    "type": "MESH",
+    "application": "Çok katmanlı PTFE kaplama ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": 10.0,
+    "width_cm": 320.0,
+    "weight_g_m2": 670.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "GFM 4000 42 - B 18909",
+    "type": "MESH",
+    "application": "Çok katmanlı PTFE kaplama ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 10.0,
+    "width_cm": 320.0,
+    "weight_g_m2": 700.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "GF 8000 - B 18059",
+    "type": 4,
+    "application": "Çok katmanlı PTFE kaplama, iki tarafı da sızdırmaz hale getiren FEP",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": 15.0,
+    "width_cm": 470.0,
+    "weight_g_m2": 1600.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "GF 7000 - B18089",
+    "type": 3,
+    "application": "Çok katmanlı PTFE kaplama, iki tarafı da sızdırmaz hale getiren FEP",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": 15.0,
+    "width_cm": 470.0,
+    "weight_g_m2": 1150.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "GF - i2000 - B 28100",
+    "type": "",
+    "application": "Fiberglas kumaş",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 18
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 370.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "GF 4500 - B18039",
+    "type": 2,
+    "application": "Çok katmanlı PTFE kaplama ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 15.0,
+    "width_cm": 320.0,
+    "weight_g_m2": 770.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "GF 4006",
+    "type": 2,
+    "application": "Çok katmanlı PTFE kaplama ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": 10.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 750.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "GF 3006",
+    "type": 1,
+    "application": "Çok katmanlı PTFE kaplama ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 20
+    },
+    "warranty_years": 10.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "F 1100 - B 4911",
+    "type": 3,
+    "application": "İki tarafı PVC, tek taraflı PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 85,
+      "weft": 75
+    },
+    "warranty_years": 10.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 1100.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "F 900 - B4616",
+    "type": 2,
+    "application": "İki tarafı PVC, tek taraflı PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 45,
+      "weft": 45
+    },
+    "warranty_years": 10.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "F 700 - B 4907",
+    "type": 1,
+    "application": "İki tarafı PVC, tek taraflı PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 35,
+      "weft": 35
+    },
+    "warranty_years": 10.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 700.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "B4915",
+    "type": "",
+    "application": "",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 95,
+      "weft": 80
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1100.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "B3750",
+    "type": "",
+    "application": "Kaynaklanabilir PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 110,
+      "weft": 45
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 520.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "B4617",
+    "type": 2,
+    "application": "",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 58,
+      "weft": 52
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 275.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "B16856",
+    "type": "MESH",
+    "application": "PTFE kaplama ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 45,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": 300.0,
+    "weight_g_m2": 700.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "Classic 800",
+    "type": "",
+    "application": "PES - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 35,
+      "weft": 30
+    },
+    "warranty_years": 5.0,
+    "width_cm": null,
+    "weight_g_m2": 800.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "Classic 900",
+    "type": "",
+    "application": "PES - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 55,
+      "weft": 50
+    },
+    "warranty_years": 5.0,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "Classic 1100",
+    "type": "",
+    "application": "PES - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 95,
+      "weft": 80
+    },
+    "warranty_years": 5.0,
+    "width_cm": null,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "Classic 1300",
+    "type": "",
+    "application": "PES - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 120,
+      "weft": 110
+    },
+    "warranty_years": 5.0,
+    "width_cm": null,
+    "weight_g_m2": 1300.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "Classic 1500",
+    "type": "",
+    "application": "PES - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 180,
+      "weft": 160
+    },
+    "warranty_years": 5.0,
+    "width_cm": null,
+    "weight_g_m2": 1500.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "B 71180",
+    "type": "",
+    "application": "PES - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 800.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "B 71290",
+    "type": "",
+    "application": "PES - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 55
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "Classic 1100 (B 71311)",
+    "type": "",
+    "application": "PES - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 95,
+      "weft": 80
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "Classic 1300 As (B 71413)",
+    "type": "",
+    "application": "PES - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 120,
+      "weft": 110
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1300.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "B 71515",
+    "type": "",
+    "application": "PES - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 180,
+      "weft": 160
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1500.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "DLG-Prüf. 5883F Classic 900",
+    "type": "",
+    "application": "PES - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 55
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "Tidox 90 - B 1000 F",
+    "type": 2,
+    "application": "TiO2 takviyeli PVC kaplama, üst yüzey PVDF kaplama",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 52
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 1000.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "Tidox 120 - B 1150F",
+    "type": 3,
+    "application": "TiO2 takviyeli PVC kaplama, üst yüzey PVDF kaplama",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 95,
+      "weft": 80
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 1150.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "Tidox 200 - B1550F",
+    "type": 5,
+    "application": "TiO2 takviyeli PVC kaplama, üst yüzey PVDF kaplama",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 180,
+      "weft": 160
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 1550.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "B 3750",
+    "type": "MESH",
+    "application": "PVC, cilalı PVDF kaplama",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 90,
+      "weft": 45
+    },
+    "warranty_years": null,
+    "width_cm": 300.0,
+    "weight_g_m2": 500.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXM-3200.30 - B3704",
+    "type": "MESH",
+    "application": "İki taraflı PVDF, PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 70,
+      "weft": 70
+    },
+    "warranty_years": 10.0,
+    "width_cm": 320.0,
+    "weight_g_m2": 480.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXM-4500.40 - B3750",
+    "type": "MESH",
+    "application": "İki taraflı PVDF, PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 50
+    },
+    "warranty_years": 10.0,
+    "width_cm": 320.0,
+    "weight_g_m2": 500.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "GF-7006 - B 18659",
+    "type": "",
+    "application": "PTFE kaplama ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": 10.0,
+    "width_cm": 470.0,
+    "weight_g_m2": 1400.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "GF-6006 - B 18689",
+    "type": "",
+    "application": "PTFE kaplama ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 40,
+      "weft": 40
+    },
+    "warranty_years": 10.0,
+    "width_cm": 470.0,
+    "weight_g_m2": 1100.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "GF-4006 - B 18639",
+    "type": "",
+    "application": "PTFE kaplama ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": 10.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 750.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "TXA 900 F - B 4617",
+    "type": 2,
+    "application": "TiO2 takviyeli PVC kaplama, İki yüzey de PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 52
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "GF-4500 - B 18039",
+    "type": 2,
+    "application": "Çok katmanlı PTFE kaplama ve her iki taraf FEP sızdırmazlık",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 15.0,
+    "width_cm": 320.0,
+    "weight_g_m2": 770.0,
+    "unit_price": null
+  },
+  {
+    "brand": "VERSAIDAG",
+    "range": "VERSAIDAG",
+    "name": "DLG-Prüf.  5883F Classic 1100 - (B71311)",
+    "type": "",
+    "application": "PES - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 95,
+      "weft": 80
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1100.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "Facade Element T2 - W090721LV",
+    "type": 2,
+    "application": "Yazdırılabilir, mat, parlak olmak üzere üç  seçenekli ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 140,
+      "weft": 110
+    },
+    "warranty_years": 12.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 700.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T2199 - Tensile Architecture",
+    "type": 2,
+    "application": "Cam elyaf ağ üzerine florapolimer kaplama, yarı saydam membran, alev geciktirici özellikli",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 80
+    },
+    "warranty_years": 15.0,
+    "width_cm": 150.0,
+    "weight_g_m2": null,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B8103 - Tents",
+    "type": "",
+    "application": "PES-PVC, alt ve üst yüz parlak",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 27,
+      "weft": 27
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B8120 - Tents",
+    "type": "",
+    "application": "PES-PVC, alt ve üst yüz parlak",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 27,
+      "weft": 27
+    },
+    "warranty_years": null,
+    "width_cm": 218.0,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B8195 - Tents",
+    "type": "",
+    "application": "PES-PVC, üst yüz-donuk kaplama, alt yüz-Low-E",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 27,
+      "weft": 27
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 610.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B8196 - Tents",
+    "type": "",
+    "application": "PES-PVC, alt ve üst yüz parlak, düşük fitil",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 27,
+      "weft": 27
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B8288 - Tents",
+    "type": "",
+    "application": "PES-PVC, alt ve üst yüz parlak ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 27,
+      "weft": 27
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 800.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B9115",
+    "type": "",
+    "application": "PES-PVC, alt ve üst yüz parlak, aşırı soğuğa dayanıklı - Tente, salon",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 730.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B9113",
+    "type": "",
+    "application": "PES-PVC, alt ve üst yüz parlak - Tente, salon",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 730.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B9117",
+    "type": "",
+    "application": "PES-PVC, alt ve üst yüz parlak, aşırı soğuğa dayanıklı, düşük fitil - Tente, salon",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 730.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B6196",
+    "type": "",
+    "application": "PES-PVC, alt ve üst yüz parlak - Tente, salon",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": 300.0,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B7145",
+    "type": "",
+    "application": "PES-PVC, alt ve üst yüz parlak - hafif ve iç membran",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 20
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 450.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B7120",
+    "type": "",
+    "application": "PES-PVC, alt ve üst yüz parlak - hafif ve iç membran",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 20
+    },
+    "warranty_years": null,
+    "width_cm": 300.0,
+    "weight_g_m2": 550.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B7170",
+    "type": "",
+    "application": "Transparan, PES-PVC, alt ve üst yüz parlak, yarı saydam, dirençli - hafif ve iç membran",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 20
+    },
+    "warranty_years": null,
+    "width_cm": 300.0,
+    "weight_g_m2": 520.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B5454",
+    "type": "",
+    "application": "PES-PVC, alt ve üst yüz parlak - hafif ve iç membran",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 10,
+      "weft": 10
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 450.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "C5399",
+    "type": "",
+    "application": "PES-PVC, alt ve üst yüz parlak - hafif ve iç membran",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 6
+    },
+    "warranty_years": null,
+    "width_cm": 300.0,
+    "weight_g_m2": 400.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B8115",
+    "type": "",
+    "application": "PES, üst yüz-mat olmayan, alt yüz donuk kaplama - Pergolalarda",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 27,
+      "weft": 27
+    },
+    "warranty_years": null,
+    "width_cm": 300.0,
+    "weight_g_m2": 850.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B8118",
+    "type": "",
+    "application": "Küp kabartmalı PES-PVC, alt ve üst yüz parlak",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 27,
+      "weft": 27
+    },
+    "warranty_years": null,
+    "width_cm": 300.0,
+    "weight_g_m2": 850.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "S9150 - Military Applications",
+    "type": "",
+    "application": "Askeri uygulamalarda, alev geciktirici, PES-PVC, alt yüz - parlak",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 700.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B9191- Military Applications",
+    "type": "",
+    "application": "Askeri uygulamalarda, alev geciktirici, PES-PVC, alt ve alt yüz superdull",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 700.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B9643 - Military Applications",
+    "type": "",
+    "application": "Askeri uygulamalarda, alev geciktirici, PES-PVC, alt yüz - parlak",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 680.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "B8195 - Military Applications",
+    "type": "",
+    "application": "Askeri uygulamalarda, alev geciktirici, PES-PVC, üst yüz-donuk kaplama, alt yüz-Low-E",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 27,
+      "weft": 27
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 610.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "C5511 - Military Applications ",
+    "type": "",
+    "application": "Askeri uygulamalarda, alev geciktirici, PES-PVC, alt ve alt yüz superdull",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 10,
+      "weft": 10
+    },
+    "warranty_years": null,
+    "width_cm": 300.0,
+    "weight_g_m2": 500.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "S8150 - Military Applications",
+    "type": "",
+    "application": "Askeri uygulamalarda, alev geciktirici, PES-PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 23,
+      "weft": 23
+    },
+    "warranty_years": null,
+    "width_cm": 218.0,
+    "weight_g_m2": 700.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "S2700 - Military Applications",
+    "type": "",
+    "application": "Askeri uygulamalarda, alev geciktirici, PES-PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 27,
+      "weft": 27
+    },
+    "warranty_years": null,
+    "width_cm": 218.0,
+    "weight_g_m2": 700.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T0119E - Tensile Architecture",
+    "type": 0,
+    "application": "Üst yüz PVDF fluomax, alt yüz akrilik kaplama, PVC, süper opak, alev geciktirici, antibakteriyel",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 10.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 800.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T1117E - Tensile Architecture",
+    "type": 1,
+    "application": "Üst yüz PVDF fluomax, alt yüz akrilik kaplama, PVC, alev geciktirici, antibakteriyel",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 10.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 725.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T1119E - Tensile Architecture",
+    "type": 1,
+    "application": "Üst yüz PVDF fluomax, alt yüz akrilik kaplama, PVC, süper opak, alev geciktirici, antibakteriyel",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 10.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 850.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T2117E - Tensile Architecture ",
+    "type": 2,
+    "application": "Üst yüz PVDF fluomax, alt yüz akrilik kaplama, PVC, alev geciktirici, antibakteriyel",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 50
+    },
+    "warranty_years": 10.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T2118E - Tensile Architecture",
+    "type": 2,
+    "application": "Üst yüz PVDF fluomax, alt yüz akrilik kaplama, PVC, alev geciktirici, antibakteriyel",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 50
+    },
+    "warranty_years": 10.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T0117F - Tensile Architecture",
+    "type": 0,
+    "application": "İki yüz PVDF fluomax, PVC, alev geciktirici, antibakteriyel ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 10.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T1117F - Tensile Architecture ",
+    "type": 1,
+    "application": "İki yüz PVDF fluomax, PVC, alev geciktirici, antibakteriyel ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 10.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 725.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T2117F - Tensile Architecture ",
+    "type": 2,
+    "application": "İki yüz PVDF fluomax, PVC, alev geciktirici, antibakteriyel ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 50
+    },
+    "warranty_years": 10.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T2118F - Tensile Architecture ",
+    "type": 2,
+    "application": "İki yüz PVDF fluomax, PVC, alev geciktirici, antibakteriyel ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 50
+    },
+    "warranty_years": 15.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T3117F - Tensile Architecture ",
+    "type": 3,
+    "application": "İki yüz PVDF fluomax, PVC, alev geciktirici, antibakteriyel ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 90,
+      "weft": 80
+    },
+    "warranty_years": 15.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 1150.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T4117F - Tensile Architecture ",
+    "type": 4,
+    "application": "İki yüz PVDF fluomax, PVC, alev geciktirici, antibakteriyel ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 120,
+      "weft": 120
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 1350.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T5117F - Tensile Architecture ",
+    "type": 5,
+    "application": "İki yüz PVDF fluomax, PVC, alev geciktirici, antibakteriyel ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 200,
+      "weft": 200
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 1600.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T1117T - Tensile Architecture",
+    "type": 1,
+    "application": "Üst yüz titanyum PVDF fluomax, alt yüz PVDF fluomax kaplama, alev geciktirici, antibakteriyel",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 15.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 725.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T2118T - Tensile Architecture",
+    "type": 2,
+    "application": "Üst yüz titanyum PVDF fluomax, alt yüz PVDF fluomax kaplama, alev geciktirici, antibakteriyel",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 50
+    },
+    "warranty_years": 20.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T3117T - Tensile Architecture ",
+    "type": 3,
+    "application": "Üst yüz titanyum PVDF fluomax, alt yüz PVDF fluomax kaplama, alev geciktirici, antibakteriyel",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 90,
+      "weft": 80
+    },
+    "warranty_years": 20.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 1150.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SIOEN",
+    "range": "SIOEN",
+    "name": "T4117T - Tensile Architecture ",
+    "type": 4,
+    "application": "Üst yüz titanyum PVDF fluomax, alt yüz PVDF fluomax kaplama, alev geciktirici, antibakteriyel",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 120,
+      "weft": 120
+    },
+    "warranty_years": 20.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 1350.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "VALMEX FR 700 ",
+    "type": 1,
+    "application": "İki taraflı PVDF, PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 850.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "VALMEX FR 900",
+    "type": 2,
+    "application": "İki taraflı PVDF, PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 45
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "VALMEX FR 900 ",
+    "type": 2,
+    "application": "İki taraflı PVDF, PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 45
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 900 Opak ",
+    "type": 2,
+    "application": "İki taraflı PVDF, PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 45
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1000.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 1000 ",
+    "type": 3,
+    "application": "İki taraflı PVDF, PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 90,
+      "weft": 80
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 1000 Opak ",
+    "type": 3,
+    "application": "İki taraflı PVDF, PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 90,
+      "weft": 80
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1080.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 1000 Metalik ",
+    "type": 3,
+    "application": "Üst yüzey de metalik lake ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 90,
+      "weft": 80
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex FR 1400 - 7270",
+    "type": 4,
+    "application": "İki taraflı PVDF, pvc",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 120,
+      "weft": 120
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 1350.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 1400 ",
+    "type": 4,
+    "application": "İki taraflı PVDF, PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 120,
+      "weft": 120
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1350.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 1400 - 1321.2 Gold",
+    "type": 4,
+    "application": "Üst taraf lake, iç taraf akrilik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 120,
+      "weft": 120
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1350.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 1600 ",
+    "type": 5,
+    "application": "İki taraf PVDF, PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 200,
+      "weft": 200
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1550.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "8964 FR ",
+    "type": "",
+    "application": "İki taraf akrilik vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 20,
+      "weft": 15
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 600.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Silver MESH FR",
+    "type": "",
+    "application": "Lake",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 320.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Flashguard",
+    "type": "",
+    "application": "PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 420.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": " 8506 - Poly Prima",
+    "type": "",
+    "application": "İki taraf akrilik vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "tent 8506  Poly Opak",
+    "type": "",
+    "application": "İki taraf akrilik vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 35,
+      "weft": 35
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 800.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 700 duo opak ",
+    "type": 1,
+    "application": "İki taraf akrilik vernik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 800.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 700 ten",
+    "type": "",
+    "application": "İki taraflı PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 700.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "TF 400 Cristal Premium",
+    "type": "",
+    "application": "Üst taraf PVDF, iç taraf akrilik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 70,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 930.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 700 Premium - 7205",
+    "type": 1,
+    "application": "Ön taraf PVDF, iç taraf akrilik ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 700.0,
+    "unit_price": 8.3
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 900 Mehatop F1  - 7211",
+    "type": 2,
+    "application": "İki taraflı PVDF - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 900.0,
+    "unit_price": 9.0
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 580 Mehatop F1 - 7213",
+    "type": "",
+    "application": "İki taraflı PVDF - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 580.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 650-2 Mehatop F1 - 7216",
+    "type": "",
+    "application": "İki taraflı PVDF - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 27
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 1000 Mehatop F1 - 7269",
+    "type": 3,
+    "application": "İki taraflı PVDF - PVC ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 90,
+      "weft": 80
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 1050.0,
+    "unit_price": 10.3
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 1400 Mehatop F1 - 7270",
+    "type": 4,
+    "application": "İki taraflı PVDF - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 120,
+      "weft": 120
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 1350.0,
+    "unit_price": 12.72
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 1600 Mehatop F1 - 7274",
+    "type": 5,
+    "application": "İki taraflı PVDF - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 200,
+      "weft": 200
+    },
+    "warranty_years": 15.0,
+    "width_cm": null,
+    "weight_g_m2": 1550.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "TF 400 F - 7280",
+    "type": "MESH",
+    "application": "İki taraflı PVDF - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 70
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 420.0,
+    "unit_price": 7.4
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "TF 400 F1 -7280",
+    "type": "MESH",
+    "application": "İki taraflı PVDF - PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 70
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 420.0,
+    "unit_price": 7.91
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "8506 - 4248 tech",
+    "type": "",
+    "application": "Ön taraf PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "8596 - 6999 Poly Opak",
+    "type": "",
+    "application": "Her iki yüzey akrilik laklı",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 35,
+      "weft": 35
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 800.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 580 Mehatop F1 - 7213",
+    "type": "",
+    "application": "Her iki yüzey PVDF laklı ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 580.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 650-2 Mehatop F1 ",
+    "type": "",
+    "application": "Her iki yüzey PVDF laklı ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 27
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Shadow FR 900",
+    "type": 2,
+    "application": "Üst yüzey PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 48
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex Tivoli 7213 - 5260",
+    "type": "Valmex Tivoli 7213 - 5260",
+    "application": "Her iki yüzey cilalı",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 580.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Shadow FR 1000 ",
+    "type": "",
+    "application": "Üst yüzey PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 90,
+      "weft": 80
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Mehler 9000 - 67985",
+    "type": "",
+    "application": "Bir tarafı PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 950.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex 8540 - 5240 - 900",
+    "type": "",
+    "application": "Her iki yüzey akrilik ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "TF 400 ",
+    "type": "MESH",
+    "application": "Her iki yüzey akrilik",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 70
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 420.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "TF 400 Crystal",
+    "type": "",
+    "application": "Her iki yüzey PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 70,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 930.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "TF 400 ",
+    "type": "MESH",
+    "application": "Her iki yüzey PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 70
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 420.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex VS 1050",
+    "type": "",
+    "application": "Üst yüzey PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex FR 650-2  - 8212 Blackback",
+    "type": "",
+    "application": "",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex Camping 4231/5740",
+    "type": "",
+    "application": "Her iki yüzey akrilik, PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": null,
+    "width_cm": 150.0,
+    "weight_g_m2": 420.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex Camping 4213/5342",
+    "type": "",
+    "application": "Her iki taraf lake (mat), PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 17,
+      "weft": 12
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 420.0,
+    "unit_price": 5.0
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex Camping 7822/5240",
+    "type": "",
+    "application": "Her iki taraf lake, PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 680.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex Camping 8227/4299",
+    "type": "",
+    "application": "Her iki taraf lake, PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 35,
+      "weft": 35
+    },
+    "warranty_years": null,
+    "width_cm": 300.0,
+    "weight_g_m2": 720.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex Camping 8559/5240",
+    "type": "",
+    "application": "Her iki taraf lake, PVC",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": 2.0
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex Camping 8227/7080",
+    "type": "",
+    "application": "Her iki taraf lake, PVC, ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": 300.0,
+    "weight_g_m2": 680.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex VS 680",
+    "type": "",
+    "application": "Üst yüzey PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 750.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Polymar FR 850 - 8512",
+    "type": 1,
+    "application": "",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 850.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex FR 650-2 - 7216",
+    "type": "",
+    "application": "low - wick",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 27
+    },
+    "warranty_years": 15.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex FR 650-2 - 8212",
+    "type": "",
+    "application": "",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": 15.0,
+    "width_cm": null,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Valmex VS 900",
+    "type": 2,
+    "application": "Üst yüzey PVDF ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 950.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Haku Polymar 8205",
+    "type": "",
+    "application": "İki tarafı akrilik lakla kaplı ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 680.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Polymar Poly Opak - 8596",
+    "type": "",
+    "application": "",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 350,
+      "weft": 350
+    },
+    "warranty_years": 15.0,
+    "width_cm": null,
+    "weight_g_m2": 800.0,
+    "unit_price": 5.0
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Polymar 8506 5250",
+    "type": "",
+    "application": "İki tarafı akrilik lakla kaplı ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 650.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "Haku Polymar 8556",
+    "type": "",
+    "application": "İki tarafı akrilik lakla kaplı ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "TF 300 ",
+    "type": "MESH",
+    "application": "Her iki yüzey PVDF laklı, alev yürütmez",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 70
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 740.0,
+    "unit_price": 8.2
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "TF 400 F1",
+    "type": "MESH",
+    "application": "Her iki yüzey PVDF laklı, low-wick özelliği",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 80,
+      "weft": 70
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 420.0,
+    "unit_price": null
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "TF 600",
+    "type": "",
+    "application": "Her iki yüzey PVDF laklı, low-wick özelliği",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 180,
+      "weft": 180
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1050.0,
+    "unit_price": 9.8
+  },
+  {
+    "brand": "MEHLER",
+    "range": "MEHLER",
+    "name": "FR 900 TYPE II HTL",
+    "type": 2,
+    "application": "Her iki yüzey PVDF laklı, low-wick özelliği",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "745 Polyplan Tent Light Matt",
+    "type": "",
+    "application": "PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 25,
+      "weft": 25
+    },
+    "warranty_years": 7.0,
+    "width_cm": null,
+    "weight_g_m2": 640.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "784 Polyplan Hall PVDF ",
+    "type": 1,
+    "application": "Salonlar ve çadırlar - PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 30,
+      "weft": 30
+    },
+    "warranty_years": 7.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 730.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "960 Polyplan Tent Heavy",
+    "type": "",
+    "application": "Hangarlar, depolar, endüstriyel binalar - PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 53
+    },
+    "warranty_years": 7.0,
+    "width_cm": 300.0,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "Sattler 648",
+    "type": 1,
+    "application": "PVC iki taraf, low wick özellikli",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 37,
+      "weft": 5
+    },
+    "warranty_years": 12.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 700.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "Sattler 659 - 10B TYPE III",
+    "type": 3,
+    "application": "PVC iki taraf, low wick özellikli",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 100,
+      "weft": 90
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1200.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "Sattler 669 - 10B TYPE II",
+    "type": 2,
+    "application": "PVC iki taraf, low wick özellikli",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "739 ATLAS Architecture TFL/TFX",
+    "type": 2,
+    "application": "low wick özellikli",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 60,
+      "weft": 50
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 900.0,
+    "unit_price": 7.0
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "759 ATLAS Architecture TFL/TFX",
+    "type": 3,
+    "application": "low wick özellikli",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 70,
+      "weft": 70
+    },
+    "warranty_years": null,
+    "width_cm": 250.0,
+    "weight_g_m2": 1200.0,
+    "unit_price": 11.2
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "760 ATLAS Architecture TFL/TFX",
+    "type": 4,
+    "application": "low wick özellikli",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 130,
+      "weft": 130
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1350.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "659 Polyplan Architecture ",
+    "type": 3,
+    "application": "PES fitil önleyici - PVDF, low wick özellikli",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 100,
+      "weft": 90
+    },
+    "warranty_years": 12.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 1200.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "730 ATLAS Architecture  TFL/TFX",
+    "type": 1,
+    "application": "low wick özellikli",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 40,
+      "weft": 35
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 700.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "780 ATLAS Architecture TFL/TFX",
+    "type": 5,
+    "application": "low wick özellikli",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 170,
+      "weft": 170
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1550.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "669 Polyplan Architecture PFL",
+    "type": 2,
+    "application": "PES , low wick özellikli, PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 50
+    },
+    "warranty_years": 12.0,
+    "width_cm": 250.0,
+    "weight_g_m2": 900.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "717 Polyplan Architecture PFL ",
+    "type": 4,
+    "application": "PES , low wick özellikli, PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 140,
+      "weft": 130
+    },
+    "warranty_years": 12.0,
+    "width_cm": null,
+    "weight_g_m2": 1350.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SATTLER",
+    "range": "SATTLER",
+    "name": "631 Polyplan Architecture PFL",
+    "type": 5,
+    "application": "PES , low wick özellikli, PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 200,
+      "weft": 200
+    },
+    "warranty_years": 12.0,
+    "width_cm": null,
+    "weight_g_m2": 1550.0,
+    "unit_price": null
+  },
+  {
+    "brand": "HEYTEX",
+    "range": "HEYTEX",
+    "name": " H3559-XXXX - ark IV",
+    "type": "",
+    "application": "PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 120,
+      "weft": 120
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1400.0,
+    "unit_price": null
+  },
+  {
+    "brand": "HEYTEX",
+    "range": "HEYTEX",
+    "name": "H5071-0297",
+    "type": "",
+    "application": "",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 56,
+      "weft": 34
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 340.0,
+    "unit_price": null
+  },
+  {
+    "brand": "OBEIKAN",
+    "range": "OBEIKAN",
+    "name": "OBEFLEX TYPE V ",
+    "type": 5,
+    "application": "PTFE kaplama, parlak",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1424.0,
+    "unit_price": null
+  },
+  {
+    "brand": "OBEIKAN",
+    "range": "OBEIKAN",
+    "name": "OBETEX TYPE 2105-FR White",
+    "type": "",
+    "application": "Her iki taraf PVC kaplama, PVDF kaplama",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 50,
+      "weft": 40
+    },
+    "warranty_years": null,
+    "width_cm": 500.0,
+    "weight_g_m2": 1050.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SEFAR",
+    "range": "SEFAR",
+    "name": "Tenara Fabric 4T20HF",
+    "type": "",
+    "application": "PTFE kaplama",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 79,
+      "weft": 8
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1080.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SEFAR",
+    "range": "SEFAR",
+    "name": "Tenara 4T40HF",
+    "type": "",
+    "application": "PTFE kaplama",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 79,
+      "weft": 8
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 1080.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SEFAR",
+    "range": "SEFAR",
+    "name": "IA 80 CL",
+    "type": "",
+    "application": "PVDF, akustik operatif ışıklı tavanlar, duvarlar ve katmanlı yapılar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 4,
+      "weft": 8
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 440.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SEFAR",
+    "range": "SEFAR",
+    "name": " IA 85 OP ",
+    "type": "Opak",
+    "application": "PVDF, akustik operatif ışıklı tavanlar, duvarlar ve katmanlı yapılar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 4,
+      "weft": 8
+    },
+    "warranty_years": null,
+    "width_cm": 160.0,
+    "weight_g_m2": 220.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SEFAR",
+    "range": "SEFAR",
+    "name": " IA 95 CL",
+    "type": "",
+    "application": "PVDF, akustik operatif ışıklı tavanlar, duvarlar ve katmanlı yapılar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 3,
+      "weft": 4
+    },
+    "warranty_years": null,
+    "width_cm": 160.0,
+    "weight_g_m2": 220.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SEFAR",
+    "range": "SEFAR",
+    "name": "IL 80 OP ",
+    "type": "",
+    "application": "PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 160.0,
+    "weight_g_m2": 240.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SEFAR",
+    "range": "SEFAR",
+    "name": "IL 90 CL",
+    "type": "",
+    "application": "PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 240.0,
+    "weight_g_m2": 240.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SEFAR",
+    "range": "SEFAR",
+    "name": "IA 85 OP",
+    "type": "",
+    "application": "PVDF",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 220.0,
+    "weight_g_m2": 160.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SEFAR",
+    "range": "SEFAR",
+    "name": "IA 95 CL",
+    "type": "",
+    "application": "PVDF, akustik operatif ışıklı tavanlar, duvarlar ve katmanlı yapılar",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 220.0,
+    "weight_g_m2": 160.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SEFAR",
+    "range": "SEFAR",
+    "name": "EL 35 T1",
+    "type": 1,
+    "application": "PTFE",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 160.0,
+    "weight_g_m2": 320.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SEFAR",
+    "range": "SEFAR",
+    "name": "EL 65 T0 ",
+    "type": 0,
+    "application": "PTFE",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 160.0,
+    "weight_g_m2": 310.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SEFAR",
+    "range": "SEFAR",
+    "name": "EH 35 T2",
+    "type": 2,
+    "application": "PTFE",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 160.0,
+    "weight_g_m2": 530.0,
+    "unit_price": null
+  },
+  {
+    "brand": "SEFAR",
+    "range": "SEFAR",
+    "name": "I/E-200-S",
+    "type": 2,
+    "application": "PVDF, iç ve dış mekanlarda",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": 200.0,
+    "weight_g_m2": 990.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FABRASORB",
+    "range": "FABRASORB ",
+    "name": "Fabrasorb II  Acoustical Membrane",
+    "type": "",
+    "application": "Akustik membran",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 7,
+      "weft": 5
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 200.0,
+    "unit_price": null
+  },
+  {
+    "brand": "NORTON",
+    "range": "NORTON ETFE",
+    "name": "Norton ETFE ",
+    "type": "",
+    "application": "",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": null,
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": null,
+    "unit_price": null
+  },
+  {
+    "brand": "SHEERFILL",
+    "range": "SHEERFILL",
+    "name": "Sheerfill ",
+    "type": "",
+    "application": "Sheerfill V Architecture Membrane, PTFE ",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 155,
+      "weft": 265
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 985.0,
+    "unit_price": null
+  },
+  {
+    "brand": "T",
+    "range": "T MORE",
+    "name": "T More T - 1150",
+    "type": "",
+    "application": "PTFE ",
+    "tensile_strength_N_5cm": {
+      "warp": 600,
+      "weft": 600
+    },
+    "tearing_strength_N_5cm": {
+      "warp": 45,
+      "weft": 45
+    },
+    "warranty_years": null,
+    "width_cm": 380.0,
+    "weight_g_m2": 1000.0,
+    "unit_price": null
+  },
+  {
+    "brand": "FIBETTECH",
+    "range": "FIBETTECH TEFLON",
+    "name": "Fibertop AM 7",
+    "type": "MESH",
+    "application": "PTFE",
+    "tensile_strength_N_5cm": null,
+    "tearing_strength_N_5cm": {
+      "warp": 551.5,
+      "weft": 500
+    },
+    "warranty_years": null,
+    "width_cm": null,
+    "weight_g_m2": 750.0,
+    "unit_price": null
+  }
+]

@@ -1,0 +1,127 @@
+{
+  "PLAKA_STANDARDS": {
+    "grades": [
+      /* --- YAPI ÇELİKLERİ (EN 10025-2) --- */
+      { "code": "S185",     "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
+      { "code": "S235JR",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
+      { "code": "S235JO",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
+      { "code": "S235J2",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
+      { "code": "S275JR",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
+      { "code": "S275JO",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
+      { "code": "S275J2",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
+      { "code": "S355JR",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
+      { "code": "S355JO",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
+      { "code": "S355J2",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
+      { "code": "S355K2",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
+      { "code": "S450J0",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
+
+      /* --- İNCE TANELİ, TERMOMEKANİK (EN 10025-3/-4) --- */
+      { "code": "S275N",    "standard": ["EN 10025-3"], "density_kg_m3": 7850 },
+      { "code": "S275NL",   "standard": ["EN 10025-3"], "density_kg_m3": 7850 },
+      { "code": "S355N",    "standard": ["EN 10025-3"], "density_kg_m3": 7850 },
+      { "code": "S355NL",   "standard": ["EN 10025-3"], "density_kg_m3": 7850 },
+      { "code": "S420N",    "standard": ["EN 10025-3"], "density_kg_m3": 7850 },
+      { "code": "S420NL",   "standard": ["EN 10025-3"], "density_kg_m3": 7850 },
+      { "code": "S460N",    "standard": ["EN 10025-3"], "density_kg_m3": 7850 },
+      { "code": "S460NL",   "standard": ["EN 10025-3"], "density_kg_m3": 7850 },
+
+      { "code": "S275M",    "standard": ["EN 10025-4"], "density_kg_m3": 7850 },
+      { "code": "S275ML",   "standard": ["EN 10025-4"], "density_kg_m3": 7850 },
+      { "code": "S355M",    "standard": ["EN 10025-4"], "density_kg_m3": 7850 },
+      { "code": "S355ML",   "standard": ["EN 10025-4"], "density_kg_m3": 7850 },
+      { "code": "S420M",    "standard": ["EN 10025-4"], "density_kg_m3": 7850 },
+      { "code": "S420ML",   "standard": ["EN 10025-4"], "density_kg_m3": 7850 },
+      { "code": "S460M",    "standard": ["EN 10025-4"], "density_kg_m3": 7850 },
+      { "code": "S460ML",   "standard": ["EN 10025-4"], "density_kg_m3": 7850 },
+
+      /* --- ARAÇ/FORM ÇELİKLERİ (EN 10149-2) --- */
+      { "code": "S315MC",   "standard": ["EN 10149-2"], "density_kg_m3": 7850 },
+      { "code": "S355MC",   "standard": ["EN 10149-2"], "density_kg_m3": 7850 },
+      { "code": "S420MC",   "standard": ["EN 10149-2"], "density_kg_m3": 7850 },
+      { "code": "S460MC",   "standard": ["EN 10149-2"], "density_kg_m3": 7850 },
+      { "code": "S500MC",   "standard": ["EN 10149-2"], "density_kg_m3": 7850 },
+      { "code": "S550MC",   "standard": ["EN 10149-2"], "density_kg_m3": 7850 },
+      { "code": "S600MC",   "standard": ["EN 10149-2"], "density_kg_m3": 7850 },
+      { "code": "S650MC",   "standard": ["EN 10149-2"], "density_kg_m3": 7850 },
+      { "code": "S700MC",   "standard": ["EN 10149-2"], "density_kg_m3": 7850 },
+
+      /* --- BASINÇ KAPAK / KAZAN ÇELİKLERİ (EN 10028) --- */
+      { "code": "P235GH",   "standard": ["EN 10028-2"], "density_kg_m3": 7850 },
+      { "code": "P265GH",   "standard": ["EN 10028-2"], "density_kg_m3": 7850 },
+      { "code": "P295GH",   "standard": ["EN 10028-2"], "density_kg_m3": 7850 },
+      { "code": "P355GH",   "standard": ["EN 10028-2"], "density_kg_m3": 7850 },
+      { "code": "16Mo3",    "standard": ["EN 10028-2"], "density_kg_m3": 7850 },
+      { "code": "13CrMo4-5","standard": ["EN 10028-2"], "density_kg_m3": 7850 },
+      { "code": "10CrMo9-10","standard":["EN 10028-2"],"density_kg_m3":7850 },
+
+      /* --- PASLANMAZ ÇELİKLER (EN 10088-2) --- */
+      { "code": "AISI 304",   "standard": ["EN 10088-2"], "density_kg_m3": 8000 },
+      { "code": "AISI 304L",  "standard": ["EN 10088-2"], "density_kg_m3": 8000 },
+      { "code": "AISI 316",   "standard": ["EN 10088-2"], "density_kg_m3": 8000 },
+      { "code": "AISI 316L",  "standard": ["EN 10088-2"], "density_kg_m3": 8000 },
+      { "code": "AISI 310S",  "standard": ["EN 10088-2"], "density_kg_m3": 8000 },
+      { "code": "AISI 321",   "standard": ["EN 10088-2"], "density_kg_m3": 8000 },
+      { "code": "AISI 430",   "standard": ["EN 10088-2"], "density_kg_m3": 7750 },
+
+      // --- GALVANİZ / KAPLAMALI (EN 10346) --- 
+      { "code": "DX51D+Z", "standard": ["EN 10346"], "density_kg_m3": 7870 },
+      { "code": "DX52D+Z", "standard": ["EN 10346"], "density_kg_m3": 7870 },
+      { "code": "DX53D+Z", "standard": ["EN 10346"], "density_kg_m3": 7870 },
+      { "code": "DX54D+Z", "standard": ["EN 10346"], "density_kg_m3": 7870 },
+      { "code": "S220GD+Z","standard": ["EN 10346"], "density_kg_m3": 7870 },
+      { "code": "S250GD+Z","standard": ["EN 10346"], "density_kg_m3": 7870 },
+      { "code": "S280GD+Z","standard": ["EN 10346"], "density_kg_m3": 7870 },
+      { "code": "S320GD+Z","standard": ["EN 10346"], "density_kg_m3": 7870 },
+      { "code": "S350GD+Z","standard": ["EN 10346"], "density_kg_m3": 7870 },
+
+      /* --- AŞINMAYA DİRENÇLİ PLAKALAR (HARDOX vb.) --- */
+      { "code": "Hardox 400","standard": ["SSAB"], "density_kg_m3": 7850 },
+      { "code": "Hardox 450","standard": ["SSAB"], "density_kg_m3": 7850 },
+      { "code": "Hardox 500","standard": ["SSAB"], "density_kg_m3": 7850 },
+      { "code": "Hardox 550","standard": ["SSAB"], "density_kg_m3": 7850 },
+      { "code": "Hardox 600","standard": ["SSAB"], "density_kg_m3": 7850 },
+      { "code": "Raex 400",  "standard": ["Ruukki"], "density_kg_m3": 7850 },
+      { "code": "Raex 500",  "standard": ["Ruukki"], "density_kg_m3": 7850 }
+    ],
+
+    "sheet_sizes_mm": [
+      { "width": 1000, "length": 2000 },
+      { "width": 1250, "length": 2500 },
+      { "width": 1500, "length": 3000 },
+      { "width": 1500, "length": 6000 },
+      { "width": 2000, "length": 4000 },
+      { "width": 2000, "length": 6000 },
+      { "width": 2000, "length": 8000 },
+      { "width": 2500, "length": 6000 },
+      { "width": 2500, "length": 8000 },
+      { "width": 3000, "length": 12000 }
+    ],
+
+    "thickness_mm": [
+      0.4, 0.5, 0.6, 0.7, 0.8, 0.9,
+      1, 1.2, 1.5, 1.8, 2, 2.5,
+      3, 3.5, 4, 4.5, 5, 5.5,
+      6, 7, 8, 9, 10, 11, 12, 14, 15, 16,
+      18, 20, 22, 25, 28, 30, 32, 35, 40,
+      45, 50, 55, 60, 65, 70, 75, 80, 90, 100, 120
+    ],
+
+    "surface_finish": [
+      "Siyah (Hot Rolled)",
+      "Pickled & Oiled (P&O)",
+      "Cold Rolled",
+      "Galvanizli",
+      "Boya Kaplı",
+      "Paslanmaz No.1",
+      "Paslanmaz 2B",
+      "Paslanmaz BA"
+    ],
+
+    "tolerance_standards": [
+      { "code": "EN 10029",   "scope": "Hot rolled steel plates tolerances" },
+      { "code": "EN 10051",   "scope": "Continuously hot-rolled strip/sheet tolerances" },
+      { "code": "EN ISO 9445","scope": "Cold-rolled stainless steel strip tolerances" },
+      { "code": "EN 10204",   "scope": "Metal ürünler için muayene belgeleri (3.1 sertifika)" }
+    ]
+  }
+}

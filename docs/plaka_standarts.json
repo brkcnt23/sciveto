@@ -1,0 +1,14 @@
+{
+  "PLAKA_STANDARDS": [
+    "S235JR",
+    "S275JR",
+    "S355JR",
+    "S355J2",
+    "AISI 304",
+    "AISI 316L",
+    "DX51D+Z (Galvaniz)",
+    "P265GH",
+    "Hardox 400",
+    "Hardox 450"
+  ]
+}
