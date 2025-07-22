@@ -112,8 +112,8 @@ export interface LayoutConfig {
   }
 }
 
-// Theme Configuration
-export interface ThemeConfig {
+// Theme Configuration (Legacy - renamed to avoid conflicts with useTheme)
+export interface UIThemeConfig {
   colorMode: 'light' | 'dark' | 'auto'
   primaryColor: UIColor
   neutralColor: 'slate' | 'gray' | 'zinc' | 'neutral' | 'stone'
@@ -123,7 +123,7 @@ export interface ThemeConfig {
 
 // User Interface State
 export interface UIState {
-  theme: ThemeConfig
+  theme: UIThemeConfig
   layout: LayoutConfig
   sidebar: SidebarState
   commandPalette: {

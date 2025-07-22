@@ -1,5 +1,6 @@
 // plugins/theme.client.ts
 import { useTheme } from '~/composables/useTheme'
+import type { ThemeState } from '~/composables/useTheme'
 
 export default defineNuxtPlugin({
   name: 'theme-manager',
@@ -96,7 +97,7 @@ export default defineNuxtPlugin({
     
     // Make theme utilities globally available
     if (process.client) {
-      window.__nuxt_theme__ = themeUtils
+      ;(window as any).__nuxt_theme__ = themeUtils
     }
     
     // Cleanup on app unmount
@@ -106,17 +107,3 @@ export default defineNuxtPlugin({
   // Ensure this plugin runs before other plugins that might depend on theme
   enforce: 'pre'
 })
-
-// Global type augmentation for theme utilities
-declare global {
-  interface Window {
-    __nuxt_theme__?: {
-      getThemeState: () => import('~/composables/useTheme').ThemeState
-      isCurrentlyDark: () => boolean
-      isCurrentlyLight: () => boolean
-      isAutoMode: () => boolean
-      getSystemPreference: () => 'light' | 'dark'
-      getStoredPreference: () => 'light' | 'dark' | 'auto' | null
-    }
-  }
-}

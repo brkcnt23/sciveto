@@ -63,16 +63,19 @@
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
             <UIcon name="i-lucide-bell" class="w-5 h-5 text-primary" />
-            <h3 class="text-xl font-bold text-highlighted">Toast Notifications (Nuxt UI v3)</h3>
+            <h3 class="text-xl font-bold text-highlighted">Enhanced Toast System</h3>
           </div>
-          <UBadge color="primary" variant="solid">Updated</UBadge>
+          <div class="flex items-center gap-2">
+            <UBadge color="success" variant="soft">useDualToast</UBadge>
+            <UBadge color="primary" variant="solid">Updated</UBadge>
+          </div>
         </div>
       </template>
 
       <div class="space-y-6">
         <!-- Basic Toast Examples -->
         <div>
-          <h4 class="font-semibold text-highlighted mb-4">Basic Toast Examples</h4>
+          <h4 class="font-semibold text-highlighted mb-4">Enhanced Toast Methods</h4>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
             <UButton color="success" @click="showSuccessToast" block>
               <UIcon name="i-lucide-check" class="w-4 h-4 mr-2" />
@@ -93,85 +96,59 @@
           </div>
         </div>
 
-        <!-- Toast Component Preview -->
+        <!-- Advanced Features -->
         <div>
-          <h4 class="font-semibold text-highlighted mb-4">Toast Component Preview</h4>
-          <UCard variant="outline" class="bg-neutral-50 dark:bg-neutral-900/50">
-            <p class="text-sm text-muted mb-4">Preview of Toast components (not functional, just visual):</p>
-            
-            <div class="space-y-3">
-              <!-- Success Toast Preview -->
-              <div class="flex items-center gap-3 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-success-200 dark:border-success-800 border-l-4 border-l-success-500">
-                <UIcon name="i-lucide-check-circle" class="w-5 h-5 text-success-600 flex-shrink-0" />
-                <div class="flex-1">
-                  <h5 class="text-sm font-semibold text-highlighted">Success!</h5>
-                  <p class="text-sm text-muted mt-1">Your data has been saved successfully.</p>
-                </div>
-                <UButton color="neutral" variant="ghost" size="xs">
-                  <UIcon name="i-lucide-x" class="w-4 h-4" />
-                </UButton>
-              </div>
-
-              <!-- Error Toast Preview -->
-              <div class="flex items-center gap-3 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-error-200 dark:border-error-800 border-l-4 border-l-error-500">
-                <UIcon name="i-lucide-alert-circle" class="w-5 h-5 text-error-600 flex-shrink-0" />
-                <div class="flex-1">
-                  <h5 class="text-sm font-semibold text-highlighted">Error!</h5>
-                  <p class="text-sm text-muted mt-1">Something went wrong. Please try again.</p>
-                </div>
-                <div class="flex gap-2">
-                  <UButton color="error" variant="ghost" size="xs">Retry</UButton>
-                  <UButton color="neutral" variant="ghost" size="xs">
-                    <UIcon name="i-lucide-x" class="w-4 h-4" />
-                  </UButton>
-                </div>
-              </div>
-
-              <!-- Warning Toast Preview -->
-              <div class="flex items-center gap-3 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-warning-200 dark:border-warning-800 border-l-4 border-l-warning-500">
-                <UIcon name="i-lucide-alert-triangle" class="w-5 h-5 text-warning-600 flex-shrink-0" />
-                <div class="flex-1">
-                  <h5 class="text-sm font-semibold text-highlighted">Warning!</h5>
-                  <p class="text-sm text-muted mt-1">Please review your settings before continuing.</p>
-                </div>
-                <UButton color="neutral" variant="ghost" size="xs">
-                  <UIcon name="i-lucide-x" class="w-4 h-4" />
-                </UButton>
-              </div>
-
-              <!-- Info Toast Preview -->
-              <div class="flex items-center gap-3 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-info-200 dark:border-info-800 border-l-4 border-l-info-500">
-                <UIcon name="i-lucide-info" class="w-5 h-5 text-info-600 flex-shrink-0" />
-                <div class="flex-1">
-                  <h5 class="text-sm font-semibold text-highlighted">Information</h5>
-                  <p class="text-sm text-muted mt-1">Here is some important information for you.</p>
-                </div>
-                <UButton color="neutral" variant="ghost" size="xs">
-                  <UIcon name="i-lucide-x" class="w-4 h-4" />
-                </UButton>
-              </div>
-            </div>
-          </UCard>
-        </div>
-
-        <!-- Advanced Toast Features -->
-        <div>
-          <h4 class="font-semibold text-highlighted mb-4">Advanced Toast Features</h4>
+          <h4 class="font-semibold text-highlighted mb-4">Advanced Features</h4>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <UButton variant="outline" @click="showToastWithActions" block>
-              <UIcon name="i-lucide-zap" class="w-4 h-4 mr-2" />
-              Toast with Actions
+            <UButton variant="outline" @click="showServerErrorToast" block>
+              <UIcon name="i-lucide-server-crash" class="w-4 h-4 mr-2" />
+              Server Error (with Retry)
             </UButton>
-            <UButton variant="outline" @click="showPersistentToast" block>
-              <UIcon name="i-lucide-clock" class="w-4 h-4 mr-2" />
-              Persistent Toast
+            <UButton variant="outline" @click="showLoadingToast" block>
+              <UIcon name="i-lucide-loader-2" class="w-4 h-4 mr-2" />
+              Loading Toast
             </UButton>
-            <UButton variant="outline" @click="showToastWithAvatar" block>
-              <UIcon name="i-lucide-user" class="w-4 h-4 mr-2" />
-              Toast with Avatar
+            <UButton variant="outline" @click="showConfirmToast" block>
+              <UIcon name="i-lucide-help-circle" class="w-4 h-4 mr-2" />
+              Confirmation Toast
             </UButton>
           </div>
         </div>
+
+        <!-- Smart Positioning Info -->
+        <UAlert 
+          color="primary" 
+          variant="soft" 
+          icon="i-lucide-info"
+          title="Smart Toast Positioning"
+          description="Errors appear at the top for immediate attention, while success/info toasts appear at the bottom for less intrusive feedback."
+        />
+
+        <!-- Quick Actions Demo -->
+        <div>
+          <h4 class="font-semibold text-highlighted mb-4">Real-world Quick Actions</h4>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <UButton variant="soft" color="success" @click="showProjectUpdateToast" block>
+              <UIcon name="i-lucide-trending-up" class="w-4 h-4 mr-2" />
+              Project Update
+            </UButton>
+            <UButton variant="soft" color="success" @click="showTaskCompletedToast" block>
+              <UIcon name="i-lucide-check-circle-2" class="w-4 h-4 mr-2" />
+              Task Completed
+            </UButton>
+            <UButton variant="soft" color="primary" @click="showDataSavedToast" block>
+              <UIcon name="i-lucide-save" class="w-4 h-4 mr-2" />
+              Data Saved
+            </UButton>
+            <UButton variant="soft" color="info" @click="showUserInvitedToast" block>
+              <UIcon name="i-lucide-user-plus" class="w-4 h-4 mr-2" />
+              User Invited
+            </UButton>
+          </div>
+        </div>
+
+        <!-- Enhanced Toast Showcase Component -->
+        <ToastShowcase />
       </div>
     </UCard>
 
@@ -435,7 +412,9 @@ import StatusShowcase from '~/showcase/forms/StatusShowcase.vue'
 import SkeletonLoader from '~/components/ui/SkeletonLoader.vue'
 import LoadingSpinner from '~/components/ui/LoadingSpinner.vue'
 import EmptyState from '~/components/ui/EmptyState.vue'
+import ToastShowcase from '~/showcase/feedback/ToastShowcase.vue'
 
+// Use our enhanced dual toast system with Nuxt UI v3 integration
 const toast = useDualToast()
 
 // Alert states
@@ -448,70 +427,57 @@ const showInfoAlert = ref(false)
 const isTableLoading = ref(false)
 const isFormLoading = ref(false)
 
-// Toast functions
+// Enhanced toast functions using useDualToast
 const showSuccessToast = () => {
-  toast.success('Operation completed successfully!')
+  toast.success('Success!', 'Operation completed successfully!')
 }
 
 const showErrorToast = () => {
-  toast.error('Something went wrong. Please try again.')
+  toast.error('Error!', 'Something went wrong. Please try again.')
 }
 
 const showWarningToast = () => {
-  toast.warning('Please review your settings before continuing.')
+  toast.warning('Warning!', 'Please review your settings before continuing.')
 }
 
 const showInfoToast = () => {
-  toast.info('Here is some important information for you.')
+  toast.info('Information', 'Here is some important information for you.')
 }
 
-const showToastWithActions = () => {
-  toast.add({
-    title: 'Action Required',
-    description: 'Your session will expire soon. Would you like to extend it?',
-    color: 'warning',
-    icon: 'i-lucide-clock',
-    timeout: 0, // Persistent
-    actions: [
-      {
-        label: 'Extend Session',
-        color: 'primary',
-        click: () => {
-          toast.success('Session extended!')
-        }
-      },
-      {
-        label: 'Sign Out',
-        color: 'neutral',
-        variant: 'outline',
-        click: () => {
-          toast.info('Signing out...')
-        }
-      }
-    ]
-  })
+// Advanced toast methods
+const showServerErrorToast = () => {
+  toast.serverError('Failed to connect to the API. Please check your connection.')
 }
 
-const showPersistentToast = () => {
-  toast.add({
-    title: 'Persistent Notification',
-    description: 'This notification will stay until you dismiss it.',
-    color: 'info',
-    icon: 'i-lucide-info',
-    timeout: 0 // Never auto-close
-  })
+const showLoadingToast = () => {
+  toast.loading('Processing Request', 'Please wait while we process your data...')
 }
 
-const showToastWithAvatar = () => {
-  toast.add({
-    title: 'John Doe mentioned you',
-    description: 'In the "Website Redesign" project discussion.',
-    color: 'primary',
-    avatar: {
-      src: null,
-      alt: 'John Doe'
+const showConfirmToast = () => {
+  toast.confirm(
+    'Delete Item',
+    'Are you sure you want to delete this item? This action cannot be undone.',
+    () => {
+      toast.success('Deleted', 'Item has been deleted successfully.')
     }
-  })
+  )
+}
+
+// Real-world quick action toasts
+const showProjectUpdateToast = () => {
+  toast.projectUpdate('Website Redesign', 75)
+}
+
+const showTaskCompletedToast = () => {
+  toast.taskCompleted('Code Review')
+}
+
+const showDataSavedToast = () => {
+  toast.dataSaved('User Profile')
+}
+
+const showUserInvitedToast = () => {
+  toast.userInvited('newuser@example.com')
 }
 
 // Alert functions

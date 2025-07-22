@@ -21,7 +21,7 @@
     />
 
     <!-- Main Content -->
-    <div class="lg:pl-64 transition-all duration-300 theme-transition" :class="{ 'lg:pl-16': sidebarCollapsed }">
+    <div class="transition-all duration-300 theme-transition" :class="sidebarCollapsed ? 'lg:pl-16' : 'lg:pl-64'">
       <div class="px-4 sm:px-6 lg:px-8 py-8">
         <div class="max-w-7xl mx-auto space-y-8">
           <!-- Welcome Section with Theme Demo -->
@@ -217,13 +217,47 @@
           </div>
 
           <!-- Original Showcase Components -->
+          <UCard 
+            class="relative overflow-hidden"
+            :ui="{ 
+              body: { 
+                padding: 'p-0',
+                background: 'bg-transparent'
+              },
+              header: {
+                background: 'bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm',
+                padding: 'px-6 py-4'
+              }
+            }"
+          >
+            <!-- Background Image -->
+            <div 
+              class="absolute inset-0"
+              style="
+                background-image: url('/map/f4f0badc-fb78-404c-8e19-acdeabe279d7.png');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+              "
+            ></div>
+
+            <template #header>
+              <div class="flex items-center gap-2 relative z-10" style="color: white !important;">
+                🌍 <span class="font-semibold" style="color: white !important;">Global Project Map</span>
+              </div>
+            </template>
+
+            <div class="relative z-10 p-6">
+              <WorldMap name="world-map" />
+            </div>
+          </UCard>
           <DataShowcase />
           <FeedbackShowcase />
           <ToastShowcase />
           <FormShowcase />
           <StatusShowcase />
           <LayoutShowcase />
-          <NavigationShowcase />
+          <!-- NavigationShowcase removed to prevent auto-scroll -->
         </div>
       </div>
     </div>
@@ -231,17 +265,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useTheme } from '~/composables/useTheme'
 
 // Import showcase components
-import DataShowcase from '@/showcase/data/DataShowcase.vue'
-import FeedbackShowcase from '@/showcase/feedback/FeedbackShowcase.vue'
-import ToastShowcase from '@/showcase/feedback/ToastShowcase.vue'
+import WorldMap from '~/components/WorldMap.vue'
+import DataShowcase from '~/showcase/data/DataShowcase.vue'
+import FeedbackShowcase from '~/showcase/feedback/FeedbackShowcase.vue'
+import ToastShowcase from '~/showcase/feedback/ToastShowcase.vue'
 import FormShowcase from '~/showcase/forms/FormShowcase.vue'
 import StatusShowcase from '~/showcase/forms/StatusShowcase.vue'
 import LayoutShowcase from '~/showcase/layout/LayoutShowcase.vue'
-import NavigationShowcase from '~/showcase/navigation/NavigationShowcase.vue'
+// import NavigationShowcase from '~/showcase/navigation/NavigationShowcase.vue' // Removed to prevent auto-scroll
 
 // Import layout components
 import AppHeader from '@/components/layout/AppHeader.vue'
@@ -251,7 +286,7 @@ import AppSidebar from '@/components/layout/AppSidebar.vue'
 const { state: themeState, setTheme } = useTheme()
 
 // Page state
-const sidebarCollapsed = ref(false)
+const sidebarCollapsed = ref(true) // Default kapalı
 
 // Mock data
 const currentUser = {
@@ -282,6 +317,11 @@ const toggleNotifications = () => {
 const handleSignOut = () => {
   console.log('User signed out')
 }
+
+// Force scroll to top on page load
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
 
 // Page meta
 definePageMeta({

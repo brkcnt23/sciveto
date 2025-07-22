@@ -66,7 +66,7 @@ onErrorCaptured((error: Error, instance: any, info: string) => {
 html {
   /* Smooth transitions for theme changes */
   transition: color-scheme 250ms ease-in-out;
-  scroll-behavior: smooth;
+  /* Remove auto scroll behavior */
 }
 
 body {

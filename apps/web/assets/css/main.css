@@ -430,39 +430,56 @@ html:not(.dark) .text-gray-300 {
   animation: theme-pulse 2s ease-in-out infinite;
 }
 
-/* ===== PRINT STYLES ===== */
-@media print {
-  .dashboard-card,
-  .glass-panel {
-    background: white !important;
-    box-shadow: none !important;
-    border: 1px solid #ccc !important;
+/* ===== TOAST ANIMATIONS ===== */
+@keyframes slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
   }
-  
-  .text-highlighted,
-  .text-default,
-  .text-muted {
-    color: black !important;
-  }
-  
-  .bg-default,
-  .bg-elevated,
-  .bg-muted {
-    background: white !important;
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* ===== HIGH CONTRAST MODE SUPPORT ===== */
-@media (prefers-contrast: high) {
-  :root {
-    --ui-border-accented: #000000;
-    --ui-border-default: #000000;
-    --ui-text-muted: var(--ui-text-default);
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
   }
-  
-  html.dark {
-    --ui-border-accented: #ffffff;
-    --ui-border-default: #ffffff;
-    --ui-text-muted: var(--ui-text-default);
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
+
+@keyframes progress {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-progress {
+  animation: progress linear;
+}
+
+/* Toast hover effects */
+[id^="toast-container"] > div {
+  transition: all 0.2s ease-in-out;
+}
+
+[id^="toast-container"] > div:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }

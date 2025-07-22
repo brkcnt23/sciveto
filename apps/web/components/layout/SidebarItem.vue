@@ -1,7 +1,20 @@
-<!-- components/layout/SidebarItem.vue -->
+<!  <div
+    :class="[
+      'group relative flex items-center rounded-lg transition-all duration-300 ease-in-out',
+      'cursor-pointer hover:scale-[1.02] active:scale-[0.98]',
+      'min-h-[40px]',
+      {
+        'px-3 py-2': !collapsed,
+        'px-2 py-2 justify-center': collapsed,
+        'bg-primary-500 text-white shadow-sm hover:bg-primary-600': active,
+        'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-primary-600 dark:hover:text-primary-400': !active
+      }
+    ]"
+    @click="handleClick"
+  >layout/SidebarItem.vue -->
 <template>
   <div
-    :class="[
+    :class=" [
       'group relative flex items-center rounded-lg transition-all duration-200 ease-in-out',
       'cursor-pointer hover:scale-[1.02] active:scale-[0.98]',
       {
@@ -12,10 +25,11 @@
       }
     ]"
     @click="handleClick"
+    style="min-height:40px"
   >
     <!-- Icon -->
     <div
-      :class="[
+      :class=" [
         'flex items-center justify-center shrink-0',
         {
           'mr-3': !collapsed,
@@ -25,8 +39,8 @@
     >
       <UIcon
         :name="item.icon"
-        :class="[
-          'transition-colors duration-200 w-5 h-5',
+        :class=" [
+          'transition-all duration-300 w-5 h-5 shrink-0',
           {
             'text-white': active,
             'text-neutral-600 dark:text-neutral-400 group-hover:text-primary-600 dark:group-hover:text-primary-400': !active
@@ -36,10 +50,10 @@
     </div>
 
     <!-- Label & Badge (only when not collapsed) -->
-    <div v-if="!collapsed" class="flex items-center justify-between flex-1 min-w-0">
+    <div class="flex items-center justify-between flex-1 min-w-0 transition-all duration-300" :class="!collapsed ? 'opacity-100' : 'opacity-0'">
       <span
-        :class="[
-          'truncate text-sm font-medium transition-colors duration-200',
+        :class=" [
+          'truncate text-sm font-medium transition-colors duration-300',
           {
             'text-white': active,
             'text-neutral-700 dark:text-neutral-300 group-hover:text-primary-600 dark:group-hover:text-primary-400': !active
@@ -56,7 +70,7 @@
         :color="active ? 'white' : badgeData.color"
         :variant="active ? 'outline' : 'soft'"
         size="xs"
-        class="shrink-0 ml-2"
+        class="shrink-0 ml-2 transition-all duration-300"
       />
     </div>
 
@@ -77,7 +91,7 @@
 
     <!-- Hover effect -->
     <div
-      :class="[
+      :class=" [
         'absolute inset-0 rounded-lg transition-opacity duration-200',
         'bg-gradient-to-r from-primary-500/10 to-secondary-500/10',
         'opacity-0 group-hover:opacity-100',

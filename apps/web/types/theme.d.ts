@@ -52,8 +52,8 @@ declare global {
   const useTheme: typeof import('~/composables/useTheme')['useTheme']
 }
 
-// Theme configuration types
-export interface ThemeConfig {
+// Theme configuration types (Legacy - renamed to avoid conflicts with useTheme)
+export interface LegacyThemeConfig {
   autoMode: 'system' | 'time' | 'none'
   timeSchedule: {
     lightStart: string
@@ -65,8 +65,8 @@ export interface ThemeConfig {
   persistMode: 'localStorage' | 'cookie' | 'none'
 }
 
-// Theme state types
-export interface ThemeState {
+// Theme state types (Legacy - renamed to avoid conflicts with useTheme)
+export interface LegacyThemeState {
   current: 'light' | 'dark'
   preference: 'light' | 'dark' | 'auto'
   isSystemDark: boolean
@@ -75,26 +75,34 @@ export interface ThemeState {
 }
 
 // Theme events types
-export interface ThemeEvents {
+export interface LegacyThemeEvents {
   onBeforeChange: (newTheme: 'light' | 'dark') => void | Promise<void>
   onAfterChange: (newTheme: 'light' | 'dark') => void
   onSystemChange: (isSystemDark: boolean) => void
 }
+export interface NuxtThemeUtils {
+  getThemeState: () => any
+  isCurrentlyDark: () => boolean
+  isCurrentlyLight: () => boolean
+  isAutoMode: () => boolean
+  getSystemPreference: () => 'light' | 'dark'
+  getStoredPreference: () => 'light' | 'dark' | 'auto' | undefined
+}
 
 // Theme utilities return type
 export interface ThemeComposable {
-  state: Readonly<Ref<ThemeState>>
+  state: Readonly<Ref<LegacyThemeState>>
   isDark: Readonly<Ref<boolean>>
   isLight: Readonly<Ref<boolean>>
   isAuto: Readonly<Ref<boolean>>
-  config: Readonly<Ref<ThemeConfig>>
+  config: Readonly<Ref<LegacyThemeConfig>>
   toggle: () => Promise<void>
   setTheme: (theme: 'light' | 'dark' | 'auto') => Promise<void>
   initialize: () => (() => void) | undefined
   getSystemPreference: () => 'light' | 'dark'
   getStoredPreference: () => 'light' | 'dark' | 'auto' | null
-  updateConfig: (newConfig: Partial<ThemeConfig>) => void
-  updateEvents: (newEvents: Partial<ThemeEvents>) => void
+  updateConfig: (newConfig: Partial<LegacyThemeConfig>) => void
+  updateEvents: (newEvents: Partial<LegacyThemeEvents>) => void
   _internal?: {
     systemMediaQuery: Readonly<Ref<MediaQueryList | null>>
     timeScheduleInterval: Readonly<Ref<NodeJS.Timeout | null>>
@@ -114,17 +122,6 @@ export interface ThemeChangeEvent extends CustomEvent {
 declare global {
   interface WindowEventMap {
     'theme-changed': ThemeChangeEvent
-  }
-  
-  interface Window {
-    __nuxt_theme__?: {
-      getThemeState: () => ThemeState
-      isCurrentlyDark: () => boolean
-      isCurrentlyLight: () => boolean
-      isAutoMode: () => boolean
-      getSystemPreference: () => 'light' | 'dark'
-      getStoredPreference: () => 'light' | 'dark' | 'auto' | null
-    }
   }
 }
 

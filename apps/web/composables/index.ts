@@ -1,8 +1,7 @@
-// composables/index.ts - Explicit exports for better TypeScript support
+// composables/index.ts - Global type augmentation and utilities
 
-// Re-export useTheme
-export { useTheme } from './useTheme'
-export type { ThemeConfig, ThemeState, ThemeEvents } from './useTheme'
+// Note: Individual composables are auto-imported by Nuxt
+// Explicit imports are used in files to avoid TypeScript errors
 
 // Global type augmentation to ensure TypeScript recognizes our composables
 declare global {
