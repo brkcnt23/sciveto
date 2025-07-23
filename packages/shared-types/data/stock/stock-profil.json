@@ -1,0 +1,140 @@
+[
+  {
+    "name": "HEA 100 Profil",
+    "description": "HEA 100 yapısal çelik profil",
+    "category": "Profil",
+    "unit": "m",
+    "stockInfo": {
+      "defaultMinStock": 50,
+      "defaultMaxStock": 300
+    },
+    "specifications": {
+      "profile_type": "HEA",
+      "dimensions": "100",
+      "height_mm": 96,
+      "width_mm": 100,
+      "web_thickness_mm": 5,
+      "flange_thickness_mm": 8,
+      "weight_kg_m": 16.7,
+      "material": "S235JR"
+    }
+  },
+  {
+    "name": "HEA 120 Profil",
+    "description": "HEA 120 yapısal çelik profil",
+    "category": "Profil",
+    "unit": "m",
+    "stockInfo": {
+      "defaultMinStock": 40,
+      "defaultMaxStock": 250
+    },
+    "specifications": {
+      "profile_type": "HEA",
+      "dimensions": "120",
+      "height_mm": 114,
+      "width_mm": 120,
+      "web_thickness_mm": 5,
+      "flange_thickness_mm": 8,
+      "weight_kg_m": 19.9,
+      "material": "S235JR"
+    }
+  },
+  {
+    "name": "IPE 100 Profil",
+    "description": "IPE 100 I profil",
+    "category": "Profil",
+    "unit": "m",
+    "stockInfo": {
+      "defaultMinStock": 60,
+      "defaultMaxStock": 400
+    },
+    "specifications": {
+      "profile_type": "IPE",
+      "dimensions": "100",
+      "height_mm": 100,
+      "width_mm": 55,
+      "web_thickness_mm": 4.1,
+      "flange_thickness_mm": 5.7,
+      "weight_kg_m": 8.1,
+      "material": "S235JR"
+    }
+  },
+  {
+    "name": "IPE 120 Profil",
+    "description": "IPE 120 I profil",
+    "category": "Profil",
+    "unit": "m",
+    "stockInfo": {
+      "defaultMinStock": 50,
+      "defaultMaxStock": 350
+    },
+    "specifications": {
+      "profile_type": "IPE",
+      "dimensions": "120",
+      "height_mm": 120,
+      "width_mm": 64,
+      "web_thickness_mm": 4.4,
+      "flange_thickness_mm": 6.3,
+      "weight_kg_m": 10.4,
+      "material": "S235JR"
+    }
+  },
+  {
+    "name": "UPN 100 Profil",
+    "description": "UPN 100 U profil",
+    "category": "Profil",
+    "unit": "m",
+    "stockInfo": {
+      "defaultMinStock": 30,
+      "defaultMaxStock": 200
+    },
+    "specifications": {
+      "profile_type": "UPN",
+      "dimensions": "100",
+      "height_mm": 100,
+      "width_mm": 50,
+      "web_thickness_mm": 6,
+      "flange_thickness_mm": 8.5,
+      "weight_kg_m": 10.6,
+      "material": "S235JR"
+    }
+  },
+  {
+    "name": "RHS 40x40x3 Profil",
+    "description": "40x40x3 kare profil",
+    "category": "Profil",
+    "unit": "m",
+    "stockInfo": {
+      "defaultMinStock": 80,
+      "defaultMaxStock": 500
+    },
+    "specifications": {
+      "profile_type": "RHS",
+      "dimensions": "40x40x3",
+      "height_mm": 40,
+      "width_mm": 40,
+      "wall_thickness_mm": 3,
+      "weight_kg_m": 3.45,
+      "material": "S235JR"
+    }
+  },
+  {
+    "name": "RHS 50x50x3 Profil",
+    "description": "50x50x3 kare profil",
+    "category": "Profil",
+    "unit": "m",
+    "stockInfo": {
+      "defaultMinStock": 70,
+      "defaultMaxStock": 450
+    },
+    "specifications": {
+      "profile_type": "RHS",
+      "dimensions": "50x50x3",
+      "height_mm": 50,
+      "width_mm": 50,
+      "wall_thickness_mm": 3,
+      "weight_kg_m": 4.47,
+      "material": "S235JR"
+    }
+  }
+]

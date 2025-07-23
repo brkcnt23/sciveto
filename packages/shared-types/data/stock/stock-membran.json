@@ -1,0 +1,95 @@
+[
+  {
+    "name": "FERRARI Biobrane Activ 902",
+    "description": "Gaz tutucu membranlar - S2 PVDF / Aktif",
+    "category": "Membran",
+    "unit": "m²",
+    "stockInfo": {
+      "defaultMinStock": 100,
+      "defaultMaxStock": 500,
+      "preferredSupplier": "FERRARI"
+    },
+    "specifications": {
+      "brand": "FERRARI",
+      "weight_g_m2": 950,
+      "width_cm": 267,
+      "warranty_years": 10,
+      "application": "Gaz tutucu membranlar"
+    }
+  },
+  {
+    "name": "MEHLER FR 1000 Mehatop F1",
+    "description": "İki taraflı PVDF - PVC",
+    "category": "Membran",
+    "unit": "m²",
+    "stockInfo": {
+      "defaultMinStock": 80,
+      "defaultMaxStock": 400,
+      "preferredSupplier": "MEHLER"
+    },
+    "specifications": {
+      "brand": "MEHLER",
+      "weight_g_m2": 1050,
+      "width_cm": 250,
+      "warranty_years": 15,
+      "unit_price": 10.3
+    }
+  },
+  {
+    "name": "SIOEN B6196",
+    "description": "PES-PVC, alt ve üst yüz parlak - Tente, salon",
+    "category": "Membran",
+    "unit": "m²",
+    "stockInfo": {
+      "defaultMinStock": 50,
+      "defaultMaxStock": 300,
+      "preferredSupplier": "SIOEN"
+    },
+    "specifications": {
+      "brand": "SIOEN",
+      "weight_g_m2": 900,
+      "width_cm": 300,
+      "tearing_strength": {
+        "warp": 60,
+        "weft": 50
+      }
+    }
+  },
+  {
+    "name": "VERSAIDAG Classic 1300",
+    "description": "PES - PVC",
+    "category": "Membran",
+    "unit": "m²",
+    "stockInfo": {
+      "defaultMinStock": 60,
+      "defaultMaxStock": 350,
+      "preferredSupplier": "VERSAIDAG"
+    },
+    "specifications": {
+      "brand": "VERSAIDAG",
+      "weight_g_m2": 1300,
+      "warranty_years": 5,
+      "tearing_strength": {
+        "warp": 120,
+        "weft": 110
+      }
+    }
+  },
+  {
+    "name": "SEFAR EL 65 T0",
+    "description": "PTFE",
+    "category": "Membran",
+    "unit": "m²",
+    "stockInfo": {
+      "defaultMinStock": 30,
+      "defaultMaxStock": 200,
+      "preferredSupplier": "SEFAR"
+    },
+    "specifications": {
+      "brand": "SEFAR",
+      "weight_g_m2": 310,
+      "width_cm": 160,
+      "application": "PTFE"
+    }
+  }
+]

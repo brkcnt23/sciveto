@@ -1,0 +1,102 @@
+[
+  {
+    "name": "6mm Çelik Halat (6x19 FC)",
+    "description": "6x19 construction, FC core",
+    "category": "Halat",
+    "unit": "m",
+    "stockInfo": {
+      "defaultMinStock": 500,
+      "defaultMaxStock": 2000
+    },
+    "specifications": {
+      "construction": "6x19",
+      "material": "Carbon Steel",
+      "core_type": "FC",
+      "diameter_mm": 6,
+      "tensile_grade_MPa": 1770,
+      "unit_weight_kg_m": 0.222,
+      "min_break_kN": 23.0,
+      "standards": ["EN 12385-4", "DIN 3060"]
+    }
+  },
+  {
+    "name": "8mm Çelik Halat (6x19 FC)",
+    "description": "6x19 construction, FC core",
+    "category": "Halat",
+    "unit": "m",
+    "stockInfo": {
+      "defaultMinStock": 400,
+      "defaultMaxStock": 1500
+    },
+    "specifications": {
+      "construction": "6x19",
+      "material": "Carbon Steel",
+      "core_type": "FC",
+      "diameter_mm": 8,
+      "tensile_grade_MPa": 1770,
+      "unit_weight_kg_m": 0.395,
+      "min_break_kN": 40.8,
+      "standards": ["EN 12385-4", "DIN 3060"]
+    }
+  },
+  {
+    "name": "12mm Çelik Halat (6x19 IWRC)",
+    "description": "6x19 construction, IWRC core",
+    "category": "Halat",
+    "unit": "m",
+    "stockInfo": {
+      "defaultMinStock": 300,
+      "defaultMaxStock": 1000
+    },
+    "specifications": {
+      "construction": "6x19",
+      "material": "Carbon Steel",
+      "core_type": "IWRC",
+      "diameter_mm": 12,
+      "tensile_grade_MPa": 1960,
+      "unit_weight_kg_m": 0.884,
+      "min_break_kN": 102.0,
+      "standards": ["EN 12385-4", "DIN 3060"]
+    }
+  },
+  {
+    "name": "2mm Paslanmaz Halat (7x7)",
+    "description": "7x7 construction, paslanmaz çelik",
+    "category": "Halat",
+    "unit": "m",
+    "stockInfo": {
+      "defaultMinStock": 200,
+      "defaultMaxStock": 800
+    },
+    "specifications": {
+      "construction": "7x7",
+      "material": "AISI 316",
+      "core_type": "—",
+      "diameter_mm": 2.0,
+      "tensile_grade_MPa": 1570,
+      "unit_weight_kg_m": 0.019,
+      "min_break_kN": 2.88,
+      "standards": ["EN 12385-4"]
+    }
+  },
+  {
+    "name": "4mm Paslanmaz Halat (7x19)",
+    "description": "7x19 construction, paslanmaz çelik",
+    "category": "Halat",
+    "unit": "m",
+    "stockInfo": {
+      "defaultMinStock": 150,
+      "defaultMaxStock": 600
+    },
+    "specifications": {
+      "construction": "7x19",
+      "material": "AISI 316",
+      "core_type": "—",
+      "diameter_mm": 4.0,
+      "tensile_grade_MPa": 1570,
+      "unit_weight_kg_m": 0.066,
+      "min_break_kN": 8.34,
+      "standards": ["EN 12385-4"]
+    }
+  }
+]

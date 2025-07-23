@@ -1,0 +1,101 @@
+[
+  {
+    "name": "Halat Ucu Saplaması 8mm",
+    "description": "8mm halat için saplama",
+    "category": "Mapa",
+    "unit": "adet",
+    "stockInfo": {
+      "defaultMinStock": 50,
+      "defaultMaxStock": 200
+    },
+    "specifications": {
+      "rope_diameter_mm": 8,
+      "A_mm": 16,
+      "B1_mm": 72,
+      "B2_mm": 144,
+      "B3_mm": 72,
+      "thread": "M14"
+    }
+  },
+  {
+    "name": "Halat Ucu Saplaması 12mm",
+    "description": "12mm halat için saplama",
+    "category": "Mapa",
+    "unit": "adet",
+    "stockInfo": {
+      "defaultMinStock": 30,
+      "defaultMaxStock": 150
+    },
+    "specifications": {
+      "rope_diameter_mm": 12,
+      "A_mm": 24,
+      "B1_mm": 108,
+      "B2_mm": 216,
+      "B3_mm": 108,
+      "thread": "M20"
+    }
+  },
+  {
+    "name": "Halat Ucu Çatalı 10mm",
+    "description": "10mm halat için çatal",
+    "category": "Mapa",
+    "unit": "adet",
+    "stockInfo": {
+      "defaultMinStock": 40,
+      "defaultMaxStock": 160
+    },
+    "specifications": {
+      "rope_diameter_mm": 10,
+      "A_mm": 20,
+      "B1_mm": 80,
+      "B2_mm": 162,
+      "C_mm": 42,
+      "D_mm": 18,
+      "E_mm": 45,
+      "F_mm": 22,
+      "G_mm": 45
+    }
+  },
+  {
+    "name": "Halat Ucu Mapası 8mm",
+    "description": "8mm halat için mapa",
+    "category": "Mapa",
+    "unit": "adet",
+    "stockInfo": {
+      "defaultMinStock": 60,
+      "defaultMaxStock": 240
+    },
+    "specifications": {
+      "rope_diameter_mm": 8,
+      "A_mm": 16,
+      "B1_mm": 82,
+      "B2_mm": 138,
+      "C_mm": 42,
+      "D_mm": 22,
+      "E_mm": 50,
+      "F_mm": 17
+    }
+  },
+  {
+    "name": "Paslanmaz Halat Ucu Saplaması 16mm",
+    "description": "16mm paslanmaz halat için saplama",
+    "category": "Mapa",
+    "unit": "adet",
+    "stockInfo": {
+      "defaultMinStock": 20,
+      "defaultMaxStock": 100
+    },
+    "specifications": {
+      "rope_diameter_mm": 16,
+      "material": "Stainless Steel",
+      "A_mm": 32,
+      "B1_mm": 125,
+      "B2_mm": 254,
+      "C_mm": 50,
+      "D_mm": 25,
+      "E_mm": 47,
+      "F_mm": 22,
+      "G_mm": 55
+    }
+  }
+]

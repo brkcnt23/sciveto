@@ -1,112 +1,103 @@
 [
   {
-    "id": "plaka_001",
-    "name": "5mm Çelik Plaka",
-    "description": "1000x2000mm standart çelik plaka",
+    "name": "S235JR 2mm Plaka",
+    "description": "Yapısal çelik plaka 2mm kalınlık",
     "category": "Plaka",
-    "unit": "adet",
-    "thickness": 5,
-    "material": "Çelik",
-    "width": 1000,
-    "length": 2000,
-    "weight": 78.5,
-    "supplier": "Metal A.Ş.",
-    "price": 450.00,
-    "currency": "TRY",
+    "unit": "m²",
     "stockInfo": {
-      "currentStock": 25,
-      "minStock": 20,
-      "maxStock": 200,
-      "location": "Depo-A-01",
-      "lastRestockDate": "2025-01-15"
+      "defaultMinStock": 50,
+      "defaultMaxStock": 300
+    },
+    "specifications": {
+      "material": "S235JR",
+      "thickness_mm": 2,
+      "standard": "EN 10025-2",
+      "yield_strength_MPa": 235,
+      "tensile_strength_MPa": 360
     }
   },
   {
-    "id": "plaka_002", 
-    "name": "10mm Paslanmaz Plaka",
-    "description": "800x1600mm paslanmaz çelik plaka",
+    "name": "S235JR 3mm Plaka",
+    "description": "Yapısal çelik plaka 3mm kalınlık",
     "category": "Plaka",
-    "unit": "adet",
-    "thickness": 10,
-    "material": "Paslanmaz Çelik",
-    "width": 800,
-    "length": 1600,
-    "weight": 100.2,
-    "supplier": "İnox Ltd.",
-    "price": 780.00,
-    "currency": "TRY",
+    "unit": "m²",
     "stockInfo": {
-      "currentStock": 15,
-      "minStock": 10,
-      "maxStock": 100,
-      "location": "Depo-A-02",
-      "lastRestockDate": "2025-01-10"
+      "defaultMinStock": 40,
+      "defaultMaxStock": 250
+    },
+    "specifications": {
+      "material": "S235JR",
+      "thickness_mm": 3,
+      "standard": "EN 10025-2",
+      "yield_strength_MPa": 235,
+      "tensile_strength_MPa": 360
     }
   },
   {
-    "id": "plaka_003",
-    "name": "3mm Alüminyum Plaka", 
-    "description": "1200x2400mm alüminyum plaka",
+    "name": "S235JR 5mm Plaka",
+    "description": "Yapısal çelik plaka 5mm kalınlık",
     "category": "Plaka",
-    "unit": "adet",
-    "thickness": 3,
-    "material": "Alüminyum",
-    "width": 1200,
-    "length": 2400,
-    "weight": 23.4,
-    "supplier": "Alü Metal",
-    "price": 320.00,
-    "currency": "TRY",
+    "unit": "m²",
     "stockInfo": {
-      "currentStock": 45,
-      "minStock": 30,
-      "maxStock": 300,
-      "location": "Depo-B-01",
-      "lastRestockDate": "2025-01-20"
+      "defaultMinStock": 30,
+      "defaultMaxStock": 200
+    },
+    "specifications": {
+      "material": "S235JR",
+      "thickness_mm": 5,
+      "standard": "EN 10025-2",
+      "yield_strength_MPa": 235,
+      "tensile_strength_MPa": 360
     }
   },
   {
-    "id": "plaka_004",
-    "name": "8mm Galvaniz Plaka",
-    "description": "1000x1500mm galvanizli çelik plaka",
-    "category": "Plaka", 
-    "unit": "adet",
-    "thickness": 8,
-    "material": "Galvanizli Çelik",
-    "width": 1000,
-    "length": 1500,
-    "weight": 94.2,
-    "supplier": "Galva A.Ş.",
-    "price": 520.00,
-    "currency": "TRY",
+    "name": "AISI 304 1mm Plaka",
+    "description": "Paslanmaz çelik plaka 1mm kalınlık",
+    "category": "Plaka",
+    "unit": "m²",
     "stockInfo": {
-      "currentStock": 18,
-      "minStock": 15,
-      "maxStock": 150,
-      "location": "Depo-A-03",
-      "lastRestockDate": "2025-01-12"
+      "defaultMinStock": 20,
+      "defaultMaxStock": 100
+    },
+    "specifications": {
+      "material": "AISI 304",
+      "thickness_mm": 1,
+      "grade": "Austenitic",
+      "chromium_content": "18-20%",
+      "nickel_content": "8-10.5%"
     }
   },
   {
-    "id": "plaka_005",
-    "name": "12mm Çelik Plaka",
-    "description": "2000x3000mm kalın çelik plaka",
+    "name": "AISI 304 2mm Plaka",
+    "description": "Paslanmaz çelik plaka 2mm kalınlık",
     "category": "Plaka",
-    "unit": "adet", 
-    "thickness": 12,
-    "material": "Çelik",
-    "width": 2000,
-    "length": 3000,
-    "weight": 565.2,
-    "supplier": "Metal A.Ş.",
-    "price": 1250.00,
-    "currency": "TRY",
+    "unit": "m²",
     "stockInfo": {
-      "currentStock": 8,
-      "minStock": 5,
-      "maxStock": 50,
-      "location": "Depo-C-01",
-      "lastRestockDate": "2025-01-08"
+      "defaultMinStock": 15,
+      "defaultMaxStock": 80
+    },
+    "specifications": {
+      "material": "AISI 304",
+      "thickness_mm": 2,
+      "grade": "Austenitic",
+      "chromium_content": "18-20%",
+      "nickel_content": "8-10.5%"
+    }
+  },
+  {
+    "name": "Galvaniz Plaka 1.5mm",
+    "description": "DX51D+Z galvanizli plaka 1.5mm",
+    "category": "Plaka",
+    "unit": "m²",
+    "stockInfo": {
+      "defaultMinStock": 25,
+      "defaultMaxStock": 150
+    },
+    "specifications": {
+      "material": "DX51D+Z",
+      "thickness_mm": 1.5,
+      "coating": "Galvaniz",
+      "zinc_coating_g_m2": 275
     }
   }
 ]

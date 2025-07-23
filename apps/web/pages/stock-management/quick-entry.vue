@@ -1,6 +1,7 @@
-<!-- pages/stock-management/quick-entry.vue -->
+<!-- apps/web/pages/stock-management/quick-entry.vue -->
 <template>
   <div class="space-y-6">
+    <!-- Header -->
     <div class="flex items-center justify-between">
       <div>
         <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Hızlı Stok Girişi</h1>
@@ -190,6 +191,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useInventoryCount } from '~/composables/useInventoryCount'
+import type { StockItem } from '~/types/stock'
 
 // Page setup
 definePageMeta({
@@ -207,13 +209,13 @@ const {
   categories, 
   stockEntries, 
   loadStockData, 
-  saveAllStocks: saveStocks 
+  saveAllStocks: saveStocks
 } = useInventoryCount()
 
 // Local state
 const searchTerm = ref('')
 const selectedCategory = ref('all')
-const selectedItems = ref<any[]>([])
+const selectedItems = ref<StockItem[]>([])
 const saving = ref(false)
 
 // Search results
@@ -244,7 +246,7 @@ const hasValidEntries = computed(() => {
 })
 
 // Methods
-const selectProduct = (item: any) => {
+const selectProduct = (item: StockItem) => {
   if (!selectedItems.value.find(selected => selected.id === item.id)) {
     selectedItems.value.push(item)
     
@@ -300,9 +302,10 @@ const saveAllStocks = async () => {
     await saveStocks(selectedItems.value)
     
     // Show success message
-    // TODO: Add toast notification
     console.log('Stoklar başarıyla kaydedildi!')
     
+    // Clear selections after save
+    clearAllSelections()
   } catch (error) {
     console.error('Kaydetme hatası:', error)
   } finally {

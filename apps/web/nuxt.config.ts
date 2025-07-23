@@ -45,8 +45,12 @@ export default defineNuxtConfig({
     '@vueuse/nuxt'
   ],
 
-  css: ['~/assets/css/main.css'],
+  alias: {
+    '@/types': './types'
+  },
   
+  css: ['~/assets/css/main.css'],
+
   typescript: {
     strict: true,
     typeCheck: true
@@ -70,32 +74,32 @@ export default defineNuxtConfig({
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'description', content: 'Modern dashboard built with Nuxt UI v3' },
-        
+
         // Enhanced theme meta tags
         { name: 'theme-color', content: '#16a34a', media: '(prefers-color-scheme: light)' },
         { name: 'theme-color', content: '#22c55e', media: '(prefers-color-scheme: dark)' },
         { name: 'color-scheme', content: 'light dark' },
-        
+
         // Apple-specific meta tags
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
-        
+
         // Microsoft-specific meta tags
         { name: 'msapplication-TileColor', content: '#16a34a' },
-        
+
         // Prefers color scheme support
         { name: 'supported-color-schemes', content: 'light dark' }
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        
+
         // Preload critical fonts for better performance
-        { 
-          rel: 'preload', 
-          href: '/fonts/inter-var.woff2', 
-          as: 'font', 
-          type: 'font/woff2', 
-          crossorigin: 'anonymous' 
+        {
+          rel: 'preload',
+          href: '/fonts/inter-var.woff2',
+          as: 'font',
+          type: 'font/woff2',
+          crossorigin: 'anonymous'
         }
       ],
       script: [
@@ -200,7 +204,7 @@ export default defineNuxtConfig({
     public: {
       apiBase: process.env.API_BASE_URL || 'http://localhost:3001',
       wsUrl: process.env.WS_URL || 'ws://localhost:3001',
-      
+
       // Theme system configuration
       theme: {
         defaultMode: process.env.NUXT_DEFAULT_THEME || 'system',
@@ -216,7 +220,7 @@ export default defineNuxtConfig({
     experimental: {
       wasm: true
     },
-    
+
     // Prerender configuration for better SEO
     prerender: {
       routes: ['/']

@@ -1,21 +1,26 @@
-<!-- pages/stock-management/inventory.vue -->
+<!-- apps/web/pages/stock-management/inventory.vue -->
 <template>
   <div class="space-y-6">
-    <div class="flex items-center justify-between">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Stok Sayımı</h1>
-        <p class="text-gray-600 dark:text-gray-400 mt-1">Touch-friendly stok sayım arayüzü</p>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+          Stok Sayımı
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400">
+          Ürünlerin stok miktarlarını güncelleyin
+        </p>
       </div>
       
       <!-- Stats -->
-      <div class="flex gap-4">
-        <div class="text-right">
-          <div class="text-2xl font-bold text-primary">{{ filteredItems.length }}</div>
-          <div class="text-sm text-gray-500">Toplam Ürün</div>
+      <div class="flex items-center gap-4 text-sm">
+        <div class="text-center">
+          <div class="font-semibold text-lg">{{ filteredItems.length }}</div>
+          <div class="text-gray-500">Toplam Ürün</div>
         </div>
-        <div class="text-right">
-          <div class="text-2xl font-bold text-green-600">{{ updatedCount }}</div>
-          <div class="text-sm text-gray-500">Güncellenen</div>
+        <div class="text-center">
+          <div class="font-semibold text-lg text-green-600">{{ updatedCount }}</div>
+          <div class="text-gray-500">Güncellenen</div>
         </div>
       </div>
     </div>
@@ -24,36 +29,39 @@
     <UCard>
       <div class="space-y-4">
         <!-- Search -->
-        <UInput 
+        <UInput
           v-model="search"
-          placeholder="Ürün ara..."
+          placeholder="Ürün ara... (ad, açıklama, kategori)"
           icon="i-lucide-search"
           size="lg"
-          clearable
+          :loading="loading"
         />
         
-        <!-- Category Filter -->
-        <div class="flex gap-2 flex-wrap">
-          <UButton 
+        <!-- Category and Status Filters -->
+        <div class="flex flex-wrap gap-2">
+          <!-- Categories -->
+          <UButton
             v-for="category in categories"
             :key="category.id"
             :variant="selectedCategory === category.id ? 'solid' : 'outline'"
+            :color="selectedCategory === category.id ? 'primary' : 'gray'"
             size="sm"
             @click="selectedCategory = category.id"
           >
             {{ category.name }}
             <UBadge 
-              v-if="category.id !== 'all'" 
-              variant="soft" 
-              size="xs" 
+              v-if="category.count > 0"
+              :color="selectedCategory === category.id ? 'white' : 'primary'"
+              :variant="selectedCategory === category.id ? 'solid' : 'soft'"
+              size="xs"
               class="ml-1"
             >
-              {{ getCategoryCount(category.id) }}
+              {{ category.count }}
             </UBadge>
           </UButton>
         </div>
         
-        <!-- Stock Status Filter -->
+        <!-- Status Filter -->
         <div class="flex gap-2">
           <UButton
             :variant="statusFilter === 'all' ? 'solid' : 'outline'"
@@ -64,69 +72,74 @@
           </UButton>
           <UButton
             :variant="statusFilter === 'low' ? 'solid' : 'outline'"
-            size="sm"
             color="red"
+            size="sm"
             @click="statusFilter = 'low'"
           >
-            Az Stok
-            <UBadge color="red" variant="soft" size="xs" class="ml-1">
-              {{ getLowStockCount() }}
-            </UBadge>
+            Düşük Stok
           </UButton>
           <UButton
-            :variant="statusFilter === 'normal' ? 'solid' : 'outline'"
+            :variant="statusFilter === 'medium' ? 'solid' : 'outline'"
+            color="yellow"
             size="sm"
-            color="green"
-            @click="statusFilter = 'normal'"
+            @click="statusFilter = 'medium'"
           >
-            Normal
+            Orta Stok
           </UButton>
           <UButton
             :variant="statusFilter === 'high' ? 'solid' : 'outline'"
+            color="green"
             size="sm"
-            color="blue"
             @click="statusFilter = 'high'"
           >
-            Fazla Stok
+            Yeterli Stok
           </UButton>
         </div>
       </div>
     </UCard>
-    
-    <!-- Loading State -->
-    <div v-if="loading" class="flex justify-center py-12">
-      <UIcon name="i-lucide-loader-2" class="w-8 h-8 animate-spin text-primary" />
+
+    <!-- Inventory Grid -->
+    <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div 
+        v-for="n in 6" 
+        :key="n"
+        class="animate-pulse"
+      >
+        <div class="h-48 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+      </div>
     </div>
     
-    <!-- Inventory Grid -->
     <div v-else-if="displayedItems.length > 0" class="space-y-4">
-      <!-- Grid -->
+      <!-- Items Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <StockCountCard 
           v-for="item in displayedItems" 
           :key="item.id"
           :item="item"
-          :model-value="stockEntries[item.id]"
+          :stock-entry="stockEntries[item.id]"
           @update="updateStock"
         />
       </div>
       
       <!-- Load More -->
-      <div v-if="hasMore" class="text-center">
+      <div 
+        v-if="hasMore" 
+        class="text-center py-6"
+      >
         <UButton 
           @click="loadMore"
-          variant="outline"
           :loading="loadingMore"
-          icon="i-lucide-chevron-down"
+          variant="outline"
+          size="lg"
         >
-          Daha Fazla Yükle ({{ remainingCount }} kaldı)
+          {{ remainingCount }} ürün daha yükle
         </UButton>
       </div>
     </div>
     
     <!-- Empty State -->
     <div v-else class="text-center py-12">
-      <UIcon name="i-lucide-package-x" class="w-16 h-16 text-gray-400 mx-auto mb-4" />
+      <UIcon name="i-lucide-package-search" class="w-16 h-16 text-gray-400 mx-auto mb-4" />
       <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
         {{ search || selectedCategory !== 'all' ? 'Arama sonucu bulunamadı' : 'Henüz ürün yok' }}
       </h3>
@@ -153,7 +166,7 @@
     <!-- Auto-save Indicator -->
     <div 
       v-if="autoSaving"
-      class="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2"
+      class="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 z-50"
     >
       <UIcon name="i-lucide-save" class="w-4 h-4" />
       Otomatik kaydediliyor...
@@ -165,6 +178,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useInventoryCount } from '~/composables/useInventoryCount'
 import StockCountCard from '~/components/stock/StockCountCard.vue'
+import type { StockItem } from '~/types/stock'
 
 // Page setup
 definePageMeta({
@@ -185,10 +199,12 @@ const {
   categories,
   stockEntries,
   loading,
+  autoSaving,
   loadStockData,
-  updateStock: updateStockEntry,
   loadSavedEntries,
-  getStockStatus
+  updateStock: updateStockEntry,
+  getStockStatus,
+  clearFilters
 } = useInventoryCount()
 
 // Local state
@@ -196,7 +212,6 @@ const statusFilter = ref('all')
 const currentPage = ref(1)
 const itemsPerPage = 20
 const loadingMore = ref(false)
-const autoSaving = ref(false)
 
 // Computed
 const statusFilteredItems = computed(() => {
@@ -222,52 +237,35 @@ const remainingCount = computed(() => {
 })
 
 const updatedCount = computed(() => {
-  return Object.keys(stockEntries).filter(key => {
-    const entry = stockEntries[key]
-    return entry && (entry.current > 0 || entry.min > 0)
-  }).length
+  return Object.keys(stockEntries).length
 })
 
 // Methods
-const getCategoryCount = (categoryId: string) => {
-  return stockItems.value.filter(item => item.category === categoryId).length
-}
-
-const getLowStockCount = () => {
-  return stockItems.value.filter(item => getStockStatus(item) === 'low').length
-}
-
-const updateStock = (itemId: string, field: 'current' | 'min', value: number) => {
-  updateStockEntry(itemId, field, value)
-  
-  // Show auto-save indicator
-  autoSaving.value = true
-  setTimeout(() => {
-    autoSaving.value = false
-  }, 1500)
+const updateStock = async (itemId: string, newStock: number) => {
+  try {
+    await updateStockEntry(itemId, newStock)
+  } catch (error) {
+    console.error('Stok güncelleme hatası:', error)
+    // TODO: Show error toast
+  }
 }
 
 const loadMore = () => {
   loadingMore.value = true
   setTimeout(() => {
-    currentPage.value += 1
+    currentPage.value++
     loadingMore.value = false
   }, 500)
 }
 
-const clearFilters = () => {
-  search.value = ''
-  selectedCategory.value = 'all'
-  statusFilter.value = 'all'
-}
-
-// Watch for filter changes and reset pagination
+// Reset pagination when filters change
 watch([search, selectedCategory, statusFilter], () => {
   currentPage.value = 1
 })
 
-onMounted(() => {
-  loadStockData()
+// Load data on mount
+onMounted(async () => {
+  await loadStockData()
   loadSavedEntries()
 })
 </script>
