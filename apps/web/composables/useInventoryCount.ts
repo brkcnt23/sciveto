@@ -1,6 +1,6 @@
 // apps/web/composables/useInventoryCount.ts
 import { ref, reactive, computed } from 'vue'
-import type { StockItem, StockEntry, Category } from '~/types/stock'
+import type { StockItem, StockEntry, Category, CategoryWithCount } from '~/types/stock'
 
 export const useInventoryCount = () => {
   // State
@@ -12,25 +12,25 @@ export const useInventoryCount = () => {
   const autoSaving = ref(false)
 
   // Computed
-  const categories = computed<Category[]>(() => {
+  const categories = computed<CategoryWithCount[]>(() => {
     const categoryMap = new Map<string, number>()
     
     stockItems.value.forEach(item => {
-      categoryMap.set(item.category, (categoryMap.get(item.category) || 0) + 1)
+      const categoryName = item.category || 'Genel'
+      categoryMap.set(categoryName, (categoryMap.get(categoryName) || 0) + 1)
     })
 
     const colors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4']
     
-    const categoriesArray: Category[] = [
-      { id: 'all', name: 'Tümü', count: stockItems.value.length, color: '#6B7280' }
+    const categoriesArray: CategoryWithCount[] = [
+      { id: 'all', name: 'Tümü', count: stockItems.value.length }
     ]
 
     categoryMap.forEach((count, name) => {
       categoriesArray.push({
         id: name.toLowerCase(),
         name,
-        count,
-        color: colors[categoriesArray.length % colors.length]
+        count
       })
     })
 
@@ -43,7 +43,7 @@ export const useInventoryCount = () => {
     // Category filter
     if (selectedCategory.value !== 'all') {
       items = items.filter(item => 
-        item.category.toLowerCase() === selectedCategory.value
+        (item.category || 'genel').toLowerCase() === selectedCategory.value
       )
     }
 
@@ -53,7 +53,7 @@ export const useInventoryCount = () => {
       items = items.filter(item => 
         item.name.toLowerCase().includes(searchTerm) ||
         item.description.toLowerCase().includes(searchTerm) ||
-        item.category.toLowerCase().includes(searchTerm)
+        (item.category || '').toLowerCase().includes(searchTerm)
       )
     }
 
@@ -78,7 +78,13 @@ export const useInventoryCount = () => {
         allItems.push(...items.map((item: any, index: number) => ({
           ...item,
           id: `membran-${index}`,
-          currentStock: 0
+          currentStock: 0,
+          stockInfo: {
+            currentStock: 0,
+            defaultMinStock: item.minStock || 10,
+            defaultMaxStock: item.maxStock || 100,
+            preferredSupplier: item.supplier
+          }
         })))
       }
 
@@ -87,7 +93,13 @@ export const useInventoryCount = () => {
         allItems.push(...items.map((item: any, index: number) => ({
           ...item,
           id: `halat-${index}`,
-          currentStock: 0
+          currentStock: 0,
+          stockInfo: {
+            currentStock: 0,
+            defaultMinStock: item.minStock || 10,
+            defaultMaxStock: item.maxStock || 100,
+            preferredSupplier: item.supplier
+          }
         })))
       }
 
@@ -96,7 +108,13 @@ export const useInventoryCount = () => {
         allItems.push(...items.map((item: any, index: number) => ({
           ...item,
           id: `mapa-${index}`,
-          currentStock: 0
+          currentStock: 0,
+          stockInfo: {
+            currentStock: 0,
+            defaultMinStock: item.minStock || 10,
+            defaultMaxStock: item.maxStock || 100,
+            preferredSupplier: item.supplier
+          }
         })))
       }
 
@@ -105,7 +123,13 @@ export const useInventoryCount = () => {
         allItems.push(...items.map((item: any, index: number) => ({
           ...item,
           id: `plaka-${index}`,
-          currentStock: 0
+          currentStock: 0,
+          stockInfo: {
+            currentStock: 0,
+            defaultMinStock: item.minStock || 10,
+            defaultMaxStock: item.maxStock || 100,
+            preferredSupplier: item.supplier
+          }
         })))
       }
 
@@ -114,7 +138,13 @@ export const useInventoryCount = () => {
         allItems.push(...items.map((item: any, index: number) => ({
           ...item,
           id: `profil-${index}`,
-          currentStock: 0
+          currentStock: 0,
+          stockInfo: {
+            currentStock: 0,
+            defaultMinStock: item.minStock || 10,
+            defaultMaxStock: item.maxStock || 100,
+            preferredSupplier: item.supplier
+          }
         })))
       }
 
@@ -146,7 +176,7 @@ export const useInventoryCount = () => {
       stockEntries[itemId] = {
         ...stockEntries[itemId],
         current: newStock,
-        lastUpdated: new Date()
+        lastUpdate: new Date()
       }
 
       // Save to localStorage
@@ -202,7 +232,7 @@ export const useInventoryCount = () => {
         if (stockEntries[item.id]) {
           saves[item.id] = {
             ...stockEntries[item.id],
-            lastUpdated: new Date()
+            lastUpdate: new Date()
           }
         }
       })

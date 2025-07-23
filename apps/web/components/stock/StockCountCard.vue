@@ -23,7 +23,7 @@
       
       <!-- Category Badge -->
       <UBadge 
-        :color="getCategoryColor(item.category)"
+        :color="getCategoryColor(item.category ?? '')"
         variant="soft"
         size="sm"
         class="ml-2 shrink-0"
@@ -167,8 +167,8 @@ interface StockItem {
   id: string
   name: string
   description: string
-  category: string
-  unit: string
+  category?: string // Made optional to match the frontend usage
+  unit?: string // Made optional to match the frontend usage
   currentStock?: number
   minStock?: number
   originalRef?: any
@@ -205,7 +205,7 @@ const minStock = computed(() => {
 })
 
 const lastUpdated = computed(() => {
-  return props.stockEntry?.lastUpdated
+  return props.stockEntry?.lastUpdate
 })
 
 const statusColor = computed(() => {

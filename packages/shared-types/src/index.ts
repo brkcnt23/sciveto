@@ -20,3 +20,6 @@ export * from './projects/allocate-stock.dto'
 // Common types
 export * from './common/api-response.types'
 export * from './common/pagination.types'
+
+// Stock types
+export * from './stock/stock.types'

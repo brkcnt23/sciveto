@@ -201,7 +201,8 @@ const totalCategories = computed(() => {
 
 const categoryStats = computed(() => {
   const categories = stockItems.value.reduce((acc, item) => {
-    acc[item.category] = (acc[item.category] || 0) + 1
+    const categoryName = item.category || 'Genel'
+    acc[categoryName] = (acc[categoryName] || 0) + 1
     return acc
   }, {} as Record<string, number>)
   

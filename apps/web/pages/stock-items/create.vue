@@ -1,302 +1,401 @@
+<!-- apps/web/pages/stock-items/create.vue -->
 <template>
-  <div class="min-h-screen bg-neutral-50">
+  <div class="space-y-6">
     <!-- Header -->
-    <div class="bg-white shadow">
-      <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="flex h-16 justify-between items-center">
-          <div class="flex items-center space-x-4">
-            <NuxtLink to="/stock-items" class="text-neutral-500 hover:text-neutral-700">
-              <Icon name="i-heroicons-arrow-left" class="h-5 w-5" />
-            </NuxtLink>
-            <h1 class="text-xl font-semibold text-neutral-900">Create Stock Item</h1>
-          </div>
-        </div>
+    <div class="flex items-center gap-4">
+      <UButton 
+        to="/stock-items" 
+        icon="i-lucide-arrow-left" 
+        variant="ghost"
+        size="sm"
+      />
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+          Yeni Stok Kalemi Ekle
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400">
+          Kategori seçin ve ürün bilgilerini girin
+        </p>
       </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="mx-auto max-w-3xl px-6 lg:px-8 py-8">
-      <UCard>
-        <template #header>
-          <h2 class="text-lg font-semibold text-neutral-900">Stock Item Information</h2>
-        </template>
+    <!-- Category Selection -->
+    <UCard v-if="!selectedCategory">
+      <template #header>
+        <div class="flex items-center gap-3">
+          <UIcon name="i-lucide-folder" class="w-5 h-5" />
+          <h2 class="text-lg font-semibold">Kategori Seçin</h2>
+        </div>
+      </template>
 
-        <form @submit.prevent="createStockItem" class="space-y-6">
-          <!-- Basic Information -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <UFormGroup label="Stock Item Name" required>
-              <UInput
-                v-model="form.name"
-                placeholder="Enter stock item name"
-                :disabled="loading"
-                required
-              />
-            </UFormGroup>
+      <div class="space-y-4">
+        <UInput
+          v-model="categorySearch"
+          placeholder="Kategori ara..."
+          icon="i-lucide-search"
+          size="lg"
+        />
 
-            <UFormGroup label="SKU" description="Stock Keeping Unit">
-              <UInput
-                v-model="form.sku"
-                placeholder="Enter SKU (optional)"
-                :disabled="loading"
-              />
-            </UFormGroup>
-          </div>
-
-          <!-- Description -->
-          <UFormGroup label="Description">
-            <UTextarea
-              v-model="form.description"
-              placeholder="Enter stock item description"
-              :disabled="loading"
-              rows="4"
-            />
-          </UFormGroup>
-
-          <!-- Price and Stock -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <UFormGroup label="Price ($)">
-              <UInput
-                v-model.number="form.price"
-                type="number"
-                step="0.01"
-                min="0"
-                placeholder="0.00"
-                :disabled="loading"
-              />
-            </UFormGroup>
-
-            <UFormGroup label="Stock Quantity" required>
-              <UInput
-                v-model.number="form.stock"
-                type="number"
-                min="0"
-                placeholder="0"
-                :disabled="loading"
-                required
-              />
-            </UFormGroup>
-          </div>
-
-          <!-- Category and Status -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <UFormGroup label="Category">
-              <USelect
-                v-model="form.categoryId"
-                :options="categoryOptions"
-                placeholder="Select category"
-                :disabled="loading || loadingCategories"
-              />
-              <div v-if="categoryError" class="text-red-500 text-sm mt-1">
-                {{ categoryError }}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div
+            v-for="category in filteredCategories"
+            :key="category.id"
+            class="p-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-700 transition-colors cursor-pointer group"
+            @click="selectCategory(category)"
+          >
+            <div class="flex items-center gap-3">
+              <div 
+                class="p-3 rounded-xl transition-transform group-hover:scale-110"
+                :style="{ backgroundColor: category.color + '20' }"
+              >
+                <UIcon 
+                  :name="category.icon" 
+                  class="w-6 h-6"
+                  :style="{ color: category.color }"
+                />
               </div>
-            </UFormGroup>
-
-            <UFormGroup label="Status">
-              <USelect
-                v-model="form.status"
-                :options="statusOptions"
-                :disabled="loading"
-              />
-            </UFormGroup>
+              
+              <div>
+                <h3 class="font-semibold text-gray-900 dark:text-white">
+                  {{ category.name }}
+                </h3>
+                <p class="text-sm text-gray-500">
+                  {{ category.properties.length }} özellik
+                </p>
+              </div>
+            </div>
           </div>
+        </div>
 
-          <!-- Image URL -->
-          <UFormGroup label="Image URL" description="Direct link to stock item image">
-            <UInput
-              v-model="form.imageUrl"
-              type="url"
-              placeholder="https://example.com/image.jpg"
-              :disabled="loading"
-            />
-          </UFormGroup>
+        <div v-if="filteredCategories.length === 0" class="text-center py-8">
+          <UIcon name="i-lucide-search-x" class="w-12 h-12 text-gray-400 mx-auto mb-2" />
+          <p class="text-gray-500">Aradığınız kategoride sonuç bulunamadı</p>
+          <UButton 
+            to="/categories/create"
+            variant="outline"
+            icon="i-lucide-plus"
+            class="mt-4"
+          >
+            Yeni Kategori Oluştur
+          </UButton>
+        </div>
+      </div>
+    </UCard>
 
-          <!-- Image Preview -->
-          <div v-if="form.imageUrl" class="space-y-2">
-            <label class="block text-sm font-medium text-neutral-700">Image Preview</label>
-            <div class="w-32 h-32 border-2 border-neutral-200 rounded-lg overflow-hidden">
-              <img 
-                :src="form.imageUrl" 
-                :alt="form.name"
-                class="w-full h-full object-cover"
-                @error="imageError = true"
-                @load="imageError = false"
+    <!-- Stock Item Form -->
+    <div v-if="selectedCategory" class="space-y-6">
+      <!-- Selected Category Info -->
+      <UCard>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div 
+              class="p-2 rounded-lg"
+              :style="{ backgroundColor: selectedCategory.color + '20' }"
+            >
+              <UIcon 
+                :name="selectedCategory.icon" 
+                class="w-5 h-5"
+                :style="{ color: selectedCategory.color }"
               />
             </div>
-            <p v-if="imageError" class="text-red-500 text-sm">
-              Unable to load image from this URL
-            </p>
+            <div>
+              <h3 class="font-medium">{{ selectedCategory.name }}</h3>
+              <p class="text-sm text-gray-500">{{ selectedCategory.description }}</p>
+            </div>
           </div>
-
-          <!-- Form Actions -->
-          <div class="flex justify-end space-x-3 pt-6 border-t">
-            <UButton
-              type="button"
-              variant="outline"
-              @click="$router.push('/stock-items')"
-              :disabled="loading"
-            >
-              Cancel
-            </UButton>
-            
-            <UButton
-              type="submit"
-              color="green"
-              :loading="loading"
-              :disabled="!isFormValid"
-            >
-              Create Stock Item
-            </UButton>
-          </div>
-        </form>
+          
+          <UButton 
+            @click="selectedCategory = null" 
+            icon="i-lucide-x" 
+            variant="ghost" 
+            size="sm"
+          />
+        </div>
       </UCard>
-    </div>
 
-    <!-- Success/Error Notifications -->
-    <div v-if="notification.show" class="fixed top-4 right-4 z-50">
-      <UAlert
-        :color="notification.type"
-        :title="notification.title"
-        :description="notification.message"
-        :close-button="{ icon: 'i-heroicons-x-mark', color: 'neutral', variant: 'link' }"
-        @close="notification.show = false"
-      />
+      <!-- Basic Info Form -->
+      <UCard>
+        <template #header>
+          <h3 class="text-lg font-semibold">Temel Bilgiler</h3>
+        </template>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <UFormField label="Ürün Adı" required>
+            <UInput 
+              v-model="form.name"
+              placeholder="Ürün adını girin"
+              icon="i-lucide-tag"
+            />
+          </UFormField>
+
+          <UFormField label="Birim" required>
+            <USelect
+              v-model="form.unit"
+              :options="unitOptions"
+              placeholder="Birim seçin"
+            />
+          </UFormField>
+
+          <UFormField label="Mevcut Stok" required class="md:col-span-2">
+            <div class="grid grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Mevcut Stok
+                </label>
+                <UInput 
+                  v-model.number="form.currentStock"
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Minimum Stok
+                </label>
+                <UInput 
+                  v-model.number="form.minStock"
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Maksimum Stok
+                </label>
+                <UInput 
+                  v-model.number="form.maxStock"
+                  type="number"
+                  min="0"
+                  placeholder="Opsiyonel"
+                />
+              </div>
+            </div>
+          </UFormField>
+
+          <UFormField label="Açıklama" class="md:col-span-2">
+            <UTextarea 
+              v-model="form.description"
+              placeholder="Ürün hakkında ek bilgiler"
+              rows="3"
+            />
+          </UFormField>
+        </div>
+      </UCard>
+
+      <!-- Category-Specific Properties -->
+      <UCard v-if="selectedCategory.properties.length > 0">
+        <template #header>
+          <h3 class="text-lg font-semibold">
+            {{ selectedCategory.name }} Özellikleri
+          </h3>
+        </template>
+
+        <DynamicPropertyForm
+          :properties="selectedCategory.properties"
+          v-model="form.properties"
+        />
+      </UCard>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-4">
+        <UButton 
+          @click="saveStockItem"
+          :loading="saving"
+          :disabled="!isFormValid"
+          size="lg"
+          icon="i-lucide-save"
+        >
+          Ürünü Kaydet
+        </UButton>
+        
+        <UButton 
+          @click="saveAndCreateAnother"
+          :loading="saving"
+          :disabled="!isFormValid"
+          variant="outline"
+          size="lg"
+          icon="i-lucide-plus"
+        >
+          Kaydet & Yeni Ekle
+        </UButton>
+
+        <UButton 
+          to="/stock-items"
+          variant="outline"
+          size="lg"
+        >
+          İptal
+        </UButton>
+      </div>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, reactive, computed, onMounted } from 'vue'
+import { useCategoryManager } from '~/composables/useCategoryManager'
+import { useStockItemManager } from '~/composables/useStockItemManager'
+import DynamicPropertyForm from '~/components/forms/DynamicPropertyForm.vue'
+import type { Category } from '~/types/stock'
 
-// Data
-const loading = ref(false)
-const loadingCategories = ref(false)
-const categories = ref([])
-const categoryError = ref('')
-const imageError = ref(false)
+// Page setup
+definePageMeta({
+  title: 'Yeni Stok Kalemi'
+})
+
+useHead({
+  title: 'Yeni Stok Kalemi - Sciveto'
+})
+
+// Composables
+const { categories, fetchCategories } = useCategoryManager()
+const { createStockItem } = useStockItemManager()
+
+// State
+const selectedCategory = ref<Category | null>(null)
+const categorySearch = ref('')
+const saving = ref(false)
 
 const form = reactive({
   name: '',
-  sku: '',
   description: '',
-  price: 0,
-  stock: 0,
-  categoryId: '',
-  status: 'active',
-  imageUrl: ''
-})
-
-const notification = reactive({
-  show: false,
-  type: 'success',
-  title: '',
-  message: ''
+  unit: '',
+  currentStock: 0,
+  minStock: 0,
+  maxStock: null as number | null,
+  properties: {} as Record<string, any>
 })
 
 // Options
-const statusOptions = [
-  { label: 'Active', value: 'active' },
-  { label: 'Inactive', value: 'inactive' }
+const unitOptions = [
+  { label: 'Adet', value: 'adet' },
+  { label: 'Metre (m)', value: 'm' },
+  { label: 'Metrekare (m²)', value: 'm²' },
+  { label: 'Metreküp (m³)', value: 'm³' },
+  { label: 'Kilogram (kg)', value: 'kg' },
+  { label: 'Gram (g)', value: 'g' },
+  { label: 'Litre (L)', value: 'L' },
+  { label: 'Paket', value: 'paket' },
+  { label: 'Kutu', value: 'kutu' },
+  { label: 'Rulo', value: 'rulo' }
 ]
 
 // Computed
-const categoryOptions = computed(() => {
-  const options = [{ label: 'No Category', value: '' }]
-  categories.value.forEach(category => {
-    options.push({ label: category.name, value: category.id })
-  })
-  return options
+const filteredCategories = computed(() => {
+  if (!categorySearch.value) return categories.value
+  
+  const search = categorySearch.value.toLowerCase()
+  return categories.value.filter(category =>
+    category.name.toLowerCase().includes(search) ||
+    category.description?.toLowerCase().includes(search)
+  )
 })
 
 const isFormValid = computed(() => {
-  return form.name.trim() !== '' && form.stock >= 0
+  if (!form.name.trim() || !form.unit || !selectedCategory.value) {
+    return false
+  }
+
+  // Check required properties
+  return selectedCategory.value.properties
+    .filter(prop => prop.required)
+    .every(prop => {
+      const value = form.properties[prop.id]
+      return value !== undefined && value !== null && value !== ''
+    })
 })
 
 // Methods
-const fetchCategories = async () => {
-  loadingCategories.value = true
-  categoryError.value = ''
+const selectCategory = (category: any) => {
+  // Create a mutable copy of the category
+  selectedCategory.value = {
+    ...category,
+    properties: [...category.properties].map(prop => ({ ...prop }))
+  }
   
-  try {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500))
-    
-    // Mock categories data
-    categories.value = [
-      { id: 1, name: 'Hardware' },
-      { id: 2, name: 'Software' },
-      { id: 3, name: 'Materials' },
-      { id: 4, name: 'Electronics' }
-    ]
-  } catch (error) {
-    console.error('Error fetching categories:', error)
-    categoryError.value = 'Failed to load categories'
-  } finally {
-    loadingCategories.value = false
+  // Reset form properties
+  form.properties = {}
+  
+  // Initialize properties with default values
+  if (selectedCategory.value) {
+    selectedCategory.value.properties.forEach(prop => {
+    switch (prop.type) {
+      case 'boolean':
+        form.properties[prop.id] = false
+        break
+      case 'number':
+        form.properties[prop.id] = null
+        break
+      default:
+        form.properties[prop.id] = ''
+    }
+  })
   }
 }
 
-const createStockItem = async () => {
-  if (!isFormValid.value) return
-
-  loading.value = true
-
+const saveStockItem = async () => {
+  if (!selectedCategory.value || !isFormValid.value) return
+  
+  saving.value = true
+  
   try {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    // Mock successful creation
-    console.log('Creating stock item:', form)
-    
-    // Show success notification
-    notification.show = true
-    notification.type = 'green'
-    notification.title = 'Success!'
-    notification.message = 'Stock item created successfully'
-    
-    // Reset form
-    Object.assign(form, {
-      name: '',
-      sku: '',
-      description: '',
-      price: 0,
-      stock: 0,
-      categoryId: '',
-      status: 'active',
-      imageUrl: ''
+    await createStockItem({
+      name: form.name,
+      description: form.description,
+      categoryId: selectedCategory.value.id,
+      unit: form.unit,
+      stock: form.currentStock,
+      minStockLevel: form.minStock || undefined,
+      maxStockLevel: form.maxStock || undefined,
+      customProperties: form.properties
     })
     
-    // Navigate to stock items list after a delay
-    setTimeout(() => {
-      navigateTo('/stock-items')
-    }, 1500)
+    // Success - redirect to stock items list
+    await navigateTo('/stock-items')
+    
+    // TODO: Show success toast
+    console.log('Stok kalemi başarıyla oluşturuldu')
     
   } catch (error) {
-    console.error('Error creating stock item:', error)
-    
-    // Show error notification
-    notification.show = true
-    notification.type = 'red'
-    notification.title = 'Error!'
-    notification.message = 'Failed to create stock item. Please try again.'
-    
+    console.error('Stok kalemi oluşturulurken hata:', error)
+    // TODO: Show error toast
   } finally {
-    loading.value = false
+    saving.value = false
   }
 }
 
-const showNotification = (type, title, message) => {
-  notification.show = true
-  notification.type = type
-  notification.title = title
-  notification.message = message
+const saveAndCreateAnother = async () => {
+  await saveStockItem()
   
-  // Auto hide after 5 seconds
-  setTimeout(() => {
-    notification.show = false
-  }, 5000)
+  if (!saving.value) {
+    // Reset form but keep category selection
+    form.name = ''
+    form.description = ''
+    form.currentStock = 0
+    form.minStock = 0
+    form.maxStock = null
+    
+    // Reset properties to default values
+    if (selectedCategory.value) {
+      selectedCategory.value.properties.forEach(prop => {
+        switch (prop.type) {
+          case 'boolean':
+            form.properties[prop.id] = false
+            break
+          case 'number':
+            form.properties[prop.id] = null
+            break
+          default:
+            form.properties[prop.id] = ''
+        }
+      })
+    }
+  }
 }
 
-// Lifecycle
+// Load categories on mount
 onMounted(() => {
   fetchCategories()
 })
