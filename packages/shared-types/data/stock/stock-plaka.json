@@ -1,0 +1,112 @@
+[
+  {
+    "id": "plaka_001",
+    "name": "5mm Çelik Plaka",
+    "description": "1000x2000mm standart çelik plaka",
+    "category": "Plaka",
+    "unit": "adet",
+    "thickness": 5,
+    "material": "Çelik",
+    "width": 1000,
+    "length": 2000,
+    "weight": 78.5,
+    "supplier": "Metal A.Ş.",
+    "price": 450.00,
+    "currency": "TRY",
+    "stockInfo": {
+      "currentStock": 25,
+      "minStock": 20,
+      "maxStock": 200,
+      "location": "Depo-A-01",
+      "lastRestockDate": "2025-01-15"
+    }
+  },
+  {
+    "id": "plaka_002", 
+    "name": "10mm Paslanmaz Plaka",
+    "description": "800x1600mm paslanmaz çelik plaka",
+    "category": "Plaka",
+    "unit": "adet",
+    "thickness": 10,
+    "material": "Paslanmaz Çelik",
+    "width": 800,
+    "length": 1600,
+    "weight": 100.2,
+    "supplier": "İnox Ltd.",
+    "price": 780.00,
+    "currency": "TRY",
+    "stockInfo": {
+      "currentStock": 15,
+      "minStock": 10,
+      "maxStock": 100,
+      "location": "Depo-A-02",
+      "lastRestockDate": "2025-01-10"
+    }
+  },
+  {
+    "id": "plaka_003",
+    "name": "3mm Alüminyum Plaka", 
+    "description": "1200x2400mm alüminyum plaka",
+    "category": "Plaka",
+    "unit": "adet",
+    "thickness": 3,
+    "material": "Alüminyum",
+    "width": 1200,
+    "length": 2400,
+    "weight": 23.4,
+    "supplier": "Alü Metal",
+    "price": 320.00,
+    "currency": "TRY",
+    "stockInfo": {
+      "currentStock": 45,
+      "minStock": 30,
+      "maxStock": 300,
+      "location": "Depo-B-01",
+      "lastRestockDate": "2025-01-20"
+    }
+  },
+  {
+    "id": "plaka_004",
+    "name": "8mm Galvaniz Plaka",
+    "description": "1000x1500mm galvanizli çelik plaka",
+    "category": "Plaka", 
+    "unit": "adet",
+    "thickness": 8,
+    "material": "Galvanizli Çelik",
+    "width": 1000,
+    "length": 1500,
+    "weight": 94.2,
+    "supplier": "Galva A.Ş.",
+    "price": 520.00,
+    "currency": "TRY",
+    "stockInfo": {
+      "currentStock": 18,
+      "minStock": 15,
+      "maxStock": 150,
+      "location": "Depo-A-03",
+      "lastRestockDate": "2025-01-12"
+    }
+  },
+  {
+    "id": "plaka_005",
+    "name": "12mm Çelik Plaka",
+    "description": "2000x3000mm kalın çelik plaka",
+    "category": "Plaka",
+    "unit": "adet", 
+    "thickness": 12,
+    "material": "Çelik",
+    "width": 2000,
+    "length": 3000,
+    "weight": 565.2,
+    "supplier": "Metal A.Ş.",
+    "price": 1250.00,
+    "currency": "TRY",
+    "stockInfo": {
+      "currentStock": 8,
+      "minStock": 5,
+      "maxStock": 50,
+      "location": "Depo-C-01",
+      "lastRestockDate": "2025-01-08"
+    }
+  }
+]
