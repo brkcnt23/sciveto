@@ -1,0 +1,158 @@
+{
+  "MAPA_AKSESUAR_DATA": {
+    "HALAT_UCU_SAPLAMASI": [
+      { "code": "HUS06", "rope_mm": 6,  "A_mm": 12, "B1_mm": 54,  "B2_mm": 108, "B3_mm": 54,  "thread": "M10" },
+      { "code": "HUS08", "rope_mm": 8,  "A_mm": 16, "B1_mm": 72,  "B2_mm": 144, "B3_mm": 72,  "thread": "M14" },
+      { "code": "HUS10", "rope_mm": 10, "A_mm": 20, "B1_mm": 90,  "B2_mm": 180, "B3_mm": 90,  "thread": "M16" },
+      { "code": "HUS12", "rope_mm": 12, "A_mm": 24, "B1_mm": 108, "B2_mm": 216, "B3_mm": 108, "thread": "M20" },
+      { "code": "HUS14", "rope_mm": 14, "A_mm": 28, "B1_mm": 126, "B2_mm": 252, "B3_mm": 126, "thread": "M24" },
+      { "code": "HUS16", "rope_mm": 16, "A_mm": 32, "B1_mm": 144, "B2_mm": 288, "B3_mm": 144, "thread": "M27" },
+      { "code": "HUS18", "rope_mm": 18, "A_mm": 35, "B1_mm": 162, "B2_mm": 324, "B3_mm": 162, "thread": "M30" },
+      { "code": "HUS20", "rope_mm": 20, "A_mm": 40, "B1_mm": 180, "B2_mm": 360, "B3_mm": 180, "thread": "M36" },
+      { "code": "HUS22", "rope_mm": 22, "A_mm": 40, "B1_mm": 198, "B2_mm": 396, "B3_mm": 198, "thread": "M36" },
+      { "code": "HUS24", "rope_mm": 24, "A_mm": 45, "B1_mm": 216, "B2_mm": 432, "B3_mm": 216, "thread": "M39" },
+      { "code": "HUS26", "rope_mm": 26, "A_mm": 50, "B1_mm": 234, "B2_mm": 468, "B3_mm": 234, "thread": "M42" },
+      { "code": "HUS28", "rope_mm": 28, "A_mm": 55, "B1_mm": 252, "B2_mm": 504, "B3_mm": 252, "thread": "M48" },
+      { "code": "HUS30", "rope_mm": 30, "A_mm": 55, "B1_mm": 270, "B2_mm": 540, "B3_mm": 270, "thread": "M48" },
+      { "code": "HUS32", "rope_mm": 32, "A_mm": 60, "B1_mm": 288, "B2_mm": 576, "B3_mm": 288, "thread": "M52" }
+    ],
+
+    "HALAT_UCU_CATASI": [
+      { "code": "HUC08", "rope_mm": 8,  "A_mm": 16, "B1_mm": 80,  "B2_mm": 162, "C_mm": 42, "D_mm": 18, "E_mm": 45, "F_mm": 22, "G_mm": 45 },
+      { "code": "HUC10", "rope_mm": 10, "A_mm": 20, "B1_mm": 80,  "B2_mm": 162, "C_mm": 42, "D_mm": 18, "E_mm": 45, "F_mm": 22, "G_mm": 45 },
+      { "code": "HUC12", "rope_mm": 12, "A_mm": 24, "B1_mm": 100, "B2_mm": 200, "C_mm": 51, "D_mm": 22, "E_mm": 56, "F_mm": 26, "G_mm": 54 },
+      { "code": "HUC14", "rope_mm": 14, "A_mm": 28, "B1_mm": 120, "B2_mm": 230, "C_mm": 54, "D_mm": 25, "E_mm": 62, "F_mm": 28, "G_mm": 60 },
+      { "code": "HUC16", "rope_mm": 16, "A_mm": 32, "B1_mm": 145, "B2_mm": 265, "C_mm": 60, "D_mm": 30, "E_mm": 70, "F_mm": 32, "G_mm": 64 },
+      { "code": "HUC18", "rope_mm": 18, "A_mm": 35, "B1_mm": 145, "B2_mm": 265, "C_mm": 60, "D_mm": 30, "E_mm": 70, "F_mm": 32, "G_mm": 64 },
+      { "code": "HUC20", "rope_mm": 20, "A_mm": 40, "B1_mm": 160, "B2_mm": 300, "C_mm": 70, "D_mm": 33, "E_mm": 80, "F_mm": 40, "G_mm": 74 },
+      { "code": "HUC22", "rope_mm": 22, "A_mm": 40, "B1_mm": 160, "B2_mm": 300, "C_mm": 70, "D_mm": 33, "E_mm": 80, "F_mm": 40, "G_mm": 74 },
+      { "code": "HUC24", "rope_mm": 24, "A_mm": 45, "B1_mm": 210, "B2_mm": 400, "C_mm": 89, "D_mm": 42, "E_mm": 95, "F_mm": 50, "G_mm": 99 },
+      { "code": "HUC26", "rope_mm": 26, "A_mm": 50, "B1_mm": 210, "B2_mm": 400, "C_mm": 89, "D_mm": 42, "E_mm": 95, "F_mm": 50, "G_mm": 99 }
+    ],
+
+    "HALAT_UCU_MAPASI": [
+      { "code": "HUM08", "rope_mm": 8,  "A_mm": 16, "B1_mm": 82,  "B2_mm": 138, "C_mm": 42,  "D_mm": 22, "E_mm": 50,  "F_mm": 17 },
+      { "code": "HUM10", "rope_mm": 10, "A_mm": 20, "B1_mm": 82,  "B2_mm": 138, "C_mm": 42,  "D_mm": 22, "E_mm": 50,  "F_mm": 17 },
+      { "code": "HUM12", "rope_mm": 12, "A_mm": 24, "B1_mm": 98,  "B2_mm": 163, "C_mm": 52,  "D_mm": 26, "E_mm": 60,  "F_mm": 22 },
+      { "code": "HUM14", "rope_mm": 14, "A_mm": 28, "B1_mm": 130, "B2_mm": 209, "C_mm": 62,  "D_mm": 32, "E_mm": 70,  "F_mm": 28 },
+      { "code": "HUM16", "rope_mm": 16, "A_mm": 32, "B1_mm": 130, "B2_mm": 209, "C_mm": 62,  "D_mm": 32, "E_mm": 70,  "F_mm": 28 },
+      { "code": "HUM18", "rope_mm": 18, "A_mm": 35, "B1_mm": 162, "B2_mm": 260, "C_mm": 75,  "D_mm": 37, "E_mm": 85,  "F_mm": 35 },
+      { "code": "HUM20", "rope_mm": 20, "A_mm": 40, "B1_mm": 162, "B2_mm": 260, "C_mm": 75,  "D_mm": 37, "E_mm": 85,  "F_mm": 35 },
+      { "code": "HUM22", "rope_mm": 22, "A_mm": 40, "B1_mm": 162, "B2_mm": 260, "C_mm": 75,  "D_mm": 37, "E_mm": 85,  "F_mm": 35 },
+      { "code": "HUM24", "rope_mm": 24, "A_mm": 45, "B1_mm": 200, "B2_mm": 330, "C_mm": 95,  "D_mm": 45, "E_mm": 115, "F_mm": 45 },
+      { "code": "HUM26", "rope_mm": 26, "A_mm": 50, "B1_mm": 200, "B2_mm": 330, "C_mm": 95,  "D_mm": 45, "E_mm": 115, "F_mm": 45 },
+      { "code": "HUM28", "rope_mm": 28, "A_mm": 55, "B1_mm": 250, "B2_mm": 400, "C_mm": 115, "D_mm": 55, "E_mm": 135, "F_mm": 50 },
+      { "code": "HUM30", "rope_mm": 30, "A_mm": 55, "B1_mm": 250, "B2_mm": 400, "C_mm": 115, "D_mm": 55, "E_mm": 135, "F_mm": 50 },
+      { "code": "HUM32", "rope_mm": 32, "A_mm": 60, "B1_mm": 300, "B2_mm": 465, "C_mm": 135, "D_mm": 65, "E_mm": 150, "F_mm": 60 },
+      { "code": "HUM36", "rope_mm": 36, "A_mm": 60, "B1_mm": 300, "B2_mm": 465, "C_mm": 135, "D_mm": 65, "E_mm": 150, "F_mm": 60 }
+    ],
+
+    "BORU_TIP_GERDIRME": [
+      { "code": "C18B", "A1_mm": 163, "A2_mm": 305, "B1_mm": 22, "B2_mm": 45, "B3_mm": 45, "C_mm": 45, "D_mm": 18 },
+      { "code": "C22B", "A1_mm": 205, "A2_mm": 370, "B1_mm": 26, "B2_mm": 54, "B3_mm": 51, "C_mm": 56, "D_mm": 22 },
+      { "code": "C27B", "A1_mm": 255, "A2_mm": 450, "B1_mm": 28, "B2_mm": 60, "B3_mm": 54, "C_mm": 62, "D_mm": 25 },
+      { "code": "C33B", "A1_mm": 300, "A2_mm": 525, "B1_mm": 32, "B2_mm": 64, "B3_mm": 62, "C_mm": 70, "D_mm": 30 },
+      { "code": "C39B", "A1_mm": 350, "A2_mm": 580, "B1_mm": 40, "B2_mm": 74, "B3_mm": 70, "C_mm": 80, "D_mm": 33 },
+      { "code": "C42B", "A1_mm": 440, "A2_mm": 750, "B1_mm": 50, "B2_mm": 99, "B3_mm": 89, "C_mm": 95, "D_mm": 42 },
+      { "code": "C50B", "A1_mm": 570, "A2_mm": 930, "B1_mm": 55, "B2_mm": 119, "B3_mm": 106, "C_mm": 120, "D_mm": 50 },
+      { "code": "C60B", "A1_mm": 620, "A2_mm": 1050, "B1_mm": 67, "B2_mm": 125, "B3_mm": 128, "C_mm": 145, "D_mm": 60 }
+    ],
+
+    "SAPLAMA_CATAL_GERDIRME": [
+      { "code": "C18S", "A1_mm": 165, "A2_mm": 345, "B1_mm": 22, "B2_mm": 45,  "B3_mm": 42,  "C_mm": 45,  "D_mm": 18 },
+      { "code": "C22S", "A1_mm": 210, "A2_mm": 415, "B1_mm": 26, "B2_mm": 54,  "B3_mm": 51,  "C_mm": 56,  "D_mm": 22 },
+      { "code": "C27S", "A1_mm": 255, "A2_mm": 495, "B1_mm": 28, "B2_mm": 60,  "B3_mm": 54,  "C_mm": 62,  "D_mm": 25 },
+      { "code": "C33S", "A1_mm": 300, "A2_mm": 590, "B1_mm": 32, "B2_mm": 64,  "B3_mm": 60,  "C_mm": 70,  "D_mm": 30 },
+      { "code": "C39S", "A1_mm": 350, "A2_mm": 690, "B1_mm": 40, "B2_mm": 74,  "B3_mm": 70,  "C_mm": 80,  "D_mm": 33 },
+      { "code": "C42S", "A1_mm": 440, "A2_mm": 850, "B1_mm": 50, "B2_mm": 99,  "B3_mm": 89,  "C_mm": 95,  "D_mm": 42 },
+      { "code": "C50S", "A1_mm": 570, "A2_mm": 1060,"B1_mm": 55, "B2_mm": 119, "B3_mm": 98,  "C_mm": 120, "D_mm": 50 },
+      { "code": "C60S", "A1_mm": 620, "A2_mm": 1200,"B1_mm": 65, "B2_mm": 130, "B3_mm": 122, "C_mm": 145, "D_mm": 60 }
+    ],
+
+    "SAPLAMA_MAPA_GERDIRME": [
+      { "code": "C18M", "A1_mm": 165, "A2_mm": 320, "B1_mm": 22, "B2_mm": 42, "E_mm": 17 },
+      { "code": "C22M", "A1_mm": 210, "A2_mm": 390, "B1_mm": 26, "B2_mm": 52, "E_mm": 22 },
+      { "code": "C27M", "A1_mm": 255, "A2_mm": 465, "B1_mm": 32, "B2_mm": 62, "E_mm": 28 },
+      { "code": "C33M", "A1_mm": 300, "A2_mm": 560, "B1_mm": 37, "B2_mm": 75, "E_mm": 34 },
+      { "code": "C39M", "A1_mm": 350, "A2_mm": 650, "B1_mm": 37, "B2_mm": 75, "E_mm": 34 },
+      { "code": "C42M", "A1_mm": 440, "A2_mm": 795, "B1_mm": 45, "B2_mm": 95, "E_mm": 45 },
+      { "code": "C50M", "A1_mm": 570, "A2_mm": 980, "B1_mm": 55, "B2_mm": 115,"E_mm": 50 },
+      { "code": "C60M", "A1_mm": 620, "A2_mm": 1100,"B1_mm": 65, "B2_mm": 135,"E_mm": 60 }
+    ],
+
+    "SAPLAMA_GERDIRME": [
+      { "code": "C18", "A1_mm": 165, "A2_mm": 375, "A3_mm": 90,  "D_mm": 20 },
+      { "code": "C22", "A1_mm": 210, "A2_mm": 460, "A3_mm": 110, "D_mm": 24 },
+      { "code": "C27", "A1_mm": 255, "A2_mm": 540, "A3_mm": 126, "D_mm": 28 },
+      { "code": "C33", "A1_mm": 300, "A2_mm": 660, "A3_mm": 162, "D_mm": 35 },
+      { "code": "C39", "A1_mm": 350, "A2_mm": 785, "A3_mm": 200, "D_mm": 40 },
+      { "code": "C42", "A1_mm": 440, "A2_mm": 950, "A3_mm": 234, "D_mm": 50 },
+      { "code": "C50", "A1_mm": 570, "A2_mm": 1150,"A3_mm": 270, "D_mm": 55 },
+      { "code": "C60", "A1_mm": 620, "A2_mm": 1315,"A3_mm": 324, "D_mm": 60 }
+    ],
+
+    "AMERIKAN_TIP_GERDIRME": [
+      { "code": "AG12/6", "size_inch": "1/2",   "WLL_kg": 1000, "A_mm": 190, "B_mm": 152, "C_mm": 147, "D_mm": 9.6,  "E_mm": 27, "F_mm": 16 },
+      { "code": "AG16/9", "size_inch": "5/8",   "WLL_kg": 1590, "A_mm": 276, "B_mm": 228, "C_mm": 201, "D_mm": 12,   "E_mm": 33, "F_mm": 19 },
+      { "code": "AG20/9", "size_inch": "3/4",   "WLL_kg": 2360, "A_mm": 287, "B_mm": 228, "C_mm": 213, "D_mm": 16,   "E_mm": 38, "F_mm": 23 },
+      { "code": "AG22/12","size_inch": "7/8",   "WLL_kg": 3270, "A_mm": 372, "B_mm": 304, "C_mm": 266, "D_mm": 19,   "E_mm": 44, "F_mm": 28 },
+      { "code": "AG26/12","size_inch": "1",     "WLL_kg": 4540, "A_mm": 381, "B_mm": 304, "C_mm": 286, "D_mm": 22,   "E_mm": 52, "F_mm": 30 },
+      { "code": "AG32/12","size_inch": "1 1/4", "WLL_kg": 6890, "A_mm": 410, "B_mm": 310, "C_mm": 360, "D_mm": 26,   "E_mm": 71, "F_mm": 44 },
+      { "code": "AG38/18","size_inch": "1 1/2", "WLL_kg": 9710, "A_mm": 570, "B_mm": 457, "C_mm": 430, "D_mm": 35,   "E_mm": 71, "F_mm": 52 }
+    ],
+
+    "U_TIP_KILIT": [
+      { "code": "G2150-8",  "size_inch": "5/16",  "WLL_ton": 0.75, "A_mm": 13.5, "B_mm": 9.65, "C_mm": 26.2, "D_mm": 8,  "E_mm": 29.5, "F_mm": 19.1, "H_mm": 48.5 },
+      { "code": "G2150-10", "size_inch": "3/8",   "WLL_ton": 1,    "A_mm": 16.8, "B_mm": 11.2, "C_mm": 31.8, "D_mm": 10, "E_mm": 35.8, "F_mm": 23.1, "H_mm": 58.5 },
+      { "code": "G2150-12", "size_inch": "1/2",   "WLL_ton": 2,    "A_mm": 20.6, "B_mm": 16,   "C_mm": 41.4, "D_mm": 12, "E_mm": 46,   "F_mm": 30.2, "H_mm": 77 },
+      { "code": "G2150-16", "size_inch": "5/8",   "WLL_ton": 3.25, "A_mm": 26.9, "B_mm": 19.1, "C_mm": 51,   "D_mm": 16, "E_mm": 58.5, "F_mm": 38.1, "H_mm": 95.5 },
+      { "code": "G2150-19", "size_inch": "3/4",   "WLL_ton": 4.75, "A_mm": 31.8, "B_mm": 22.4, "C_mm": 60.5, "D_mm": 19, "E_mm": 70,   "F_mm": 46,   "H_mm": 115 },
+      { "code": "G2150-22", "size_inch": "7/8",   "WLL_ton": 6.5,  "A_mm": 36.6, "B_mm": 25.4, "C_mm": 71.5, "D_mm": 22, "E_mm": 81,   "F_mm": 53,   "H_mm": 135 },
+      { "code": "G2150-26", "size_inch": "1",     "WLL_ton": 8.5,  "A_mm": 42.9, "B_mm": 28.7, "C_mm": 81,   "D_mm": 26, "E_mm": 93.5, "F_mm": 60.5, "H_mm": 151 },
+      { "code": "G2150-28", "size_inch": "1 1/8", "WLL_ton": 9.5,  "A_mm": 46,   "B_mm": 31.8, "C_mm": 91,   "D_mm": 28, "E_mm": 103,  "F_mm": 68.5, "H_mm": 172 },
+      { "code": "G2150-32", "size_inch": "1 1/4", "WLL_ton": 12,   "A_mm": 51.5, "B_mm": 35.1, "C_mm": 100,  "D_mm": 32, "E_mm": 115,  "F_mm": 76,   "H_mm": 191 },
+      { "code": "G2150-35", "size_inch": "1 3/8", "WLL_ton": 13.5, "A_mm": 57,   "B_mm": 38.1, "C_mm": 111,  "D_mm": 35, "E_mm": 127,  "F_mm": 84,   "H_mm": 210 },
+      { "code": "G2150-38", "size_inch": "1 1/2", "WLL_ton": 17,   "A_mm": 60.5, "B_mm": 41.4, "C_mm": 122,  "D_mm": 38, "E_mm": 137,  "F_mm": 92,   "H_mm": 230 }
+    ],
+
+    "OMEGA_TIP_KILIT": [
+      { "code": "G2130-8",  "size_inch": "5/16",  "WLL_ton": 0.75, "A_mm": 13.5, "B_mm": 9.65, "C_mm": 31,  "D_mm": 8,  "E_mm": 21.3, "F_mm": 19.1, "G_mm": 37.3, "H_mm": 53 },
+      { "code": "G2130-10", "size_inch": "3/8",   "WLL_ton": 1,    "A_mm": 16.8, "B_mm": 11.2, "C_mm": 36.6,"D_mm": 10, "E_mm": 26.2, "F_mm": 23.1, "G_mm": 45.2, "H_mm": 63 },
+      { "code": "G2130-12", "size_inch": "1/2",   "WLL_ton": 2,    "A_mm": 20.6, "B_mm": 16,   "C_mm": 47.8,"D_mm": 12, "E_mm": 33.3, "F_mm": 30.2, "G_mm": 58.5, "H_mm": 83.5 },
+      { "code": "G2130-16", "size_inch": "5/8",   "WLL_ton": 3.25, "A_mm": 26.9, "B_mm": 19.1, "C_mm": 60.5,"D_mm": 16, "E_mm": 42.9, "F_mm": 38.1, "G_mm": 74.5, "H_mm": 106 },
+      { "code": "G2130-19", "size_inch": "3/4",   "WLL_ton": 4.75, "A_mm": 31.8, "B_mm": 22.4, "C_mm": 71.5,"D_mm": 19, "E_mm": 51,   "F_mm": 46,   "G_mm": 89,   "H_mm": 126 },
+      { "code": "G2130-22", "size_inch": "7/8",   "WLL_ton": 6.5,  "A_mm": 36.6, "B_mm": 25.4, "C_mm": 84,  "D_mm": 22, "E_mm": 58,   "F_mm": 53,   "G_mm": 102,  "H_mm": 148 },
+      { "code": "G2130-26", "size_inch": "1",     "WLL_ton": 8.5,  "A_mm": 42.9, "B_mm": 28.7, "C_mm": 95.5,"D_mm": 26, "E_mm": 68.5, "F_mm": 60.5, "G_mm": 119,  "H_mm": 167 },
+      { "code": "G2130-28", "size_inch": "1 1/8", "WLL_ton": 9.5,  "A_mm": 46,   "B_mm": 31.8, "C_mm": 108, "D_mm": 28, "E_mm": 74,   "F_mm": 68.5, "G_mm": 131,  "H_mm": 190 },
+      { "code": "G2130-32", "size_inch": "1 1/4", "WLL_ton": 12,   "A_mm": 51.5, "B_mm": 35.1, "C_mm": 119, "D_mm": 32, "E_mm": 82.5, "F_mm": 76,   "G_mm": 146,  "H_mm": 210 },
+      { "code": "G2130-35", "size_inch": "1 3/8", "WLL_ton": 13.5, "A_mm": 57,   "B_mm": 38.1, "C_mm": 133, "D_mm": 35, "E_mm": 92,   "F_mm": 84,   "G_mm": 162,  "H_mm": 233 },
+      { "code": "G2130-38", "size_inch": "1 1/2", "WLL_ton": 17,   "A_mm": 60.5, "B_mm": 41.4, "C_mm": 146, "D_mm": 38, "E_mm": 98.5, "F_mm": 92,   "G_mm": 175,  "H_mm": 254 }
+    ],
+
+    "PASLANMAZ_HALAT_UCU_CATASI": [
+      { "code": "SSHUC08", "rope_mm": 8,  "A_mm": 16, "B1_mm": 62,  "B2_mm": 133, "C_mm": 25, "D_mm": 12, "E_mm": 24, "F_mm": 12, "G_mm": 30 },
+      { "code": "SSHUC10","rope_mm": 10, "A_mm": 20, "B1_mm": 80,  "B2_mm": 161, "C_mm": 31, "D_mm": 15, "E_mm": 29, "F_mm": 14, "G_mm": 35 },
+      { "code": "SSHUC12","rope_mm": 12, "A_mm": 24, "B1_mm": 95,  "B2_mm": 194, "C_mm": 37, "D_mm": 18, "E_mm": 35, "F_mm": 17, "G_mm": 42 },
+      { "code": "SSHUC14","rope_mm": 14, "A_mm": 28, "B1_mm": 110, "B2_mm": 226, "C_mm": 44, "D_mm": 22, "E_mm": 40, "F_mm": 20, "G_mm": 50 },
+      { "code": "SSHUC16","rope_mm": 16, "A_mm": 32, "B1_mm": 125, "B2_mm": 254, "C_mm": 50, "D_mm": 25, "E_mm": 47, "F_mm": 22, "G_mm": 55 },
+      { "code": "SSHUC18","rope_mm": 18, "A_mm": 35, "B1_mm": 145, "B2_mm": 288, "C_mm": 58, "D_mm": 28, "E_mm": 53, "F_mm": 28, "G_mm": 65 },
+      { "code": "SSHUC20","rope_mm": 20, "A_mm": 40, "B1_mm": 160, "B2_mm": 315, "C_mm": 62, "D_mm": 30, "E_mm": 57, "F_mm": 28, "G_mm": 70 },
+      { "code": "SSHUC22","rope_mm": 22, "A_mm": 40, "B1_mm": 175, "B2_mm": 337, "C_mm": 62, "D_mm": 33, "E_mm": 60, "F_mm": 28, "G_mm": 70 },
+      { "code": "SSHUC24","rope_mm": 24, "A_mm": 45, "B1_mm": 190, "B2_mm": 364, "C_mm": 70, "D_mm": 33, "E_mm": 64, "F_mm": 28, "G_mm": 75 },
+      { "code": "SSHUC26","rope_mm": 26, "A_mm": 50, "B1_mm": 205, "B2_mm": 389, "C_mm": 77, "D_mm": 36, "E_mm": 70, "F_mm": 33, "G_mm": 85 }
+    ],
+
+    "PASLANMAZ_HALAT_UCU_MAPASI": [
+      { "code": "SSHUM08", "rope_mm": 8,  "A_mm": 16, "B1_mm": 75,  "B2_mm": 126, "C_mm": 28, "D_mm": 13, "E_mm": 51,  "F_mm": 10 },
+      { "code": "SSHUM10", "rope_mm": 10, "A_mm": 20, "B1_mm": 90,  "B2_mm": 155, "C_mm": 35, "D_mm": 16, "E_mm": 63,  "F_mm": 12 },
+      { "code": "SSHUM12", "rope_mm": 12, "A_mm": 24, "B1_mm": 108, "B2_mm": 185, "C_mm": 40, "D_mm": 20, "E_mm": 75,  "F_mm": 15 },
+      { "code": "SSHUM14", "rope_mm": 14, "A_mm": 28, "B1_mm": 126, "B2_mm": 215, "C_mm": 50, "D_mm": 23, "E_mm": 88,  "F_mm": 18 },
+      { "code": "SSHUM16", "rope_mm": 16, "A_mm": 32, "B1_mm": 144, "B2_mm": 245, "C_mm": 55, "D_mm": 27, "E_mm": 102, "F_mm": 20 },
+      { "code": "SSHUM18", "rope_mm": 18, "A_mm": 35, "B1_mm": 162, "B2_mm": 280, "C_mm": 65, "D_mm": 30, "E_mm": 117, "F_mm": 25 },
+      { "code": "SSHUM20", "rope_mm": 20, "A_mm": 40, "B1_mm": 180, "B2_mm": 305, "C_mm": 70, "D_mm": 32, "E_mm": 126, "F_mm": 25 },
+      { "code": "SSHUM22", "rope_mm": 22, "A_mm": 40, "B1_mm": 198, "B2_mm": 332, "C_mm": 70, "D_mm": 35, "E_mm": 134, "F_mm": 25 },
+      { "code": "SSHUM24", "rope_mm": 24, "A_mm": 45, "B1_mm": 216, "B2_mm": 355, "C_mm": 75, "D_mm": 35, "E_mm": 139, "F_mm": 25 },
+      { "code": "SSHUM26", "rope_mm": 26, "A_mm": 50, "B1_mm": 234, "B2_mm": 390, "C_mm": 85, "D_mm": 38, "E_mm": 153, "F_mm": 30 }
+    ]
+  }
+}

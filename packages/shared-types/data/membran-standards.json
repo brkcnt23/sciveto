@@ -1,0 +1,44 @@
+{
+    "MEMBRAN_STANDARDS": {
+        "material_types": [
+            "PVC-P (Polyester taşıyıcılı PVC kaplı)",
+            "PTFE (Cam elyaf taşıyıcılı PTFE kaplı)",
+            "ETFE (Fluoropolymer film)",
+            "Silicone-Coated Glass",
+            "PVDF Lacquered PVC",
+            "TPU / PUR kaplı özel teknik kumaşlar"
+        ],
+        "common_properties": [
+            "brand",
+            "series", 
+            "model",
+            "material_type", 
+            "application",
+            "weight_g_m2",
+            "tensile_strength_N_5cm", 
+            "tear_strength_N", 
+            "elongation_%", 
+            "light_transmission_%",
+            "solar_reflectance_%", 
+            "fire_rating", 
+            "uv_resistance",
+            "coating", 
+            "surface_finish",
+            "color_options", 
+            "width_cm",
+            "roll_length_m",
+            "warranty_years",
+            "certificate_docs",
+            "notes"
+        ],
+        "fire_standards": [
+            "EN 13501-1 (B-s2,d0 / B-s1,d0 ...)",
+            "DIN 4102 (B1 / B2)",
+            "NFPA 701",
+            "ASTM E84 (Class A)",
+            "BS 7837",
+            "M1/M2 (Fransa)",
+            "GB 8624 (Çin)"
+        ]
+    }
+}

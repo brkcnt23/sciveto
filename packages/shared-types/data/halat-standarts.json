@@ -1,0 +1,81 @@
+{
+  "HALAT_STANDARDS": {
+    "carbon_steel": {
+      "series": [
+        {
+          "type": "6x19",
+          "composition": "6(1+6+12)",
+          "core_types": ["FC","IWRC"],
+          "tensile_grades_MPa": [1770,1960],
+          "standards": ["EN 12385-4","DIN 3060","TS 1918/10"]
+        },
+        {
+          "type": "6x36 WS",
+          "composition": "6(1+7+(7+7)+14)",
+          "core_types": ["FC","IWRC"],
+          "tensile_grades_MPa": [1770,1960],
+          "standards": ["EN 12385-4","DIN 3064","TS 1918/14"]
+        },
+        {
+          "type": "6x41 WS",
+          "composition": "6(1+8+(8+8+16))",
+          "core_types": ["FC","IWRC"],
+          "tensile_grades_MPa": [1770,1960],
+          "standards": ["EN 12385-4","DIN 3055","TS 1918/15"]
+        },
+        {
+          "type": "8x19 Seale",
+          "composition": "8(1+9+9)",
+          "core_types": ["FC","IWRC"],
+          "tensile_grades_MPa": [1570,1770],
+          "standards": ["EN 12385-5","DIN 3062","TS 1918/18"]
+        },
+        {
+          "type": "18x7 Nufleks (non-rotating)",
+          "composition": "ÖZ+6(1+6)+12(1+6)",
+          "core_types": ["FC","IWRC"],
+          "tensile_grades_MPa": [1770,1960],
+          "standards": ["EN 12385-4","DIN 3069","TS 1918/24"]
+        },
+        {
+          "type": "Monotron 1x19",
+          "composition": "1x19",
+          "core_types": ["—"],
+          "tensile_grades_MPa": [1570,1770,1960],
+          "standards": ["EN 12385-10","DIN 3053","TS 1918/2"]
+        },
+        {
+          "type": "Monotron 1x37",
+          "composition": "1x37",
+          "core_types": ["—"],
+          "tensile_grades_MPa": [1570,1770,1960],
+          "standards": ["EN 12385-10","DIN 3053","TS 1918/2"]
+        },
+        {
+          "type": "Monotron 1x61",
+          "composition": "1x61",
+          "core_types": ["—"],
+          "tensile_grades_MPa": [1570,1770,1960],
+          "standards": ["EN 12385-10","DIN 3053","TS 1918/2"]
+        },
+        {
+          "type": "Monotron 1x127",
+          "composition": "1x127",
+          "core_types": ["—"],
+          "tensile_grades_MPa": [1570,1770,1960],
+          "standards": ["EN 12385-10","DIN 3053","TS 1918/2"]
+        }
+      ]
+    },
+    "stainless_steel": {
+      "material": "AISI 316 / 316L",
+      "series": ["1x19","1x37","1x61","1x91","7x7","7x19"],
+      "table": [
+        { "diameter_mm": 1.5, "construction": "7x7",  "F_kN": 1.86, "MQ_mm2": 0.97, "S_N_mm2": 1570 },
+        { "diameter_mm": 2.0, "construction": "7x7",  "F_kN": 2.88, "MQ_mm2": 1.73, "S_N_mm2": 1570 },
+        { "diameter_mm": 3.0, "construction": "7x19", "F_kN": 4.69, "MQ_mm2": 3.73, "S_N_mm2": 1570 },
+        { "diameter_mm": 4.0, "construction": "7x19", "F_kN": 8.34, "MQ_mm2": 6.63, "S_N_mm2": 1570 }
+      ]
+    }
+  }
+}

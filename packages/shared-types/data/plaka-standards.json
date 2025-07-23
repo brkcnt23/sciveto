@@ -1,7 +1,6 @@
 {
   "PLAKA_STANDARDS": {
     "grades": [
-      /* --- YAPI ÇELİKLERİ (EN 10025-2) --- */
       { "code": "S185",     "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
       { "code": "S235JR",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
       { "code": "S235JO",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
@@ -15,7 +14,6 @@
       { "code": "S355K2",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
       { "code": "S450J0",   "standard": ["EN 10025-2"], "density_kg_m3": 7850 },
 
-      /* --- İNCE TANELİ, TERMOMEKANİK (EN 10025-3/-4) --- */
       { "code": "S275N",    "standard": ["EN 10025-3"], "density_kg_m3": 7850 },
       { "code": "S275NL",   "standard": ["EN 10025-3"], "density_kg_m3": 7850 },
       { "code": "S355N",    "standard": ["EN 10025-3"], "density_kg_m3": 7850 },
@@ -34,7 +32,6 @@
       { "code": "S460M",    "standard": ["EN 10025-4"], "density_kg_m3": 7850 },
       { "code": "S460ML",   "standard": ["EN 10025-4"], "density_kg_m3": 7850 },
 
-      /* --- ARAÇ/FORM ÇELİKLERİ (EN 10149-2) --- */
       { "code": "S315MC",   "standard": ["EN 10149-2"], "density_kg_m3": 7850 },
       { "code": "S355MC",   "standard": ["EN 10149-2"], "density_kg_m3": 7850 },
       { "code": "S420MC",   "standard": ["EN 10149-2"], "density_kg_m3": 7850 },
@@ -45,7 +42,6 @@
       { "code": "S650MC",   "standard": ["EN 10149-2"], "density_kg_m3": 7850 },
       { "code": "S700MC",   "standard": ["EN 10149-2"], "density_kg_m3": 7850 },
 
-      /* --- BASINÇ KAPAK / KAZAN ÇELİKLERİ (EN 10028) --- */
       { "code": "P235GH",   "standard": ["EN 10028-2"], "density_kg_m3": 7850 },
       { "code": "P265GH",   "standard": ["EN 10028-2"], "density_kg_m3": 7850 },
       { "code": "P295GH",   "standard": ["EN 10028-2"], "density_kg_m3": 7850 },
@@ -54,7 +50,6 @@
       { "code": "13CrMo4-5","standard": ["EN 10028-2"], "density_kg_m3": 7850 },
       { "code": "10CrMo9-10","standard":["EN 10028-2"],"density_kg_m3":7850 },
 
-      /* --- PASLANMAZ ÇELİKLER (EN 10088-2) --- */
       { "code": "AISI 304",   "standard": ["EN 10088-2"], "density_kg_m3": 8000 },
       { "code": "AISI 304L",  "standard": ["EN 10088-2"], "density_kg_m3": 8000 },
       { "code": "AISI 316",   "standard": ["EN 10088-2"], "density_kg_m3": 8000 },
@@ -63,7 +58,6 @@
       { "code": "AISI 321",   "standard": ["EN 10088-2"], "density_kg_m3": 8000 },
       { "code": "AISI 430",   "standard": ["EN 10088-2"], "density_kg_m3": 7750 },
 
-      // --- GALVANİZ / KAPLAMALI (EN 10346) --- 
       { "code": "DX51D+Z", "standard": ["EN 10346"], "density_kg_m3": 7870 },
       { "code": "DX52D+Z", "standard": ["EN 10346"], "density_kg_m3": 7870 },
       { "code": "DX53D+Z", "standard": ["EN 10346"], "density_kg_m3": 7870 },
@@ -74,7 +68,6 @@
       { "code": "S320GD+Z","standard": ["EN 10346"], "density_kg_m3": 7870 },
       { "code": "S350GD+Z","standard": ["EN 10346"], "density_kg_m3": 7870 },
 
-      /* --- AŞINMAYA DİRENÇLİ PLAKALAR (HARDOX vb.) --- */
       { "code": "Hardox 400","standard": ["SSAB"], "density_kg_m3": 7850 },
       { "code": "Hardox 450","standard": ["SSAB"], "density_kg_m3": 7850 },
       { "code": "Hardox 500","standard": ["SSAB"], "density_kg_m3": 7850 },
