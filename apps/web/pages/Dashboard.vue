@@ -11,14 +11,8 @@
               <p class="text-xs text-red-600 dark:text-red-400">{{ authStore.userEmail || 'No user email' }}</p>
             </div>
           </div>
-          <UButton
-            variant="outline"
-            color="error"
-            size="sm"
-            icon="i-lucide-log-out"
-            @click="handleDevLogout"
-            :loading="loggingOut"
-          >
+          <UButton variant="outline" color="error" size="sm" icon="i-lucide-log-out" @click="handleDevLogout"
+            :loading="loggingOut">
             Test Logout
           </UButton>
         </div>
@@ -187,18 +181,16 @@
 </template>
 
 <script setup lang="ts">
-// Manual imports - sadece gerekli olanlar
 import { ref } from 'vue'
-
-// Nuxt auto-imports - bunları manuel import etmeyin!
-// definePageMeta, useSeoMeta, useAuthStore, useDualToast otomatik gelir
+import { definePageMeta, useSeoMeta } from 'nuxt/app'
+import { useAuthStore } from '../stores/auth'
+import { useDualToast } from '../composables/useDualToast'
 
 // Page meta
 definePageMeta({
   middleware: 'auth',
   layout: 'default'
 })
-
 // Composables - Nuxt auto-import ile gelir
 const authStore = useAuthStore()
 const toast = useDualToast()
@@ -209,7 +201,7 @@ const loggingOut = ref(false)
 // Methods
 const handleDevLogout = async () => {
   loggingOut.value = true
-  
+
   try {
     await new Promise(resolve => setTimeout(resolve, 500)) // Simulate API call
     await authStore.logout()

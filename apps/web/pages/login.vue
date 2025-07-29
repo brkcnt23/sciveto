@@ -76,10 +76,8 @@
 <script setup lang="ts">
 // Manual imports - sadece gerekli olanlar
 import { reactive } from 'vue'
-
-// Nuxt auto-imports - bunları manuel import etmeyin!
-// definePageMeta, useRouter, useRoute, useAuthStore otomatik gelir
-
+import { useRouter, useRoute } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 // Page meta - Nuxt will auto-handle this
 definePageMeta({
   middleware: 'guest',

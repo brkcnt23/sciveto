@@ -44,5 +44,20 @@
     ".nuxt",
     "dist",
     ".output"
-  ]
+  ],
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.suggest.autoImports": true,
+  "typescript.suggest.includeCompletionsForModuleExports": true,
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "vetur.validation.script": false,
+  "vetur.validation.template": false,
+  "vetur.validation.interpolation": false,
+  "vue.features.codeActions.enabled": true,
+  "vue.complete.casing.tags": "kebab",
+  "vue.complete.casing.props": "camel",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
 }
+

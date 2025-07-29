@@ -16,7 +16,11 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
     {
-      path: '~/components/business',
+      path: '~/components/stock',
+      pathPrefix: false,
+    },
+    {
+      path: '~/components/projects',
       pathPrefix: false,
     },
     {
@@ -46,7 +50,9 @@ export default defineNuxtConfig({
   ],
 
   alias: {
-    '@/types': './types'
+    '@/types': './types',
+    '@/': './',
+    '~/': './'
   },
   
   css: ['~/assets/css/main.css'],
