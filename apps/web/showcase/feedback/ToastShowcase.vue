@@ -1,16 +1,20 @@
-<!-- showcase/feedback/ToastShowcase.vue - Enhanced with useDualToast -->
+<!-- showcase/feedback/ToastShowcase.vue - Optimized with Unified Toast Component -->
 <template>
   <div class="space-y-8">
-    <!-- Header Section -->
+    <!-- Header Section - Enhanced -->
     <div class="space-y-4">
       <div class="flex items-center justify-between">
-        <h3 class="text-2xl font-semibold tracking-tight">Toast System</h3>
+        <h3 class="text-2xl font-semibold tracking-tight bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent">Toast System</h3>
         <div class="flex items-center gap-2">
+          <UBadge color="success" variant="soft">Unified Component</UBadge>
+          <UBadge color="primary" variant="solid">v3.0</UBadge>
           <UButton 
             variant="outline" 
             size="sm" 
             icon="i-lucide-trash-2"
             @click="clearAllToasts"
+            color="error"
+            class="hover:scale-105 transition-transform"
           >
             Clear All
           </UButton>
@@ -19,22 +23,28 @@
             size="sm" 
             icon="i-lucide-eye"
             @click="showPreview = !showPreview"
+            class="hover:scale-105 transition-transform"
           >
             {{ showPreview ? 'Hide' : 'Show' }} Preview
           </UButton>
         </div>
       </div>
-      <p class="text-muted-foreground">
-        Interactive toast notifications with enhanced positioning and styling. 
-        Errors appear at the top, success/info at the bottom by default.
+      <p class="text-muted-foreground text-lg">
+        Unified toast system using <code class="px-2 py-1 bg-primary-100 dark:bg-primary-900 rounded text-primary-600 dark:text-primary-400">Toast.vue</code> component. 
+        <span class="font-semibold text-amber-600 dark:text-amber-400">All colors from app.config.ts</span> - fully consistent!
       </p>
     </div>
 
-    <!-- Basic Toast Examples -->
-    <div class="space-y-6">
-      <h4 class="text-lg font-semibold text-foreground border-b border-border pb-2">
-        Basic Toast Types
-      </h4>
+    <!-- Basic Toast Examples - Enhanced -->
+    <UCard class="border-0 shadow-2xl bg-gradient-to-br from-white/90 to-gray-50/90 dark:from-gray-900/90 dark:to-gray-800/90 backdrop-blur-xl">
+      <template #header>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center">
+            <UIcon name="i-lucide-message-circle" class="w-5 h-5 text-white" />
+          </div>
+          <h4 class="text-lg font-semibold text-foreground">Basic Toast Types</h4>
+        </div>
+      </template>
       
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <UButton 
@@ -42,7 +52,7 @@
           variant="outline"
           icon="i-lucide-check-circle"
           @click="showSuccessToast"
-          class="w-full"
+          class="w-full hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/25 border-2"
         >
           Success
         </UButton>
@@ -52,7 +62,7 @@
           variant="outline"
           icon="i-lucide-x-circle"
           @click="showErrorToast"
-          class="w-full"
+          class="w-full hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25 border-2"
         >
           Error
         </UButton>
@@ -62,7 +72,7 @@
           variant="outline"
           icon="i-lucide-alert-triangle"
           @click="showWarningToast"
-          class="w-full"
+          class="w-full hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25 border-2"
         >
           Warning
         </UButton>
@@ -72,139 +82,64 @@
           variant="outline"
           icon="i-lucide-info"
           @click="showInfoToast"
-          class="w-full"
+          class="w-full hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 border-2"
         >
           Info
         </UButton>
       </div>
-    </div>
+    </UCard>
 
-    <!-- Advanced Toast Examples -->
-    <div class="space-y-6">
-      <h4 class="text-lg font-semibold text-foreground border-b border-border pb-2">
-        Advanced Toast Features
-      </h4>
+    <!-- Advanced Toast Examples - Enhanced -->
+    <UCard class="border-0 shadow-2xl bg-gradient-to-br from-purple-50/90 to-indigo-50/90 dark:from-purple-950/50 dark:to-indigo-950/50 backdrop-blur-xl border border-purple-200 dark:border-purple-800">
+      <template #header>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center">
+            <UIcon name="i-lucide-sparkles" class="w-5 h-5 text-white" />
+          </div>
+          <h4 class="text-lg font-semibold text-foreground">Advanced Toast Features</h4>
+        </div>
+      </template>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <UButton 
-          variant="outline"
+          variant="soft"
           icon="i-lucide-server-crash"
           @click="showServerErrorToast"
-          class="w-full"
+          class="w-full hover:scale-105 transition-all duration-300 hover:shadow-lg"
         >
           Server Error (with Retry)
         </UButton>
         
         <UButton 
-          variant="outline"
+          variant="soft"
           icon="i-lucide-loader-2"
           @click="showLoadingToast"
-          class="w-full"
+          class="w-full hover:scale-105 transition-all duration-300 hover:shadow-lg"
         >
           Loading Toast
         </UButton>
         
         <UButton 
-          variant="outline"
+          variant="soft"
           icon="i-lucide-help-circle"
           @click="showConfirmToast"
-          class="w-full"
+          class="w-full hover:scale-105 transition-all duration-300 hover:shadow-lg"
         >
           Confirmation Toast
         </UButton>
       </div>
-    </div>
+    </UCard>
 
-    <!-- Toast Component Preview -->
-    <div v-if="showPreview" class="space-y-6">
-      <h4 class="text-lg font-semibold text-foreground border-b border-border pb-2">
-        Toast Component Preview
-      </h4>
-      
-      <div class="bg-muted/50 p-6 rounded-lg border border-border">
-        <p class="text-sm text-muted-foreground mb-4">Preview of new modern Toast components (visual only):</p>
-        
-        <div class="space-y-4 max-w-md">
-          <!-- Success Toast Preview -->
-          <div class="relative overflow-hidden bg-green-50 dark:bg-green-950 border-2 border-green-500 dark:border-green-400 text-green-900 dark:text-green-100 rounded-xl shadow-xl p-4 cursor-pointer hover:scale-105 transition-transform">
-            <div class="flex items-start space-x-3">
-              <UIcon name="i-lucide-check-circle" class="w-5 h-5 text-current mt-0.5 flex-shrink-0" />
-              <div class="flex-1 min-w-0">
-                <h5 class="font-semibold text-sm text-current leading-5">Success!</h5>
-                <p class="text-sm mt-1 text-current opacity-80 leading-4">Your data has been saved successfully.</p>
-              </div>
-            </div>
-            <div class="absolute bottom-0 left-0 h-1 bg-current opacity-30 w-3/4"></div>
+    <!-- Real-world Examples - Enhanced -->
+    <UCard class="border-0 shadow-2xl bg-gradient-to-br from-cyan-50/90 to-teal-50/90 dark:from-cyan-950/50 dark:to-teal-950/50 backdrop-blur-xl border border-cyan-200 dark:border-cyan-800">
+      <template #header>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-cyan-500 to-teal-600 rounded-xl flex items-center justify-center">
+            <UIcon name="i-lucide-briefcase" class="w-5 h-5 text-white" />
           </div>
-
-          <!-- Error Toast Preview -->  
-          <div class="relative overflow-hidden bg-red-50 dark:bg-red-950 border-2 border-red-500 dark:border-red-400 text-red-900 dark:text-red-100 rounded-xl shadow-xl p-4 cursor-pointer hover:scale-105 transition-transform">
-            <div class="flex items-start space-x-3">
-              <UIcon name="i-lucide-x-circle" class="w-5 h-5 text-current mt-0.5 flex-shrink-0" />
-              <div class="flex-1 min-w-0">
-                <h5 class="font-semibold text-sm text-current leading-5">Error!</h5>
-                <p class="text-sm mt-1 text-current opacity-80 leading-4">Something went wrong. Please try again.</p>
-                <div class="flex gap-2 mt-3">
-                  <button class="px-3 py-1.5 text-xs font-medium rounded-lg bg-current/10 hover:bg-current/20 text-current border border-current/20">
-                    Retry
-                  </button>
-                  <button class="px-3 py-1.5 text-xs font-medium rounded-lg bg-current/10 hover:bg-current/20 text-current border border-current/20">
-                    Dismiss
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="absolute bottom-0 left-0 h-1 bg-current opacity-30 w-1/2"></div>
-          </div>
-
-          <!-- Info Toast Preview -->
-          <div class="relative overflow-hidden bg-blue-50 dark:bg-blue-950 border-2 border-blue-500 dark:border-blue-400 text-blue-900 dark:text-blue-100 rounded-xl shadow-xl p-4 cursor-pointer hover:scale-105 transition-transform">
-            <div class="flex items-start space-x-3">
-              <UIcon name="i-lucide-info" class="w-5 h-5 text-current mt-0.5 flex-shrink-0" />
-              <div class="flex-1 min-w-0">
-                <h5 class="font-semibold text-sm text-current leading-5">New Update Available</h5>
-                <p class="text-sm mt-1 text-current opacity-80 leading-4">Click to download the latest version.</p>
-              </div>
-            </div>
-            <div class="absolute bottom-0 left-0 h-1 bg-current opacity-30 w-4/5"></div>
-          </div>
-
-          <!-- Warning Toast Preview -->
-          <div class="relative overflow-hidden bg-yellow-50 dark:bg-yellow-950 border-2 border-yellow-500 dark:border-yellow-400 text-yellow-900 dark:text-yellow-100 rounded-xl shadow-xl p-4 cursor-pointer hover:scale-105 transition-transform">
-            <div class="flex items-start space-x-3">
-              <UIcon name="i-lucide-alert-triangle" class="w-5 h-5 text-current mt-0.5 flex-shrink-0" />
-              <div class="flex-1 min-w-0">
-                <h5 class="font-semibold text-sm text-current leading-5">Warning!</h5>
-                <p class="text-sm mt-1 text-current opacity-80 leading-4">Please review your settings before continuing.</p>
-              </div>
-            </div>
-            <div class="absolute bottom-0 left-0 h-1 bg-current opacity-30 w-2/3"></div>
-          </div>
+          <h4 class="text-lg font-semibold text-foreground">Real-world Examples</h4>
         </div>
-        
-        <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 rounded-lg">
-          <div class="flex items-start space-x-2">
-            <UIcon name="i-lucide-lightbulb" class="w-4 h-4 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
-            <div class="text-sm text-blue-800 dark:text-blue-200">
-              <strong>New Features:</strong>
-              <ul class="mt-1 space-y-1 text-xs">
-                <li>• Click anywhere on toast to dismiss</li>
-                <li>• Progress bar shows remaining time</li>
-                <li>• Smooth hover animations</li>
-                <li>• Solid backgrounds for better readability</li>
-                <li>• Error toasts appear at top, success at bottom</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Real-world Examples -->
-    <div class="space-y-6">
-      <h4 class="text-lg font-semibold text-foreground border-b border-border pb-2">
-        Real-world Examples
-      </h4>
+      </template>
       
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
         <UButton 
@@ -212,7 +147,7 @@
           color="success" 
           icon="i-lucide-trending-up"
           @click="showProjectUpdateToast"
-          class="w-full"
+          class="w-full hover:scale-105 transition-all duration-300 hover:shadow-lg"
         >
           Project Update
         </UButton>
@@ -222,7 +157,7 @@
           color="success" 
           icon="i-lucide-check-circle-2"
           @click="showTaskCompletedToast"
-          class="w-full"
+          class="w-full hover:scale-105 transition-all duration-300 hover:shadow-lg"
         >
           Task Completed
         </UButton>
@@ -232,7 +167,7 @@
           color="primary" 
           icon="i-lucide-save"
           @click="showDataSavedToast"
-          class="w-full"
+          class="w-full hover:scale-105 transition-all duration-300 hover:shadow-lg"
         >
           Data Saved
         </UButton>
@@ -242,20 +177,126 @@
           color="info" 
           icon="i-lucide-user-plus"
           @click="showUserInvitedToast"
-          class="w-full"
+          class="w-full hover:scale-105 transition-all duration-300 hover:shadow-lg"
         >
           User Invited
         </UButton>
       </div>
-    </div>
+    </UCard>
 
-    <!-- Feature Info -->
+    <!-- Live Toast Component Preview - Using Real Component -->
+    <UCard v-if="showPreview" class="border-0 shadow-2xl bg-gradient-to-br from-slate-50/90 to-gray-100/90 dark:from-slate-900/90 dark:to-gray-900/90 backdrop-blur-xl">
+      <template #header>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-slate-600 to-gray-700 rounded-xl flex items-center justify-center">
+            <UIcon name="i-lucide-eye" class="w-5 h-5 text-white" />
+          </div>
+          <h4 class="text-lg font-semibold text-foreground">Live Toast Component Preview</h4>
+        </div>
+      </template>
+      
+      <div class="space-y-6">
+        <div class="flex items-center gap-2 text-sm">
+          <UIcon name="i-lucide-info" class="w-4 h-4 text-blue-500" />
+          <span class="text-muted-foreground">These are live Toast.vue components with consistent app.config.ts colors:</span>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Live Success Toast -->
+          <div class="space-y-3">
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 bg-emerald-500 rounded-full"></div>
+              <span class="text-sm font-semibold text-emerald-600 dark:text-emerald-400">Success Toast (Bottom)</span>
+            </div>
+            <div class="relative">
+              <Toast
+                title="Success!"
+                description="Your data has been saved successfully with the unified component."
+                color="success"
+                icon="i-lucide-check-circle"
+                :timeout="0"
+                position="bottom"
+                :show-progress="false"
+                :closable="false"
+              />
+            </div>
+          </div>
+
+          <!-- Live Error Toast -->
+          <div class="space-y-3">
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+              <span class="text-sm font-semibold text-red-600 dark:text-red-400">Error Toast (Top)</span>
+            </div>
+            <div class="relative">
+              <Toast
+                title="Error!"
+                description="Something went wrong. Please try again."
+                color="error"
+                icon="i-lucide-x-circle"
+                :timeout="0"
+                position="top"
+                :show-progress="false"
+                :closable="false"
+                :actions="[
+                  { label: 'Retry', onClick: () => {} },
+                  { label: 'Dismiss', onClick: () => {} }
+                ]"
+              />
+            </div>
+          </div>
+
+          <!-- Live Warning Toast -->
+          <div class="space-y-3">
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 bg-amber-500 rounded-full"></div>
+              <span class="text-sm font-semibold text-amber-600 dark:text-amber-400">Warning Toast (Top)</span>
+            </div>
+            <div class="relative">
+              <Toast
+                title="Warning!"
+                description="Please review your settings before continuing."
+                color="warning"
+                icon="i-lucide-alert-triangle"
+                :timeout="0"
+                position="top"
+                :show-progress="false"
+                :closable="false"
+              />
+            </div>
+          </div>
+
+          <!-- Live Info Toast -->
+          <div class="space-y-3">
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+              <span class="text-sm font-semibold text-blue-600 dark:text-blue-400">Info Toast (Bottom)</span>
+            </div>
+            <div class="relative">
+              <Toast
+                title="Information"
+                description="Here is some important information for you."
+                color="info"
+                icon="i-lucide-info"
+                :timeout="0"
+                position="bottom"
+                :show-progress="false"
+                :closable="false"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </UCard>
+
+    <!-- Optimization Info -->
     <UAlert 
       color="primary" 
       variant="soft"
-      icon="i-lucide-lightbulb"
-      title="Enhanced Toast Features"
-      description="Our useDualToast composable provides smart positioning (errors at top, success at bottom), enhanced styling, and pre-built quick actions for common scenarios."
+      icon="i-lucide-rocket"
+      title="Optimized Toast System"
+      description="✅ Single Toast.vue component ✅ Colors from app.config.ts ✅ No duplicate styling ✅ Vue component instead of DOM manipulation ✅ Consistent across all UI ✅ Fully type-safe"
+      class="border-2 border-primary-200 dark:border-primary-800 shadow-xl shadow-primary-500/10"
     />
   </div>
 </template>
@@ -263,26 +304,15 @@
 <script setup>
 import { ref } from 'vue'
 import { useDualToast } from '~/composables/useDualToast'
+import Toast from '~/components/ui/Toast.vue'
 
-// Use our enhanced dual toast system with Nuxt UI v3 integration
+// Use our optimized dual toast system
 const toast = useDualToast()
 
-// Props for controlling sections
-const props = defineProps({
-  showControls: {
-    type: Boolean,
-    default: true
-  },
-  defaultShowPreview: {
-    type: Boolean,
-    default: false
-  }
-})
-
 // State
-const showPreview = ref(props.defaultShowPreview)
+const showPreview = ref(false)
 
-// Basic toast methods - enhanced
+// Basic toast methods - now using unified component
 const showSuccessToast = () => {
   toast.success('Success!', 'Your action was completed successfully.')
 }
@@ -299,7 +329,7 @@ const showInfoToast = () => {
   toast.info('Information', 'Here is some important information for you.')
 }
 
-// Advanced toast methods - using enhanced useDualToast features
+// Advanced toast methods - using optimized useDualToast features
 const showServerErrorToast = () => {
   toast.serverError('Failed to connect to the API. Please check your connection.')
 }

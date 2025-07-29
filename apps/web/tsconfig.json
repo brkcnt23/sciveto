@@ -35,8 +35,10 @@
     "app.vue", 
     "nuxt.config.ts",
     "app.config.ts",
-    ".nuxt/nuxt.d.ts"
-, "showcase/forms/FormShowcase.vue", "showcase/forms/StatusShowcase.vue"  ],
+    ".nuxt/nuxt.d.ts",
+    "showcase/forms/FormShowcase.vue", 
+    "showcase/forms/StatusShowcase.vue"
+  ],
   "exclude": [
     "node_modules",
     ".nuxt",
