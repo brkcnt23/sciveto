@@ -1,7 +1,8 @@
-/* assets/css/main.css - Nuxt UI v3 + Tailwind v4 */
+/* assets/css/main.css - Nuxt UI v3 + Tailwind v4 - FIXED */
 
 /* Import Tailwind CSS - Nuxt UI v3 syntax */
 @import "tailwindcss";
+@import "@nuxt/ui";
 
 /* Sciveto Brand Colors */
 :root {
@@ -67,18 +68,34 @@ html.dark {
 
 /* Custom Animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { 
+    opacity: 0; 
+  }
+  to { 
+    opacity: 1; 
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from { 
+    transform: translateY(10px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
 }
 
 @keyframes slideDown {
-  from { transform: translateY(-10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from { 
+    transform: translateY(-10px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
 }
 
 /* Utility Classes */
@@ -92,4 +109,15 @@ html.dark {
 
 .slide-down {
   animation: slideDown 0.3s ease-out;
+}
+
+/* Focus styles for accessibility - FIXED: Using CSS custom properties */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--sciveto-green);
+}
+
+/* Smooth transitions */
+.theme-transition {
+  transition: color 150ms ease-in-out, background-color 150ms ease-in-out, border-color 150ms ease-in-out;
 }
