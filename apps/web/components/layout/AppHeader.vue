@@ -96,12 +96,12 @@
           <!-- User Menu -->
           <UDropdownMenu v-if="user">
             <UButton variant="ghost" size="sm" class="gap-2">
-              <UAvatar
-                :src="user.avatar"
-                :alt="user.name"
-                size="xs"
-                :ui="{ background: 'bg-primary-500 dark:bg-primary-400' }"
-              >
+                              <UAvatar
+                  :src="user.avatar"
+                  :alt="user.name"
+                  size="xs"
+                  class="bg-primary-500 dark:bg-primary-400"
+                >
                 {{ user.name?.charAt(0).toUpperCase() }}
               </UAvatar>
               <span class="hidden md:block text-sm font-medium text-highlighted max-w-32 truncate">

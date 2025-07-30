@@ -374,6 +374,9 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
+import { useDualToast } from '~/composables/useDualToast'
+
 // Types
 type ProjectStatus = 'planning' | 'in-progress' | 'completed' | 'on-hold'
 type ProjectPriority = 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
@@ -401,7 +404,7 @@ interface Project {
 // Composables
 const route = useRoute()
 const router = useRouter()
-const toast = useToast()
+const toast = useDualToast()
 
 // State
 const loading = ref(true)
@@ -533,8 +536,8 @@ const getProjectIconColor = (status: string) => {
   return colors[status as ProjectStatus] || 'text-gray-600 dark:text-gray-400'
 }
 
-const getStatusColor = (status: string) => {
-  const colors: Record<ProjectStatus, string> = {
+const getStatusColor = (status: string): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {
+  const colors: Record<ProjectStatus, 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral'> = {
     'planning': 'info',
     'in-progress': 'warning',
     'completed': 'success',
@@ -557,8 +560,8 @@ const getStatusLabel = (status: string) => {
   return labels[status as ProjectStatus] || status
 }
 
-const getPriorityColor = (priority: string) => {
-  const colors: Record<ProjectPriority, string> = {
+const getPriorityColor = (priority: string): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {
+  const colors: Record<ProjectPriority, 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral'> = {
     'LOW': 'success',
     'MEDIUM': 'warning',
     'HIGH': 'error',
@@ -655,7 +658,6 @@ definePageMeta({
 })
 
 
-import { useSeoMeta } from 'nuxt/app'
 useSeoMeta({
   title: 'Project Detail - Sciveto'
 })

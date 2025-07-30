@@ -37,7 +37,7 @@
             :loading="importing.membran"
             :disabled="importing.membran"
             block
-            color="blue"
+            color="info"
             icon="i-lucide-download"
           >
             {{ importing.membran ? 'İmport Ediliyor...' : 'Membran Import Et' }}
@@ -74,7 +74,7 @@
             :loading="importing.halat"
             :disabled="importing.halat"
             block
-            color="green"
+            color="success"
             icon="i-lucide-download"
           >
             {{ importing.halat ? 'İmport Ediliyor...' : 'Halat Import Et' }}
@@ -111,7 +111,7 @@
             :loading="importing.mapa"
             :disabled="importing.mapa"
             block
-            color="yellow"
+            color="warning"
             icon="i-lucide-download"
           >
             {{ importing.mapa ? 'İmport Ediliyor...' : 'Mapa Import Et' }}
@@ -148,7 +148,7 @@
             :loading="importing.plaka"
             :disabled="importing.plaka"
             block
-            color="purple"
+            color="primary"
             icon="i-lucide-download"
           >
             {{ importing.plaka ? 'İmport Ediliyor...' : 'Plaka Import Et' }}
@@ -185,7 +185,7 @@
             :loading="importing.profil"
             :disabled="importing.profil"
             block
-            color="orange"
+            color="warning"
             icon="i-lucide-download"
           >
             {{ importing.profil ? 'İmport Ediliyor...' : 'Profil Import Et' }}
@@ -291,7 +291,7 @@
             </div>
           </div>
           <UBadge 
-            :color="history.success ? 'green' : 'red'" 
+            :color="history.success ? 'success' : 'error'" 
             variant="soft"
           >
             {{ history.success ? 'Başarılı' : 'Hatalı' }}

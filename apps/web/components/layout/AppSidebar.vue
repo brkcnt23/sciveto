@@ -44,14 +44,14 @@
         <div v-for="section in navigationSections" :key="section.id" class="mb-6 last:mb-0">
           <SidebarSection :title="section.label" :collapsed="collapsed && !showExpandedContent" />
           <div class="space-y-1 mt-2">
-            <template v-for="item in section.items" :key="item.to">
-              <SidebarItem
-                :item="item"
-                :collapsed="collapsed && !showExpandedContent"
-                :active="isCurrentRoute(item.to)"
-                @click="$router.push(item.to)"
-              />
-            </template>
+            <SidebarItem
+              v-for="item in section.items"
+              :key="item.to"
+              :item="item"
+              :collapsed="collapsed && !showExpandedContent"
+              :active="isCurrentRoute(item.to)"
+              @click="$router.push(item.to)"
+            />
           </div>
         </div>
       </div>
@@ -132,7 +132,7 @@
               alt="User avatar"
               size="xs"
               class="shrink-0"
-              :ui="{ background: 'bg-primary-500 dark:bg-primary-400' }"
+              :ui="{ fallback: 'bg-primary-500 dark:bg-primary-400 text-white' }"
             >
               JD
             </UAvatar>
@@ -169,7 +169,7 @@ interface NavigationItem {
   label: string
   to: string
   icon: string
-  badge?: { label: string; color: string } // badge artık obje olmalı
+  badge?: { label: string; color: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' } // badge artık strict type olmalı
   children?: NavigationItem[]
 }
 

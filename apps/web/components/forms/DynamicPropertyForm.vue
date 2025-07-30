@@ -66,7 +66,7 @@
             :placeholder="property.placeholder"
             :required="property.required"
             :disabled="disabled"
-            rows="3"
+            :rows="3"
           />
         </UFormGroup>
 

@@ -166,14 +166,14 @@
           <UButton
             icon="i-heroicons-eye"
             size="xs"
-            color="blue"
+            color="info"
             variant="ghost"
             @click.stop="$emit('view', item)"
           />
           <UButton
             icon="i-heroicons-arrow-up"
             size="xs"
-            color="green"
+            color="success"
             variant="ghost"
             @click.stop="$emit('restock', item)"
           />
@@ -247,12 +247,12 @@ const getCategoryTextClass = (category: string): string => {
   return categoryColorMap[category] || 'text-gray-600'
 }
 
-const statusColor = computed(() => {
+const statusColor = computed((): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {
   switch (props.item.status) {
-    case 'ACTIVE': return 'green'
-    case 'INACTIVE': return 'yellow'
-    case 'DISCONTINUED': return 'red'
-    case 'ARCHIVED': return 'gray'
+    case 'ACTIVE': return 'success'
+    case 'INACTIVE': return 'warning'
+    case 'DISCONTINUED': return 'error'
+    case 'ARCHIVED': return 'neutral'
     default: return 'neutral'
   }
 })

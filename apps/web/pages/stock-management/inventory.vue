@@ -44,14 +44,14 @@
             v-for="category in categories"
             :key="category.id"
             :variant="selectedCategory === category.id ? 'solid' : 'outline'"
-            :color="selectedCategory === category.id ? 'primary' : 'gray'"
+            :color="selectedCategory === category.id ? 'primary' : 'neutral'"
             size="sm"
             @click="selectedCategory = category.id"
           >
             {{ category.name }}
             <UBadge 
               v-if="category.count > 0"
-              :color="selectedCategory === category.id ? 'white' : 'primary'"
+              :color="selectedCategory === category.id ? 'neutral' : 'primary'"
               :variant="selectedCategory === category.id ? 'solid' : 'soft'"
               size="xs"
               class="ml-1"
@@ -72,7 +72,7 @@
           </UButton>
           <UButton
             :variant="statusFilter === 'low' ? 'solid' : 'outline'"
-            color="red"
+            color="error"
             size="sm"
             @click="statusFilter = 'low'"
           >
@@ -80,7 +80,7 @@
           </UButton>
           <UButton
             :variant="statusFilter === 'medium' ? 'solid' : 'outline'"
-            color="yellow"
+            color="warning"
             size="sm"
             @click="statusFilter = 'medium'"
           >
@@ -88,7 +88,7 @@
           </UButton>
           <UButton
             :variant="statusFilter === 'high' ? 'solid' : 'outline'"
-            color="green"
+            color="success"
             size="sm"
             @click="statusFilter = 'high'"
           >

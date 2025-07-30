@@ -355,7 +355,7 @@
                   <UInput :disabled="isFormLoading" type="email" placeholder="Enter your email" />
                 </UFormGroup>
                 <UFormGroup label="Message">
-                  <UTextarea :disabled="isFormLoading" placeholder="Your message" rows="3" />
+                  <UTextarea :disabled="isFormLoading" placeholder="Your message" :rows="3" />
                 </UFormGroup>
               </div>
             </UCard>

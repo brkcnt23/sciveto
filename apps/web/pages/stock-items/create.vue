@@ -178,7 +178,7 @@
             <UTextarea 
               v-model="form.description"
               placeholder="Ürün hakkında ek bilgiler"
-              rows="3"
+              :rows="3"
             />
           </UFormField>
         </div>

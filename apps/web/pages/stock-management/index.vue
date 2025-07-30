@@ -97,7 +97,7 @@
               <UIcon name="i-lucide-alert-triangle" class="w-5 h-5 text-red-500" />
               <h3 class="font-semibold">Az Stok Uyarısı</h3>
             </div>
-            <UBadge color="red" variant="soft">{{ lowStockItems.length }}</UBadge>
+            <UBadge color="error" variant="soft">{{ lowStockItems.length }}</UBadge>
           </div>
         </template>
         

@@ -1,5 +1,10 @@
 {
-  "extends": "./.nuxt/tsconfig.json",
+  "extends": "./.nuxt/t    "types": [
+      "node",
+      "nuxt",
+      "@pinia/nuxt",
+      "@vueuse/nuxt"
+    ].json",
   "compilerOptions": {
     "baseUrl": ".",
     "target": "ES2022",
@@ -25,7 +30,8 @@
       "#app": ["./.nuxt/nuxt.d.ts"]
     },
     "types": [
-      "node",
+      "@types/node",
+      "@nuxt/types",
       "nuxt",
       "@pinia/nuxt",
       "@vueuse/nuxt"
@@ -46,3 +52,4 @@
     ".output"
   ]
 }
+

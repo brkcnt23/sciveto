@@ -57,7 +57,7 @@
               v-model="form.description"
               placeholder="Enter stock item description"
               :disabled="loading"
-              rows="4"
+              :rows="4"
             />
           </UFormGroup>
 
@@ -145,7 +145,7 @@
             
             <UButton
               type="submit"
-              color="blue"
+              color="info"
               :loading="loading"
               :disabled="!isFormValid"
             >

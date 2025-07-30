@@ -73,7 +73,7 @@
         <UButton 
           @click="clearAllSelections"
           variant="outline"
-          color="red"
+          color="error"
           size="sm"
         >
           Tümünü Temizle
@@ -91,7 +91,7 @@
             @click="removeSelectedItem(item.id)"
             icon="i-lucide-x"
             size="xs"
-            color="red"
+            color="error"
             variant="ghost"
             class="absolute top-2 right-2"
           />

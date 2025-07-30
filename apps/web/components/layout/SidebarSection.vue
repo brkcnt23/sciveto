@@ -22,6 +22,13 @@ withDefaults(defineProps<Props>(), {
 })
 </script>
 
+<script lang="ts">
+// Make it default export for better compatibility
+export default {
+  name: 'SidebarSection'
+}
+</script>
+
 <style scoped>
 /* Sabit yükseklik ve hizalama ile layout shifting engellenir */
 .min-h-\[40px\] { min-height: 40px; }

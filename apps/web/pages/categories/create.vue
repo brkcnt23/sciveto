@@ -54,7 +54,7 @@
               v-model="formData.description"
               placeholder="Bu kategori hakkında kısa açıklama"
               :disabled="loading"
-              rows="2"
+              :rows="2"
             />
           </UFormGroup>
 
@@ -136,7 +136,7 @@
                     <UButton
                       @click="removeProperty(index)"
                       icon="i-lucide-trash-2"
-                      color="red"
+                      color="error"
                       variant="ghost"
                       size="sm"
                       :disabled="loading"
@@ -202,7 +202,7 @@
           <!-- Actions -->
           <div class="flex items-center justify-end gap-3 pt-6 border-t">
             <UButton
-              color="gray"
+              color="neutral"
               variant="ghost"
               to="/categories"
               :disabled="loading"

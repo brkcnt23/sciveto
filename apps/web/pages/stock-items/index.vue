@@ -136,14 +136,14 @@
                     icon="i-heroicons-pencil"
                     size="sm"
                     variant="soft"
-                    color="blue"
+                    color="info"
                     @click.stop="editItem(item.id)"
                   />
                   <UButton
                     icon="i-heroicons-trash"
                     size="sm"
                     variant="soft"
-                    color="red"
+                    color="error"
                     @click.stop="deleteItem(item.id)"
                   />
                 </div>
@@ -159,66 +159,6 @@
           :columns="tableColumns"
           :loading="loading"
         >
-          <template #name-data="{ row }">
-            <div class="flex items-center space-x-3">
-              <img 
-                v-if="row.imageUrl"
-                :src="row.imageUrl" 
-                :alt="row.name"
-                class="w-10 h-10 rounded object-cover"
-              />
-              <div v-else class="w-10 h-10 bg-neutral-100 rounded flex items-center justify-center">
-                <Icon name="i-heroicons-cube" class="w-5 h-5 text-neutral-400" />
-              </div>
-              <div>
-                <p class="font-medium text-neutral-900">{{ row.name }}</p>
-                <p v-if="row.sku" class="text-sm text-neutral-500">{{ row.sku }}</p>
-              </div>
-            </div>
-          </template>
-
-          <template #status-data="{ row }">
-            <UBadge :color="getStatusColor(row.status)">
-              {{ row.status }}
-            </UBadge>
-          </template>
-
-          <template #price-data="{ row }">
-            <span class="font-medium">
-              {{ row.price ? `$${row.price.toFixed(2)}` : '-' }}
-            </span>
-          </template>
-
-          <template #stock-data="{ row }">
-            <span :class="getStockColorClass(row.stock)">
-              {{ row.stock }}
-            </span>
-          </template>
-
-          <template #actions-data="{ row }">
-            <div class="flex space-x-1">
-              <UButton
-                icon="i-heroicons-eye"
-                size="sm"
-                variant="ghost"
-                @click="viewItem(row.id)"
-              />
-              <UButton
-                icon="i-heroicons-pencil"
-                size="sm"
-                variant="ghost"
-                color="blue"
-                @click="editItem(row.id)"
-              />
-              <UButton
-                icon="i-heroicons-trash"
-                size="sm"
-                variant="ghost"
-                color="red"
-                @click="deleteItem(row.id)"
-              />
-            </div>
-          </template>
         </UTable>
 
         <!-- Pagination -->
@@ -243,7 +183,7 @@
         action-text="Add Stock Item"
         action-link="/stock-items/create"
         action-icon="i-heroicons-plus"
-        action-color="green"
+        action-color="success"
       />
 
       <!-- View Mode Toggle -->
@@ -282,7 +222,7 @@
             <UButton variant="outline" @click="showDeleteModal = false">
               Cancel
             </UButton>
-            <UButton color="red" :loading="deleting" @click="confirmDelete">
+            <UButton color="error" :loading="deleting" @click="confirmDelete">
               Delete
             </UButton>
           </div>
@@ -292,20 +232,42 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
+import type { TableColumn } from '@nuxt/ui'
+
+// Define StockItem interface
+interface StockItem {
+  id: number
+  name: string
+  description?: string
+  price?: number
+  stock: number
+  status: 'active' | 'inactive' | 'out_of_stock'
+  category: string
+  sku?: string
+  imageUrl?: string | null
+}
 
 // Data
 const loading = ref(false)
 const deleting = ref(false)
 const showDeleteModal = ref(false)
-const deleteItemId = ref(null)
-const viewMode = ref('grid')
-const stockItems = ref([])
+const deleteItemId = ref<number | null>(null)
+const viewMode = ref<'grid' | 'table'>('grid')
+const stockItems = ref<StockItem[]>([])
 const currentPage = ref(1)
 const perPage = ref(12)
 const totalItems = ref(0)
+
+// Composables
+// const router = useRouter() // Auto-import issues - using manual navigation
+const router = {
+  push: (path: string) => {
+    window.location.href = path
+  }
+}
 
 const filters = reactive({
   search: '',
@@ -328,13 +290,13 @@ const statusOptions = [
   { label: 'Out of Stock', value: 'out_of_stock' }
 ]
 
-const tableColumns = [
-  { id: 'name', key: 'name', label: 'Name' },
-  { id: 'category', key: 'category', label: 'Category' },
-  { id: 'status', key: 'status', label: 'Status' },
-  { id: 'price', key: 'price', label: 'Price' },
-  { id: 'stock', key: 'stock', label: 'Stock' },
-  { id: 'actions', key: 'actions', label: 'Actions' }
+const tableColumns: TableColumn<StockItem>[] = [
+  { accessorKey: 'name', header: 'Name', enableSorting: true },
+  { accessorKey: 'category', header: 'Category', enableSorting: true },
+  { accessorKey: 'status', header: 'Status', enableSorting: true },
+  { accessorKey: 'price', header: 'Price', enableSorting: true },
+  { accessorKey: 'stock', header: 'Stock', enableSorting: true },
+  { id: 'actions', header: 'Actions', enableSorting: false }
 ]
 
 // Computed
@@ -394,31 +356,31 @@ const resetFilters = () => {
   fetchStockItems()
 }
 
-const getStatusColor = (status) => {
-  const colors = {
-    active: 'green',
+const getStatusColor = (status: string): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {
+  const colors: Record<string, 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral'> = {
+    active: 'success',
     inactive: 'neutral',
-    out_of_stock: 'red'
+    out_of_stock: 'error'
   }
   return colors[status] || 'neutral'
 }
 
-const getStockColorClass = (stock) => {
+const getStockColorClass = (stock: number): string => {
   if (stock === 0) return 'text-red-600 font-semibold'
   if (stock < 10) return 'text-yellow-600 font-semibold'
   return 'text-green-600 font-semibold'
 }
 
-const viewItem = (id) => {
-  navigateTo(`/stock-items/${id}`)
+const viewItem = (id: number | string): void => {
+  router.push(`/stock-items/${id}`)
 }
 
-const editItem = (id) => {
-  navigateTo(`/stock-items/${id}/edit`)
+const editItem = (id: number | string): void => {
+  router.push(`/stock-items/${id}/edit`)
 }
 
-const deleteItem = (id) => {
-  deleteItemId.value = id
+const deleteItem = (id: number | string): void => {
+  deleteItemId.value = Number(id)
   showDeleteModal.value = true
 }
 
@@ -440,12 +402,12 @@ const confirmDelete = async () => {
   }
 }
 
-const handlePageChange = (page) => {
+const handlePageChange = (page: number): void => {
   currentPage.value = page
   fetchStockItems()
 }
 
-const handlePageSizeChange = (size) => {
+const handlePageSizeChange = (size: number): void => {
   perPage.value = size
   currentPage.value = 1
   fetchStockItems()

@@ -30,7 +30,7 @@
 
       <!-- Badge -->
       <UBadge 
-        :color="category.isDefault ? 'blue' : 'purple'" 
+        :color="category.isDefault ? 'info' : 'primary'" 
         variant="soft"
         size="sm"
       >
@@ -54,7 +54,7 @@
           :key="property.id"
           variant="soft"
           size="xs"
-          color="gray"
+          color="neutral"
         >
           {{ property.name }}
         </UBadge>
@@ -62,7 +62,7 @@
           v-if="category.properties.length > 3"
           variant="soft"
           size="xs"
-          color="gray"
+          color="neutral"
         >
           +{{ category.properties.length - 3 }} daha
         </UBadge>
@@ -91,7 +91,7 @@
         @click.stop="$emit('delete', category)"
         icon="i-lucide-trash-2"
         size="sm"
-        color="red"
+        color="error"
         variant="outline"
       >
         Sil

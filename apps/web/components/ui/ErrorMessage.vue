@@ -67,7 +67,7 @@
               <UButton
                 v-if="showRetry"
                 size="xs"
-                color="red"
+                color="error"
                 variant="outline"
                 @click="$emit('retry')"
                 :loading="retrying"

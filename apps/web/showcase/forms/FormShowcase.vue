@@ -103,7 +103,7 @@
             <UTextarea 
               v-model="formData.description" 
               placeholder="Describe your project..."
-              :rows="4"
+              ::rows="4"
             />
           </UFormField>
 

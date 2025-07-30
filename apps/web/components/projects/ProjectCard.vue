@@ -316,8 +316,8 @@ const getStatusIndicatorColor = (status: string) => {
   return colors[status as ProjectStatus] || 'bg-gray-500'
 }
 
-const getStatusColor = (status: string) => {
-  const colors: Record<ProjectStatus, string> = {
+const getStatusColor = (status: string): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {
+  const colors: Record<ProjectStatus, 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral'> = {
     'planning': 'info',
     'in-progress': 'warning',
     'completed': 'success',
@@ -350,8 +350,8 @@ const getStatusIcon = (status: string) => {
   return icons[status as ProjectStatus] || 'i-lucide-circle'
 }
 
-const getPriorityColor = (priority: string) => {
-  const colors: Record<ProjectPriority, string> = {
+const getPriorityColor = (priority: string): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {
+  const colors: Record<ProjectPriority, 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral'> = {
     'LOW': 'success',
     'MEDIUM': 'warning',
     'HIGH': 'error',

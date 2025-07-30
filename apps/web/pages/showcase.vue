@@ -220,14 +220,8 @@
           <UCard 
             class="relative overflow-hidden"
             :ui="{ 
-              body: { 
-                padding: 'p-0',
-                background: 'bg-transparent'
-              },
-              header: {
-                background: 'bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm',
-                padding: 'px-6 py-4'
-              }
+              body: 'p-0',
+              header: 'bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm'
             }"
           >
             <!-- Background Image -->

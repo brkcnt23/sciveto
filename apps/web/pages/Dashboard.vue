@@ -182,7 +182,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { definePageMeta, useSeoMeta } from 'nuxt/app'
 import { useAuthStore } from '../stores/auth'
 import { useDualToast } from '../composables/useDualToast'
 
@@ -191,7 +190,14 @@ definePageMeta({
   middleware: 'auth',
   layout: 'default'
 })
-// Composables - Nuxt auto-import ile gelir
+
+// SEO
+useSeoMeta({
+  title: 'Dashboard - Sciveto',
+  description: 'Your project management dashboard'
+})
+
+// Composables
 const authStore = useAuthStore()
 const toast = useDualToast()
 
@@ -212,10 +218,4 @@ const handleDevLogout = async () => {
     loggingOut.value = false
   }
 }
-
-// SEO
-useSeoMeta({
-  title: 'Dashboard - Sciveto',
-  description: 'Your project management dashboard'
-})
 </script>

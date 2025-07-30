@@ -67,7 +67,7 @@
       <UBadge
         v-if="badgeData"
         :label="badgeData.label"
-        :color="active ? 'white' : badgeData.color"
+        :color="active ? 'neutral' : badgeData.color"
         :variant="active ? 'outline' : 'soft'"
         size="xs"
         class="shrink-0 ml-2 transition-all duration-300"
@@ -109,7 +109,7 @@ interface NavigationItem {
   icon: string
   badge?: {
     label: string
-    color: string
+    color: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral'
   }
 }
 
@@ -119,7 +119,7 @@ interface Props {
   active?: boolean
   badge?: {
     label: string
-    color: string
+    color: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral'
   }
 }
 
@@ -140,6 +140,13 @@ const badgeData = computed(() => {
 // Handle click event
 const handleClick = () => {
   emit('click')
+}
+</script>
+
+<script lang="ts">
+// Make it default export for better compatibility
+export default {
+  name: 'SidebarItem'
 }
 </script>
 

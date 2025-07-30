@@ -40,7 +40,7 @@
 
           <!-- User Menu -->
           <UDropdown :items="userMenuItems">
-            <UButton variant="ghost" color="white" class="flex items-center space-x-2">
+            <UButton variant="ghost" color="neutral" class="flex items-center space-x-2">
               <UAvatar :src="user?.avatar" :alt="user?.name" size="sm"
                 class="bg-gradient-to-br from-indigo-380 to-green-500 text-white" />
               <span class="hidden md:block text-sm font-medium">

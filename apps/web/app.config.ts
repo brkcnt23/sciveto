@@ -1,7 +1,5 @@
 // app.config.ts - Enhanced with Advanced Theme System
-declare global {
-  const defineAppConfig: typeof import('nuxt/app')['defineAppConfig']
-}
+
 // app.config.ts - Unified Color System for Consistent Toast Colors
 export default defineAppConfig({
   // Nuxt UI v3 Color System - Unified with Toast Component

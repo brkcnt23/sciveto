@@ -249,17 +249,17 @@ const saveCount = async () => {
   }
 }
 
-const getCategoryColor = (category: string): string => {
-  const colors: Record<string, string> = {
-    'Membran': 'blue',
-    'Halat': 'green',
-    'Mapa': 'yellow',
-    'Plaka': 'purple',
-    'Profil': 'orange',
-    'Fitil': 'pink',
-    'Sarf': 'gray'
+const getCategoryColor = (category: string): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {
+  const colors: Record<string, 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral'> = {
+    'Membran': 'info',
+    'Halat': 'success',
+    'Mapa': 'warning',
+    'Plaka': 'secondary',
+    'Profil': 'warning',
+    'Fitil': 'primary',
+    'Sarf': 'neutral'
   }
-  return colors[category] || 'gray'
+  return colors[category] || 'neutral'
 }
 
 const getStockInputClass = () => {

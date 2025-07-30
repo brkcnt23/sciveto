@@ -28,9 +28,9 @@
         </div>
         
         <!-- Category Type Badge -->
-        <UBadge 
-          :color="category.isDefault ? 'gray' : 'primary'" 
-          variant="soft" 
+        <UBadge
+          :color="category.isDefault ? 'neutral' : 'primary'"
+          variant="soft"
           size="xs"
         >
           {{ category.isDefault ? 'Varsayılan' : 'Özel' }}
@@ -199,15 +199,15 @@ const dropdownItems = computed(() => {
 })
 
 // Methods
-const getPropertyTypeColor = (type: string) => {
-  const colors = {
-    text: 'blue',
-    number: 'green',
-    textarea: 'purple',
-    select: 'orange',
-    boolean: 'pink'
+const getPropertyTypeColor = (type: string): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {
+  const colors: Record<string, 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral'> = {
+    text: 'info',
+    number: 'success',
+    textarea: 'secondary',
+    select: 'warning',
+    boolean: 'primary'
   }
-  return colors[type as keyof typeof colors] || 'gray'
+  return colors[type] || 'neutral'
 }
 
 const getPropertyTypeLabel = (type: string) => {

@@ -1,40 +1,51 @@
-// types/global.d.ts - Complete auto-import definitions for VSCode
+// types/global.d.ts - Comprehensive auto-import definitions
 
 declare global {
-  // Fetch utilities
-  const $fetch: typeof import('ofetch')['$fetch']
-  
-  // Vue Router
-  const useRouter: typeof import('nuxt/app')['useRouter']
-  const useRoute: typeof import('nuxt/app')['useRoute']
-  
-  // Vue composition API
-  const reactive: typeof import('vue')['reactive']
+  // Vue Composition API
   const ref: typeof import('vue')['ref']
+  const reactive: typeof import('vue')['reactive']
   const computed: typeof import('vue')['computed']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
   const onMounted: typeof import('vue')['onMounted']
   const onUnmounted: typeof import('vue')['onUnmounted']
+  const onErrorCaptured: typeof import('vue')['onErrorCaptured']
   const nextTick: typeof import('vue')['nextTick']
+  const readonly: typeof import('vue')['readonly']
+  const shallowRef: typeof import('vue')['shallowRef']
   
-  // Nuxt app composables
+  // Nuxt Composables - Direct paths to avoid #imports issues
   const definePageMeta: typeof import('nuxt/app')['definePageMeta']
-  const useRuntimeConfig: typeof import('nuxt/app')['useRuntimeConfig']
+  const useSeoMeta: typeof import('nuxt/app')['useSeoMeta'] 
+  const useHead: typeof import('nuxt/app')['useHead']
+  const useRouter: typeof import('nuxt/app')['useRouter']
+  const useRoute: typeof import('nuxt/app')['useRoute']
   const navigateTo: typeof import('nuxt/app')['navigateTo']
   const createError: typeof import('nuxt/app')['createError']
-  const useSeoMeta: typeof import('nuxt/app')['useSeoMeta']
-  const useHead: typeof import('nuxt/app')['useHead']
+  const useRuntimeConfig: typeof import('nuxt/app')['useRuntimeConfig']
   
-  // Nuxt UI toast (standard)
+  // Pinia
+  const defineStore: typeof import('pinia')['defineStore']
+  
+  // Fetch utilities
+  const $fetch: typeof import('ofetch')['$fetch']
+  
+  // Nuxt UI
   const useToast: typeof import('@nuxt/ui')['useToast']
   
-  // Custom stores
-  const useAuthStore: typeof import('~/stores/auth')['useAuthStore']
+  // Custom stores - relative paths to avoid resolution issues
+  const useAuthStore: () => import('./stores/auth').AuthStore
   
   // Custom composables
-  const useDualToast: typeof import('~/composables/useDualToast')['useDualToast']
-  const useTheme: typeof import('~/composables/useTheme')['useTheme']
+  const useDualToast: typeof import('./composables/useDualToast')['useDualToast']
+  const useTheme: typeof import('./composables/useTheme')['useTheme']
+}
+
+// Module declarations for better IDE support
+declare module '*.vue' {
+  import type { DefineComponent } from 'vue'
+  const component: DefineComponent<{}, {}, any>
+  export default component
 }
 
 export {}

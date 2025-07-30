@@ -15,7 +15,7 @@
             <UButton 
               :to="`/stock-items/${route.params.id}/edit`"
               icon="i-heroicons-pencil"
-              color="blue"
+              color="info"
               variant="outline"
             >
               Edit
@@ -23,7 +23,7 @@
             
             <UButton 
               icon="i-heroicons-trash"
-              color="red"
+              color="error"
               variant="outline"
               @click="showDeleteModal = true"
             >
@@ -139,7 +139,7 @@
             <UButton 
               :to="`/stock-items/${stockItem.id}/edit`"
               icon="i-heroicons-pencil"
-              color="blue"
+              color="info"
               block
             >
               Edit Stock Item
@@ -147,7 +147,7 @@
             
             <UButton 
               icon="i-heroicons-arrow-path"
-              color="green"
+              color="success"
               variant="outline"
               @click="showAdjustModal = true"
             >
@@ -213,7 +213,7 @@
         <div class="space-y-4">
           <p>Are you sure you want to delete <strong>{{ stockItem?.name }}</strong>? This action cannot be undone.</p>
           <UAlert
-            color="red"
+            color="error"
             variant="soft"
             title="Warning"
             description="All associated data will be permanently removed."
@@ -225,7 +225,7 @@
             <UButton variant="outline" @click="showDeleteModal = false">
               Cancel
             </UButton>
-            <UButton color="red" :loading="deleting" @click="confirmDelete">
+            <UButton color="error" :loading="deleting" @click="confirmDelete">
               Delete
             </UButton>
           </div>
@@ -259,7 +259,7 @@
             <UTextarea
               v-model="adjustStock.reason"
               placeholder="Enter reason for stock adjustment"
-              rows="3"
+              :rows="3"
             />
           </UFormGroup>
         </div>
@@ -269,7 +269,7 @@
             <UButton variant="outline" @click="showAdjustModal = false">
               Cancel
             </UButton>
-            <UButton color="green" :loading="adjusting" @click="confirmAdjustStock">
+            <UButton color="success" :loading="adjusting" @click="confirmAdjustStock">
               Adjust Stock
             </UButton>
           </div>

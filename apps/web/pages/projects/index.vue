@@ -186,7 +186,7 @@
         <!-- Table View -->
         <div v-else>
           <UTable
-            :data="filteredProjects"
+            :rows="filteredProjects"
             :columns="tableColumns"
             :loading="loading"
             :empty-state="{ 
@@ -195,55 +195,6 @@
               description: searchQuery ? 'Try adjusting your search or filters' : 'Get started by creating your first project'
             }"
           >
-            <template #name-data="{ row }">
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
-                  <UIcon name="i-lucide-folder" class="w-4 h-4 text-primary-600 dark:text-primary-400" />
-                </div>
-                <div>
-                  <div class="font-semibold text-gray-900 dark:text-white">
-                    {{ row.name }}
-                  </div>
-                  <div class="text-sm text-gray-600 dark:text-gray-400">
-                    {{ row.projectCode }}
-                  </div>
-                </div>
-              </div>
-            </template>
-
-            <template #status-data="{ row }">
-              <UBadge 
-                :color="getStatusColor(row.status)"
-                :variant="getStatusVariant(row.status)"
-              >
-                {{ getStatusLabel(row.status) }}
-              </UBadge>
-            </template>
-
-            <template #priority-data="{ row }">
-              <UBadge 
-                :color="getPriorityColor(row.priority)"
-                variant="outline"
-                size="xs"
-              >
-                {{ row.priority }}
-              </UBadge>
-            </template>
-
-            <template #progress-data="{ row }">
-              <div class="flex items-center gap-2">
-                <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                  <div 
-                    class="bg-primary-500 h-2 rounded-full transition-all duration-300"
-                    :style="{ width: row.completionPercentage + '%' }"
-                  ></div>
-                </div>
-                <span class="text-sm text-gray-600 dark:text-gray-400 min-w-[3rem]">
-                  {{ row.completionPercentage }}%
-                </span>
-              </div>
-            </template>
-
             <template #actions-data="{ row }">
               <div class="flex items-center gap-1">
                 <UButton
@@ -319,10 +270,10 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
 import { useDualToast } from '~/composables/useDualToast'
+import type { TableColumn } from '@nuxt/ui'
 
 // Components - Import path düzeltildi
 import ProjectCard from '~/components/projects/ProjectCard.vue'
-import { useSeoMeta } from 'nuxt/app'
 
 // Composables
 const toast = useDualToast()
@@ -331,6 +282,22 @@ const router = useRouter()
 // Types for better TypeScript support
 type ProjectStatus = 'planning' | 'in-progress' | 'completed' | 'on-hold'
 type ProjectPriority = 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
+
+interface Project {
+  id: string
+  name: string
+  projectCode: string
+  description: string
+  status: ProjectStatus
+  priority: ProjectPriority
+  completionPercentage: number
+  clientName: string
+  estimatedCost: number
+  actualCost: number
+  deadline: string
+  createdAt: string
+  categoryId: string
+}
 
 // State
 const loading = ref(true)
@@ -422,14 +389,14 @@ const categoryOptions = [
 ]
 
 // Table columns
-const tableColumns = [
-  { key: 'name', label: 'Project' },
-  { key: 'status', label: 'Status' },
-  { key: 'priority', label: 'Priority' },
-  { key: 'progress', label: 'Progress' },
-  { key: 'clientName', label: 'Client' },
-  { key: 'deadline', label: 'Deadline' },
-  { key: 'actions', label: '', sortable: false }
+const tableColumns: TableColumn<Project>[] = [
+  { accessorKey: 'name', header: 'Project' },
+  { accessorKey: 'status', header: 'Status' },
+  { accessorKey: 'priority', header: 'Priority' },
+  { accessorKey: 'completionPercentage', header: 'Progress' },
+  { accessorKey: 'clientName', header: 'Client' },
+  { accessorKey: 'deadline', header: 'Deadline' },
+  { id: 'actions', header: 'Actions', enableSorting: false }
 ]
 
 // Computed
@@ -519,8 +486,8 @@ const visiblePages = computed(() => {
 })
 
 // Methods
-const getStatusColor = (status: string) => {
-  const colors: Record<ProjectStatus, string> = {
+const getStatusColor = (status: string): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {
+  const colors: Record<ProjectStatus, 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral'> = {
     'planning': 'info',
     'in-progress': 'warning',
     'completed': 'success',
@@ -543,8 +510,8 @@ const getStatusLabel = (status: string) => {
   return labels[status as ProjectStatus] || status
 }
 
-const getPriorityColor = (priority: string) => {
-  const colors: Record<ProjectPriority, string> = {
+const getPriorityColor = (priority: string): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {
+  const colors: Record<ProjectPriority, 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral'> = {
     'LOW': 'success',
     'MEDIUM': 'warning',
     'HIGH': 'error',

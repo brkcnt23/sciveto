@@ -139,7 +139,7 @@
                   <UTextarea 
                     v-model="settingsForm.description" 
                     placeholder="Project description"
-                    rows="3"
+                    :rows="3"
                   />
                 </UFormGroup>
                 
@@ -621,7 +621,7 @@
             </Tooltip>
 
             <Tooltip name="Tooltip" content="Error theme tooltip" theme="error">
-              <UButton variant="outline" color="red">Error</UButton>
+              <UButton variant="outline" color="error">Error</UButton>
             </Tooltip>
 
             <Tooltip name="Tooltip" content="Warning theme tooltip" theme="warning">
@@ -629,7 +629,7 @@
             </Tooltip>
 
             <Tooltip name="Tooltip" content="Success theme tooltip" theme="success">
-              <UButton variant="outline" color="green">Success</UButton>
+              <UButton variant="outline" color="success">Success</UButton>
             </Tooltip>
           </div>
         </div>

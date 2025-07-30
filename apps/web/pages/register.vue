@@ -144,7 +144,7 @@
           <!-- Submit Button -->
           <UButton
             type="submit"
-            color="white"
+            color="neutral"
             variant="solid"
             size="lg"
             :loading="loading"
@@ -169,7 +169,7 @@
         <div class="grid grid-cols-2 gap-3">
           <UButton
             variant="outline"
-            color="white"
+            color="neutral"
             size="sm"
             :disabled="loading"
             @click="handleSocialRegister('google')"
@@ -180,7 +180,7 @@
           </UButton>
           <UButton
             variant="outline"
-            color="white"
+            color="neutral"
             size="sm"
             :disabled="loading"
             @click="handleSocialRegister('github')"
