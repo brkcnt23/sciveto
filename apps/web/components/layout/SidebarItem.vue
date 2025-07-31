@@ -15,7 +15,7 @@
 <template>
   <div
     :class=" [
-      'group relative flex items-center rounded-lg transition-all duration-200 ease-in-out',
+      'group relative flex items-center rounded-lg transition-all duration-300 ease-in-out',
       'cursor-pointer hover:scale-[1.02] active:scale-[0.98]',
       {
         'px-3 py-2': !collapsed,
@@ -30,10 +30,10 @@
     <!-- Icon -->
     <div
       :class=" [
-        'flex items-center justify-center shrink-0',
+        'flex items-center justify-center shrink-0 transition-all duration-300',
         {
           'mr-3': !collapsed,
-          'mr-0': collapsed
+          'mr-0 w-full': collapsed
         }
       ]"
     >
@@ -43,17 +43,21 @@
           'transition-all duration-300 w-5 h-5 shrink-0',
           {
             'text-white': active,
-            'text-neutral-600 dark:text-neutral-400 group-hover:text-primary-600 dark:group-hover:text-primary-400': !active
+            'text-neutral-600 dark:text-neutral-400 group-hover:text-primary-600 dark:group-hover:text-primary-400': !active && !collapsed,
+            'text-neutral-500 dark:text-neutral-500 group-hover:text-primary-500 dark:group-hover:text-primary-500': !active && collapsed
           }
         ]"
       />
     </div>
 
     <!-- Label & Badge (only when not collapsed) -->
-    <div class="flex items-center justify-between flex-1 min-w-0 transition-all duration-300" :class="!collapsed ? 'opacity-100' : 'opacity-0'">
+    <div 
+      class="flex items-center justify-between flex-1 min-w-0 transition-all duration-300 overflow-hidden" 
+      :class="!collapsed ? 'opacity-100' : 'opacity-0 w-0'"
+    >
       <span
         :class=" [
-          'truncate text-sm font-medium transition-colors duration-300',
+          'truncate text-sm font-medium transition-colors duration-300 max-w-full',
           {
             'text-white': active,
             'text-neutral-700 dark:text-neutral-300 group-hover:text-primary-600 dark:group-hover:text-primary-400': !active

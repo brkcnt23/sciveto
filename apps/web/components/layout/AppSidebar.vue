@@ -6,7 +6,7 @@
       (collapsed && !showExpandedContent) ? 'w-16' : 'w-64',
       collapsed && showExpandedContent ? 'shadow-2xl z-60' : ''
     ]"
-    style="overflow-x: hidden;"
+    style="overflow: hidden;"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >
@@ -39,11 +39,11 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="flex-1 overflow-y-auto scrollbar-thin">
-      <div class="px-2 pt-4 pb-0">
-        <div v-for="section in navigationSections" :key="section.id" class="mb-6 last:mb-0">
+    <nav class="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin">
+      <div class="px-2 pt-4 pb-0 min-w-0">
+        <div v-for="section in navigationSections" :key="section.id" class="mb-6 last:mb-0 min-w-0">
           <SidebarSection :title="section.label" :collapsed="collapsed && !showExpandedContent" />
-          <div class="space-y-1 mt-2">
+          <div class="space-y-1 mt-2 min-w-0">
             <SidebarItem
               v-for="item in section.items"
               :key="item.to"

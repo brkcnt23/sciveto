@@ -1,0 +1,123 @@
+/* assets/css/main.css - Nuxt UI v3 + Tailwind v4 - FIXED */
+
+/* Import Tailwind CSS - Nuxt UI v3 syntax */
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+/* Sciveto Brand Colors */
+:root {
+  /* Sciveto Primary Colors */
+  --sciveto-green: #22c55e;
+  --sciveto-green-dark: #16a34a;
+  --sciveto-green-light: #4ade80;
+  
+  /* UI Design Tokens - Light Mode */
+  --ui-primary: #22c55e;
+  --ui-secondary: #2563eb;
+  --ui-success: #059669;
+  --ui-info: #0284c7;
+  --ui-warning: #d97706;
+  --ui-error: #dc2626;
+  --ui-neutral: #64748b;
+
+  /* Light Mode Backgrounds */
+  --ui-background: #ffffff;
+  --ui-background-elevated: #f8fafc;
+  --ui-background-muted: #f1f5f9;
+  --ui-background-inverted: #0f172a;
+
+  /* Light Mode Text Colors */
+  --ui-text-highlighted: #0f172a;
+  --ui-text-default: #334155;
+  --ui-text-muted: #64748b;
+  --ui-text-inverted: #ffffff;
+  
+  /* Light Mode Border Colors */
+  --ui-border-accented: #e2e8f0;
+  --ui-border-default: #cbd5e1;
+  --ui-border-inverted: #475569;
+}
+
+/* Dark Mode Design Tokens */
+html.dark {
+  --ui-primary: #22c55e;
+  --ui-secondary: #3b82f6;
+  --ui-success: #10b981;
+  --ui-info: #0ea5e9;
+  --ui-warning: #f59e0b;
+  --ui-error: #ef4444;
+  --ui-neutral: #94a3b8;
+
+  /* Dark Mode Backgrounds */
+  --ui-background: #0f172a;
+  --ui-background-elevated: #1e293b;
+  --ui-background-muted: #334155;
+  --ui-background-inverted: #ffffff;
+
+  /* Dark Mode Text Colors */
+  --ui-text-highlighted: #ffffff;
+  --ui-text-default: #cbd5e1;
+  --ui-text-muted: #94a3b8;
+  --ui-text-inverted: #0f172a;
+  
+  /* Dark Mode Border Colors */
+  --ui-border-accented: #1e293b;
+  --ui-border-default: #334155;
+  --ui-border-inverted: #cbd5e1;
+}
+
+/* Custom Animations */
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+  }
+  to { 
+    opacity: 1; 
+  }
+}
+
+@keyframes slideUp {
+  from { 
+    transform: translateY(10px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+}
+
+@keyframes slideDown {
+  from { 
+    transform: translateY(-10px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+}
+
+/* Utility Classes */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+.slide-down {
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Focus styles for accessibility - FIXED: Using CSS custom properties */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--sciveto-green);
+}
+
+/* Smooth transitions */
+.theme-transition {
+  transition: color 150ms ease-in-out, background-color 150ms ease-in-out, border-color 150ms ease-in-out;
+}

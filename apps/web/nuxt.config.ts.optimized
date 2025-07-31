@@ -69,37 +69,13 @@ export default defineNuxtConfig({
     transpile: ['@headlessui/vue']
   },
 
-  // Vite configuration - Tailwind CSS v4 + Nuxt UI v3 Windows Fix
+  // Vite configuration - Optimized
   vite: {
     define: {
       __VUE_OPTIONS_API__: false
     },
     optimizeDeps: {
-      include: ['vue', '@nuxt/ui', 'pinia'],
-      exclude: ['@tailwindcss/oxide', 'lightningcss']
-    },
-    ssr: {
-      noExternal: ['@nuxt/ui', 'tailwindcss']
-    },
-    build: {
-      rollupOptions: {
-        external: ['@tailwindcss/oxide-win32-x64-msvc', 'lightningcss/node']
-      }
-    },
-    server: {
-      fs: {
-        allow: ['..', '../../node_modules']
-      }
-    }
-  },
-
-  // Nitro configuration for Windows + Tailwind v4
-  nitro: {
-    experimental: {
-      wasm: true
-    },
-    rollupConfig: {
-      external: ['@tailwindcss/oxide', 'lightningcss']
+      include: ['vue', '@nuxt/ui', 'pinia']
     }
   },
 

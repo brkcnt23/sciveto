@@ -41,7 +41,7 @@
 /* Focus styles for accessibility */
 .focus-ring:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--sciveto-primary);
+  box-shadow: 0 0 0 2px theme(colors.white), 0 0 0 4px var(--sciveto-primary);
 }
 
 /* Smooth transitions */

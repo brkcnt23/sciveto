@@ -1,32 +1,31 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
-    <!-- Dev Logout Section -->
-    <div class="bg-red-50 dark:bg-red-950 border-b border-red-200 dark:border-red-800">
-      <div class="px-4 py-3 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <UIcon name="i-lucide-code" class="w-5 h-5 text-red-600 dark:text-red-400" />
-            <div>
-              <p class="text-sm font-medium text-red-800 dark:text-red-200">Development Mode</p>
-              <p class="text-xs text-red-600 dark:text-red-400">{{ authStore.userEmail || 'No user email' }}</p>
-            </div>
+  <!-- Dev Logout Section -->
+  <div class="bg-red-50 dark:bg-red-950 border-b border-red-200 dark:border-red-800 mb-6">
+    <div class="px-4 py-3 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <UIcon name="i-lucide-code" class="w-5 h-5 text-red-600 dark:text-red-400" />
+          <div>
+            <p class="text-sm font-medium text-red-800 dark:text-red-200">Development Mode</p>
+            <p class="text-xs text-red-600 dark:text-red-400">{{ authStore.userEmail || 'No user email' }}</p>
           </div>
-          <UButton variant="outline" color="error" size="sm" icon="i-lucide-log-out" @click="handleDevLogout"
-            :loading="loggingOut">
-            Test Logout
-          </UButton>
         </div>
+        <UButton variant="outline" color="error" size="sm" icon="i-lucide-log-out" @click="handleDevLogout"
+          :loading="loggingOut">
+          Test Logout
+        </UButton>
       </div>
     </div>
+  </div>
 
-    <!-- Page Header -->
-    <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-      <div class="px-4 py-6 sm:px-6 lg:px-8">
-        <div class="flex items-center gap-4">
-          <div class="p-3 rounded-xl bg-primary-100 dark:bg-primary-900">
-            <UIcon name="i-lucide-layout-dashboard" class="w-6 h-6 text-primary-600 dark:text-primary-400" />
-          </div>
-          <div>
+  <!-- Page Header -->
+  <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg mb-6">
+    <div class="px-4 py-6 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-4">
+        <div class="p-3 rounded-xl bg-primary-100 dark:bg-primary-900">
+          <UIcon name="i-lucide-layout-dashboard" class="w-6 h-6 text-primary-600 dark:text-primary-400" />
+        </div>
+        <div>
             <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
               Dashboard
             </h1>
@@ -177,7 +176,6 @@
         </UCard>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
