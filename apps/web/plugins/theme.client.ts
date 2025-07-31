@@ -5,7 +5,7 @@ import type { ThemeState } from '~/composables/useTheme'
 export default defineNuxtPlugin({
   name: 'theme-manager',
   
-  async setup() {
+  setup() {
     // Only run on client-side
     if (process.server) return
 
@@ -35,10 +35,10 @@ export default defineNuxtPlugin({
       }
     })
 
-    // Initialize theme system
+    // Initialize theme system and store cleanup function
     const cleanup = initialize()
     
-    // Early theme application to prevent flash
+    // Apply early theme to prevent flash
     const applyEarlyTheme = () => {
       try {
         const stored = getStoredPreference()
@@ -97,11 +97,24 @@ export default defineNuxtPlugin({
     
     // Make theme utilities globally available
     if (process.client) {
-      ;(window as any).__nuxt_theme__ = themeUtils
+      (window as any).__nuxt_theme__ = themeUtils
     }
     
-    // Cleanup on app unmount
-    return cleanup
+    // Handle cleanup when app unmounts
+    if (process.client) {
+      window.addEventListener('beforeunload', () => {
+        cleanup?.()
+      })
+      
+      // Also handle cleanup on navigation
+      const nuxtApp = useNuxtApp()
+      nuxtApp.hook('app:beforeMount', () => {
+        // Store cleanup function for later use
+        nuxtApp.payload._themeCleanup = cleanup
+      })
+    }
+    
+    // Return void (no return value) to satisfy Nuxt plugin typing
   },
   
   // Ensure this plugin runs before other plugins that might depend on theme
