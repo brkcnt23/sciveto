@@ -1,4 +1,3 @@
-// nuxt.config.ts - Clean Nuxt UI v3 Configuration
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
@@ -7,14 +6,44 @@ export default defineNuxtConfig({
   // CSS imports
   css: ['~/assets/css/main.css'],
 
-  // Auto-imports configuration
+  // ENHANCED Auto-imports configuration
   imports: {
     autoImport: true,
     global: true,
     dirs: [
       'composables/**',
-      'utils/**',
+      'utils/**', 
       'stores/**'
+    ],
+    // Explicit imports to fix VSCode issues
+    presets: [
+      {
+        from: 'vue',
+        imports: [
+          'ref', 'reactive', 'computed', 'watch', 'watchEffect',
+          'onMounted', 'onUnmounted', 'onErrorCaptured', 'nextTick',
+          'readonly', 'shallowRef', 'toRef', 'toRefs', 'unref'
+        ]
+      },
+      {
+        from: '@nuxt/kit',
+        imports: ['useHead']
+      },
+      {
+        from: 'nuxt/app', 
+        imports: [
+          'definePageMeta', 'useSeoMeta', 'useRouter', 'useRoute',
+          'navigateTo', 'createError', 'useRuntimeConfig'
+        ]
+      },
+      {
+        from: '@nuxt/ui',
+        imports: ['useToast']
+      },
+      {
+        from: 'pinia',
+        imports: ['defineStore']
+      }
     ]
   },
 
@@ -51,25 +80,44 @@ export default defineNuxtConfig({
     '@vueuse/nuxt'
   ],
 
-  // Alias configuration
+  // TypeScript configuration - Enhanced
+  typescript: {
+    strict: true,
+    typeCheck: true,
+    // Generate better types for VSCode
+    tsConfig: {
+      compilerOptions: {
+        // Better auto-import support
+        types: [
+          'node',
+          'nuxt',
+          '@pinia/nuxt',
+          '@vueuse/nuxt',
+          '@nuxt/ui'
+        ]
+      },
+      // Ensure .nuxt types are included
+      include: [
+        '**/*.ts',
+        '**/*.tsx', 
+        '**/*.vue',
+        '.nuxt/nuxt.d.ts',
+        '.nuxt/imports.d.ts'
+      ]
+    }
+  },
+
+  // Rest of config...
   alias: {
     '@/types': './types',
     '@/': './',
     '~/': './'
   },
 
-  // TypeScript configuration
-  typescript: {
-    strict: true,
-    typeCheck: true
-  },
-
-  // Build configuration
   build: {
     transpile: ['@headlessui/vue']
   },
 
-  // Vite configuration
   vite: {
     define: {
       __VUE_OPTIONS_API__: false
@@ -90,7 +138,6 @@ export default defineNuxtConfig({
     }
   },
 
-  // Runtime configuration
   runtimeConfig: {
     public: {
       apiBase: process.env.API_BASE_URL || 'http://localhost:3001'
