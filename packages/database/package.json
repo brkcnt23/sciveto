@@ -11,6 +11,9 @@
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
+    "db:seed-templates": "tsx prisma/seed-templates.ts",
+    "db:seed-all": "npm run db:seed && npm run db:seed-templates",
+    "setup:templates": "npm run db:migrate && npm run db:generate && npm run db:seed-templates",
     "clean": "rm -rf dist node_modules/.prisma",
     "prebuild": "prisma generate"
   },

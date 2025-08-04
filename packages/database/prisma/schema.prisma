@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -46,21 +43,96 @@ model User {
   @@index([organizationId])
 }
 
-model Category {
+// ===============================
+// TEMPLATE SYSTEM TABLES - NEW
+// ===============================
+
+model SystemCategoryTemplate {
   id             String   @id @default(cuid())
-  name           String
+  name           String   // "Profil", "Plaka", "Halat", etc.
+  version        String   @default("1.0")
+  isLatest       Boolean  @default(true)
   description    String?
-  color          String   @default("#3B82F6")
-  organizationId String
+  industry       String?  // "steel-manufacturing", "tensile-architecture", etc.
+  icon           String?  // UI ikonu
+  
+  // Metadata
+  changelog      String?  // "3 yeni standart eklendi"
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   
   // Relations
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  stockItems     StockItem[]
+  standards      TemplateStandard[]
+  fields         TemplateField[]
+  categories     Category[]         // Bu template'den oluşturulan kategoriler
   
-  @@unique([name, organizationId]) // Each org can have unique category names
+  @@unique([name, version])
+  @@index([name])
+  @@index([isLatest])
+}
+
+model TemplateStandard {
+  id         String @id @default(cuid())
+  templateId String
+  name       String // "HEA", "S235JR", "6x19_FC", etc.
+  value      String // Actual value
+  category   String? // "profile_type", "material", "construction", etc.
+  sortOrder  Int    @default(0)
+  
+  // Relations
+  template   SystemCategoryTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  
+  @@index([templateId])
+  @@index([category])
+}
+
+model TemplateField {
+  id            String      @id @default(cuid())
+  templateId    String
+  name          String      // "dimensions", "material", "thickness_mm"
+  label         String      // "Dimensions", "Material", "Thickness (mm)"
+  type          FieldType
+  required      Boolean     @default(false)
+  defaultValue  String?
+  options       Json?       // For select/enum fields
+  validation    Json?       // Validation rules
+  unit          String?     // "mm", "kg", "m", etc.
+  sortOrder     Int         @default(0)
+  
+  // Relations
+  template      SystemCategoryTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  
+  @@index([templateId])
+}
+
+// ===============================
+// EXISTING TABLES - UPDATED
+// ===============================
+
+model Category {
+  id               String   @id @default(cuid())
+  name             String
+  description      String?
+  color            String   @default("#3B82F6")
+  organizationId   String
+  
+  // Template integration - NEW
+  templateId       String?  // Hangi template'den oluşturuldu
+  templateVersion  String?  // Hangi version
+  isSystemBased    Boolean  @default(false) // Template'den mi oluştu
+  customFields     Json?    // Template'e ek olarak eklenen custom alanlar
+  
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  
+  // Relations
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  template         SystemCategoryTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  stockItems       StockItem[]
+  
+  @@unique([name, organizationId])
   @@index([organizationId])
+  @@index([templateId])
 }
 
 model StockItem {
@@ -68,29 +140,34 @@ model StockItem {
   name           String
   description    String?
   sku            String?
-  unit           String    @default("pcs") // pcs, kg, m, m2, m3, etc.
+  unit           String    @default("pcs")
   
   // Stock Information
   currentStock   Float     @default(0)
-  reservedStock  Float     @default(0) // Reserved for projects
-  availableStock Float     @default(0) // currentStock - reservedStock
-  minStockLevel  Float     @default(0) // Alert threshold
-  maxStockLevel  Float?    // Maximum capacity
+  reservedStock  Float     @default(0)
+  availableStock Float     @default(0)
+  minStockLevel  Float     @default(0)
+  maxStockLevel  Float?
   
   // Cost Information
   lastPurchasePrice  Float?
   averageCost        Float?
-  totalValue         Float     @default(0) // currentStock * averageCost
+  totalValue         Float     @default(0)
+  
+  // Template integration - UPDATED
+  standardValues     Json?     // Template'den gelen standart değerler
+  customValues       Json?     // Şirkete özel değerler
+  specifications     Json?     // Backward compatibility için
   
   // Organization & Category
   organizationId String
   categoryId     String?
-  userId         String    // Who added this item
+  userId         String
   
   // Status & Metadata
   status         StockStatus @default(ACTIVE)
-  location       String?     // Storage location
-  supplier       String?     // Main supplier
+  location       String?
+  supplier       String?
   notes          String?
   
   createdAt      DateTime  @default(now())
@@ -112,7 +189,7 @@ model Project {
   id             String    @id @default(cuid())
   name           String
   description    String?
-  projectCode    String?   // Custom project identifier
+  projectCode    String?
   
   // Project Information
   clientName     String?
@@ -124,7 +201,7 @@ model Project {
   
   // Organization
   organizationId String
-  managerId      String    // Project manager
+  managerId      String
   
   // Status
   status         ProjectStatus @default(PLANNING)
@@ -148,13 +225,13 @@ model ProjectAllocation {
   // Project & Item
   projectId      String
   stockItemId    String
-  userId         String    // Who made the allocation
+  userId         String
   
   // Allocation Details
   allocatedQuantity  Float
   usedQuantity       Float     @default(0)
-  allocatedPrice     Float     // Price at time of allocation
-  totalAllocatedCost Float     // allocatedQuantity * allocatedPrice
+  allocatedPrice     Float
+  totalAllocatedCost Float
   
   // Status & Metadata
   status         AllocationStatus @default(RESERVED)
@@ -186,13 +263,13 @@ model StockTransaction {
   totalCost      Float?
   
   // Reference Information
-  referenceType  String?   // "purchase", "project", "adjustment", "return"
-  referenceId    String?   // Reference to purchase order, project, etc.
+  referenceType  String?
+  referenceId    String?
   
   // Metadata
   description    String?
-  performedBy    String?   // User who performed transaction
-  supplier       String?   // For purchase transactions
+  performedBy    String?
+  supplier       String?
   
   createdAt      DateTime  @default(now())
   
@@ -204,7 +281,10 @@ model StockTransaction {
   @@index([createdAt])
 }
 
-// Enums
+// ===============================
+// ENUMS - UPDATED
+// ===============================
+
 enum UserRole {
   SUPER_ADMIN
   ORG_ADMIN
@@ -248,4 +328,15 @@ enum TransactionType {
   RETURN
   ADJUSTMENT
   TRANSFER
+}
+
+// NEW ENUM
+enum FieldType {
+  text
+  number
+  textarea
+  select
+  boolean
+  date
+  enum
 }
