@@ -1,4 +1,3 @@
-// apps/api/src/modules/categories/categories.controller.ts
 import {
   Controller,
   Get,
@@ -20,7 +19,7 @@ export class CategoriesController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto, @Request() req) {
+  create(@Body() createCategoryDto: CreateCategoryDto, @Request() req): Promise<any> {
     console.log('Categories POST - User org:', req.user.organizationId);
     return this.categoriesService.create(createCategoryDto, req.user.organizationId);
   }
@@ -28,7 +27,7 @@ export class CategoriesController {
   // For testing, let's make this require auth temporarily to ensure we get the right org
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findAll(@Request() req) {
+  async findAll(@Request() req): Promise<any> {
     try {
       console.log('Categories GET - Full user object:', req.user);
       const organizationId = req.user.organizationId;
@@ -48,20 +47,20 @@ export class CategoriesController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string, @Request() req) {
+  findOne(@Param('id') id: string, @Request() req): Promise<any> {
     const organizationId = req.user.organizationId;
     return this.categoriesService.findOne(id, organizationId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto, @Request() req) {
+  update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto, @Request() req): Promise<any> {
     return this.categoriesService.update(id, updateCategoryDto, req.user.organizationId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string, @Request() req) {
+  remove(@Param('id') id: string, @Request() req): Promise<any> {
     return this.categoriesService.remove(id, req.user.organizationId);
   }
 }

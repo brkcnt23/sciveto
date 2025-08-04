@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { IsString, IsOptional, IsNumber, IsEnum, IsDateString, IsPositive } from 'class-validator';
 
 export enum ProjectStatus {

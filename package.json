@@ -21,8 +21,7 @@
     "fresh-install": "pnpm run clean && pnpm install && pnpm run db:generate && pnpm run packages:build && pnpm run build"
   },
   "devDependencies": {
-    "turbo": "^2.5.4",
-    "prettier": "^3.0.0"
-  },
-  "dependencies": {}
+    "prettier": "^3.6.2",
+    "turbo": "^2.5.5"
+  }
 }

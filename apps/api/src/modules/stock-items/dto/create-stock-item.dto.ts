@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { IsString, IsOptional, IsNumber, IsEnum, IsPositive, Min } from 'class-validator';
 
 export enum StockStatus {

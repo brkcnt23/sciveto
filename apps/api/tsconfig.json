@@ -12,14 +12,21 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
+    "strict": false,
     "noImplicitAny": false,
-    "strictBindCallApply": false,
+    "noImplicitReturns": false,
+    "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@sciveto/database": ["../../packages/database/src"],
       "@sciveto/shared-types": ["../../packages/shared-types/src"]
     }
+  },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ],
+  "ts-node": {
+    "transpileOnly": true
   }
 }

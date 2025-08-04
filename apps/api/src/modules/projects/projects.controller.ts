@@ -3,8 +3,8 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
+  Patch,
   Delete,
   Query,
   UseGuards,
@@ -20,7 +20,7 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Post()
-  create(@Body() createProjectDto: CreateProjectDto, @Request() req) {
+  create(@Body() createProjectDto: CreateProjectDto, @Request() req): Promise<any> {
     return this.projectsService.create(
       createProjectDto,
       req.user.id,
@@ -29,12 +29,12 @@ export class ProjectsController {
   }
 
   @Get()
-  findAll(@Query() queryDto: ProjectQueryDto, @Request() req) {
+  findAll(@Query() queryDto: ProjectQueryDto, @Request() req): Promise<any> {
     return this.projectsService.findAll(queryDto, req.user.organizationId);
   }
 
   @Get('my')
-  findMyProjects(@Query() queryDto: ProjectQueryDto, @Request() req) {
+  findMyProjects(@Query() queryDto: ProjectQueryDto, @Request() req): Promise<any> {
     return this.projectsService.findAll(
       { ...queryDto, managerId: req.user.id },
       req.user.organizationId
@@ -42,7 +42,7 @@ export class ProjectsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string, @Request() req) {
+  findOne(@Param('id') id: string, @Request() req): Promise<any> {
     return this.projectsService.findOne(id, req.user.organizationId);
   }
 
@@ -51,7 +51,7 @@ export class ProjectsController {
     @Param('id') id: string,
     @Body() updateProjectDto: UpdateProjectDto,
     @Request() req,
-  ) {
+  ): Promise<any> {
     return this.projectsService.update(
       id,
       updateProjectDto,
@@ -61,7 +61,7 @@ export class ProjectsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @Request() req) {
+  remove(@Param('id') id: string, @Request() req): Promise<any> {
     return this.projectsService.remove(id, req.user.id, req.user.organizationId);
   }
 
@@ -71,7 +71,7 @@ export class ProjectsController {
     @Param('id') projectId: string,
     @Body() allocateStockDto: AllocateStockDto,
     @Request() req,
-  ) {
+  ): Promise<any> {
     return this.projectsService.allocateStock(
       projectId,
       allocateStockDto,
@@ -81,7 +81,7 @@ export class ProjectsController {
   }
 
   @Get(':id/allocations')
-  getProjectAllocations(@Param('id') projectId: string, @Request() req) {
+  getProjectAllocations(@Param('id') projectId: string, @Request() req): Promise<any> {
     return this.projectsService.getProjectAllocations(
       projectId,
       req.user.organizationId
@@ -93,7 +93,7 @@ export class ProjectsController {
     @Param('allocationId') allocationId: string,
     @Body('usedQuantity') usedQuantity: number,
     @Request() req,
-  ) {
+  ): Promise<any> {
     return this.projectsService.updateAllocationUsage(
       allocationId,
       usedQuantity,

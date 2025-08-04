@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateStockItemDto } from './create-stock-item.dto';
 

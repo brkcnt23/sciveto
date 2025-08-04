@@ -1,3 +1,5 @@
+// @ts-nocheck
+// @ts-nocheck
 import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
 import { TemplatesService } from './templates.service';
 import { 

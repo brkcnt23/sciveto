@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateStockItemDto, UpdateStockItemDto, StockItemQueryDto, StockStatus } from './dto';

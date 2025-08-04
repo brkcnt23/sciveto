@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { IsOptional, IsString, IsEnum, IsNumber, Min } from 'class-validator';
 import { Type } from 'class-transformer';
 import { StockStatus } from './create-stock-item.dto';

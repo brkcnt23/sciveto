@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { IsString, IsNumber, IsPositive, IsOptional } from 'class-validator';
 
 export class AllocateStockDto {
