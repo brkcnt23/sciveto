@@ -7,7 +7,7 @@ import { StockItemsModule } from './modules/stock-items/stock-items.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { ProjectsModule } from './modules/projects/projects.module';
 import { PrismaService } from './prisma/prisma.service';
-
+import { TemplatesModule } from './modules/templates/templates.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -17,6 +17,7 @@ import { PrismaService } from './prisma/prisma.service';
     StockItemsModule,
     CategoriesModule,
     ProjectsModule,
+    TemplatesModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

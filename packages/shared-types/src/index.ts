@@ -17,6 +17,11 @@ export * from './projects/update-project.dto'
 export * from './projects/project-query.dto'
 export * from './projects/allocate-stock.dto'
 
+// Template DTOs - NEW
+export * from './templates/template.types'
+export * from './templates/create-category-from-template.dto'
+export * from './templates/template-query.dto'
+
 // Common types
 export * from './common/api-response.types'
 export * from './common/pagination.types'

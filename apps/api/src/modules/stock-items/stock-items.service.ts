@@ -6,7 +6,7 @@ import { CreateStockItemDto, UpdateStockItemDto, StockItemQueryDto, StockStatus 
 export class StockItemsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createStockItemDto: CreateStockItemDto, userId: string, organizationId: string) {
+  async create(createStockItemDto: CreateStockItemDto, userId: string, organizationId: string): Promise<any>  {
     return this.prisma.stockItem.create({
       data: {
         name: createStockItemDto.name,
@@ -34,7 +34,7 @@ export class StockItemsService {
     });
   }
 
-  async findAll(queryDto: StockItemQueryDto, organizationId: string, userId?: string) {
+  async findAll(queryDto: StockItemQueryDto, organizationId: string, userId?: string): Promise<any>  {
     const {
       search,
       categoryId,
@@ -121,7 +121,7 @@ export class StockItemsService {
     };
   }
 
-  async findOne(id: string, organizationId: string) {
+  async findOne(id: string, organizationId: string): Promise<any>  {
     const stockItem = await this.prisma.stockItem.findFirst({
       where: { id, organizationId },
       include: {
@@ -158,7 +158,7 @@ export class StockItemsService {
     };
   }
 
-  async update(id: string, updateStockItemDto: UpdateStockItemDto, userId: string, organizationId: string) {
+  async update(id: string, updateStockItemDto: UpdateStockItemDto, userId: string, organizationId: string): Promise<any>  {
     const stockItem = await this.findOne(id, organizationId);
 
     // Check if user owns the item
@@ -189,7 +189,7 @@ export class StockItemsService {
     });
   }
 
-  async remove(id: string, userId: string, organizationId: string) {
+  async remove(id: string, userId: string, organizationId: string): Promise<any>  {
     const stockItem = await this.findOne(id, organizationId);
 
     // Check if user owns the item
@@ -202,22 +202,22 @@ export class StockItemsService {
     });
   }
 
-  async findById(id: string, organizationId: string) {
+  async findById(id: string, organizationId: string): Promise<any> {
     return this.findOne(id, organizationId);
   }
-  async findMyItems(userId: string, queryDto: StockItemQueryDto, organizationId: string) {
+  async findMyItems(userId: string, queryDto: StockItemQueryDto, organizationId: string): Promise<any>  {
     return this.findAll({ ...queryDto, userId }, organizationId, userId);
   }
 
-  async findByCategory(categoryId: string, queryDto: StockItemQueryDto, organizationId: string) {
+  async findByCategory(categoryId: string, queryDto: StockItemQueryDto, organizationId: string): Promise<any>  {
     return this.findAll({ ...queryDto, categoryId }, organizationId);
   }
 
-  async updateStatus(id: string, status: StockStatus, userId: string, organizationId: string) {
+  async updateStatus(id: string, status: StockStatus, userId: string, organizationId: string): Promise<any>  {
     return this.update(id, { status }, userId, organizationId);
   }
 
-  async findMyStockItems(userId: string, queryDto: StockItemQueryDto, organizationId: string) {
+  async findMyStockItems(userId: string, queryDto: StockItemQueryDto, organizationId: string): Promise<any>  {
     return this.findAll(queryDto, organizationId, userId);
-  }
+  } 
 }
