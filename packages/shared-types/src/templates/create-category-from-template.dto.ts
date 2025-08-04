@@ -2,9 +2,10 @@
 
 export interface CreateCategoryFromTemplateDto {
   templateId: string;
-  organizationId: string;
+  organizationId?: string;
   categoryName: string;
   description?: string;
+  color?: string;
 }
 
 export interface CreateCategoryFromTemplateResponse {

@@ -49,15 +49,25 @@ export const DEFAULT_CATEGORY_TEMPLATES: CategoryTemplate[] = [
   {
     name: 'Membran',
     description: 'Membran ürünleri ve aksesuarları',
-    color: '#3B82F6',
+    color: '#EC4899',
     icon: 'i-lucide-layers',
     properties: [
-      { name: 'Marka', type: 'text', required: true, placeholder: 'FERRARI, MEHLER, SIOEN...' },
-      { name: 'Seri', type: 'text', required: false, placeholder: 'Biobrane, Mehatop...' },
-      { name: 'Ağırlık', type: 'number', required: false, unit: 'g/m²', placeholder: '950' },
+      { name: 'Marka', type: 'select', required: true, options: ['Serge Ferrari', 'Mehler Texnologies', 'Verseidag', 'Sioen', 'SATTLER PRO-TEX', 'Taiyo', 'Saint-Gobain', 'Chukoh Chemical'], placeholder: 'Üretici firma' },
+      { name: 'Seri', type: 'text', required: false, placeholder: 'Precontraint, Valmex, Duraskin...' },
+      { name: 'Model', type: 'text', required: false, placeholder: 'F402, B902, Mehatop F/IV' },
+      { name: 'Malzeme Tipi', type: 'select', required: true, options: ['PVC-P', 'PTFE', 'ETFE', 'Silicone-Coated Glass', 'PVDF Lacquered PVC', 'TPU/PUR'], placeholder: 'Kaplama tipi' },
+      { name: 'Ağırlık', type: 'number', required: true, unit: 'g/m²', placeholder: '950' },
+      { name: 'Çekme Dayanımı', type: 'number', required: false, unit: 'N/5cm', placeholder: '4200/4000' },
+      { name: 'Yırtılma Dayanımı', type: 'number', required: false, unit: 'N', placeholder: '500' },
+      { name: 'Uzama Yüzdesi', type: 'number', required: false, unit: '%', placeholder: '20/15' },
+      { name: 'Işık Geçirgenliği', type: 'number', required: false, unit: '%', placeholder: '12' },
+      { name: 'Güneş Yansıtıcılığı', type: 'number', required: false, unit: '%', placeholder: '73' },
+      { name: 'Yangın Sınıfı', type: 'select', required: false, options: ['EN 13501-1 (B-s2,d0)', 'DIN 4102 B1', 'NFPA 701', 'ASTM E84 Class A', 'BS 7837', 'M1/M2'], placeholder: 'Yangın standardı' },
+      { name: 'UV Direnci', type: 'text', required: false, placeholder: 'Çok iyi, İyi, Orta' },
       { name: 'Genişlik', type: 'number', required: false, unit: 'cm', placeholder: '267' },
+      { name: 'Rulo Uzunluğu', type: 'number', required: false, unit: 'm', placeholder: '50' },
       { name: 'Garanti', type: 'number', required: false, unit: 'yıl', placeholder: '10' },
-      { name: 'Uygulama', type: 'textarea', required: false, placeholder: 'Gaz tutucu membranlar - S2 PVDF' }
+      { name: 'Uygulama', type: 'textarea', required: false, placeholder: 'Dış cephe germe membranı, güneş kırıcı, iç mekan dekoratif membran...' }
     ]
   },
   {

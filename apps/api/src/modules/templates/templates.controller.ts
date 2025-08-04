@@ -29,6 +29,14 @@ export class TemplatesController {
 
   @Post('create-category')
   async createCategory(@Body() dto: CreateCategoryFromTemplateDto): Promise<CreateCategoryFromTemplateResponse> {
-    return this.templatesService.createCategoryFromTemplate(dto);
+    console.log('Create category DTO:', dto);
+    try {
+      const result = await this.templatesService.createCategoryFromTemplate(dto);
+      console.log('Create category result:', result);
+      return result;
+    } catch (error) {
+      console.error('Create category error:', error);
+      throw error;
+    }
   }
 }

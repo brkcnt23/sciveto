@@ -286,16 +286,21 @@ const SYSTEM_TEMPLATES = [
   {
     name: 'Membran',
     version: '1.0',
-    description: 'Tensile membran kumaşları - Marka ve özellik bazlı',
+    description: 'Tensile membran kumaşları - Malzeme türü ve özellik bazlı',
     industry: 'tensile-architecture',
     icon: 'i-lucide-layers',
-    changelog: 'Initial template with membrane fabric brands',
+    changelog: 'Updated template with proper membrane material types',
     standards: [
-      { name: 'FERRARI', value: 'FERRARI', category: 'brand', sortOrder: 1 },
-      { name: 'MEHLER', value: 'MEHLER', category: 'brand', sortOrder: 2 },
-      { name: 'SIOEN', value: 'SIOEN', category: 'brand', sortOrder: 3 },
-      { name: 'VERSEIDAG', value: 'VERSEIDAG', category: 'brand', sortOrder: 4 },
-      { name: 'SEFAR', value: 'SEFAR', category: 'brand', sortOrder: 5 },
+      { name: 'PVC-P (Polyester taşıyıcılı PVC kaplı)', value: 'PVC-P', category: 'material_type', sortOrder: 1 },
+      { name: 'PTFE (Cam elyaf taşıyıcılı PTFE kaplı)', value: 'PTFE', category: 'material_type', sortOrder: 2 },
+      { name: 'ETFE (Fluoropolymer film)', value: 'ETFE', category: 'material_type', sortOrder: 3 },
+      { name: 'Silicone-Coated Glass', value: 'SILICONE_GLASS', category: 'material_type', sortOrder: 4 },
+      { name: 'PVDF Lacquered PVC', value: 'PVDF_PVC', category: 'material_type', sortOrder: 5 },
+      { name: 'TPU / PUR kaplı özel teknik kumaşlar', value: 'TPU_PUR', category: 'material_type', sortOrder: 6 },
+      { name: 'EN 13501-1 (B-s2,d0 / B-s1,d0)', value: 'EN_13501_1', category: 'fire_rating', sortOrder: 7 },
+      { name: 'DIN 4102 (B1 / B2)', value: 'DIN_4102', category: 'fire_rating', sortOrder: 8 },
+      { name: 'NFPA 701', value: 'NFPA_701', category: 'fire_rating', sortOrder: 9 },
+      { name: 'ASTM E84 (Class A)', value: 'ASTM_E84', category: 'fire_rating', sortOrder: 10 },
     ],
     fields: [
       {
@@ -306,12 +311,108 @@ const SYSTEM_TEMPLATES = [
         sortOrder: 1
       },
       {
+        name: 'series',
+        label: 'Seri',
+        type: 'text',
+        required: false,
+        sortOrder: 2
+      },
+      {
+        name: 'model',
+        label: 'Model',
+        type: 'text',
+        required: true,
+        sortOrder: 3
+      },
+      {
+        name: 'material_type',
+        label: 'Malzeme Türü',
+        type: 'select',
+        required: true,
+        sortOrder: 4
+      },
+      {
         name: 'weight_g_m2',
         label: 'Ağırlık (g/m²)',
         type: 'number',
         required: true,
         unit: 'g/m²',
-        sortOrder: 2
+        sortOrder: 5
+      },
+      {
+        name: 'tensile_strength_N_5cm',
+        label: 'Çekme Mukavemeti (N/5cm)',
+        type: 'number',
+        required: true,
+        unit: 'N/5cm',
+        sortOrder: 6
+      },
+      {
+        name: 'tear_strength_N',
+        label: 'Yırtılma Mukavemeti (N)',
+        type: 'number',
+        required: true,
+        unit: 'N',
+        sortOrder: 7
+      },
+      {
+        name: 'elongation_%',
+        label: 'Uzama (%)',
+        type: 'number',
+        required: false,
+        unit: '%',
+        sortOrder: 8
+      },
+      {
+        name: 'light_transmission_%',
+        label: 'Işık Geçirgenliği (%)',
+        type: 'number',
+        required: false,
+        unit: '%',
+        sortOrder: 9
+      },
+      {
+        name: 'solar_reflectance_%',
+        label: 'Güneş Yansıması (%)',
+        type: 'number',
+        required: false,
+        unit: '%',
+        sortOrder: 10
+      },
+      {
+        name: 'fire_rating',
+        label: 'Yangın Sınıfı',
+        type: 'select',
+        required: true,
+        sortOrder: 11
+      },
+      {
+        name: 'uv_resistance',
+        label: 'UV Dayanımı',
+        type: 'text',
+        required: false,
+        sortOrder: 12
+      },
+      {
+        name: 'coating',
+        label: 'Kaplama',
+        type: 'text',
+        required: false,
+        sortOrder: 13
+      },
+      {
+        name: 'surface_finish',
+        label: 'Yüzey İşlemi',
+        type: 'text',
+        required: false,
+        sortOrder: 14
+      },
+      {
+        name: 'color_options',
+        label: 'Renk Seçenekleri',
+        type: 'text',
+        required: false,
+        sortOrder: 15
       },
       {
         name: 'width_cm',
@@ -319,7 +420,15 @@ const SYSTEM_TEMPLATES = [
         type: 'number',
         required: true,
         unit: 'cm',
-        sortOrder: 3
+        sortOrder: 16
+      },
+      {
+        name: 'roll_length_m',
+        label: 'Rulo Uzunluğu (m)',
+        type: 'number',
+        required: false,
+        unit: 'm',
+        sortOrder: 17
       },
       {
         name: 'warranty_years',
@@ -327,14 +436,28 @@ const SYSTEM_TEMPLATES = [
         type: 'number',
         required: false,
         unit: 'yıl',
-        sortOrder: 4
+        sortOrder: 18
       },
       {
         name: 'application',
         label: 'Uygulama Alanı',
         type: 'text',
         required: false,
-        sortOrder: 5
+        sortOrder: 19
+      },
+      {
+        name: 'certificate_docs',
+        label: 'Sertifika Belgeleri',
+        type: 'text',
+        required: false,
+        sortOrder: 20
+      },
+      {
+        name: 'notes',
+        label: 'Notlar',
+        type: 'textarea',
+        required: false,
+        sortOrder: 21
       }
     ]
   }

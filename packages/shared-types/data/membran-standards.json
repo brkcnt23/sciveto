@@ -8,6 +8,16 @@
             "PVDF Lacquered PVC",
             "TPU / PUR kaplı özel teknik kumaşlar"
         ],
+        "brands": [
+            "Serge Ferrari",
+            "Mehler Texnologies",
+            "Verseidag",
+            "Sioen",
+            "SATTLER PRO-TEX",
+            "Taiyo",
+            "Saint-Gobain",
+            "Chukoh Chemical"
+        ],
         "common_properties": [
             "brand",
             "series", 

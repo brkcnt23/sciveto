@@ -5,5 +5,16 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "typeCheck": false
+  },
+  "projects": {
+    "api": {
+      "type": "application",
+      "root": "",
+      "entryFile": "main",
+      "sourceRoot": "src",
+      "compilerOptions": {
+        "tsConfigPath": "tsconfig.json"
+      }
+    }
   }
 }

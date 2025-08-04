@@ -61,7 +61,7 @@
         
         <div class="space-y-1">
           <div 
-            v-for="property in category.properties.slice(0, 3)" 
+            v-for="property in category.properties.slice(0, 6)" 
             :key="property.id"
             class="flex items-center justify-between text-xs"
           >
@@ -82,8 +82,8 @@
             </div>
           </div>
           
-          <div v-if="category.properties.length > 3" class="text-xs text-gray-400 text-center">
-            +{{ category.properties.length - 3 }} daha...
+          <div v-if="category.properties.length > 6" class="text-xs text-gray-400 text-center">
+            +{{ category.properties.length - 6 }} daha...
           </div>
         </div>
       </div>
@@ -120,6 +120,14 @@
             Ürünler
           </UButton>
           <UButton
+            @click="showPreview = true"
+            icon="i-lucide-eye"
+            size="xs"
+            variant="outline"
+          >
+            Önizleme
+          </UButton>
+          <UButton
             v-if="!category.isDefault"
             @click="$emit('edit', category)"
             icon="i-lucide-edit"
@@ -128,6 +136,13 @@
           >
             Düzenle
           </UButton>
+          
+          <!-- Category Preview Modal -->
+          <CategoryPreviewModal 
+            v-model="showPreview"
+            :category="category"
+            @edit="$emit('edit', category)"
+          />
         </div>
         
         <UDropdown 
@@ -146,8 +161,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import type { Category } from '~/types/stock'
+import CategoryPreviewModal from './CategoryPreviewModal.vue'
 
 interface Props {
   category: Category
@@ -161,6 +177,8 @@ interface Emits {
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
+
+const showPreview = ref(false)
 
 // Computed
 const dropdownItems = computed(() => {

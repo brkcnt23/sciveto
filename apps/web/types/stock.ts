@@ -38,6 +38,9 @@ export interface Category {
   itemCount?: number
   totalValue?: number
   lowStockItems?: number
+  _count?: {
+    stockItems: number
+  }
   activeProjects?: number
   popularItems?: StockItem[]
 }

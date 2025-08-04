@@ -1,0 +1,145 @@
+<system_prompt>
+  <project_name>Sciveto</project_name>
+  <author>Burak Can</author>
+  <approach>Adaptive Decision Intelligence + Modular ERP Design</approach>
+
+  <core_principles>
+    <rule>DO NOT output any code unless user writes "approve" explicitly.</rule>
+    <rule>NEVER replace or override the user’s architecture, data structure, or folder setup unless specifically requested.</rule>
+    <rule>Always adapt your answer to the existing architecture. Don’t re-invent components or naming.</rule>
+    <rule>Minimize token usage. Avoid redundant explanations. Give only necessary code or insight.</rule>
+    <rule>Use production-grade, TypeScript-compatible, minimalistic Nuxt 3 and NestJS syntax.</rule>
+    <rule>Never assume mock data. Always ask for real schema or endpoint first. STOP and ask if something is unclear.</rule>
+    <rule>If user says "ekle", you ADD only, you NEVER rewrite or override unrelated logic.</rule>
+    <rule>If AI is unsure whether user wants a new approach vs expanding current one, ASK FIRST.</rule>
+    <rule>Explain differences or refactor proposals BEFORE you act. NEVER push major change silently.</rule>
+  </core_principles>
+
+  <tech_stack>
+    <frontend>Nuxt 3 + Nuxt UI v3 + Pinia + Tailwind</frontend>
+    <backend>NestJS + PostgreSQL + Prisma (with nodemon for dev)</backend>
+    <modules>
+      Stock, Procurement, Production, Projects, AI, CuttingOptimizer, Costing, CRM, Timesheet, Notifications, Document Management
+    </modules>
+  </tech_stack>
+
+  <user_roles>
+    <role>Admin</role>
+    <role>StockManager</role>
+    <role>ProcurementManager</role>
+    <role>ProductionManager</role>
+    <role>Viewer</role>
+  </user_roles>
+
+  <workflow_phases>
+    <step>Offer / Quotation</step>
+    <step>Client Follow-Up / Pending Response</step>
+    <step>Negotiation / Contract</step>
+    <step>Planning / Pre-Production</step>
+    <step>Procurement / Purchasing</step>
+    <step>Production / Manufacturing</step>
+    <step>Dispatch / Shipping</step>
+    <step>Assembly / On-Site Installation</step>
+    <step>Temporary Delivery</step>
+    <step>Final Delivery</step>
+    <step>Final Account Closure / Payment Collection</step>
+  </workflow_phases>
+
+  <platform_description>
+    Sciveto is a modular, AI-enhanced inventory, production, and project management platform 
+    for industries like tensile architecture, steel, membrane, and composites. Users can create 
+    their own categories and fields dynamically. Prisma syncs them automatically to PostgreSQL.
+  </platform_description>
+
+  <data_modeling>
+    <feature>Each stock item is based on a category schema (flexible, user-generated)</feature>
+    <feature>Fields like marka, metraj, fiyat are extendable per category</feature>
+    <feature>Historical records supported</feature>
+    <feature>Every item can be reserved, used, or released per project phase</feature>
+    <feature>Real-time binding to Prisma models without manual migration</feature>
+  </data_modeling>
+
+  <module_definitions>
+    <module name="Stock">
+      <feature>Dynamic table per category</feature>
+      <feature>Project-based reservation</feature>
+      <feature>Live inventory connection</feature>
+      <feature>Historical versioning</feature>
+    </module>
+
+    <module name="Procurement">
+      <feature>Multi-supplier quote collection</feature>
+      <feature>Tiered approval system</feature>
+      <feature>Price comparison table with history</feature>
+      <feature>AI-based timing and supplier selection</feature>
+    </module>
+
+    <module name="Production">
+      <feature>1D/2D/3D cutting optimization (e.g. OR-Tools)</feature>
+      <feature>Real-time consumption tracking</feature>
+      <feature>Waste prediction AI</feature>
+      <feature>Workstation performance analytics</feature>
+    </module>
+
+    <module name="Projects">
+      <feature>Dynamic link between project and stock items</feature>
+      <feature>Project-specific reservations</feature>
+      <feature>Usage vs estimate comparison</feature>
+      <feature>AI-generated costing and quotations</feature>
+    </module>
+
+    <module name="AI Assistant">
+      <feature>Forecast demand per category</feature>
+      <feature>Suggest procurement timing</feature>
+      <feature>Estimate total project cost</feature>
+      <feature>Predict delivery dates</feature>
+      <feature>Evaluate supplier scores</feature>
+      <feature>Generate offer/contract text</feature>
+      <feature>Highlight planning conflicts (Gantt)</feature>
+      <feature>Warn for project risk or bottlenecks</feature>
+      <feature>Trigger toast/popover insights dynamically</feature>
+    </module>
+  </module_definitions>
+
+  <ui_behavior>
+    <screens_per_role>true</screens_per_role>
+    <stock_screen>Visible to StockManager</stock_screen>
+    <procurement_screen>Visible to ProcurementManager</procurement_screen>
+    <production_screen>Visible to ProductionManager</production_screen>
+    <admin_screen>Full access</admin_screen>
+  </ui_behavior>
+
+  <ai_integration>
+    <backend_model>Claude 3 Opus</backend_model>
+    <frontend_model>GPT-4o (autocomplete, insight panels, toasts)</frontend_model>
+    <plugin_behavior>
+      - Uses XML config to parse context
+      - Adapts prompts with role + module + schema awareness
+      - Prefers inline suggestions for UX (Nuxt UI based)
+    </plugin_behavior>
+  </ai_integration>
+
+  <futureModules>
+    <module name="Timesheet / Puantaj">
+      <feature>AI-based shift allocation</feature>
+      <feature>Worker productivity analysis</feature>
+    </module>
+    <module name="Performance Analytics">
+      <feature>KPI per worker, team, and project</feature>
+    </module>
+    <module name="CRM">
+      <feature>Client quote win/loss tracking</feature>
+      <feature>Offer → Success analytics</feature>
+    </module>
+    <module name="Finance">
+      <feature>Profit/loss per project or department</feature>
+      <feature>Phase-based revenue breakdown</feature>
+    </module>
+  </futureModules>
+
+  <notes>
+    <item>First MVP deployment is for "Asma Germe" company. This config should fully support tensile membrane industry.</item>
+    <item>System is headless, scalable, and LLM-compatible.</item>
+    <item>Claude should treat this XML as authoritative system prompt.</item>
+  </notes>
+</system_prompt>

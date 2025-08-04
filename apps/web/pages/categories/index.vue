@@ -126,7 +126,29 @@
     </div>
 
     <!-- Categories Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+    <div v-if="loading || refreshing" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <UCard v-for="n in 6" :key="n" class="animate-pulse">
+        <div class="space-y-4">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center gap-3">
+              <USkeleton class="w-12 h-12 rounded-lg" />
+              <div class="space-y-2">
+                <USkeleton class="h-4 w-24" />
+                <USkeleton class="h-3 w-16" />
+              </div>
+            </div>
+            <USkeleton class="w-8 h-8 rounded" />
+          </div>
+          <USkeleton class="h-3 w-full" />
+          <div class="flex justify-between">
+            <USkeleton class="h-3 w-16" />
+            <USkeleton class="h-3 w-20" />
+          </div>
+        </div>
+      </UCard>
+    </div>
+
+    <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
       <UCard 
         v-for="category in filteredCategories"
         :key="category.id"
@@ -301,6 +323,8 @@ definePageMeta({
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import type { Category } from '~/types/category'
+import { useCategoriesApi, type ApiCategory } from '~/composables/useCategoriesApi'
+import { useToastManager } from '~/composables/useToastManager'
 
 // Interfaces
 interface TemplateInfo {
@@ -316,64 +340,17 @@ const activeTab = ref('all')
 const showCreateOptions = ref(false)
 const showTemplateInfo = ref(false)
 
-// Mock data - replace with API calls
-const allCategories = ref<(Category & { itemCount?: number; isSystemBased?: boolean; templateInfo?: TemplateInfo })[]>([
-  {
-    id: '1',
-    name: 'Profil',
-    description: 'HEA, HEB, IPE serisi yapısal profiller',
-    color: '#3B82F6',
-    icon: 'i-lucide-box',
-    isDefault: true,
-    properties: [],
-    itemCount: 25,
-    isSystemBased: true,
-    templateInfo: {
-      name: 'Profil',
-      version: '1.0',
-      standardCount: 15,
-      fieldCount: 8
-    },
-    createdAt: new Date('2024-01-15'),
-    updatedAt: new Date('2024-01-15')
-  },
-  {
-    id: '2',
-    name: 'Plaka',
-    description: 'S235, S355, paslanmaz çelik plakalar',
-    color: '#10B981',
-    icon: 'i-lucide-square',
-    isDefault: true,
-    properties: [],
-    itemCount: 18,
-    isSystemBased: true,
-    templateInfo: {
-      name: 'Plaka',
-      version: '1.0',
-      standardCount: 10,
-      fieldCount: 6
-    },
-    createdAt: new Date('2024-01-16'),
-    updatedAt: new Date('2024-01-16')
-  },
-  {
-    id: '3',
-    name: 'Özel Aksesuarlar',
-    description: 'Firmaya özel üretim aksesuarları',
-    color: '#8B5CF6',
-    icon: 'i-lucide-wrench',
-    isDefault: false,
-    properties: [],
-    itemCount: 8,
-    isSystemBased: false,
-    createdAt: new Date('2024-01-20'),
-    updatedAt: new Date('2024-01-20')
-  }
-])
+// API Integration
+const { fetchCategories, deleteCategory: deleteCategoryApi, loading, error } = useCategoriesApi()
+const { success: showSuccessToast, error: showErrorToast } = useToastManager()
+
+// Categories data from API
+const allCategories = ref<(ApiCategory & { itemCount?: number; templateInfo?: TemplateInfo })[]>([])
+const refreshing = ref(false)
 
 // Computed
 const totalCategories = computed(() => allCategories.value.length)
-const totalProducts = computed(() => allCategories.value.reduce((sum, cat) => sum + (cat.itemCount || 0), 0))
+const totalProducts = computed(() => allCategories.value.reduce((sum, cat) => sum + (cat._count?.stockItems || cat.itemCount || 0), 0))
 const templateBasedCategories = computed(() => allCategories.value.filter(cat => cat.isSystemBased))
 const customCategories = computed(() => allCategories.value.filter(cat => !cat.isSystemBased))
 
@@ -387,6 +364,139 @@ const filteredCategories = computed(() => {
       return allCategories.value
   }
 })
+
+// Methods
+const loadCategories = async () => {
+  refreshing.value = true
+  try {
+    const categories = await fetchCategories()
+    
+    // Fallback to mock data if API returns empty or fails
+    if (categories.length === 0) {
+      allCategories.value = getMockCategories()
+    } else {
+      allCategories.value = categories.map(cat => ({
+        ...cat,
+        itemCount: cat._count?.stockItems || 0,
+        // Add default icons based on category name
+        icon: getIconForCategory(cat.name),
+        templateInfo: cat.isSystemBased && cat.templateId ? {
+          name: cat.name,
+          version: cat.templateVersion || '1.0',
+          standardCount: 0, // Bu bilgiyi template'den alacağız
+          fieldCount: 0 // Bu bilgiyi template'den alacağız
+        } : undefined
+      }))
+    }
+  } catch (err) {
+    console.warn('API failed, using mock data:', err)
+    allCategories.value = getMockCategories()
+  } finally {
+    refreshing.value = false
+  }
+}
+
+const getMockCategories = (): (ApiCategory & { itemCount?: number; templateInfo?: TemplateInfo })[] => {
+  return [
+    {
+      id: 'mock-1',
+      name: 'Profil',
+      description: 'HEA, HEB, IPE serisi yapısal profiller',
+      color: '#3B82F6',
+      organizationId: 'mock-org',
+      isSystemBased: true,
+      templateId: 'template-1',
+      templateVersion: '1.0',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      icon: 'i-lucide-box',
+      itemCount: 25,
+      templateInfo: {
+        name: 'Profil',
+        version: '1.0',
+        standardCount: 15,
+        fieldCount: 8
+      }
+    },
+    {
+      id: 'mock-2',
+      name: 'Plaka',
+      description: 'S235, S355, paslanmaz çelik plakalar',
+      color: '#10B981',
+      organizationId: 'mock-org',
+      isSystemBased: true,
+      templateId: 'template-2',
+      templateVersion: '1.0',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      icon: 'i-lucide-square',
+      itemCount: 18,
+      templateInfo: {
+        name: 'Plaka',
+        version: '1.0',
+        standardCount: 10,
+        fieldCount: 6
+      }
+    },
+    {
+      id: 'mock-3',
+      name: 'Halat',
+      description: 'Çelik halat, paslanmaz halat, galvanizli halat',
+      color: '#F59E0B',
+      organizationId: 'mock-org',
+      isSystemBased: true,
+      templateId: 'template-3',
+      templateVersion: '1.0',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      icon: 'i-lucide-git-branch',
+      itemCount: 12,
+      templateInfo: {
+        name: 'Halat',
+        version: '1.0',
+        standardCount: 8,
+        fieldCount: 5
+      }
+    },
+    {
+      id: 'mock-4',
+      name: 'Özel Aksesuarlar',
+      description: 'Firmaya özel üretim aksesuarları',
+      color: '#8B5CF6',
+      organizationId: 'mock-org',
+      isSystemBased: false,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      icon: 'i-lucide-wrench',
+      itemCount: 8
+    }
+  ]
+}
+
+const getIconForCategory = (name: string): string => {
+  const iconMap: Record<string, string> = {
+    'Profil': 'i-lucide-box',
+    'Plaka': 'i-lucide-square',
+    'Halat': 'i-lucide-git-branch',
+    'Membran': 'i-lucide-layers',
+    'Kablo': 'i-lucide-cable',
+    'Bağlantı': 'i-lucide-link',
+    'Aksesuarlar': 'i-lucide-wrench',
+    'Özel': 'i-lucide-settings'
+  }
+  
+  // Try to find exact match first
+  if (iconMap[name]) return iconMap[name]
+  
+  // Then try partial matches
+  for (const [key, icon] of Object.entries(iconMap)) {
+    if (name.toLowerCase().includes(key.toLowerCase())) {
+      return icon
+    }
+  }
+  
+  return 'i-lucide-folder'
+}
 
 // Methods
 const viewCategory = (category: any) => {
@@ -411,9 +521,16 @@ const getCategoryActions = (category: any) => [
   }]
 ]
 
-const deleteCategory = (category: Category) => {
-  // Implement delete logic
-  console.log('Delete category:', category.id)
+const deleteCategory = async (category: ApiCategory) => {
+  try {
+    const success = await deleteCategoryApi(category.id)
+    if (success) {
+      showSuccessToast('Kategori silindi')
+      await loadCategories() // Reload categories
+    }
+  } catch (err) {
+    showErrorToast('Kategori silinemedi')
+  }
 }
 
 const navigateToTemplate = () => {
@@ -426,7 +543,7 @@ const navigateToManual = () => {
   router.push('/categories/create-new')
 }
 
-const formatDate = (date: Date) => {
+const formatDate = (date: Date | string) => {
   return new Intl.DateTimeFormat('tr-TR', {
     day: 'numeric',
     month: 'short',
@@ -435,9 +552,9 @@ const formatDate = (date: Date) => {
 }
 
 // Lifecycle
-onMounted(() => {
+onMounted(async () => {
   // Load categories from API
-  // loadCategories()
+  await loadCategories()
 })
 </script>
 

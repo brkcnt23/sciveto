@@ -114,6 +114,7 @@ model Category {
   name             String
   description      String?
   color            String   @default("#3B82F6")
+  icon             String?  // UI icon name - NEW
   organizationId   String
   
   // Template integration - NEW

@@ -25,7 +25,7 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
       <UCard class="text-center theme-transition">
         <div class="space-y-2">
-          <UIcon name="i-lucide-template" class="w-8 h-8 text-primary mx-auto" />
+          <UIcon name="i-lucide-file-text" class="w-8 h-8 text-primary mx-auto" />
           <div class="text-2xl font-bold text-highlighted">{{ templateStats.total }}</div>
           <div class="text-sm text-muted">Toplam Template</div>
         </div>
@@ -129,7 +129,14 @@
           İş alanınıza en uygun sektörü seçin. Her sektör için özel hazırlanmış template'ler ve standartlar bulunur.
         </p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div v-if="apiLoading" class="flex items-center justify-center py-12">
+          <div class="text-center space-y-4">
+            <UIcon name="i-lucide-loader-2" class="w-8 h-8 text-primary animate-spin mx-auto" />
+            <p class="text-muted">Template'ler yükleniyor...</p>
+          </div>
+        </div>
+
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           <UCard 
             v-for="industry in industries"
             :key="industry.id"
@@ -188,7 +195,7 @@
       <template #header>
         <div class="flex items-center justify-between w-full">
           <div class="flex items-center gap-3">
-            <UIcon name="i-lucide-template" class="w-6 h-6 text-primary" />
+            <UIcon name="i-lucide-file-text" class="w-6 h-6 text-primary" />
             <h3 class="text-xl font-bold text-highlighted">Template Seçimi</h3>
             <UBadge color="primary" variant="soft" size="xs">Adım 2/3</UBadge>
           </div>
@@ -314,7 +321,7 @@
           </template>
         </UAlert>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="space-y-6">
           <!-- Category Settings -->
           <UCard variant="soft" color="neutral">
             <template #header>
@@ -324,7 +331,7 @@
               </div>
             </template>
 
-            <div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label class="block text-sm font-medium text-highlighted mb-2">Kategori Adı</label>
                 <UInput 
@@ -359,42 +366,102 @@
             </div>
           </UCard>
 
-          <!-- Template Preview -->
-          <UCard variant="soft" color="primary">
+          <!-- Template Details Preview -->
+          <UCard v-if="selectedTemplate" variant="soft" color="primary">
             <template #header>
-              <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-eye" class="w-5 h-5 text-primary" />
-                <h4 class="font-semibold text-highlighted">Template Önizleme</h4>
+              <div class="flex items-center gap-3">
+                <UIcon :name="selectedTemplate?.icon || 'i-lucide-folder'" class="w-6 h-6 text-primary" />
+                <div>
+                  <h4 class="font-semibold text-highlighted">{{ selectedTemplate.name }} Template Detayları</h4>
+                  <p class="text-sm text-muted">{{ selectedTemplate.description }}</p>
+                </div>
               </div>
             </template>
 
-            <div class="space-y-4">
-              <div v-if="selectedTemplate">
-                <h5 class="font-medium text-highlighted mb-2">İçerik Özeti:</h5>
-                <div class="space-y-2 text-sm">
-                  <div class="flex items-center justify-between">
-                    <span class="text-muted">Standartlar</span>
-                    <span class="text-highlighted font-medium">{{ selectedTemplate.standardCount }} adet</span>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <span class="text-muted">Toplam Alan</span>
-                    <span class="text-highlighted font-medium">{{ selectedTemplate.fieldCount }} adet</span>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <span class="text-muted">Zorunlu Alan</span>
-                    <span class="text-highlighted font-medium">{{ selectedTemplate.requiredFieldCount }} adet</span>
-                  </div>
+            <div class="space-y-6">
+              <!-- Template Info Grid -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="text-center p-4 bg-white/50 rounded-lg">
+                  <UIcon name="i-lucide-star" class="w-8 h-8 text-warning mx-auto mb-2" />
+                  <div class="text-2xl font-bold text-warning">{{ selectedTemplate.standardCount }}</div>
+                  <div class="text-sm text-muted">Standart</div>
+                </div>
+                
+                <div class="text-center p-4 bg-white/50 rounded-lg">
+                  <UIcon name="i-lucide-form-input" class="w-8 h-8 text-blue-500 mx-auto mb-2" />
+                  <div class="text-2xl font-bold text-blue-600">{{ selectedTemplate.fieldCount }}</div>
+                  <div class="text-sm text-muted">Veri Alanı</div>
+                </div>
+                
+                <div class="text-center p-4 bg-white/50 rounded-lg">
+                  <UIcon name="i-lucide-asterisk" class="w-8 h-8 text-red-500 mx-auto mb-2" />
+                  <div class="text-2xl font-bold text-red-600">{{ selectedTemplate.requiredFieldCount }}</div>
+                  <div class="text-sm text-muted">Zorunlu Alan</div>
                 </div>
               </div>
 
-              <UButton 
-                variant="ghost" 
-                size="sm" 
-                block
-                @click="showPreview = true"
-              >
-                Detaylı Önizleme
-              </UButton>
+              <!-- Template Content -->
+              <div v-if="loadingDetails" class="text-center py-8">
+                <UIcon name="i-lucide-loader-2" class="w-8 h-8 text-primary animate-spin mx-auto mb-2" />
+                <p class="text-muted">Template detayları yükleniyor...</p>
+              </div>
+              
+              <div v-else-if="templateDetails" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Standards -->
+                <div v-if="templateDetails.standards && templateDetails.standards.length > 0">
+                  <h5 class="text-lg font-semibold text-highlighted mb-4 flex items-center gap-2">
+                    <UIcon name="i-lucide-star" class="w-5 h-5 text-warning" />
+                    Standartlar ({{ templateDetails.standards.length }})
+                  </h5>
+                  <div class="space-y-3 max-h-64 overflow-y-auto">
+                    <div 
+                      v-for="standard in templateDetails.standards" 
+                      :key="standard.id"
+                      class="p-3 bg-white/60 rounded-lg border"
+                    >
+                      <div class="font-medium text-highlighted">{{ standard.name }}</div>
+                      <div class="text-sm text-muted">{{ standard.value }}</div>
+                      <UBadge v-if="standard.category" color="neutral" variant="soft" size="xs" class="mt-1">
+                        {{ standard.category }}
+                      </UBadge>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Fields -->
+                <div v-if="templateDetails.fields && templateDetails.fields.length > 0">
+                  <h5 class="text-lg font-semibold text-highlighted mb-4 flex items-center gap-2">
+                    <UIcon name="i-lucide-form-input" class="w-5 h-5 text-blue-500" />
+                    Veri Alanları ({{ templateDetails.fields.length }})
+                  </h5>
+                  <div class="space-y-3 max-h-64 overflow-y-auto">
+                    <div 
+                      v-for="field in templateDetails.fields" 
+                      :key="field.id"
+                      class="p-3 bg-white/60 rounded-lg border"
+                    >
+                      <div class="flex items-center justify-between mb-1">
+                        <span class="font-medium text-highlighted">{{ field.label || field.name }}</span>
+                        <UBadge v-if="field.required" color="error" variant="soft" size="xs">
+                          Zorunlu
+                        </UBadge>
+                      </div>
+                      <div class="text-sm text-muted">
+                        {{ field.type || 'text' }}
+                        <span v-if="field.unit"> ({{ field.unit }})</span>
+                      </div>
+                      <div v-if="field.defaultValue" class="text-xs text-muted mt-1">
+                        Varsayılan: {{ field.defaultValue }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div v-else class="text-center py-8">
+                <UIcon name="i-lucide-alert-circle" class="w-8 h-8 text-red-500 mx-auto mb-2" />
+                <p class="text-muted">Template detayları yüklenemedi.</p>
+              </div>
             </div>
           </UCard>
         </div>
@@ -420,6 +487,8 @@
       </div>
     </UCard>
   </div>
+
+
 </template>
 
 <script setup lang="ts">
@@ -457,16 +526,21 @@ definePageMeta({
 })
 
 // Imports
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { useTemplatesApi } from '~/composables/useTemplatesApi'
+import { useDualToast } from '~/composables/useDualToast'
 
 // State
 const router = useRouter()
+const { fetchTemplates, fetchTemplate, createCategoryFromTemplate, loading: apiLoading } = useTemplatesApi()
+const { success, error: showError } = useDualToast()
 const currentStep = ref(1)
 const selectedIndustry = ref<Industry | null>(null)
 const selectedTemplate = ref<Template | null>(null)
 const isCreating = ref(false)
-const showPreview = ref(false)
+const templateDetails = ref<any>(null)
+const loadingDetails = ref(false)
 
 // Form data
 const categoryForm = ref<CategoryForm>({
@@ -475,102 +549,117 @@ const categoryForm = ref<CategoryForm>({
   color: '#3B82F6'
 })
 
-// Mock data - replace with API calls
+// API Data
+const allTemplates = ref<any[]>([])
 const templateStats = ref({
-  total: 15,
-  industries: 3,
-  standards: 120
+  total: 0,
+  industries: 0,
+  standards: 0
 })
 
-const industries = ref<Industry[]>([
-  {
-    id: 'steel-manufacturing',
-    name: 'Demir-Çelik İmalat',
-    description: 'Profil, plaka ve yapısal çelik ürünleri',
-    icon: 'i-lucide-hammer',
-    templateCount: 8,
-    standardCount: 65
-  },
-  {
-    id: 'tensile-architecture', 
-    name: 'Asma Gergi Mimarlık',
-    description: 'Membran, halat ve gergi aksesuarları',
-    icon: 'i-lucide-tent',
-    templateCount: 5,
-    standardCount: 45
-  },
-  {
-    id: 'construction',
-    name: 'İnşaat & Yapı',
-    description: 'Yapı malzemeleri ve inşaat ekipmanları',
-    icon: 'i-lucide-building',
-    templateCount: 2,
-    standardCount: 10
+// Load template details when modal opens
+const loadTemplateDetails = async (templateId: string) => {
+  if (!templateId) {
+    console.log('⚠️ No templateId provided to loadTemplateDetails')
+    return
   }
-])
+  
+  console.log('🚀 loadTemplateDetails starting for ID:', templateId)
+  loadingDetails.value = true
+  templateDetails.value = null
+  
+  try {
+    console.log('📞 Calling fetchTemplate...')
+    const details = await fetchTemplate(templateId)
+    console.log('🎯 Template details result:', details)
+    
+    if (details) {
+      templateDetails.value = details
+      console.log('✅ Template details successfully set:', templateDetails.value)
+    } else {
+      console.log('⚠️ No template details returned')
+      templateDetails.value = null
+    }
+  } catch (error) {
+    console.error('💥 Failed to load template details:', error)
+    templateDetails.value = null
+  } finally {
+    loadingDetails.value = false
+    console.log('🏁 loadTemplateDetails finished. loadingDetails:', loadingDetails.value)
+  }
+}
 
+
+
+// Load templates from API
+const loadTemplates = async () => {
+  try {
+    console.log('Loading templates...')
+    const templates = await fetchTemplates()
+    console.log('Templates response:', templates)
+    allTemplates.value = templates
+    
+    // Calculate stats
+    templateStats.value = {
+      total: allTemplates.value.length,
+      industries: [...new Set(allTemplates.value.map(t => t.industry))].length,
+      standards: allTemplates.value.reduce((sum, t) => sum + (t.standards?.length || 0), 0)
+    }
+    console.log('Template stats:', templateStats.value)
+    console.log('Industries computed:', industries.value)
+  } catch (error) {
+    console.error('Failed to load templates:', error)
+  }
+}
+
+// Compute industries from real template data
+const industries = computed((): Industry[] => {
+  const industryMap = new Map<string, Industry>()
+  
+  allTemplates.value.forEach(template => {
+    if (!template.industry) return
+    
+    if (!industryMap.has(template.industry)) {
+      industryMap.set(template.industry, {
+        id: template.industry,
+        name: template.industry === 'steel-manufacturing' ? 'Demir-Çelik İmalat' :
+              template.industry === 'tensile-architecture' ? 'Asma Gergi Mimarlık' :
+              template.industry === 'construction' ? 'İnşaat & Yapı' : template.industry,
+        description: template.industry === 'steel-manufacturing' ? 'Profil, plaka ve yapısal çelik ürünleri' :
+                    template.industry === 'tensile-architecture' ? 'Membran, halat ve gergi aksesuarları' :
+                    template.industry === 'construction' ? 'Yapı malzemeleri ve inşaat ekipmanları' : '',
+        icon: template.industry === 'steel-manufacturing' ? 'i-lucide-hammer' :
+              template.industry === 'tensile-architecture' ? 'i-lucide-tent' :
+              template.industry === 'construction' ? 'i-lucide-building' : 'i-lucide-folder',
+        templateCount: 0,
+        standardCount: 0
+      })
+    }
+    
+    const industry = industryMap.get(template.industry)!
+    industry.templateCount++
+    industry.standardCount += template.standards?.length || 0
+  })
+  
+  return Array.from(industryMap.values())
+})
+
+// Compute templates based on selected industry
 const templates = computed((): Template[] => {
   if (!selectedIndustry.value) return []
   
-  // Mock templates based on industry
-  const mockTemplates: Record<string, Template[]> = {
-    'steel-manufacturing': [
-      {
-        id: 'profil-template',
-        name: 'Profil',
-        description: 'HEA, HEB, IPE, UPN serisi yapısal profiller',
-        icon: 'i-lucide-box',
-        version: '1.0',
-        standardCount: 15,
-        fieldCount: 8,
-        requiredFieldCount: 3
-      },
-      {
-        id: 'plaka-template',
-        name: 'Plaka',
-        description: 'S235, S355, paslanmaz çelik plakalar',
-        icon: 'i-lucide-square',
-        version: '1.0',
-        standardCount: 10,
-        fieldCount: 6,
-        requiredFieldCount: 2
-      }
-    ],
-    'tensile-architecture': [
-      {
-        id: 'membran-template',
-        name: 'Membran',
-        description: 'Ferrari, Mehler, Sioen membran kumaşları',
-        icon: 'i-lucide-layers',
-        version: '1.0',
-        standardCount: 25,
-        fieldCount: 10,
-        requiredFieldCount: 4
-      },
-      {
-        id: 'halat-template',
-        name: 'Halat',
-        description: 'Çelik halat çeşitleri ve ölçüleri',
-        icon: 'i-lucide-cable',
-        version: '1.0',
-        standardCount: 12,
-        fieldCount: 7,
-        requiredFieldCount: 3
-      },
-      {
-        id: 'mapa-template',
-        name: 'Mapa',
-        description: 'Halat ucu aksesuarları ve bağlantı elemanları',
-        icon: 'i-lucide-link',
-        version: '1.0',
-        standardCount: 8,
-        fieldCount: 5,
-        requiredFieldCount: 2
-      }
-    ]
-  }
-  
-  return mockTemplates[selectedIndustry.value.id] || []
+  return allTemplates.value
+    .filter(template => template.industry === selectedIndustry.value?.id)
+    .map(template => ({
+      id: template.id,
+      name: template.name,
+      description: template.description || '',
+      icon: template.icon || 'i-lucide-folder',
+      version: template.version,
+      standardCount: template.standards?.length || 0,
+      fieldCount: template.fields?.length || 0,
+      requiredFieldCount: template.fields?.filter((f: any) => f.required).length || 0
+    }))
 })
 
 const colorOptions = [
@@ -589,6 +678,8 @@ const selectTemplate = (template: Template) => {
   if (!categoryForm.value.name) {
     categoryForm.value.name = template.name
   }
+  // Load template details immediately
+  loadTemplateDetails(template.id)
 }
 
 const goToStep = (step: number) => {
@@ -602,25 +693,43 @@ const createCategory = async () => {
   
   try {
     // API call to create category from template
-    const response: any = await $fetch('/api/templates/create-category', {
-      method: 'POST',
-      body: {
-        templateId: selectedTemplate.value.id,
-        categoryName: categoryForm.value.name,
-        description: categoryForm.value.description,
-        color: categoryForm.value.color
-      }
+    const response = await createCategoryFromTemplate({
+      templateId: selectedTemplate.value.id,
+      categoryName: categoryForm.value.name,
+      description: categoryForm.value.description,
+      color: categoryForm.value.color
     })
     
-    if (response.success) {
+    if (response?.success) {
       // Success notification
-      console.log('Category created successfully!')
+      success(
+        'Kategori Oluşturuldu! 🎉',
+        `"${categoryForm.value.name}" kategorisi ${selectedTemplate.value.name} template'inden başarıyla oluşturuldu.`,
+        {
+          timeout: 5000,
+          actions: [
+            {
+              label: 'Kategorileri Görüntüle',
+              onClick: () => router.push('/categories')
+            }
+          ]
+        }
+      )
       
-      // Redirect to categories page
-      await router.push('/categories')
+      // Redirect to categories page after a short delay
+      setTimeout(() => {
+        router.push('/categories')
+      }, 2000)
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('Failed to create category:', error)
+    showError(
+      'Kategori Oluşturulamadı',
+      error.message || 'Kategori oluşturulurken bir hata oluştu.',
+      {
+        timeout: 8000
+      }
+    )
   } finally {
     isCreating.value = false
   }
@@ -628,8 +737,7 @@ const createCategory = async () => {
 
 // Lifecycle
 onMounted(() => {
-  // Load template statistics
-  // loadTemplateStats()
+  loadTemplates()
 })
 </script>
 

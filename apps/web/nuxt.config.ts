@@ -108,5 +108,13 @@ export default defineNuxtConfig({
     public: {
       apiBase: process.env.API_BASE_URL || 'http://localhost:3001'
     }
+  },
+
+  // Nitro route rules for API proxy
+  routeRules: {
+    '/api/**': { 
+      proxy: (process.env.API_BASE_URL || 'http://localhost:3001') + '/**',
+      cors: true
+    }
   }
 })
