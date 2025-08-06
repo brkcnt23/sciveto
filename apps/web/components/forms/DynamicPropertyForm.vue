@@ -3,7 +3,7 @@
     <!-- Form Title -->
     <div class="border-b border-neutral-200 pb-4">
       <h3 class="text-lg font-semibold text-neutral-900 flex items-center">
-        <UIcon name="i-lucide-settings" class="h-6 w-6 mr-2 text-gray-600" />
+        <UIcon name="i-lucide-settings" class="h-6 w-6 mr-2 text-neutral-600" />
         Category Properties
       </h3>
       <p class="text-sm text-neutral-600 mt-1">

@@ -4,8 +4,8 @@
     <!-- Header -->
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Hızlı Stok Girişi</h1>
-        <p class="text-gray-600 dark:text-gray-400 mt-1">Ürünleri hızlıca seçip stok bilgilerini girin</p>
+        <h1 class="text-3xl font-bold text-neutral-900 dark:text-white">Hızlı Stok Girişi</h1>
+        <p class="text-neutral-600 dark:text-neutral-400 mt-1">Ürünleri hızlıca seçip stok bilgilerini girin</p>
       </div>
     </div>
 
@@ -36,13 +36,13 @@
           <div
             v-for="item in searchResults.slice(0, 10)"
             :key="item.id"
-            class="p-3 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer border-b last:border-b-0"
+            class="p-3 hover:bg-neutral-50 dark:hover:bg-neutral-800 cursor-pointer border-b last:border-b-0"
             @click="selectProduct(item)"
           >
             <div class="flex items-center justify-between">
               <div>
                 <div class="font-medium">{{ item.name }}</div>
-                <div class="text-sm text-gray-500">{{ item.description }}</div>
+                <div class="text-sm text-neutral-500">{{ item.description }}</div>
               </div>
               <UBadge variant="soft" size="sm">{{ item.category }}</UBadge>
             </div>
@@ -67,7 +67,7 @@
     <!-- Selected Items -->
     <div v-if="selectedItems.length > 0">
       <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+        <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">
           Seçilen Ürünler ({{ selectedItems.length }})
         </h3>
         <UButton 
@@ -98,7 +98,7 @@
           
           <div class="pr-8">
             <h4 class="font-semibold text-sm mb-1">{{ item.name }}</h4>
-            <p class="text-xs text-gray-500 mb-3 line-clamp-2">{{ item.description }}</p>
+            <p class="text-xs text-neutral-500 mb-3 line-clamp-2">{{ item.description }}</p>
             
             <!-- Stock Entry -->
             <div class="grid grid-cols-2 gap-3">
@@ -144,11 +144,11 @@
     
     <!-- Bulk Save -->
     <div v-if="selectedItems.length > 0" class="sticky bottom-4">
-      <UCard class="bg-white dark:bg-gray-900 shadow-lg border-2 border-primary-200 dark:border-primary-800">
+      <UCard class="bg-white dark:bg-neutral-900 shadow-lg border-2 border-primary-200 dark:border-primary-800">
         <div class="flex items-center justify-between">
           <div>
             <div class="font-semibold">{{ selectedItems.length }} ürün seçildi</div>
-            <div class="text-sm text-gray-500">Tüm stok bilgilerini kaydet</div>
+            <div class="text-sm text-neutral-500">Tüm stok bilgilerini kaydet</div>
           </div>
           <div class="flex gap-2">
             <UButton 
@@ -174,11 +174,11 @@
     
     <!-- Empty State -->
     <div v-if="selectedItems.length === 0" class="text-center py-12">
-      <UIcon name="i-lucide-package-search" class="w-16 h-16 text-gray-400 mx-auto mb-4" />
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+      <UIcon name="i-lucide-package-search" class="w-16 h-16 text-neutral-400 mx-auto mb-4" />
+      <h3 class="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
         Henüz ürün seçilmedi
       </h3>
-      <p class="text-gray-500 mb-4">
+      <p class="text-neutral-500 mb-4">
         Yukarıdaki arama kutusunu kullanarak ürün arayın ve seçin
       </p>
       <UButton @click="loadRandomProducts" variant="outline">

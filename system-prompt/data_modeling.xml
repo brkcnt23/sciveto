@@ -1,0 +1,53 @@
+<data_modeling>
+  <schema_management>
+    <dynamic_fields>true</dynamic_fields>
+    <user_defined_fields>true</user_defined_fields>
+    <field_types>
+      <basic>string, number, boolean, date</basic>
+      <advanced>json, array, file, relation</advanced>
+      <custom>barcode, qrcode, location, formula</custom>
+    </field_types>
+    <validation_rules>
+      <required>true</required>
+      <unique>true</unique>
+      <min_max>true</min_max>
+      <regex>true</regex>
+      <custom_validators>true</custom_validators>
+    </validation_rules>
+  </schema_management>
+  
+  <relationships>
+    <one_to_one>true</one_to_one>
+    <one_to_many>true</one_to_many>
+    <many_to_many>true</many_to_many>
+    <polymorphic>true</polymorphic>
+    <self_referencing>true</self_referencing>
+  </relationships>
+  
+  <indexing>
+    <strategy>compound, unique, partial, full-text</strategy>
+    <optimization>auto-analyze, vacuum, reindex</optimization>
+  </indexing>
+  
+  <caching>
+    <levels>
+      <browser>IndexedDB, LocalStorage</browser>
+      <server>Redis, Memory</server>
+      <cdn>CloudFlare, Fastly</cdn>
+    </levels>
+    <strategies>
+      <write_through>true</write_through>
+      <write_behind>true</write_behind>
+      <refresh_ahead>true</refresh_ahead>
+      <cache_aside>true</cache_aside>
+    </strategies>
+  </caching>
+  
+  <audit>
+    <change_tracking>true</change_tracking>
+    <version_control>true</version_control>
+    <soft_delete>true</soft_delete>
+    <restore_capability>true</restore_capability>
+    <audit_trail>who, what, when, where, why</audit_trail>
+  </audit>
+</data_modeling>

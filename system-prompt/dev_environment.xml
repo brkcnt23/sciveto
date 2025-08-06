@@ -1,0 +1,389 @@
+<dev_environment>
+  <package_manager>pnpm 8+</package_manager>
+  <node_version>20.x LTS</node_version>
+  
+  <os_compatibility>
+    <windows>
+      <terminal>PowerShell, Git Bash, Windows Terminal</terminal>
+      <path_separator>\</path_separator>
+      <line_ending>CRLF</line_ending>
+      <shell_scripts>.ps1, .bat</shell_scripts>
+    </windows>
+    <mac>
+      <terminal>Terminal, iTerm2</terminal>
+      <path_separator>/</path_separator>
+      <line_ending>LF</line_ending>
+      <shell_scripts>.sh, .zsh</shell_scripts>
+    </mac>
+    <linux>
+      <terminal>Terminal, Konsole</terminal>
+      <path_separator>/</path_separator>
+      <line_ending>LF</line_ending>
+      <shell_scripts>.sh, .bash</shell_scripts>
+    </linux>
+  </os_compatibility>
+  
+  <development>
+    <hot_reload>Vite HMR</hot_reload>
+    <auto_restart>Nodemon</auto_restart>
+    <error_overlay>true</error_overlay>
+    <source_maps>true</source_maps>
+    <browser_sync>true</browser_sync>
+    <file_watcher>
+      <windows>chokidar</windows>
+      <mac>fsevents</mac>
+      <linux>inotify</linux>
+    </file_watcher>
+  </development>
+  
+  <ide_config>
+    <vscode>
+      <extensions>
+        <required>
+          <extension>Vue.vscode-typescript-vue-plugin</extension>
+          <extension>Vue.volar</extension> <!-- Deprecated - Use Vue.vscode-typescript-vue-plugin -->
+          <extension>Vue.vscode-vue-devtools</extension> <!-- Vue DevTools for VSCode -->
+          <extension>nuxt.mdc</extension> <!-- Nuxt MDC syntax highlighting -->
+          <extension>Nuxtr.nuxtr-vscode</extension> <!-- Nuxt specific tooling -->
+          <extension>antfu.goto-alias</extension>
+          <extension>antfu.iconify</extension>
+          <extension>antfu.unocss</extension> <!-- If using UnoCSS -->
+          <extension>dbaeumer.vscode-eslint</extension>
+          <extension>esbenp.prettier-vscode</extension>
+          <extension>bradlc.vscode-tailwindcss</extension>
+          <extension>prisma.prisma</extension>
+          <extension>unifiedjs.vscode-mdx</extension> <!-- MDX support -->
+        </required>
+        <recommended>
+          <extension>GitHub.copilot</extension>
+          <extension>GitHub.copilot-chat</extension>
+          <extension>usernamehw.errorlens</extension>
+          <extension>aaron-bond.better-comments</extension>
+          <extension>PKief.material-icon-theme</extension>
+          <extension>formulahendry.auto-rename-tag</extension>
+          <extension>naumovs.color-highlight</extension>
+          <extension>csstools.postcss</extension>
+          <extension>christian-kohler.npm-intellisense</extension>
+          <extension>christian-kohler.path-intellisense</extension>
+          <extension>mikestead.dotenv</extension>
+          <extension>EditorConfig.EditorConfig</extension>
+          <extension>wix.vscode-import-cost</extension>
+          <extension>WallabyJs.console-ninja</extension> <!-- Console debugging -->
+          <extension>lokalise.i18n-ally</extension>
+          <extension>antfu.browse-lite</extension> <!-- In-editor browser -->
+        </recommended>
+      </extensions>
+      <settings>
+        <editor>
+          <format_on_save>true</format_on_save>
+          <default_formatter>esbenp.prettier-vscode</default_formatter>
+          <tab_size>2</tab_size>
+          <word_wrap>on</word_wrap>
+          <bracket_pair_colorization>true</bracket_pair_colorization>
+          <sticky_scroll>true</sticky_scroll>
+          <inline_suggest>true</inline_suggest>
+        </editor>
+        <files>
+          <eol>\n</eol>
+          <auto_save>afterDelay</auto_save>
+          <auto_save_delay>1000</auto_save_delay>
+          <associations>
+            <pattern>*.css</pattern>
+            <language>tailwindcss</language>
+          </associations>
+        </files>
+        <typescript>
+          <update_imports_on_file_move>always</update_imports_on_file_move>
+          <suggest_auto_imports>true</suggest_auto_imports>
+          <preferences>
+            <import_module_specifier>relative</import_module_specifier>
+            <quote_style>single</quote_style>
+          </preferences>
+        </typescript>
+        <vue>
+          <auto_insert_dot_value>true</auto_insert_dot_value>
+          <auto_complete_refs>true</auto_complete_refs>
+          <code_lens>true</code_lens>
+          <split_editors>true</split_editors>
+        </vue>
+        <tailwindcss>
+          <experimental>
+            <class_sorting_enabled>true</class_sorting_enabled>
+            <suggest_variant_order>true</suggest_variant_order>
+          </experimental>
+          <include_languages>
+            <plaintext>html</plaintext>
+            <vue-html>html</vue-html>
+          </include_languages>
+        </tailwindcss>
+        <eslint>
+          <validate>javascript,javascriptreact,typescript,typescriptreact,vue</validate>
+          <code_actions_on_save>
+            <source_fix_all_eslint>true</source_fix_all_eslint>
+          </code_actions_on_save>
+        </eslint>
+        <prettier>
+          <enable>true</enable>
+          <document_selectors>
+            <selector>**/*.{js,ts,jsx,tsx,vue,css,scss,less,html,json,md}</selector>
+          </document_selectors>
+        </prettier>
+      </settings>
+    </vscode>
+    
+    <jetbrains>
+      <webstorm>true</webstorm>
+      <plugins>
+        <plugin>Vue.js</plugin>
+        <plugin>Tailwind CSS</plugin>
+        <plugin>Prisma</plugin>
+        <plugin>Nuxt</plugin>
+        <plugin>GitHub Copilot</plugin>
+      </plugins>
+    </jetbrains>
+    
+    <cursor>
+      <ai_enabled>true</ai_enabled>
+      <extensions>inherit_from_vscode</extensions>
+    </cursor>
+  </ide_config>
+  
+  <scripts>
+    <windows>
+      <install>pnpm install</install>
+      <dev>pnpm dev</dev>
+      <build>pnpm build</build>
+      <preview>pnpm preview</preview>
+      <typecheck>pnpm typecheck</typecheck>
+      <lint>pnpm lint</lint>
+      <lint-fix>pnpm lint --fix</lint-fix>
+      <test>pnpm test</test>
+      <test-ui>pnpm test:ui</test-ui>
+      <test-coverage>pnpm test:coverage</test-coverage>
+      <clean>rmdir /s /q node_modules .nuxt .output dist</clean>
+      <fresh>pnpm clean && pnpm install</fresh>
+    </windows>
+    <unix>
+      <install>pnpm install</install>
+      <dev>pnpm dev</dev>
+      <build>pnpm build</build>
+      <preview>pnpm preview</preview>
+      <typecheck>pnpm typecheck</typecheck>
+      <lint>pnpm lint</lint>
+      <lint-fix>pnpm lint --fix</lint-fix>
+      <test>pnpm test</test>
+      <test-ui>pnpm test:ui</test-ui>
+      <test-coverage>pnpm test:coverage</test-coverage>
+      <clean>rm -rf node_modules .nuxt .output dist</clean>
+      <fresh>pnpm clean && pnpm install</fresh>
+    </unix>
+  </scripts>
+  
+  <code_quality>
+    <linting>
+      <eslint>
+        <config>@nuxt/eslint-config</config>
+        <flat_config>true</flat_config> <!-- ESLint 9+ flat config -->
+        <rules>
+          <vue_multi_word_component_names>off</vue_multi_word_component_names>
+          <no_undef>off</no_undef> <!-- TypeScript handles this -->
+          <vue_no_v_html>warn</vue_no_v_html>
+        </rules>
+      </eslint>
+      <prettier>
+        <end_of_line>auto</end_of_line>
+        <print_width>100</print_width>
+        <tab_width>2</tab_width>
+        <semi>false</semi>
+        <single_quote>true</single_quote>
+        <trailing_comma>es5</trailing_comma>
+        <arrow_parens>avoid</arrow_parens>
+        <bracket_spacing>true</bracket_spacing>
+      </prettier>
+      <stylelint>
+        <extends>stylelint-config-standard</extends>
+        <rules>
+          <at_rule_no_unknown>null</at_rule_no_unknown>
+          <selector_class_pattern>null</selector_class_pattern>
+        </rules>
+      </stylelint>
+      <commitlint>
+        <extends>@commitlint/config-conventional</extends>
+        <types>feat,fix,docs,style,refactor,perf,test,build,ci,chore,revert</types>
+      </commitlint>
+    </linting>
+    <formatting>
+      <editor_config>
+        <root>true</root>
+        <all_files>
+          <charset>utf-8</charset>
+          <end_of_line>lf</end_of_line>
+          <insert_final_newline>true</insert_final_newline>
+          <trim_trailing_whitespace>true</trim_trailing_whitespace>
+          <indent_style>space</indent_style>
+          <indent_size>2</indent_size>
+        </all_files>
+        <markdown_files>
+          <trim_trailing_whitespace>false</trim_trailing_whitespace>
+        </markdown_files>
+      </editor_config>
+      <auto_format_on_save>true</auto_format_on_save>
+      <import_sorting>true</import_sorting>
+      <organize_imports>true</organize_imports>
+    </formatting>
+    <type_checking>
+      <typescript>
+        <strict>true</strict>
+        <no_unused_locals>true</no_unused_locals>
+        <no_unused_parameters>true</no_unused_parameters>
+        <no_implicit_returns>true</no_implicit_returns>
+        <no_fallthrough_cases_in_switch>true</no_fallthrough_cases_in_switch>
+        <module_resolution>bundler</module_resolution>
+      </typescript>
+      <vue_tsc>true</vue_tsc>
+      <type_coverage>90%</type_coverage>
+    </type_checking>
+  </code_quality>
+  
+  <testing>
+    <unit>
+      <framework>Vitest</framework>
+      <ui>@vitest/ui</ui>
+      <coverage>
+        <provider>v8</provider>
+        <reporter>text,json,html,lcov</reporter>
+        <threshold>
+          <statements>80</statements>
+          <branches>80</branches>
+          <functions>80</functions>
+          <lines>80</lines>
+        </threshold>
+      </coverage>
+      <watch_mode>true</watch_mode>
+      <globals>false</globals>
+    </unit>
+    <component>
+      <framework>@nuxt/test-utils</framework>
+      <mounting>@vue/test-utils</mounting>
+      <environment>happy-dom</environment>
+    </component>
+    <integration>
+      <framework>Vitest</framework>
+      <database>testcontainers</database>
+      <api_testing>supertest</api_testing>
+    </integration>
+    <e2e>
+      <framework>Playwright</framework>
+      <browsers>chromium,firefox,webkit</browsers>
+      <headed>false</headed>
+      <slow_mo>0</slow_mo>
+      <mobile>true</mobile>
+      <screenshots>on-failure</screenshots>
+      <videos>on-failure</videos>
+      <trace>on-failure</trace>
+    </e2e>
+    <visual>
+      <framework>Percy</framework>
+      <snapshot>true</snapshot>
+      <diff_threshold>0.1</diff_threshold>
+    </visual>
+  </testing>
+  
+  <ci_cd>
+    <pipeline>GitHub Actions, GitLab CI, Azure DevOps</pipeline>
+    <stages>
+      <install_deps>pnpm install --frozen-lockfile</install_deps>
+      <lint>pnpm lint</lint>
+      <typecheck>pnpm typecheck</typecheck>
+      <test>pnpm test</test>
+      <build>pnpm build</build>
+      <security_scan>pnpm audit</security_scan>
+      <deploy>platform-specific</deploy>
+    </stages>
+    <environments>
+      <development>
+        <auto_deploy>true</auto_deploy>
+        <branch>develop</branch>
+      </development>
+      <staging>
+        <auto_deploy>false</auto_deploy>
+        <manual_approval>true</manual_approval>
+        <branch>staging</branch>
+      </staging>
+      <production>
+        <auto_deploy>false</auto_deploy>
+        <manual_approval>true</manual_approval>
+        <branch>main</branch>
+      </production>
+    </environments>
+    <caching>
+      <pnpm_store>~/.pnpm-store</pnpm_store>
+      <nuxt_cache>.nuxt/cache</nuxt_cache>
+      <node_modules>true</node_modules>
+    </caching>
+  </ci_cd>
+  
+  <containerization>
+    <docker>
+      <multi_stage>true</multi_stage>
+      <base_image>node:20-alpine</base_image>
+      <layer_caching>true</layer_caching>
+      <security_scan>trivy</security_scan>
+      <windows_containers>optional</windows_containers>
+    </docker>
+    <orchestration>
+      <kubernetes>true</kubernetes>
+      <helm>true</helm>
+      <docker_compose>development</docker_compose>
+    </orchestration>
+  </containerization>
+  
+  <environment_variables>
+    <files>
+      <development>.env.development</development>
+      <staging>.env.staging</staging>
+      <production>.env.production</production>
+      <example>.env.example</example>
+      <local>.env.local</local>
+    </files>
+    <management>
+      <local>dotenv</local>
+      <cloud>Doppler, 1Password CLI, Azure Key Vault, AWS Secrets Manager</cloud>
+    </management>
+    <validation>
+      <runtime>zod</runtime>
+      <build_time>@t3-oss/env-nuxt</build_time>
+    </validation>
+  </environment_variables>
+  
+  <debugging>
+    <vscode_launch_config>
+      <nuxt_dev>
+        <type>node</type>
+        <request>launch</request>
+        <name>Nuxt: dev</name>
+        <runtimeExecutable>pnpm</runtimeExecutable>
+        <runtimeArgs>["dev"]</runtimeArgs>
+        <port>9229</port>
+        <source_map_path_overrides>
+          <pattern>webpack://?:*</pattern>
+          <replacement>${workspaceFolder}</replacement>
+        </source_map_path_overrides>
+      </nuxt_dev>
+      <vitest>
+        <type>node</type>
+        <request>launch</request>
+        <name>Debug Vitest Tests</name>
+        <runtimeExecutable>pnpm</runtimeExecutable>
+        <runtimeArgs>["test"]</runtimeArgs>
+        <console>integratedTerminal</console>
+      </vitest>
+    </vscode_launch_config>
+    <browser_devtools>
+      <vue_devtools>true</vue_devtools>
+      <nuxt_devtools>true</nuxt_devtools>
+      <network_tab>true</network_tab>
+      <performance_profiling>true</performance_profiling>
+    </browser_devtools>
+  </debugging>
+</dev_environment>

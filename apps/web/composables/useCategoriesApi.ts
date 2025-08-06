@@ -33,6 +33,7 @@ export interface CreateCategoryPayload {
 export const useCategoriesApi = () => {
   const loading = ref(false)
   const error = ref<string | null>(null)
+  const config = useRuntimeConfig()
 
   // Dönüştürme yardımcı fonksiyonu: API yanıtını UI'a uygun hale getiriyoruz
   const transformApiCategory = (category: ApiCategory): ApiCategory => {
@@ -65,7 +66,7 @@ export const useCategoriesApi = () => {
     error.value = null
 
     try {
-      const data = await $fetch<ApiCategory[]>('/api/categories', {
+      const data = await $fetch<ApiCategory[]>(`${config.public.apiBase}/categories`, {
         method: 'GET',
         headers: useRequestHeaders(['cookie'])
       })
@@ -89,7 +90,7 @@ export const useCategoriesApi = () => {
     error.value = null
 
     try {
-      const data = await $fetch<ApiCategory>('/api/categories', {
+      const data = await $fetch<ApiCategory>(`${config.public.apiBase}/categories`, {
         method: 'POST',
         body: payload,
         headers: useRequestHeaders(['cookie'])
@@ -111,7 +112,7 @@ export const useCategoriesApi = () => {
     error.value = null
 
     try {
-      const data = await $fetch<ApiCategory>(`/api/categories/${id}`, {
+      const data = await $fetch<ApiCategory>(`${config.public.apiBase}/categories/${id}`, {
         method: 'GET',
         headers: useRequestHeaders(['cookie'])
       })
@@ -132,7 +133,7 @@ export const useCategoriesApi = () => {
     error.value = null
 
     try {
-      const data = await $fetch<ApiCategory>(`/api/categories/${id}`, {
+      const data = await $fetch<ApiCategory>(`${config.public.apiBase}/categories/${id}`, {
         method: 'PATCH',
         body: payload,
         headers: useRequestHeaders(['cookie'])
@@ -154,7 +155,7 @@ export const useCategoriesApi = () => {
     error.value = null
 
     try {
-      await $fetch(`/api/categories/${id}`, {
+      await $fetch(`${config.public.apiBase}/categories/${id}`, {
         method: 'DELETE',
         headers: useRequestHeaders(['cookie'])
       })

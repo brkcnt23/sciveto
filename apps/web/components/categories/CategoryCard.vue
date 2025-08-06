@@ -3,7 +3,7 @@
     class="category-card relative overflow-hidden transition-all duration-200 hover:shadow-lg"
     :class="[
       'border-l-4',
-      category.isDefault ? 'bg-gray-50 dark:bg-gray-800/50' : 'bg-white dark:bg-gray-900'
+      category.isDefault ? 'bg-neutral-50 dark:bg-neutral-800/50' : 'bg-white dark:bg-neutral-900'
     ]"
     :style="{ borderLeftColor: category.color }"
   >
@@ -22,8 +22,8 @@
             />
           </div>
           <div>
-            <h3 class="font-semibold text-gray-900 dark:text-white">{{ category.name }}</h3>
-            <p class="text-sm text-gray-500">{{ category.description || 'Açıklama yok' }}</p>
+            <h3 class="font-semibold text-neutral-900 dark:text-white">{{ category.name }}</h3>
+            <p class="text-sm text-neutral-500">{{ category.description || 'Açıklama yok' }}</p>
           </div>
         </div>
         
@@ -42,21 +42,21 @@
     <div class="space-y-4">
       <!-- Quick Stats -->
       <div class="grid grid-cols-2 gap-4">
-        <div class="text-center p-2 bg-gray-50 dark:bg-gray-800 rounded">
-          <div class="text-lg font-bold text-gray-900 dark:text-white">{{ category.itemCount || 0 }}</div>
-          <div class="text-xs text-gray-500">Ürün</div>
+        <div class="text-center p-2 bg-neutral-50 dark:bg-neutral-800 rounded">
+          <div class="text-lg font-bold text-neutral-900 dark:text-white">{{ category.itemCount || 0 }}</div>
+          <div class="text-xs text-neutral-500">Ürün</div>
         </div>
-        <div class="text-center p-2 bg-gray-50 dark:bg-gray-800 rounded">
+        <div class="text-center p-2 bg-neutral-50 dark:bg-neutral-800 rounded">
           <div class="text-lg font-bold text-green-600">{{ formatCurrency(category.totalValue || 0) }}</div>
-          <div class="text-xs text-gray-500">Değer</div>
+          <div class="text-xs text-neutral-500">Değer</div>
         </div>
       </div>
 
       <!-- Properties Preview -->
       <div>
         <div class="flex items-center justify-between mb-2">
-          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Özellikler</span>
-          <span class="text-xs text-gray-500">{{ category.properties.length }} alan</span>
+          <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">Özellikler</span>
+          <span class="text-xs text-neutral-500">{{ category.properties.length }} alan</span>
         </div>
         
         <div class="space-y-1">
@@ -65,7 +65,7 @@
             :key="property.id"
             class="flex items-center justify-between text-xs"
           >
-            <span class="text-gray-600 dark:text-gray-400">{{ property.name }}</span>
+            <span class="text-neutral-600 dark:text-neutral-400">{{ property.name }}</span>
             <div class="flex items-center gap-1">
               <UBadge 
                 :color="getPropertyTypeColor(property.type)" 
@@ -82,7 +82,7 @@
             </div>
           </div>
           
-          <div v-if="category.properties.length > 6" class="text-xs text-gray-400 text-center">
+          <div v-if="category.properties.length > 6" class="text-xs text-neutral-400 text-center">
             +{{ category.properties.length - 6 }} daha...
           </div>
         </div>
@@ -101,7 +101,7 @@
           </div>
         </div>
         
-        <div class="text-gray-400">
+        <div class="text-neutral-400">
           {{ formatDate(category.updatedAt) }}
         </div>
       </div>

@@ -1,0 +1,93 @@
+<performance_optimization>
+  <frontend>
+    <rendering>
+      <virtual_scrolling>
+        <threshold>100</threshold>
+        <buffer_size>5</buffer_size>
+        <dynamic_height>true</dynamic_height>
+      </virtual_scrolling>
+      
+      <lazy_loading>
+        <images>true</images>
+        <components>true</components>
+        <routes>true</routes>
+        <data>true</data>
+      </lazy_loading>
+      
+      <code_splitting>
+        <route_based>true</route_based>
+        <component_based>true</component_based>
+        <vendor_chunks>true</vendor_chunks>
+      </code_splitting>
+    </rendering>
+    
+    <state_management>
+      <debouncing>300ms</debouncing>
+      <throttling>100ms</throttling>
+      <memoization>true</memoization>
+      <computed_caching>true</computed_caching>
+    </state_management>
+    
+    <network>
+      <prefetching>true</prefetching>
+      <preloading>true</preloading>
+      <service_worker>true</service_worker>
+      <http2_push>true</http2_push>
+      <compression>gzip, brotli</compression>
+    </network>
+  </frontend>
+  
+  <backend>
+    <database>
+      <connection_pooling>
+        <min>10</min>
+        <max>100</max>
+        <idle_timeout>30000</idle_timeout>
+      </connection_pooling>
+      
+      <query_optimization>
+        <indexing>true</indexing>
+        <query_planning>true</query_planning>
+        <batch_operations>true</batch_operations>
+        <prepared_statements>true</prepared_statements>
+      </query_optimization>
+      
+      <caching>
+        <query_cache>true</query_cache>
+        <result_cache>true</result_cache>
+        <object_cache>true</object_cache>
+      </caching>
+    </database>
+    
+    <api>
+      <rate_limiting>true</rate_limiting>
+      <request_batching>true</request_batching>
+      <response_compression>true</response_compression>
+      <etag_support>true</etag_support>
+      <partial_responses>true</partial_responses>
+    </api>
+    
+    <background_jobs>
+      <queue_processing>true</queue_processing>
+      <scheduled_tasks>true</scheduled_tasks>
+      <worker_pools>true</worker_pools>
+      <job_prioritization>true</job_prioritization>
+    </background_jobs>
+  </backend>
+  
+  <monitoring>
+    <metrics>
+      <response_time>true</response_time>
+      <throughput>true</throughput>
+      <error_rate>true</error_rate>
+      <resource_usage>true</resource_usage>
+    </metrics>
+    
+    <tools>
+      <apm>Sentry, DataDog</apm>
+      <logging>Winston, Pino</logging>
+      <tracing>OpenTelemetry</tracing>
+      <profiling>Chrome DevTools, Lighthouse</profiling>
+    </tools>
+  </monitoring>
+</performance_optimization>

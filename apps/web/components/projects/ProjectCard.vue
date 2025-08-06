@@ -1,7 +1,7 @@
 <!-- components/projects/ProjectCard.vue -->
 <template>
   <UCard 
-    class="group cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-0 bg-white dark:bg-gray-800"
+    class="group cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-0 bg-white dark:bg-neutral-800"
     @click="$emit('click')"
   >
     <!-- Card Header -->
@@ -25,17 +25,17 @@
             
             <!-- Status indicator -->
             <div :class="[
-              'absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-white dark:border-gray-800',
+              'absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-white dark:border-neutral-800',
               getStatusIndicatorColor(project.status)
             ]"></div>
           </div>
 
           <!-- Project Info -->
           <div class="flex-1 min-w-0">
-            <h3 class="font-semibold text-gray-900 dark:text-white truncate group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+            <h3 class="font-semibold text-neutral-900 dark:text-white truncate group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
               {{ project.name }}
             </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400">
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">
               {{ project.projectCode }}
             </p>
           </div>
@@ -55,7 +55,7 @@
     <!-- Card Content -->
     <div class="space-y-4">
       <!-- Description -->
-      <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+      <p class="text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2">
         {{ project.description }}
       </p>
 
@@ -63,18 +63,18 @@
       <div class="space-y-3">
         <!-- Client -->
         <div class="flex items-center gap-2">
-          <UIcon name="i-lucide-building" class="w-4 h-4 text-gray-500" />
-          <span class="text-sm text-gray-700 dark:text-gray-300">{{ project.clientName }}</span>
+          <UIcon name="i-lucide-building" class="w-4 h-4 text-neutral-500" />
+          <span class="text-sm text-neutral-700 dark:text-neutral-300">{{ project.clientName }}</span>
         </div>
 
         <!-- Progress -->
         <div>
           <div class="flex items-center justify-between text-sm mb-2">
-            <span class="text-gray-600 dark:text-gray-400">Progress</span>
-            <span class="font-medium text-gray-900 dark:text-white">{{ project.completionPercentage }}%</span>
+            <span class="text-neutral-600 dark:text-neutral-400">Progress</span>
+            <span class="font-medium text-neutral-900 dark:text-white">{{ project.completionPercentage }}%</span>
           </div>
           
-          <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+          <div class="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2">
             <div 
               :class="getProgressColor(project.completionPercentage)"
               class="h-2 rounded-full transition-all duration-500 group-hover:shadow-lg"
@@ -86,15 +86,15 @@
         <!-- Budget vs Actual -->
         <div class="flex items-center justify-between text-sm">
           <div class="flex items-center gap-2">
-            <UIcon name="i-lucide-dollar-sign" class="w-4 h-4 text-gray-500" />
-            <span class="text-gray-600 dark:text-gray-400">Budget:</span>
-            <span class="font-medium text-gray-900 dark:text-white">
+            <UIcon name="i-lucide-dollar-sign" class="w-4 h-4 text-neutral-500" />
+            <span class="text-neutral-600 dark:text-neutral-400">Budget:</span>
+            <span class="font-medium text-neutral-900 dark:text-white">
               ${{ formatCurrency(project.estimatedCost) }}
             </span>
           </div>
           
           <div class="flex items-center gap-1">
-            <span class="text-gray-600 dark:text-gray-400">Spent:</span>
+            <span class="text-neutral-600 dark:text-neutral-400">Spent:</span>
             <span :class="[
               'font-medium',
               project.actualCost > project.estimatedCost 
@@ -110,19 +110,19 @@
       <!-- Timeline -->
       <div class="flex items-center gap-4 text-sm">
         <div class="flex items-center gap-2">
-          <UIcon name="i-lucide-calendar" class="w-4 h-4 text-gray-500" />
-          <span class="text-gray-600 dark:text-gray-400">Created:</span>
-          <span class="text-gray-900 dark:text-white">{{ formatDate(project.createdAt) }}</span>
+          <UIcon name="i-lucide-calendar" class="w-4 h-4 text-neutral-500" />
+          <span class="text-neutral-600 dark:text-neutral-400">Created:</span>
+          <span class="text-neutral-900 dark:text-white">{{ formatDate(project.createdAt) }}</span>
         </div>
         
         <div class="flex items-center gap-2">
-          <UIcon name="i-lucide-clock" class="w-4 h-4 text-gray-500" />
-          <span class="text-gray-600 dark:text-gray-400">Due:</span>
+          <UIcon name="i-lucide-clock" class="w-4 h-4 text-neutral-500" />
+          <span class="text-neutral-600 dark:text-neutral-400">Due:</span>
           <span :class="[
             'font-medium',
             isOverdue(project.deadline) 
               ? 'text-red-600 dark:text-red-400' 
-              : 'text-gray-900 dark:text-white'
+              : 'text-neutral-900 dark:text-white'
           ]">
             {{ formatDate(project.deadline) }}
           </span>
@@ -150,11 +150,11 @@
 
     <!-- Card Footer - Actions -->
     <template #footer>
-      <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+      <div class="flex items-center justify-between pt-4 border-t border-neutral-200 dark:border-neutral-700">
         <!-- Team members (if any) -->
         <div class="flex items-center gap-2">
-          <UIcon name="i-lucide-users" class="w-4 h-4 text-gray-500" />
-          <span class="text-sm text-gray-600 dark:text-gray-400">Team: 3</span>
+          <UIcon name="i-lucide-users" class="w-4 h-4 text-neutral-500" />
+          <span class="text-sm text-neutral-600 dark:text-neutral-400">Team: 3</span>
         </div>
 
         <!-- Action Buttons -->
@@ -213,7 +213,7 @@
                   Archive
                 </UButton>
                 
-                <div class="border-t border-gray-200 dark:border-gray-700 my-1"></div>
+                <div class="border-t border-neutral-200 dark:border-neutral-700 my-1"></div>
                 
                 <UButton
                   variant="ghost"
@@ -291,9 +291,9 @@ const getProjectIconBg = (status: string) => {
     'planning': 'bg-blue-100 dark:bg-blue-900',
     'in-progress': 'bg-amber-100 dark:bg-amber-900',
     'completed': 'bg-green-100 dark:bg-green-900',
-    'on-hold': 'bg-gray-100 dark:bg-gray-700'
+    'on-hold': 'bg-neutral-100 dark:bg-neutral-700'
   }
-  return backgrounds[status as ProjectStatus] || 'bg-gray-100 dark:bg-gray-700'
+  return backgrounds[status as ProjectStatus] || 'bg-neutral-100 dark:bg-neutral-700'
 }
 
 const getProjectIconColor = (status: string) => {
@@ -301,9 +301,9 @@ const getProjectIconColor = (status: string) => {
     'planning': 'text-blue-600 dark:text-blue-400',
     'in-progress': 'text-amber-600 dark:text-amber-400',
     'completed': 'text-green-600 dark:text-green-400',
-    'on-hold': 'text-gray-600 dark:text-gray-400'
+    'on-hold': 'text-neutral-600 dark:text-neutral-400'
   }
-  return colors[status as ProjectStatus] || 'text-gray-600 dark:text-gray-400'
+  return colors[status as ProjectStatus] || 'text-neutral-600 dark:text-neutral-400'
 }
 
 const getStatusIndicatorColor = (status: string) => {
@@ -311,9 +311,9 @@ const getStatusIndicatorColor = (status: string) => {
     'planning': 'bg-blue-500',
     'in-progress': 'bg-amber-500',
     'completed': 'bg-green-500',
-    'on-hold': 'bg-gray-500'
+    'on-hold': 'bg-neutral-500'
   }
-  return colors[status as ProjectStatus] || 'bg-gray-500'
+  return colors[status as ProjectStatus] || 'bg-neutral-500'
 }
 
 const getStatusColor = (status: string): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {

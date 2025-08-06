@@ -3,8 +3,8 @@
   <div class="space-y-6">
     <!-- Header -->
     <div>
-      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Yeni Kategori Oluştur</h1>
-      <p class="text-gray-600 dark:text-gray-400 mt-1">
+      <h1 class="text-3xl font-bold text-neutral-900 dark:text-white">Yeni Kategori Oluştur</h1>
+      <p class="text-neutral-600 dark:text-neutral-400 mt-1">
         Özel kategoriler oluşturun ve kendine özel alanlar tanımlayın
       </p>
     </div>
@@ -66,7 +66,7 @@
                 placeholder="İkon seç"
                 :disabled="loading"
               />
-              <div class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded">
+              <div class="flex items-center justify-center w-10 h-10 bg-neutral-100 rounded">
                 <UIcon :name="formData.icon || 'i-lucide-folder'" class="w-5 h-5" />
               </div>
             </div>
@@ -76,8 +76,8 @@
           <div class="border-t pt-6">
             <div class="flex items-center justify-between mb-4">
               <div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Özel Alanlar</h3>
-                <p class="text-sm text-gray-500">Bu kategoriye özel veri alanları tanımlayın</p>
+                <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">Özel Alanlar</h3>
+                <p class="text-sm text-neutral-500">Bu kategoriye özel veri alanları tanımlayın</p>
               </div>
               <UButton 
                 @click="addProperty" 
@@ -94,7 +94,7 @@
               <div 
                 v-for="(property, index) in formData.properties" 
                 :key="index"
-                class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
+                class="p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg"
               >
                 <div class="flex items-start gap-4">
                   <!-- Property Name -->
@@ -180,7 +180,7 @@
               </div>
 
               <!-- Empty State -->
-              <div v-if="formData.properties.length === 0" class="text-center py-8 text-gray-500">
+              <div v-if="formData.properties.length === 0" class="text-center py-8 text-neutral-500">
                 <UIcon name="i-lucide-list" class="w-12 h-12 mx-auto mb-2 opacity-50" />
                 <p>Henüz özel alan eklenmedi</p>
                 <p class="text-sm">Kategorinize özel veri alanları ekleyin</p>

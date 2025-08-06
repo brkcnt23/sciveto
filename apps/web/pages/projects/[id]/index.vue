@@ -1,21 +1,21 @@
 <!-- pages/projects/[id]/index.vue -->
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
     <!-- Loading State -->
     <div v-if="loading" class="p-6">
       <div class="animate-pulse space-y-6">
-        <div class="h-8 bg-gray-200 dark:bg-gray-700 rounded-lg w-1/3"></div>
+        <div class="h-8 bg-neutral-200 dark:bg-neutral-700 rounded-lg w-1/3"></div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div v-for="i in 4" :key="i" class="h-24 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+          <div v-for="i in 4" :key="i" class="h-24 bg-neutral-200 dark:bg-neutral-700 rounded-lg"></div>
         </div>
-        <div class="h-96 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+        <div class="h-96 bg-neutral-200 dark:bg-neutral-700 rounded-lg"></div>
       </div>
     </div>
 
     <!-- Project Content -->
     <div v-else-if="project" class="space-y-6">
       <!-- Header -->
-      <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      <div class="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
         <div class="px-4 py-6 sm:px-6 lg:px-8">
           <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div class="flex items-start gap-4">
@@ -31,7 +31,7 @@
               
               <div>
                 <div class="flex items-center gap-3 mb-2">
-                  <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+                  <h1 class="text-3xl font-bold text-neutral-900 dark:text-white">
                     {{ project.name }}
                   </h1>
                   <UBadge 
@@ -42,7 +42,7 @@
                   </UBadge>
                 </div>
                 
-                <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+                <div class="flex items-center gap-4 text-sm text-neutral-600 dark:text-neutral-400">
                   <span>{{ project.projectCode }}</span>
                   <span>•</span>
                   <span>{{ project.clientName }}</span>
@@ -50,7 +50,7 @@
                   <span>Due {{ formatDate(project.deadline) }}</span>
                 </div>
                 
-                <p class="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl">
+                <p class="text-neutral-600 dark:text-neutral-400 mt-2 max-w-2xl">
                   {{ project.description }}
                 </p>
               </div>
@@ -77,15 +77,15 @@
           <UCard class="relative overflow-hidden">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Progress</p>
-                <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ project.completionPercentage }}%</p>
+                <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Progress</p>
+                <p class="text-3xl font-bold text-neutral-900 dark:text-white">{{ project.completionPercentage }}%</p>
                 <p class="text-sm text-green-600 dark:text-green-400 mt-1">On track</p>
               </div>
               <div class="p-3 bg-blue-100 dark:bg-blue-900 rounded-full">
                 <UIcon name="i-lucide-trending-up" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
               </div>
             </div>
-            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-700">
+            <div class="absolute bottom-0 left-0 right-0 h-1 bg-neutral-200 dark:bg-neutral-700">
               <div 
                 class="h-full bg-blue-500 transition-all duration-500"
                 :style="{ width: project.completionPercentage + '%' }"
@@ -96,8 +96,8 @@
           <UCard>
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Budget</p>
-                <p class="text-3xl font-bold text-gray-900 dark:text-white">${{ formatCurrency(project.estimatedCost) }}</p>
+                <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Budget</p>
+                <p class="text-3xl font-bold text-neutral-900 dark:text-white">${{ formatCurrency(project.estimatedCost) }}</p>
                 <p :class="[
                   'text-sm mt-1',
                   project.actualCost > project.estimatedCost 
@@ -116,9 +116,9 @@
           <UCard>
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Timeline</p>
-                <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ remainingDays }}</p>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">days remaining</p>
+                <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Timeline</p>
+                <p class="text-3xl font-bold text-neutral-900 dark:text-white">{{ remainingDays }}</p>
+                <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">days remaining</p>
               </div>
               <div class="p-3 bg-purple-100 dark:bg-purple-900 rounded-full">
                 <UIcon name="i-lucide-calendar" class="w-6 h-6 text-purple-600 dark:text-purple-400" />
@@ -129,9 +129,9 @@
           <UCard>
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Team</p>
-                <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ teamMembers.length }}</p>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">active members</p>
+                <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Team</p>
+                <p class="text-3xl font-bold text-neutral-900 dark:text-white">{{ teamMembers.length }}</p>
+                <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">active members</p>
               </div>
               <div class="p-3 bg-orange-100 dark:bg-orange-900 rounded-full">
                 <UIcon name="i-lucide-users" class="w-6 h-6 text-orange-600 dark:text-orange-400" />
@@ -150,7 +150,7 @@
             <UCard>
               <template #header>
                 <div class="flex items-center justify-between">
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Stock Allocation</h3>
+                  <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">Stock Allocation</h3>
                   <UButton variant="outline" size="sm" icon="i-lucide-plus">
                     Add Item
                   </UButton>
@@ -159,7 +159,7 @@
 
               <div class="space-y-4">
                 <div v-for="allocation in stockAllocations" :key="allocation.id" 
-                     class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                     class="p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors">
                   <div class="flex items-center justify-between mb-3">
                     <div class="flex items-center gap-3">
                       <div class="p-2 bg-primary-100 dark:bg-primary-900 rounded-lg">
@@ -167,16 +167,16 @@
                                class="w-4 h-4 text-primary-600 dark:text-primary-400" />
                       </div>
                       <div>
-                        <h4 class="font-medium text-gray-900 dark:text-white">{{ allocation.itemName }}</h4>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ allocation.category }}</p>
+                        <h4 class="font-medium text-neutral-900 dark:text-white">{{ allocation.itemName }}</h4>
+                        <p class="text-sm text-neutral-600 dark:text-neutral-400">{{ allocation.category }}</p>
                       </div>
                     </div>
                     
                     <div class="text-right">
-                      <div class="text-sm font-medium text-gray-900 dark:text-white">
+                      <div class="text-sm font-medium text-neutral-900 dark:text-white">
                         {{ allocation.usedQuantity }}/{{ allocation.allocatedQuantity }} {{ allocation.unit }}
                       </div>
-                      <div class="text-xs text-gray-600 dark:text-gray-400">
+                      <div class="text-xs text-neutral-600 dark:text-neutral-400">
                         {{ getUsagePercentage(allocation) }}% used
                       </div>
                     </div>
@@ -184,10 +184,10 @@
 
                   <div class="space-y-2">
                     <div class="flex items-center justify-between text-xs">
-                      <span class="text-gray-600 dark:text-gray-400">Usage Progress</span>
+                      <span class="text-neutral-600 dark:text-neutral-400">Usage Progress</span>
                       <span class="font-medium">{{ getUsagePercentage(allocation) }}%</span>
                     </div>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div class="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2">
                       <div 
                         :class="getUsageColor(getUsagePercentage(allocation))"
                         class="h-2 rounded-full transition-all duration-300"
@@ -196,8 +196,8 @@
                     </div>
                   </div>
                   
-                  <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
-                    <div class="text-sm text-gray-600 dark:text-gray-400">
+                  <div class="flex items-center justify-between mt-3 pt-3 border-t border-neutral-200 dark:border-neutral-700">
+                    <div class="text-sm text-neutral-600 dark:text-neutral-400">
                       Cost: ${{ formatCurrency(allocation.totalCost) }}
                     </div>
                     <div class="flex items-center gap-2">
@@ -212,12 +212,12 @@
             <!-- Recent Activity -->
             <UCard>
               <template #header>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Recent Activity</h3>
+                <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">Recent Activity</h3>
               </template>
 
               <div class="space-y-4">
                 <div v-for="activity in recentActivities" :key="activity.id" 
-                     class="flex items-start gap-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                     class="flex items-start gap-3 p-3 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg transition-colors">
                   <div :class="[
                     'p-2 rounded-full flex-shrink-0',
                     getActivityColor(activity.type)
@@ -226,16 +226,16 @@
                   </div>
                   
                   <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium text-gray-900 dark:text-white">
+                    <p class="text-sm font-medium text-neutral-900 dark:text-white">
                       {{ activity.title }}
                     </p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">
                       {{ activity.description }}
                     </p>
                     <div class="flex items-center gap-2 mt-1">
-                      <span class="text-xs text-gray-500">{{ activity.user }}</span>
-                      <span class="text-xs text-gray-400">•</span>
-                      <span class="text-xs text-gray-500">{{ formatRelativeTime(activity.timestamp) }}</span>
+                      <span class="text-xs text-neutral-500">{{ activity.user }}</span>
+                      <span class="text-xs text-neutral-400">•</span>
+                      <span class="text-xs text-neutral-500">{{ formatRelativeTime(activity.timestamp) }}</span>
                     </div>
                   </div>
                 </div>
@@ -248,45 +248,45 @@
             <!-- Project Info -->
             <UCard>
               <template #header>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Project Details</h3>
+                <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">Project Details</h3>
               </template>
 
               <div class="space-y-4">
                 <div class="flex items-center justify-between">
-                  <span class="text-sm text-gray-600 dark:text-gray-400">Priority</span>
+                  <span class="text-sm text-neutral-600 dark:text-neutral-400">Priority</span>
                   <UBadge :color="getPriorityColor(project.priority)" variant="soft">
                     {{ project.priority }}
                   </UBadge>
                 </div>
                 
                 <div class="flex items-center justify-between">
-                  <span class="text-sm text-gray-600 dark:text-gray-400">Start Date</span>
-                  <span class="text-sm font-medium text-gray-900 dark:text-white">
+                  <span class="text-sm text-neutral-600 dark:text-neutral-400">Start Date</span>
+                  <span class="text-sm font-medium text-neutral-900 dark:text-white">
                     {{ formatDate(project.createdAt) }}
                   </span>
                 </div>
                 
                 <div class="flex items-center justify-between">
-                  <span class="text-sm text-gray-600 dark:text-gray-400">Deadline</span>
+                  <span class="text-sm text-neutral-600 dark:text-neutral-400">Deadline</span>
                   <span :class="[
                     'text-sm font-medium',
                     isOverdue(project.deadline) 
                       ? 'text-red-600 dark:text-red-400' 
-                      : 'text-gray-900 dark:text-white'
+                      : 'text-neutral-900 dark:text-white'
                   ]">
                     {{ formatDate(project.deadline) }}
                   </span>
                 </div>
                 
                 <div class="flex items-center justify-between">
-                  <span class="text-sm text-gray-600 dark:text-gray-400">Manager</span>
+                  <span class="text-sm text-neutral-600 dark:text-neutral-400">Manager</span>
                   <div class="flex items-center gap-2">
                     <div class="w-6 h-6 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center">
                       <span class="text-xs font-medium text-primary-600 dark:text-primary-400">
                         {{ project.manager?.name?.charAt(0) || 'PM' }}
                       </span>
                     </div>
-                    <span class="text-sm font-medium text-gray-900 dark:text-white">
+                    <span class="text-sm font-medium text-neutral-900 dark:text-white">
                       {{ project.manager?.name || 'Project Manager' }}
                     </span>
                   </div>
@@ -298,7 +298,7 @@
             <UCard>
               <template #header>
                 <div class="flex items-center justify-between">
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Team Members</h3>
+                  <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">Team Members</h3>
                   <UButton variant="outline" size="sm" icon="i-lucide-user-plus">
                     Add Member
                   </UButton>
@@ -307,7 +307,7 @@
 
               <div class="space-y-3">
                 <div v-for="member in teamMembers" :key="member.id" 
-                     class="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                     class="flex items-center justify-between p-3 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg transition-colors">
                   <div class="flex items-center gap-3">
                     <div class="w-8 h-8 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center">
                       <span class="text-sm font-medium text-primary-600 dark:text-primary-400">
@@ -315,17 +315,17 @@
                       </span>
                     </div>
                     <div>
-                      <div class="text-sm font-medium text-gray-900 dark:text-white">{{ member.name }}</div>
-                      <div class="text-xs text-gray-600 dark:text-gray-400">{{ member.role }}</div>
+                      <div class="text-sm font-medium text-neutral-900 dark:text-white">{{ member.name }}</div>
+                      <div class="text-xs text-neutral-600 dark:text-neutral-400">{{ member.role }}</div>
                     </div>
                   </div>
                   
                   <div class="flex items-center gap-1">
                     <div :class="[
                       'w-2 h-2 rounded-full',
-                      member.isActive ? 'bg-green-500' : 'bg-gray-400'
+                      member.isActive ? 'bg-green-500' : 'bg-neutral-400'
                     ]"></div>
-                    <span class="text-xs text-gray-500">
+                    <span class="text-xs text-neutral-500">
                       {{ member.isActive ? 'Active' : 'Offline' }}
                     </span>
                   </div>
@@ -336,7 +336,7 @@
             <!-- Operations Panel -->
             <UCard>
               <template #header>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Operations</h3>
+                <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">Operations</h3>
               </template>
 
               <div class="space-y-3">
@@ -362,9 +362,9 @@
     <!-- Error State -->
     <div v-else class="flex items-center justify-center min-h-[50vh]">
       <div class="text-center">
-        <UIcon name="i-lucide-alert-circle" class="w-16 h-16 text-gray-400 mx-auto mb-4" />
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Project not found</h3>
-        <p class="text-gray-600 dark:text-gray-400 mb-6">The project you're looking for doesn't exist or has been removed.</p>
+        <UIcon name="i-lucide-alert-circle" class="w-16 h-16 text-neutral-400 mx-auto mb-4" />
+        <h3 class="text-lg font-semibold text-neutral-900 dark:text-white mb-2">Project not found</h3>
+        <p class="text-neutral-600 dark:text-neutral-400 mb-6">The project you're looking for doesn't exist or has been removed.</p>
         <UButton color="primary" @click="$router.push('/projects')">
           Back to Projects
         </UButton>
@@ -521,9 +521,9 @@ const getProjectIconBg = (status: string) => {
     'planning': 'bg-blue-100 dark:bg-blue-900',
     'in-progress': 'bg-amber-100 dark:bg-amber-900', 
     'completed': 'bg-green-100 dark:bg-green-900',
-    'on-hold': 'bg-gray-100 dark:bg-gray-700'
+    'on-hold': 'bg-neutral-100 dark:bg-neutral-700'
   }
-  return backgrounds[status as ProjectStatus] || 'bg-gray-100 dark:bg-gray-700'
+  return backgrounds[status as ProjectStatus] || 'bg-neutral-100 dark:bg-neutral-700'
 }
 
 const getProjectIconColor = (status: string) => {
@@ -531,9 +531,9 @@ const getProjectIconColor = (status: string) => {
     'planning': 'text-blue-600 dark:text-blue-400',
     'in-progress': 'text-amber-600 dark:text-amber-400',
     'completed': 'text-green-600 dark:text-green-400', 
-    'on-hold': 'text-gray-600 dark:text-gray-400'
+    'on-hold': 'text-neutral-600 dark:text-neutral-400'
   }
-  return colors[status as ProjectStatus] || 'text-gray-600 dark:text-gray-400'
+  return colors[status as ProjectStatus] || 'text-neutral-600 dark:text-neutral-400'
 }
 
 const getStatusColor = (status: string): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {
@@ -605,7 +605,7 @@ const getActivityColor = (type: string) => {
     'stock': 'bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-400',
     'note': 'bg-purple-100 text-purple-600 dark:bg-purple-900 dark:text-purple-400'
   }
-  return colors[type as 'progress' | 'stock' | 'note'] || 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400'
+  return colors[type as 'progress' | 'stock' | 'note'] || 'bg-neutral-100 text-neutral-600 dark:bg-neutral-700 dark:text-neutral-400'
 }
 
 const formatCurrency = (amount: number) => {

@@ -12,6 +12,17 @@
       
       <div class="flex gap-2">
         <UButton 
+          @click="refreshCategories"
+          icon="i-lucide-refresh-cw"
+          :loading="refreshing"
+          :disabled="refreshing"
+          :color="refreshing ? 'neutral' : 'success'"
+          variant="soft"
+        >
+          Yenile
+        </UButton>
+        
+        <UButton 
           to="/categories/from-template"
           color="primary"
           icon="i-lucide-template"
@@ -320,7 +331,7 @@ definePageMeta({
 })
 
 // Imports
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import type { Category } from '~/types/category'
 import { useCategoriesApi, type ApiCategory } from '~/composables/useCategoriesApi'
@@ -336,17 +347,25 @@ interface TemplateInfo {
 
 // State
 const router = useRouter()
+const config = useRuntimeConfig()
 const activeTab = ref('all')
 const showCreateOptions = ref(false)
 const showTemplateInfo = ref(false)
 
 // API Integration
-const { fetchCategories, deleteCategory: deleteCategoryApi, loading, error } = useCategoriesApi()
-const { success: showSuccessToast, error: showErrorToast } = useToastManager()
+const { fetchCategories, deleteCategory: deleteCategoryApi, loading, error: apiError } = useCategoriesApi()
+const { success, error } = useDualToast()
 
 // Categories data from API
 const allCategories = ref<(ApiCategory & { itemCount?: number; templateInfo?: TemplateInfo })[]>([])
 const refreshing = ref(false)
+
+// Watch for API changes and refresh if needed
+watch(apiError, (newVal) => {
+  if (newVal) {
+    error('Hata', 'Kategori yüklenirken hata oluştu: ' + newVal)
+  }
+})
 
 // Computed
 const totalCategories = computed(() => allCategories.value.length)
@@ -369,108 +388,74 @@ const filteredCategories = computed(() => {
 const loadCategories = async () => {
   refreshing.value = true
   try {
+    console.log("Fetching categories from API...")
     const categories = await fetchCategories()
+    console.log("API returned categories:", categories)
     
-    // Fallback to mock data if API returns empty or fails
-    if (categories.length === 0) {
-      allCategories.value = getMockCategories()
+    if (Array.isArray(categories)) {
+      // Process each category from API
+      allCategories.value = categories.map(cat => {
+        // Temizlenmiş kategori adı (sayısal sonekleri temizle)
+        const cleanName = cat.name.replace(/\s*\(\d+\)$/g, '');
+        
+        // Kategori türüne göre varsayılan özellikler belirle
+        let defaultProperties = [];
+        
+        if (cleanName === 'Membran') {
+          defaultProperties = [
+            { id: 'p1', name: 'Marka', type: 'select', required: true, options: ['Serge Ferrari', 'Mehler'] },
+            { id: 'p2', name: 'Ağırlık', type: 'number', required: true, unit: 'g/m²' },
+            { id: 'p3', name: 'Genişlik', type: 'number', required: false, unit: 'cm' },
+            { id: 'p4', name: 'Malzeme Tipi', type: 'select', required: true, options: ['PVC-P', 'PTFE'] },
+            { id: 'p5', name: 'Garanti', type: 'number', required: false, unit: 'yıl' },
+            { id: 'p6', name: 'Uygulama', type: 'textarea', required: false }
+          ];
+        } else if (cleanName === 'Halat') {
+          defaultProperties = [
+            { id: 'p1', name: 'Yapı', type: 'select', required: true, options: ['6x19', '7x7'] },
+            { id: 'p2', name: 'Çap', type: 'number', required: true, unit: 'mm' },
+            { id: 'p3', name: 'Malzeme', type: 'select', required: true, options: ['Carbon Steel', 'AISI 316'] },
+            { id: 'p4', name: 'Kopma Kuvveti', type: 'number', required: false, unit: 'kN' }
+          ];
+        } else {
+          // Diğer kategoriler için varsayılan özellikler
+          defaultProperties = [
+            { id: 'p1', name: 'Marka', type: 'text', required: false },
+            { id: 'p2', name: 'Model', type: 'text', required: false },
+            { id: 'p3', name: 'Özellikler', type: 'textarea', required: false }
+          ];
+        }
+        
+        return {
+          ...cat,
+          // Temizlenmiş adı kullan
+          name: cleanName,
+          // Stok sayısı için _count veya itemCount kullan
+          itemCount: cat._count?.stockItems ?? cat.itemCount ?? 0,
+          // Eğer ikon yoksa kategori adına göre ekle
+          icon: cat.icon || getIconForCategory(cleanName),
+          // Frontend için gerekli olan properties ekle
+          properties: defaultProperties,
+          // Template bilgisi
+          templateInfo: cat.isSystemBased && cat.templateId ? {
+            name: cleanName,
+            version: cat.templateVersion || '1.0',
+            standardCount: 4,
+            fieldCount: defaultProperties.length
+          } : undefined
+        };
+      });
+      console.log("Processed categories:", allCategories.value)
     } else {
-      allCategories.value = categories.map(cat => ({
-        ...cat,
-        itemCount: cat._count?.stockItems || 0,
-        // Add default icons based on category name
-        icon: getIconForCategory(cat.name),
-        templateInfo: cat.isSystemBased && cat.templateId ? {
-          name: cat.name,
-          version: cat.templateVersion || '1.0',
-          standardCount: 0, // Bu bilgiyi template'den alacağız
-          fieldCount: 0 // Bu bilgiyi template'den alacağız
-        } : undefined
-      }))
+      allCategories.value = []
     }
   } catch (err) {
-    console.warn('API failed, using mock data:', err)
-    allCategories.value = getMockCategories()
+    console.error('Failed to load categories:', err)
+    error('Hata', 'Kategoriler yüklenirken bir hata oluştu')
+    allCategories.value = []
   } finally {
     refreshing.value = false
   }
-}
-
-const getMockCategories = (): (ApiCategory & { itemCount?: number; templateInfo?: TemplateInfo })[] => {
-  return [
-    {
-      id: 'mock-1',
-      name: 'Profil',
-      description: 'HEA, HEB, IPE serisi yapısal profiller',
-      color: '#3B82F6',
-      organizationId: 'mock-org',
-      isSystemBased: true,
-      templateId: 'template-1',
-      templateVersion: '1.0',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      icon: 'i-lucide-box',
-      itemCount: 25,
-      templateInfo: {
-        name: 'Profil',
-        version: '1.0',
-        standardCount: 15,
-        fieldCount: 8
-      }
-    },
-    {
-      id: 'mock-2',
-      name: 'Plaka',
-      description: 'S235, S355, paslanmaz çelik plakalar',
-      color: '#10B981',
-      organizationId: 'mock-org',
-      isSystemBased: true,
-      templateId: 'template-2',
-      templateVersion: '1.0',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      icon: 'i-lucide-square',
-      itemCount: 18,
-      templateInfo: {
-        name: 'Plaka',
-        version: '1.0',
-        standardCount: 10,
-        fieldCount: 6
-      }
-    },
-    {
-      id: 'mock-3',
-      name: 'Halat',
-      description: 'Çelik halat, paslanmaz halat, galvanizli halat',
-      color: '#F59E0B',
-      organizationId: 'mock-org',
-      isSystemBased: true,
-      templateId: 'template-3',
-      templateVersion: '1.0',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      icon: 'i-lucide-git-branch',
-      itemCount: 12,
-      templateInfo: {
-        name: 'Halat',
-        version: '1.0',
-        standardCount: 8,
-        fieldCount: 5
-      }
-    },
-    {
-      id: 'mock-4',
-      name: 'Özel Aksesuarlar',
-      description: 'Firmaya özel üretim aksesuarları',
-      color: '#8B5CF6',
-      organizationId: 'mock-org',
-      isSystemBased: false,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      icon: 'i-lucide-wrench',
-      itemCount: 8
-    }
-  ]
 }
 
 const getIconForCategory = (name: string): string => {
@@ -499,8 +484,9 @@ const getIconForCategory = (name: string): string => {
 }
 
 // Methods
-const viewCategory = (category: any) => {
-  router.push(`/categories/${category.id}`)
+const viewCategory = async (category: any) => {
+  console.log('Navigating to category:', category.id)
+  await navigateTo(`/categories/${category.id}`)
 }
 
 const getCategoryActions = (category: any) => [
@@ -523,13 +509,13 @@ const getCategoryActions = (category: any) => [
 
 const deleteCategory = async (category: ApiCategory) => {
   try {
-    const success = await deleteCategoryApi(category.id)
-    if (success) {
-      showSuccessToast('Kategori silindi')
+    const deleteResult = await deleteCategoryApi(category.id)
+    if (deleteResult) {
+      success('Başarılı', 'Kategori silindi')
       await loadCategories() // Reload categories
     }
   } catch (err) {
-    showErrorToast('Kategori silinemedi')
+    error('Hata', 'Kategori silinemedi')
   }
 }
 
@@ -549,6 +535,14 @@ const formatDate = (date: Date | string) => {
     month: 'short',
     year: 'numeric'
   }).format(new Date(date))
+}
+
+// Kategorileri yenile
+const refreshCategories = async () => {
+  // API'den yeni verileri getir
+  await loadCategories()
+  
+  success('Başarılı', 'Kategoriler yenilendi')
 }
 
 // Lifecycle

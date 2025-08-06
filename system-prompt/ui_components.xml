@@ -1,0 +1,97 @@
+<ui_components>
+  <datatable>
+    <component>UTable</component>
+    <features>
+      <view_modes>
+        <mode>table</mode>
+        <mode>grid</mode>
+        <mode>kanban</mode>
+        <mode>timeline</mode>
+        <mode>analytics</mode>
+      </view_modes>
+      
+      <density_options>
+        <option value="compact">Compact (8px padding)</option>
+        <option value="normal">Normal (12px padding)</option>
+        <option value="comfortable">Comfortable (16px padding)</option>
+      </density_options>
+      
+      <pagination>
+        <type>server-side</type>
+        <type>client-side</type>
+        <type>infinite-scroll</type>
+        <type>virtual-scroll</type>
+        <options>[10, 25, 50, 100, 500, 1000]</options>
+      </pagination>
+      
+      <selection>
+        <checkbox>true</checkbox>
+        <multi_select>true</multi_select>
+        <range_select>true</range_select>
+        <select_all>true</select_all>
+      </selection>
+      
+      <sorting>
+        <multi_column>true</multi_column>
+        <custom_comparators>true</custom_comparators>
+        <save_preference>true</save_preference>
+      </sorting>
+      
+      <filtering>
+        <global_search>true</global_search>
+        <column_filters>true</column_filters>
+        <advanced_filters>true</advanced_filters>
+        <filter_presets>true</filter_presets>
+        <filter_builder>true</filter_builder>
+      </filtering>
+      
+      <editing>
+        <inline>true</inline>
+        <cell_editing>true</cell_editing>
+        <row_editing>true</row_editing>
+        <validation>true</validation>
+        <auto_save>true</auto_save>
+      </editing>
+      
+      <export>
+        <excel>true</excel>
+        <csv>true</csv>
+        <pdf>true</pdf>
+        <json>true</json>
+        <print>true</print>
+      </export>
+    </features>
+  </datatable>
+  
+  <modals>
+    <component>UModal</component>
+    <sizes>xs, sm, md, lg, xl, full</sizes>
+    <features>
+      <draggable>true</draggable>
+      <resizable>true</resizable>
+      <fullscreen>true</fullscreen>
+      <stacked>true</stacked>
+    </features>
+  </modals>
+  
+  <forms>
+    <component>UForm</component>
+    <validation>Zod schemas</validation>
+    <features>
+      <auto_save>true</auto_save>
+      <draft_mode>true</draft_mode>
+      <field_dependencies>true</field_dependencies>
+      <conditional_fields>true</conditional_fields>
+    </features>
+  </forms>
+  
+  <command_palette>
+    <component>UCommandPalette</component>
+    <features>
+      <global_search>true</global_search>
+      <quick_actions>true</quick_actions>
+      <recent_items>true</recent_items>
+      <ai_suggestions>true</ai_suggestions>
+    </features>
+  </command_palette>
+</ui_components>

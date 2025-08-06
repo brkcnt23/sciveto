@@ -19,17 +19,17 @@
   </div>
 
   <!-- Page Header -->
-  <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg mb-6">
+  <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg mb-6">
     <div class="px-4 py-6 sm:px-6 lg:px-8">
       <div class="flex items-center gap-4">
         <div class="p-3 rounded-xl bg-primary-100 dark:bg-primary-900">
           <UIcon name="i-lucide-layout-dashboard" class="w-6 h-6 text-primary-600 dark:text-primary-400" />
         </div>
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+            <h1 class="text-2xl font-bold text-neutral-900 dark:text-white">
               Dashboard
             </h1>
-            <p class="text-gray-600 dark:text-gray-400 mt-1">
+            <p class="text-neutral-600 dark:text-neutral-400 mt-1">
               Welcome back! Here's what's happening with your projects.
             </p>
           </div>
@@ -44,8 +44,8 @@
         <UCard>
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Projects</p>
-              <p class="text-2xl font-bold text-gray-900 dark:text-white">24</p>
+              <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Total Projects</p>
+              <p class="text-2xl font-bold text-neutral-900 dark:text-white">24</p>
             </div>
             <div class="p-3 bg-primary-100 dark:bg-primary-900 rounded-full">
               <UIcon name="i-lucide-briefcase" class="w-5 h-5 text-primary-600 dark:text-primary-400" />
@@ -56,8 +56,8 @@
         <UCard>
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Stock Items</p>
-              <p class="text-2xl font-bold text-gray-900 dark:text-white">156</p>
+              <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Stock Items</p>
+              <p class="text-2xl font-bold text-neutral-900 dark:text-white">156</p>
             </div>
             <div class="p-3 bg-success-100 dark:bg-success-900 rounded-full">
               <UIcon name="i-lucide-package" class="w-5 h-5 text-success-600 dark:text-success-400" />
@@ -68,8 +68,8 @@
         <UCard>
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Active Users</p>
-              <p class="text-2xl font-bold text-gray-900 dark:text-white">12</p>
+              <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Active Users</p>
+              <p class="text-2xl font-bold text-neutral-900 dark:text-white">12</p>
             </div>
             <div class="p-3 bg-info-100 dark:bg-info-900 rounded-full">
               <UIcon name="i-lucide-users" class="w-5 h-5 text-info-600 dark:text-info-400" />
@@ -80,8 +80,8 @@
         <UCard>
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Revenue</p>
-              <p class="text-2xl font-bold text-gray-900 dark:text-white">$45.2K</p>
+              <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Revenue</p>
+              <p class="text-2xl font-bold text-neutral-900 dark:text-white">$45.2K</p>
             </div>
             <div class="p-3 bg-warning-100 dark:bg-warning-900 rounded-full">
               <UIcon name="i-lucide-dollar-sign" class="w-5 h-5 text-warning-600 dark:text-warning-400" />
@@ -92,7 +92,7 @@
 
       <!-- Quick Actions -->
       <div class="mt-8">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h2>
+        <h2 class="text-lg font-semibold text-neutral-900 dark:text-white mb-4">Quick Actions</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <UCard class="cursor-pointer hover:shadow-lg transition-shadow">
             <div class="flex items-center gap-4">
@@ -100,8 +100,8 @@
                 <UIcon name="i-lucide-plus" class="w-5 h-5 text-primary-600 dark:text-primary-400" />
               </div>
               <div>
-                <h3 class="font-medium text-gray-900 dark:text-white">Create Project</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Start a new project</p>
+                <h3 class="font-medium text-neutral-900 dark:text-white">Create Project</h3>
+                <p class="text-sm text-neutral-600 dark:text-neutral-400">Start a new project</p>
               </div>
             </div>
           </UCard>
@@ -112,8 +112,8 @@
                 <UIcon name="i-lucide-package-plus" class="w-5 h-5 text-success-600 dark:text-success-400" />
               </div>
               <div>
-                <h3 class="font-medium text-gray-900 dark:text-white">Add Stock Item</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Manage inventory</p>
+                <h3 class="font-medium text-neutral-900 dark:text-white">Add Stock Item</h3>
+                <p class="text-sm text-neutral-600 dark:text-neutral-400">Manage inventory</p>
               </div>
             </div>
           </UCard>
@@ -124,8 +124,8 @@
                 <UIcon name="i-lucide-user-plus" class="w-5 h-5 text-info-600 dark:text-info-400" />
               </div>
               <div>
-                <h3 class="font-medium text-gray-900 dark:text-white">Invite User</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Add team member</p>
+                <h3 class="font-medium text-neutral-900 dark:text-white">Invite User</h3>
+                <p class="text-sm text-neutral-600 dark:text-neutral-400">Add team member</p>
               </div>
             </div>
           </UCard>
@@ -134,17 +134,17 @@
 
       <!-- Recent Activity -->
       <div class="mt-8">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Activity</h2>
+        <h2 class="text-lg font-semibold text-neutral-900 dark:text-white mb-4">Recent Activity</h2>
         <UCard>
-          <div class="divide-y divide-gray-200 dark:divide-gray-700">
+          <div class="divide-y divide-neutral-200 dark:divide-neutral-700">
             <div class="py-4 first:pt-0 last:pb-0">
               <div class="flex items-center gap-4">
                 <div class="p-2 bg-green-100 dark:bg-green-900 rounded-full">
                   <UIcon name="i-lucide-check" class="w-4 h-4 text-green-600 dark:text-green-400" />
                 </div>
                 <div class="flex-1">
-                  <p class="text-sm font-medium text-gray-900 dark:text-white">Project "Website Redesign" completed</p>
-                  <p class="text-xs text-gray-600 dark:text-gray-400">2 hours ago</p>
+                  <p class="text-sm font-medium text-neutral-900 dark:text-white">Project "Website Redesign" completed</p>
+                  <p class="text-xs text-neutral-600 dark:text-neutral-400">2 hours ago</p>
                 </div>
               </div>
             </div>
@@ -155,8 +155,8 @@
                   <UIcon name="i-lucide-package" class="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div class="flex-1">
-                  <p class="text-sm font-medium text-gray-900 dark:text-white">New stock items added to inventory</p>
-                  <p class="text-xs text-gray-600 dark:text-gray-400">5 hours ago</p>
+                  <p class="text-sm font-medium text-neutral-900 dark:text-white">New stock items added to inventory</p>
+                  <p class="text-xs text-neutral-600 dark:text-neutral-400">5 hours ago</p>
                 </div>
               </div>
             </div>
@@ -167,8 +167,8 @@
                   <UIcon name="i-lucide-users" class="w-4 h-4 text-purple-600 dark:text-purple-400" />
                 </div>
                 <div class="flex-1">
-                  <p class="text-sm font-medium text-gray-900 dark:text-white">New team member joined</p>
-                  <p class="text-xs text-gray-600 dark:text-gray-400">1 day ago</p>
+                  <p class="text-sm font-medium text-neutral-900 dark:text-white">New team member joined</p>
+                  <p class="text-xs text-neutral-600 dark:text-neutral-400">1 day ago</p>
                 </div>
               </div>
             </div>

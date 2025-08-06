@@ -1,0 +1,165 @@
+<keyboard_shortcuts>
+  <global>
+    <!-- Windows -->
+    <shortcut key="ctrl+k" action="openCommandPalette" platform="windows" />
+    <shortcut key="ctrl+/" action="toggleSidebar" platform="windows" />
+    <shortcut key="ctrl+," action="openSettings" platform="windows" />
+    <shortcut key="alt+f4" action="closeApplication" platform="windows" />
+    <shortcut key="f1" action="openHelp" platform="windows" />
+    <shortcut key="f11" action="toggleFullscreen" platform="windows" />
+    
+    <!-- Mac -->
+    <shortcut key="cmd+k" action="openCommandPalette" platform="mac" />
+    <shortcut key="cmd+/" action="toggleSidebar" platform="mac" />
+    <shortcut key="cmd+," action="openSettings" platform="mac" />
+    
+    <!-- Universal -->
+    <shortcut key="esc" action="closeModal" platform="all" />
+  </global>
+  
+  <datatable>
+    <!-- Windows -->
+    <shortcut key="ctrl+f" action="focusSearch" platform="windows" />
+    <shortcut key="ctrl+a" action="selectAll" platform="windows" />
+    <shortcut key="ctrl+d" action="duplicateRow" platform="windows" />
+    <shortcut key="ctrl+shift+d" action="deleteSelected" platform="windows" />
+    <shortcut key="ctrl+e" action="exportData" platform="windows" />
+    <shortcut key="ctrl+shift+e" action="exportExcel" platform="windows" />
+    <shortcut key="ctrl+i" action="importData" platform="windows" />
+    <shortcut key="ctrl+s" action="saveChanges" platform="windows" />
+    <shortcut key="ctrl+z" action="undo" platform="windows" />
+    <shortcut key="ctrl+y" action="redo" platform="windows" />
+    <shortcut key="ctrl+shift+z" action="redo" platform="windows" />
+    <shortcut key="ctrl+p" action="print" platform="windows" />
+    <shortcut key="ctrl+n" action="newRow" platform="windows" />
+    <shortcut key="ctrl+r" action="refreshData" platform="windows" />
+    <shortcut key="f5" action="refreshData" platform="windows" />
+    <shortcut key="f2" action="editCell" platform="windows" />
+    <shortcut key="delete" action="deleteCell" platform="windows" />
+    <shortcut key="ctrl+c" action="copyCell" platform="windows" />
+    <shortcut key="ctrl+v" action="pasteCell" platform="windows" />
+    <shortcut key="ctrl+x" action="cutCell" platform="windows" />
+    
+    <!-- Mac -->
+    <shortcut key="cmd+f" action="focusSearch" platform="mac" />
+    <shortcut key="cmd+a" action="selectAll" platform="mac" />
+    <shortcut key="cmd+d" action="duplicateRow" platform="mac" />
+    <shortcut key="cmd+delete" action="deleteSelected" platform="mac" />
+    <shortcut key="cmd+e" action="exportData" platform="mac" />
+    <shortcut key="cmd+shift+e" action="exportExcel" platform="mac" />
+    <shortcut key="cmd+i" action="importData" platform="mac" />
+    <shortcut key="cmd+s" action="saveChanges" platform="mac" />
+    <shortcut key="cmd+z" action="undo" platform="mac" />
+    <shortcut key="cmd+shift+z" action="redo" platform="mac" />
+    <shortcut key="cmd+p" action="print" platform="mac" />
+    <shortcut key="cmd+n" action="newRow" platform="mac" />
+    <shortcut key="cmd+r" action="refreshData" platform="mac" />
+    
+    <!-- Universal Navigation -->
+    <shortcut key="space" action="toggleRowSelection" platform="all" />
+    <shortcut key="enter" action="confirmEdit" platform="all" />
+    <shortcut key="tab" action="nextCell" platform="all" />
+    <shortcut key="shift+tab" action="previousCell" platform="all" />
+    <shortcut key="arrow_up" action="previousRow" platform="all" />
+    <shortcut key="arrow_down" action="nextRow" platform="all" />
+    <shortcut key="arrow_left" action="previousCell" platform="all" />
+    <shortcut key="arrow_right" action="nextCell" platform="all" />
+    <shortcut key="page_up" action="previousPage" platform="all" />
+    <shortcut key="page_down" action="nextPage" platform="all" />
+    <shortcut key="home" action="firstRow" platform="all" />
+    <shortcut key="end" action="lastRow" platform="all" />
+    <shortcut key="ctrl+home" action="firstCell" platform="all" />
+    <shortcut key="ctrl+end" action="lastCell" platform="all" />
+  </datatable>
+  
+  <forms>
+    <!-- Windows -->
+    <shortcut key="ctrl+enter" action="submitForm" platform="windows" />
+    <shortcut key="alt+s" action="saveForm" platform="windows" />
+    <shortcut key="alt+c" action="cancelForm" platform="windows" />
+    <shortcut key="f3" action="findNext" platform="windows" />
+    <shortcut key="shift+f3" action="findPrevious" platform="windows" />
+    
+    <!-- Mac -->
+    <shortcut key="cmd+enter" action="submitForm" platform="mac" />
+    <shortcut key="cmd+s" action="saveForm" platform="mac" />
+    
+    <!-- Universal -->
+    <shortcut key="esc" action="cancelEdit" platform="all" />
+    <shortcut key="tab" action="nextField" platform="all" />
+    <shortcut key="shift+tab" action="previousField" platform="all" />
+  </forms>
+  
+  <quick_actions>
+    <!-- Windows -->
+    <shortcut key="alt+n" action="newProject" platform="windows" />
+    <shortcut key="alt+m" action="newMaterial" platform="windows" />
+    <shortcut key="alt+p" action="newPurchase" platform="windows" />
+    <shortcut key="alt+r" action="newReservation" platform="windows" />
+    <shortcut key="alt+q" action="quickSearch" platform="windows" />
+    <shortcut key="ctrl+shift+f" action="advancedFilter" platform="windows" />
+    <shortcut key="ctrl+shift+s" action="saveView" platform="windows" />
+    <shortcut key="ctrl+shift+l" action="loadView" platform="windows" />
+    <shortcut key="ctrl+b" action="toggleSidebar" platform="windows" />
+    <shortcut key="ctrl+shift+b" action="toggleBulkActions" platform="windows" />
+    
+    <!-- Mac -->
+    <shortcut key="option+n" action="newProject" platform="mac" />
+    <shortcut key="option+m" action="newMaterial" platform="mac" />
+    <shortcut key="option+p" action="newPurchase" platform="mac" />
+    <shortcut key="option+r" action="newReservation" platform="mac" />
+    <shortcut key="option+q" action="quickSearch" platform="mac" />
+    <shortcut key="cmd+shift+f" action="advancedFilter" platform="mac" />
+    <shortcut key="cmd+shift+s" action="saveView" platform="mac" />
+    <shortcut key="cmd+shift+l" action="loadView" platform="mac" />
+    <shortcut key="cmd+b" action="toggleSidebar" platform="mac" />
+  </quick_actions>
+  
+  <view_modes>
+    <!-- Windows -->
+    <shortcut key="alt+1" action="tableView" platform="windows" />
+    <shortcut key="alt+2" action="gridView" platform="windows" />
+    <shortcut key="alt+3" action="kanbanView" platform="windows" />
+    <shortcut key="alt+4" action="timelineView" platform="windows" />
+    <shortcut key="alt+5" action="analyticsView" platform="windows" />
+    <shortcut key="ctrl+=" action="zoomIn" platform="windows" />
+    <shortcut key="ctrl+-" action="zoomOut" platform="windows" />
+    <shortcut key="ctrl+0" action="zoomReset" platform="windows" />
+    
+    <!-- Mac -->
+    <shortcut key="cmd+1" action="tableView" platform="mac" />
+    <shortcut key="cmd+2" action="gridView" platform="mac" />
+    <shortcut key="cmd+3" action="kanbanView" platform="mac" />
+    <shortcut key="cmd+4" action="timelineView" platform="mac" />
+    <shortcut key="cmd+5" action="analyticsView" platform="mac" />
+    <shortcut key="cmd+=" action="zoomIn" platform="mac" />
+    <shortcut key="cmd+-" action="zoomOut" platform="mac" />
+    <shortcut key="cmd+0" action="zoomReset" platform="mac" />
+  </view_modes>
+  
+  <accessibility>
+    <!-- Screen Reader Support -->
+    <shortcut key="alt+shift+a" action="announceCurrentCell" platform="windows" />
+    <shortcut key="alt+shift+r" action="announceRow" platform="windows" />
+    <shortcut key="alt+shift+c" action="announceColumn" platform="windows" />
+    <shortcut key="alt+shift+h" action="announceHeaders" platform="windows" />
+    
+    <!-- High Contrast -->
+    <shortcut key="alt+shift+t" action="toggleHighContrast" platform="windows" />
+    <shortcut key="alt+shift+d" action="toggleDarkMode" platform="windows" />
+  </accessibility>
+  
+  <developer>
+    <!-- Windows -->
+    <shortcut key="f12" action="openDevTools" platform="windows" />
+    <shortcut key="ctrl+shift+i" action="openDevTools" platform="windows" />
+    <shortcut key="ctrl+shift+j" action="openConsole" platform="windows" />
+    <shortcut key="ctrl+shift+c" action="inspectElement" platform="windows" />
+    <shortcut key="ctrl+shift+m" action="toggleDeviceMode" platform="windows" />
+    
+    <!-- Mac -->
+    <shortcut key="cmd+option+i" action="openDevTools" platform="mac" />
+    <shortcut key="cmd+option+j" action="openConsole" platform="mac" />
+    <shortcut key="cmd+option+c" action="inspectElement" platform="mac" />
+  </developer>
+</keyboard_shortcuts>

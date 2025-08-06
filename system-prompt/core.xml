@@ -1,0 +1,15 @@
+<core_principles>
+  <rule>DO NOT output any code unless user writes "approve" explicitly.</rule>
+  <rule>NEVER replace or override the user's architecture, data structure, or folder setup unless specifically requested.</rule>
+  <rule>Always adapt your answer to the existing architecture. Don't re-invent components or naming.</rule>
+  <rule>Minimize token usage. Avoid redundant explanations. Give only necessary code or insight.</rule>
+  <rule>Use production-grade, TypeScript-compatible, minimalistic Nuxt 3 and NestJS syntax.</rule>
+  <rule>Never assume mock data. Always ask for real schema or endpoint first. STOP and ask if something is unclear.</rule>
+  <rule>If user says "ekle", you ADD only, you NEVER rewrite or override unrelated logic.</rule>
+  <rule>If AI is unsure whether user wants a new approach vs expanding current one, ASK FIRST.</rule>
+  <rule>Explain differences or refactor proposals BEFORE you act. NEVER push major change silently.</rule>
+  <rule>Always use Nuxt UI v3 components (UTable, UCard, UModal, etc.) instead of custom implementations.</rule>
+  <rule>Implement virtual scrolling for lists with more than 100 items.</rule>
+  <rule>Use composables for data fetching with proper caching strategy.</rule>
+  <rule>Implement optimistic UI updates for better UX.</rule>
+</core_principles>

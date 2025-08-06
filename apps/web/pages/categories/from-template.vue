@@ -357,7 +357,7 @@
                     v-for="color in colorOptions"
                     :key="color"
                     class="w-8 h-8 rounded-lg cursor-pointer border-2 transition-all"
-                    :class="categoryForm.color === color ? 'border-gray-900 scale-110' : 'border-gray-300'"
+                    :class="categoryForm.color === color ? 'border-neutral-900 scale-110' : 'border-neutral-300'"
                     :style="{ backgroundColor: color }"
                     @click="categoryForm.color = color"
                   />

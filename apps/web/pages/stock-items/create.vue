@@ -10,10 +10,10 @@
         size="sm"
       />
       <div>
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 class="text-2xl font-bold text-neutral-900 dark:text-white">
           Yeni Stok Kalemi Ekle
         </h1>
-        <p class="text-gray-600 dark:text-gray-400">
+        <p class="text-neutral-600 dark:text-neutral-400">
           Kategori seçin ve ürün bilgilerini girin
         </p>
       </div>
@@ -40,7 +40,7 @@
           <div
             v-for="category in filteredCategories"
             :key="category.id"
-            class="p-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-700 transition-colors cursor-pointer group"
+            class="p-4 border-2 border-neutral-200 dark:border-neutral-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-700 transition-colors cursor-pointer group"
             @click="selectCategory(category)"
           >
             <div class="flex items-center gap-3">
@@ -56,10 +56,10 @@
               </div>
               
               <div>
-                <h3 class="font-semibold text-gray-900 dark:text-white">
+                <h3 class="font-semibold text-neutral-900 dark:text-white">
                   {{ category.name }}
                 </h3>
-                <p class="text-sm text-gray-500">
+                <p class="text-sm text-neutral-500">
                   {{ category.properties.length }} özellik
                 </p>
               </div>
@@ -68,8 +68,8 @@
         </div>
 
         <div v-if="filteredCategories.length === 0" class="text-center py-8">
-          <UIcon name="i-lucide-search-x" class="w-12 h-12 text-gray-400 mx-auto mb-2" />
-          <p class="text-gray-500">Aradığınız kategoride sonuç bulunamadı</p>
+          <UIcon name="i-lucide-search-x" class="w-12 h-12 text-neutral-400 mx-auto mb-2" />
+          <p class="text-neutral-500">Aradığınız kategoride sonuç bulunamadı</p>
           <UButton 
             to="/categories/create"
             variant="outline"
@@ -100,7 +100,7 @@
             </div>
             <div>
               <h3 class="font-medium">{{ selectedCategory.name }}</h3>
-              <p class="text-sm text-gray-500">{{ selectedCategory.description }}</p>
+              <p class="text-sm text-neutral-500">{{ selectedCategory.description }}</p>
             </div>
           </div>
           
@@ -139,7 +139,7 @@
           <UFormField label="Mevcut Stok" required class="md:col-span-2">
             <div class="grid grid-cols-3 gap-4">
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
                   Mevcut Stok
                 </label>
                 <UInput 
@@ -150,7 +150,7 @@
                 />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
                   Minimum Stok
                 </label>
                 <UInput 
@@ -161,7 +161,7 @@
                 />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
                   Maksimum Stok
                 </label>
                 <UInput 

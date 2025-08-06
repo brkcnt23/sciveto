@@ -7,7 +7,7 @@
       statusColor === 'red' ? 'border-l-red-500' :
       statusColor === 'yellow' ? 'border-l-yellow-500' :
       statusColor === 'green' ? 'border-l-green-500' :
-      'border-l-gray-300'
+      'border-l-neutral-300'
     ]"
   >
     <!-- Header -->
@@ -16,7 +16,7 @@
         <h3 class="font-semibold text-lg leading-tight line-clamp-2">
           {{ item.name }}
         </h3>
-        <p class="text-sm text-gray-500 mt-1 line-clamp-1">
+        <p class="text-sm text-neutral-500 mt-1 line-clamp-1">
           {{ item.description }}
         </p>
       </div>
@@ -66,7 +66,7 @@
 
     <!-- Unit and Status -->
     <div class="flex items-center justify-between text-sm">
-      <span class="text-gray-500 font-medium">{{ item.unit }}</span>
+      <span class="text-neutral-500 font-medium">{{ item.unit }}</span>
       
       <!-- Stock Status -->
       <div class="flex items-center gap-1">
@@ -86,7 +86,7 @@
     <!-- Min Stock Info -->
     <div 
       v-if="minStock > 0" 
-      class="mt-2 text-xs text-gray-400 flex items-center gap-1"
+      class="mt-2 text-xs text-neutral-400 flex items-center gap-1"
     >
       <UIcon name="i-lucide-alert-triangle" class="w-3 h-3" />
       Min. stok: {{ minStock }} {{ item.unit }}
@@ -95,7 +95,7 @@
     <!-- Last Updated -->
     <div 
       v-if="lastUpdated" 
-      class="mt-2 text-xs text-gray-400 flex items-center gap-1"
+      class="mt-2 text-xs text-neutral-400 flex items-center gap-1"
     >
       <UIcon name="i-lucide-clock" class="w-3 h-3" />
       {{ formatLastUpdated() }}
@@ -104,9 +104,9 @@
     <!-- Saving Indicator -->
     <div 
       v-if="updating"
-      class="absolute inset-0 bg-white/80 dark:bg-gray-900/80 flex items-center justify-center rounded-lg"
+      class="absolute inset-0 bg-white/80 dark:bg-neutral-900/80 flex items-center justify-center rounded-lg"
     >
-      <div class="flex items-center gap-2 text-sm text-gray-600">
+      <div class="flex items-center gap-2 text-sm text-neutral-600">
         <UIcon name="i-lucide-loader-2" class="w-4 h-4 animate-spin" />
         Kaydediliyor...
       </div>
@@ -129,8 +129,8 @@
               :key="key"
               class="flex justify-between"
             >
-              <span class="text-gray-500">{{ formatKey(key) }}:</span>
-              <span class="font-mono text-gray-800 dark:text-gray-200">
+              <span class="text-neutral-500">{{ formatKey(key) }}:</span>
+              <span class="font-mono text-neutral-800 dark:text-neutral-200">
                 {{ formatValue(value) }}
               </span>
             </div>
@@ -138,17 +138,17 @@
           
           <!-- Stock Info -->
           <div v-if="item.stockInfo" class="border-t pt-1 mt-2">
-            <div class="text-gray-600 font-medium mb-1">Stok Bilgileri:</div>
+            <div class="text-neutral-600 font-medium mb-1">Stok Bilgileri:</div>
             <div class="flex justify-between">
-              <span class="text-gray-500">Varsayılan Min:</span>
+              <span class="text-neutral-500">Varsayılan Min:</span>
               <span>{{ item.stockInfo.defaultMinStock || 0 }}</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-gray-500">Varsayılan Max:</span>
+              <span class="text-neutral-500">Varsayılan Max:</span>
               <span>{{ item.stockInfo.defaultMaxStock || 0 }}</span>
             </div>
             <div v-if="item.stockInfo.preferredSupplier" class="flex justify-between">
-              <span class="text-gray-500">Tedarikçi:</span>
+              <span class="text-neutral-500">Tedarikçi:</span>
               <span>{{ item.stockInfo.preferredSupplier }}</span>
             </div>
           </div>
@@ -276,7 +276,7 @@ const getStatusDotClass = () => {
     case 'red': return 'bg-red-500'
     case 'yellow': return 'bg-yellow-500'
     case 'green': return 'bg-green-500'
-    default: return 'bg-gray-400'
+    default: return 'bg-neutral-400'
   }
 }
 
@@ -285,7 +285,7 @@ const getStatusTextClass = () => {
     case 'red': return 'text-red-600'
     case 'yellow': return 'text-yellow-600'
     case 'green': return 'text-green-600'
-    default: return 'text-gray-500'
+    default: return 'text-neutral-500'
   }
 }
 

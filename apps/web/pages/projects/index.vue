@@ -1,8 +1,8 @@
 <!-- pages/projects/index.vue -->
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
     <!-- Page Header -->
-    <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+    <div class="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
       <div class="px-4 py-6 sm:px-6 lg:px-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <!-- Title Section -->
@@ -11,10 +11,10 @@
               <UIcon name="i-lucide-briefcase" class="w-6 h-6 text-primary-600 dark:text-primary-400" />
             </div>
             <div>
-              <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+              <h1 class="text-2xl font-bold text-neutral-900 dark:text-white">
                 Projects Management
               </h1>
-              <p class="text-gray-600 dark:text-gray-400 mt-1">
+              <p class="text-neutral-600 dark:text-neutral-400 mt-1">
                 Manage your projects, track progress and allocate resources
               </p>
             </div>
@@ -55,10 +55,10 @@
         >
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">
                 {{ stat.label }}
               </p>
-              <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+              <p class="text-2xl font-bold text-neutral-900 dark:text-white mt-1">
                 {{ stat.value }}
               </p>
             </div>
@@ -75,11 +75,11 @@
           
           <!-- Progress bar -->
           <div class="mt-4">
-            <div class="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400 mb-1">
+            <div class="flex items-center justify-between text-xs text-neutral-600 dark:text-neutral-400 mb-1">
               <span>Progress</span>
               <span>{{ stat.progress }}%</span>
             </div>
-            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+            <div class="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2">
               <div 
                 :class="stat.progressColor"
                 class="h-2 rounded-full transition-all duration-500"
@@ -128,7 +128,7 @@
             />
 
             <!-- View Toggle -->
-            <div class="flex items-center rounded-lg bg-gray-100 dark:bg-gray-800 p-1">
+            <div class="flex items-center rounded-lg bg-neutral-100 dark:bg-neutral-800 p-1">
               <UButton
                 :variant="viewMode === 'grid' ? 'solid' : 'ghost'"
                 :color="viewMode === 'grid' ? 'primary' : 'neutral'"
@@ -154,16 +154,16 @@
         <div v-if="viewMode === 'grid'" class="p-6">
           <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div v-for="i in 6" :key="i" class="animate-pulse">
-              <div class="bg-gray-200 dark:bg-gray-700 rounded-lg h-48"></div>
+              <div class="bg-neutral-200 dark:bg-neutral-700 rounded-lg h-48"></div>
             </div>
           </div>
 
           <div v-else-if="filteredProjects.length === 0" class="text-center py-12">
-            <UIcon name="i-lucide-folder-x" class="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <UIcon name="i-lucide-folder-x" class="w-16 h-16 text-neutral-400 mx-auto mb-4" />
+            <h3 class="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
               No projects found
             </h3>
-            <p class="text-gray-600 dark:text-gray-400 mb-6">
+            <p class="text-neutral-600 dark:text-neutral-400 mb-6">
               {{ searchQuery ? 'Try adjusting your search or filters' : 'Get started by creating your first project' }}
             </p>
             <UButton color="primary" icon="i-lucide-plus" @click="createProject">
@@ -224,8 +224,8 @@
         </div>
 
         <!-- Pagination -->
-        <div v-if="filteredProjects.length > 0" class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 px-6 py-4">
-          <div class="text-sm text-gray-600 dark:text-gray-400">
+        <div v-if="filteredProjects.length > 0" class="flex items-center justify-between border-t border-neutral-200 dark:border-neutral-700 px-6 py-4">
+          <div class="text-sm text-neutral-600 dark:text-neutral-400">
             Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ Math.min(currentPage * pageSize, totalProjects) }} of {{ totalProjects }} projects
           </div>
           

@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
     <!-- Header -->
-    <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+    <div class="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
       <div class="px-4 py-6 sm:px-6 lg:px-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <!-- Title Section -->
@@ -10,10 +10,10 @@
               <UIcon name="i-lucide-package" class="w-6 h-6 text-success-600 dark:text-success-400" />
             </div>
             <div>
-              <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+              <h1 class="text-2xl font-bold text-neutral-900 dark:text-white">
                 Stock Items
               </h1>
-              <p class="text-gray-600 dark:text-gray-400 mt-1">
+              <p class="text-neutral-600 dark:text-neutral-400 mt-1">
                 Manage your inventory and stock levels
               </p>
             </div>

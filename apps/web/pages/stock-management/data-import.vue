@@ -3,10 +3,10 @@
   <div class="space-y-6">
     <!-- Header -->
     <div>
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+      <h1 class="text-2xl font-bold text-neutral-900 dark:text-white">
         Veri Import Sistemi
       </h1>
-      <p class="text-gray-600 dark:text-gray-400 mt-1">
+      <p class="text-neutral-600 dark:text-neutral-400 mt-1">
         JSON verilerini sisteme aktarın ve stok yönetimini başlatın
       </p>
     </div>
@@ -22,13 +22,13 @@
             </div>
             <div>
               <h3 class="font-semibold">Membran</h3>
-              <p class="text-sm text-gray-500">{{ counts.membran }} ürün</p>
+              <p class="text-sm text-neutral-500">{{ counts.membran }} ürün</p>
             </div>
           </div>
         </template>
         
         <div class="space-y-3">
-          <p class="text-sm text-gray-600 dark:text-gray-400">
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
             FERRARI, MEHLER, SIOEN ve diğer markalar
           </p>
           
@@ -59,13 +59,13 @@
             </div>
             <div>
               <h3 class="font-semibold">Halat</h3>
-              <p class="text-sm text-gray-500">{{ counts.halat }} ürün</p>
+              <p class="text-sm text-neutral-500">{{ counts.halat }} ürün</p>
             </div>
           </div>
         </template>
         
         <div class="space-y-3">
-          <p class="text-sm text-gray-600 dark:text-gray-400">
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
             Çelik ve paslanmaz halat çeşitleri
           </p>
           
@@ -96,13 +96,13 @@
             </div>
             <div>
               <h3 class="font-semibold">Mapa</h3>
-              <p class="text-sm text-gray-500">{{ counts.mapa }} ürün</p>
+              <p class="text-sm text-neutral-500">{{ counts.mapa }} ürün</p>
             </div>
           </div>
         </template>
         
         <div class="space-y-3">
-          <p class="text-sm text-gray-600 dark:text-gray-400">
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
             Halat ucu aksesuarları ve bağlantı elemanları
           </p>
           
@@ -133,13 +133,13 @@
             </div>
             <div>
               <h3 class="font-semibold">Plaka</h3>
-              <p class="text-sm text-gray-500">{{ counts.plaka }} ürün</p>
+              <p class="text-sm text-neutral-500">{{ counts.plaka }} ürün</p>
             </div>
           </div>
         </template>
         
         <div class="space-y-3">
-          <p class="text-sm text-gray-600 dark:text-gray-400">
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
             Çelik ve paslanmaz plaka çeşitleri
           </p>
           
@@ -170,13 +170,13 @@
             </div>
             <div>
               <h3 class="font-semibold">Profil</h3>
-              <p class="text-sm text-gray-500">{{ counts.profil }} ürün</p>
+              <p class="text-sm text-neutral-500">{{ counts.profil }} ürün</p>
             </div>
           </div>
         </template>
         
         <div class="space-y-3">
-          <p class="text-sm text-gray-600 dark:text-gray-400">
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
             HEA, IPE, UPN ve diğer profil tipleri
           </p>
           
@@ -202,18 +202,18 @@
       <UCard class="md:col-span-2 lg:col-span-1">
         <template #header>
           <div class="flex items-center gap-3">
-            <div class="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
-              <UIcon name="i-lucide-package" class="w-5 h-5 text-gray-600 dark:text-gray-400" />
+            <div class="p-2 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
+              <UIcon name="i-lucide-package" class="w-5 h-5 text-neutral-600 dark:text-neutral-400" />
             </div>
             <div>
               <h3 class="font-semibold">Toplu İşlem</h3>
-              <p class="text-sm text-gray-500">{{ totalCount }} toplam ürün</p>
+              <p class="text-sm text-neutral-500">{{ totalCount }} toplam ürün</p>
             </div>
           </div>
         </template>
         
         <div class="space-y-3">
-          <p class="text-sm text-gray-600 dark:text-gray-400">
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
             Tüm kategorileri tek seferde import edin
           </p>
           
@@ -255,7 +255,7 @@
         
         <div class="flex items-center justify-between">
           <p class="text-sm font-medium">{{ importProgress.message }}</p>
-          <p class="text-sm text-gray-500">
+          <p class="text-sm text-neutral-500">
             %{{ Math.round((importProgress.value / importProgress.max) * 100) }}
           </p>
         </div>
@@ -275,7 +275,7 @@
         <div 
           v-for="history in importHistory" 
           :key="history.id"
-          class="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded-lg"
+          class="flex items-center justify-between p-3 border border-neutral-200 dark:border-neutral-700 rounded-lg"
         >
           <div class="flex items-center gap-3">
             <UIcon 
@@ -285,7 +285,7 @@
             />
             <div>
               <div class="font-medium">{{ history.type }} Import</div>
-              <div class="text-sm text-gray-500">
+              <div class="text-sm text-neutral-500">
                 {{ history.count }} ürün • {{ formatDate(history.date) }}
               </div>
             </div>
@@ -298,7 +298,7 @@
           </UBadge>
         </div>
         
-        <div v-if="importHistory.length === 0" class="text-center py-8 text-gray-500">
+        <div v-if="importHistory.length === 0" class="text-center py-8 text-neutral-500">
           Henüz import işlemi yapılmamış
         </div>
       </div>

@@ -36,7 +36,7 @@
     </div>
 
     <!-- Basic Toast Examples - Enhanced -->
-    <UCard class="border-0 shadow-2xl bg-gradient-to-br from-white/90 to-gray-50/90 dark:from-gray-900/90 dark:to-gray-800/90 backdrop-blur-xl">
+    <UCard class="border-0 shadow-2xl bg-gradient-to-br from-white/90 to-neutral-50/90 dark:from-neutral-900/90 dark:to-neutral-800/90 backdrop-blur-xl">
       <template #header>
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center">
@@ -185,10 +185,10 @@
     </UCard>
 
     <!-- Live Toast Component Preview - Using Real Component -->
-    <UCard v-if="showPreview" class="border-0 shadow-2xl bg-gradient-to-br from-slate-50/90 to-gray-100/90 dark:from-slate-900/90 dark:to-gray-900/90 backdrop-blur-xl">
+    <UCard v-if="showPreview" class="border-0 shadow-2xl bg-gradient-to-br from-slate-50/90 to-neutral-100/90 dark:from-slate-900/90 dark:to-neutral-900/90 backdrop-blur-xl">
       <template #header>
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-gradient-to-br from-slate-600 to-gray-700 rounded-xl flex items-center justify-center">
+          <div class="w-10 h-10 bg-gradient-to-br from-slate-600 to-neutral-700 rounded-xl flex items-center justify-center">
             <UIcon name="i-lucide-eye" class="w-5 h-5 text-white" />
           </div>
           <h4 class="text-lg font-semibold text-foreground">Live Toast Component Preview</h4>

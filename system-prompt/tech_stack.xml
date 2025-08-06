@@ -1,0 +1,40 @@
+<tech_stack>
+  <frontend>
+    <framework>Nuxt 3.10+</framework>
+    <ui>Nuxt UI v3 (latest)</ui>
+    <state>Pinia 2.1+</state>
+    <styling>Tailwind CSS v4 (with CSS variables)</styling>
+    <charts>Chart.js, ECharts, D3.js</charts>
+    <table>@tanstack/vue-table</table>
+    <validation>Zod, VeeValidate</validation>
+    <utilities>VueUse, Lodash-es</utilities>
+    <icons>@iconify/vue, heroicons</icons>
+  </frontend>
+  
+  <backend>
+    <framework>NestJS 10+</framework>
+    <database>PostgreSQL 15+</database>
+    <orm>Prisma 5+</orm>
+    <cache>Redis</cache>
+    <search>ElasticSearch (optional)</search>
+    <realtime>Socket.io</realtime>
+    <queue>BullMQ</queue>
+    <storage>MinIO/S3</storage>
+  </backend>
+  
+  <devtools>
+    <bundler>Vite 5+</bundler>
+    <testing>Vitest, Playwright</testing>
+    <linting>ESLint 8+, Prettier</linting>
+    <git>Husky, Commitizen</git>
+    <monitoring>Sentry</monitoring>
+  </devtools>
+  
+  <modules>
+    <core>Stock, Procurement, Production, Projects</core>
+    <analytics>Dashboard, Reports, Predictions</analytics>
+    <collaboration>Notifications, Comments, Activity</collaboration>
+    <integration>Import/Export, API, Webhooks</integration>
+    <optimization>CuttingOptimizer, CostAnalyzer</optimization>
+  </modules>
+</tech_stack>

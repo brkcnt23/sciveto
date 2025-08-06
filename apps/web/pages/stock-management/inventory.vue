@@ -4,10 +4,10 @@
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 class="text-2xl font-bold text-neutral-900 dark:text-white">
           Stok Sayımı
         </h1>
-        <p class="text-gray-600 dark:text-gray-400">
+        <p class="text-neutral-600 dark:text-neutral-400">
           Ürünlerin stok miktarlarını güncelleyin
         </p>
       </div>
@@ -16,11 +16,11 @@
       <div class="flex items-center gap-4 text-sm">
         <div class="text-center">
           <div class="font-semibold text-lg">{{ filteredItems.length }}</div>
-          <div class="text-gray-500">Toplam Ürün</div>
+          <div class="text-neutral-500">Toplam Ürün</div>
         </div>
         <div class="text-center">
           <div class="font-semibold text-lg text-green-600">{{ updatedCount }}</div>
-          <div class="text-gray-500">Güncellenen</div>
+          <div class="text-neutral-500">Güncellenen</div>
         </div>
       </div>
     </div>
@@ -105,7 +105,7 @@
         :key="n"
         class="animate-pulse"
       >
-        <div class="h-48 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+        <div class="h-48 bg-neutral-200 dark:bg-neutral-700 rounded-lg"></div>
       </div>
     </div>
     
@@ -139,11 +139,11 @@
     
     <!-- Empty State -->
     <div v-else class="text-center py-12">
-      <UIcon name="i-lucide-package-search" class="w-16 h-16 text-gray-400 mx-auto mb-4" />
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+      <UIcon name="i-lucide-package-search" class="w-16 h-16 text-neutral-400 mx-auto mb-4" />
+      <h3 class="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
         {{ search || selectedCategory !== 'all' ? 'Arama sonucu bulunamadı' : 'Henüz ürün yok' }}
       </h3>
-      <p class="text-gray-500 mb-4">
+      <p class="text-neutral-500 mb-4">
         {{ search || selectedCategory !== 'all' ? 'Farklı arama terimleri deneyin' : 'Önce veri import sayfasından ürünleri yükleyin' }}
       </p>
       <UButton 

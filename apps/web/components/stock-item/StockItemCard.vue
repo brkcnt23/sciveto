@@ -233,7 +233,7 @@ const getCategoryColorClass = (category: string): string => {
     'Plaka': 'text-purple-500',
     'Profil': 'text-orange-500'
   }
-  return categoryColorMap[category] || 'text-gray-500'
+  return categoryColorMap[category] || 'text-neutral-500'
 }
 
 const getCategoryTextClass = (category: string): string => {
@@ -244,7 +244,7 @@ const getCategoryTextClass = (category: string): string => {
     'Plaka': 'text-purple-600',
     'Profil': 'text-orange-600'
   }
-  return categoryColorMap[category] || 'text-gray-600'
+  return categoryColorMap[category] || 'text-neutral-600'
 }
 
 const statusColor = computed((): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {

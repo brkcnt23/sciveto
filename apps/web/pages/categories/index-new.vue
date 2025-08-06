@@ -4,8 +4,8 @@
     <!-- Header -->
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Kategori Yönetimi</h1>
-        <p class="text-gray-600 dark:text-gray-400 mt-1">
+        <h1 class="text-3xl font-bold text-neutral-900 dark:text-white">Kategori Yönetimi</h1>
+        <p class="text-neutral-600 dark:text-neutral-400 mt-1">
           Stok kategorilerinizi oluşturun ve yönetin
         </p>
       </div>
@@ -25,8 +25,8 @@
       <UCard class="text-center">
         <div class="space-y-2">
           <UIcon name="i-lucide-folder" class="w-8 h-8 text-primary mx-auto" />
-          <div class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalCategories }}</div>
-          <div class="text-sm text-gray-500">Toplam Kategori</div>
+          <div class="text-2xl font-bold text-neutral-900 dark:text-white">{{ totalCategories }}</div>
+          <div class="text-sm text-neutral-500">Toplam Kategori</div>
         </div>
       </UCard>
       
@@ -34,7 +34,7 @@
         <div class="space-y-2">
           <UIcon name="i-lucide-package" class="w-8 h-8 text-green-500 mx-auto" />
           <div class="text-2xl font-bold text-green-600">{{ totalProducts }}</div>
-          <div class="text-sm text-gray-500">Toplam Ürün</div>
+          <div class="text-sm text-neutral-500">Toplam Ürün</div>
         </div>
       </UCard>
       
@@ -42,7 +42,7 @@
         <div class="space-y-2">
           <UIcon name="i-lucide-user" class="w-8 h-8 text-blue-500 mx-auto" />
           <div class="text-2xl font-bold text-blue-600">{{ customCategories.length }}</div>
-          <div class="text-sm text-gray-500">Özel Kategori</div>
+          <div class="text-sm text-neutral-500">Özel Kategori</div>
         </div>
       </UCard>
       
@@ -50,13 +50,13 @@
         <div class="space-y-2">
           <UIcon name="i-lucide-settings" class="w-8 h-8 text-purple-500 mx-auto" />
           <div class="text-2xl font-bold text-purple-600">{{ defaultCategories.length }}</div>
-          <div class="text-sm text-gray-500">Varsayılan Kategori</div>
+          <div class="text-sm text-neutral-500">Varsayılan Kategori</div>
         </div>
       </UCard>
     </div>
 
     <!-- Category Tabs -->
-    <div class="flex gap-1 p-1 bg-gray-100 dark:bg-gray-800 rounded-lg w-fit">
+    <div class="flex gap-1 p-1 bg-neutral-100 dark:bg-neutral-800 rounded-lg w-fit">
       <UButton
         :variant="activeTab === 'all' ? 'solid' : 'ghost'"
         size="sm"
@@ -96,12 +96,12 @@
     <div v-if="displayedCategories.length === 0" class="text-center py-12">
       <UIcon 
         :name="activeTab === 'custom' ? 'i-lucide-folder-plus' : 'i-lucide-folder'" 
-        class="w-16 h-16 text-gray-400 mx-auto mb-4" 
+        class="w-16 h-16 text-neutral-400 mx-auto mb-4" 
       />
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+      <h3 class="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
         {{ activeTab === 'custom' ? 'Henüz özel kategori yok' : 'Kategori bulunamadı' }}
       </h3>
-      <p class="text-gray-500 mb-4">
+      <p class="text-neutral-500 mb-4">
         {{ activeTab === 'custom' 
           ? 'Kendi kategorilerinizi oluşturmaya başlayın' 
           : 'Sistemde kategori bulunmuyor' 
@@ -129,14 +129,14 @@
         <div
           v-for="template in quickTemplates"
           :key="template.id"
-          class="p-4 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-700 transition-colors cursor-pointer"
+          class="p-4 border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-700 transition-colors cursor-pointer"
           @click="useTemplate(template)"
         >
           <div class="text-center space-y-2">
             <UIcon :name="template.icon" class="w-8 h-8 mx-auto" :style="{ color: template.color }" />
             <div class="font-semibold">{{ template.name }}</div>
-            <div class="text-sm text-gray-500">{{ template.description }}</div>
-            <div class="text-xs text-gray-400">{{ template.properties.length }} özel alan</div>
+            <div class="text-sm text-neutral-500">{{ template.description }}</div>
+            <div class="text-xs text-neutral-400">{{ template.properties.length }} özel alan</div>
           </div>
         </div>
       </div>

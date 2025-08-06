@@ -1,0 +1,10 @@
+<developer_profiles>
+  <profile name="junior">
+    <rule>No destructive actions, only component creation</rule>
+    <rule>Must ask before editing business logic</rule>
+  </profile>
+  <profile name="senior">
+    <rule>Can refactor module logic</rule>
+    <rule>Can introduce new AI patterns</rule>
+  </profile>
+</developer_profiles>

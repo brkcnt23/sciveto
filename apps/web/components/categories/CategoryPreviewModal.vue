@@ -137,28 +137,28 @@
               </p>
 
               <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                  <thead class="bg-gray-50 dark:bg-gray-800">
+                <table class="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
+                  <thead class="bg-neutral-50 dark:bg-neutral-800">
                     <tr>
-                      <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      <th class="px-3 py-2 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                         # Kod
                       </th>
-                      <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      <th class="px-3 py-2 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                         Ürün Adı
                       </th>
                       <th 
                         v-for="(property, index) in visibleProperties"
                         :key="index"
-                        class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                        class="px-3 py-2 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider"
                       >
                         {{ property.name }}
                       </th>
-                      <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      <th class="px-3 py-2 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                         Stok
                       </th>
                     </tr>
                   </thead>
-                  <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
+                  <tbody class="bg-white dark:bg-neutral-900 divide-y divide-neutral-200 dark:divide-neutral-800">
                     <tr v-for="i in 3" :key="i">
                       <td class="px-3 py-2 whitespace-nowrap text-xs">
                         <span class="font-mono">{{ category?.id?.substring(0, 8) || 'XXXXX' }}-{{ 100 + i }}</span>

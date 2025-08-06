@@ -3,8 +3,8 @@
   <div class="space-y-6">
     <!-- Header -->
     <div>
-      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Stok Yönetimi Dashboard</h1>
-      <p class="text-gray-600 dark:text-gray-400 mt-1">Stok durumu, import işlemleri ve sayım yönetimi</p>
+      <h1 class="text-3xl font-bold text-neutral-900 dark:text-white">Stok Yönetimi Dashboard</h1>
+      <p class="text-neutral-600 dark:text-neutral-400 mt-1">Stok durumu, import işlemleri ve sayım yönetimi</p>
     </div>
     
     <!-- Quick Stats -->
@@ -12,8 +12,8 @@
       <UCard class="text-center">
         <div class="space-y-2">
           <UIcon name="i-lucide-package" class="w-8 h-8 text-primary mx-auto" />
-          <div class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalProducts }}</div>
-          <div class="text-sm text-gray-500">Toplam Ürün</div>
+          <div class="text-2xl font-bold text-neutral-900 dark:text-white">{{ totalProducts }}</div>
+          <div class="text-sm text-neutral-500">Toplam Ürün</div>
         </div>
       </UCard>
       
@@ -21,7 +21,7 @@
         <div class="space-y-2">
           <UIcon name="i-lucide-alert-triangle" class="w-8 h-8 text-red-500 mx-auto" />
           <div class="text-2xl font-bold text-red-600">{{ lowStockCount }}</div>
-          <div class="text-sm text-gray-500">Az Stok</div>
+          <div class="text-sm text-neutral-500">Az Stok</div>
         </div>
       </UCard>
       
@@ -29,7 +29,7 @@
         <div class="space-y-2">
           <UIcon name="i-lucide-trending-up" class="w-8 h-8 text-green-500 mx-auto" />
           <div class="text-2xl font-bold text-green-600">{{ updatedToday }}</div>
-          <div class="text-sm text-gray-500">Bugün Güncellenen</div>
+          <div class="text-sm text-neutral-500">Bugün Güncellenen</div>
         </div>
       </UCard>
       
@@ -37,7 +37,7 @@
         <div class="space-y-2">
           <UIcon name="i-lucide-layers" class="w-8 h-8 text-blue-500 mx-auto" />
           <div class="text-2xl font-bold text-blue-600">{{ totalCategories }}</div>
-          <div class="text-sm text-gray-500">Kategori</div>
+          <div class="text-sm text-neutral-500">Kategori</div>
         </div>
       </UCard>
     </div>
@@ -54,34 +54,34 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <NuxtLink 
           to="/stock-management/data-import"
-          class="group block p-4 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-700 transition-colors"
+          class="group block p-4 border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-700 transition-colors"
         >
           <div class="text-center space-y-2">
-            <UIcon name="i-lucide-download" class="w-8 h-8 text-gray-400 group-hover:text-primary mx-auto" />
-            <div class="font-semibold text-gray-900 dark:text-white">Veri Import</div>
-            <div class="text-sm text-gray-500">JSON verilerini sisteme aktar</div>
+            <UIcon name="i-lucide-download" class="w-8 h-8 text-neutral-400 group-hover:text-primary mx-auto" />
+            <div class="font-semibold text-neutral-900 dark:text-white">Veri Import</div>
+            <div class="text-sm text-neutral-500">JSON verilerini sisteme aktar</div>
           </div>
         </NuxtLink>
         
         <NuxtLink 
           to="/stock-management/quick-entry"
-          class="group block p-4 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-700 transition-colors"
+          class="group block p-4 border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-700 transition-colors"
         >
           <div class="text-center space-y-2">
-            <UIcon name="i-lucide-edit" class="w-8 h-8 text-gray-400 group-hover:text-primary mx-auto" />
-            <div class="font-semibold text-gray-900 dark:text-white">Hızlı Giriş</div>
-            <div class="text-sm text-gray-500">Ürünleri seç ve stok gir</div>
+            <UIcon name="i-lucide-edit" class="w-8 h-8 text-neutral-400 group-hover:text-primary mx-auto" />
+            <div class="font-semibold text-neutral-900 dark:text-white">Hızlı Giriş</div>
+            <div class="text-sm text-neutral-500">Ürünleri seç ve stok gir</div>
           </div>
         </NuxtLink>
         
         <NuxtLink 
           to="/stock-management/inventory"
-          class="group block p-4 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-700 transition-colors"
+          class="group block p-4 border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-700 transition-colors"
         >
           <div class="text-center space-y-2">
-            <UIcon name="i-lucide-clipboard-check" class="w-8 h-8 text-gray-400 group-hover:text-primary mx-auto" />
-            <div class="font-semibold text-gray-900 dark:text-white">Stok Sayımı</div>
-            <div class="text-sm text-gray-500">Touch-friendly sayım</div>
+            <UIcon name="i-lucide-clipboard-check" class="w-8 h-8 text-neutral-400 group-hover:text-primary mx-auto" />
+            <div class="font-semibold text-neutral-900 dark:text-white">Stok Sayımı</div>
+            <div class="text-sm text-neutral-500">Touch-friendly sayım</div>
           </div>
         </NuxtLink>
       </div>
@@ -109,15 +109,15 @@
           >
             <div class="flex-1 min-w-0">
               <div class="font-medium text-sm truncate">{{ item.name }}</div>
-              <div class="text-xs text-gray-500">{{ item.category }}</div>
+              <div class="text-xs text-neutral-500">{{ item.category }}</div>
             </div>
             <div class="text-right">
               <div class="text-sm font-semibold text-red-600">{{ getStockCount(item) }}</div>
-              <div class="text-xs text-gray-500">mevcut</div>
+              <div class="text-xs text-neutral-500">mevcut</div>
             </div>
           </div>
           
-          <div v-if="lowStockItems.length === 0" class="text-center py-4 text-gray-500">
+          <div v-if="lowStockItems.length === 0" class="text-center py-4 text-neutral-500">
             🎉 Tüm stoklar yeterli seviyede!
           </div>
           
@@ -156,7 +156,7 @@
             </div>
             <div class="text-right">
               <div class="text-sm font-semibold">{{ category.count }}</div>
-              <div class="text-xs text-gray-500">{{ category.percentage }}%</div>
+              <div class="text-xs text-neutral-500">{{ category.percentage }}%</div>
             </div>
           </div>
         </div>
