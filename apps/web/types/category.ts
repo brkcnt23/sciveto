@@ -14,12 +14,19 @@ export interface Category {
   name: string
   description?: string
   color: string
-  icon: string
-  isDefault: boolean // Sistem kategorileri vs özel kategoriler
-  properties: CategoryProperty[]
+  icon?: string
+  isDefault?: boolean // Sistem kategorileri vs özel kategoriler
+  isSystemBased?: boolean // Template-based categories
+  templateId?: string // Template ID if created from template
+  templateVersion?: string // Template version
+  properties?: CategoryProperty[]
   createdAt: Date
   updatedAt: Date
   userId?: string // Kim oluşturdu
+  organizationId?: string
+  _count?: {
+    stockItems: number
+  }
 }
 
 export interface StockItemData {

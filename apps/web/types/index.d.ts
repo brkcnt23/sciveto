@@ -1,5 +1,14 @@
 // Global type declarations for the application
 
+// Table column interface
+export interface TableColumn<T = any> {
+  key: string
+  label: string
+  sortable?: boolean
+  class?: string
+  width?: string
+}
+
 declare global {
   interface Window {
     // Add any global window properties here

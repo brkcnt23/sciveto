@@ -486,7 +486,13 @@ const getIconForCategory = (name: string): string => {
 // Methods
 const viewCategory = async (category: any) => {
   console.log('Navigating to category:', category.id)
-  await navigateTo(`/categories/${category.id}`)
+  try {
+    await router.push(`/categories/${category.id}`)
+  } catch (err) {
+    console.error('Navigation error:', err)
+    // Fallback to window.location if router fails
+    window.location.href = `/categories/${category.id}`
+  }
 }
 
 const getCategoryActions = (category: any) => [

@@ -72,7 +72,7 @@ export interface StockItem {
   minStock?: number
   unit?: string
   categoryId: string
-  category?: Category | string // Allow both Category object and string
+  category?: Category
   properties?: Record<string, any>
   status: 'active' | 'inactive' | 'discontinued'
   value?: number
@@ -92,7 +92,6 @@ export interface StockItem {
   reservedStock?: number
   specifications?: string
   allocations?: ProjectAllocation[]
-  stockInfo?: StockInfo // Add stockInfo property
   createdAt: Date
   updatedAt: Date
 }
@@ -135,38 +134,4 @@ export interface StockInfo {
   defaultMinStock: number
   defaultMaxStock: number
   preferredSupplier?: string
-}
-
-// Additional types for create operations
-export interface CreateStockItemData {
-  name: string
-  description: string
-  unit: string
-  currentStock: number
-  minStock: number
-  value: number
-  categoryId: string
-  standards?: Record<string, string>
-  templateFields?: Record<string, any>
-  location?: string
-  specifications?: string
-}
-
-export interface CreateCategoryData {
-  name: string
-  description?: string
-  color: string
-  icon: string
-  properties: Omit<CategoryProperty, 'id'>[]
-}
-
-// Import types for data management
-export type ImportType = 'csv' | 'excel' | 'json'
-
-export interface ImportCounts {
-  [category: string]: number
-}
-
-export interface ImportingStates {
-  [category: string]: boolean
 }
