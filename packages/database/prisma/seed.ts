@@ -118,6 +118,25 @@ async function main() {
     }
   })
 
+  const mapaTemplate = await prisma.systemCategoryTemplate.upsert({
+    where: { 
+      name_version: {
+        name: 'Mapa',
+        version: '1.0'
+      }
+    },
+    update: {},
+    create: {
+      name: 'Mapa',
+      version: '1.0',
+      isLatest: true,
+      description: 'Halat ucu mapası, germe mapası ve mapa aksesuarları',
+      industry: 'rigging-hardware',
+      icon: 'i-lucide-link',
+      changelog: 'İlk sürüm - Mapa türleri ve ölçü standartları'
+    }
+  })
+
   console.log('✅ Templates created')
 
   // 4. Add Template Standards
@@ -141,7 +160,16 @@ async function main() {
       { templateId: halatTemplate.id, name: '6x19 FC', value: '6x19_FC', category: 'construction', sortOrder: 1 },
       { templateId: halatTemplate.id, name: '6x37 FC', value: '6x37_FC', category: 'construction', sortOrder: 2 },
       { templateId: halatTemplate.id, name: '7x7', value: '7x7', category: 'construction', sortOrder: 3 },
-      { templateId: halatTemplate.id, name: '1x19', value: '1x19', category: 'construction', sortOrder: 4 }
+      { templateId: halatTemplate.id, name: '1x19', value: '1x19', category: 'construction', sortOrder: 4 },
+      
+      // Mapa Standards
+      { templateId: mapaTemplate.id, name: 'Halat Ucu Mapası', value: 'HALAT_UCU_MAPASI', category: 'type', sortOrder: 1 },
+      { templateId: mapaTemplate.id, name: 'Halat Ucu Çatalı', value: 'HALAT_UCU_CATALI', category: 'type', sortOrder: 2 },
+      { templateId: mapaTemplate.id, name: 'Asma Germe Galvaniz', value: 'ASMA_GERME_GALVANIZ', category: 'type', sortOrder: 3 },
+      { templateId: mapaTemplate.id, name: 'Boru Tip Germe', value: 'BORU_TIP_GERDIRME', category: 'type', sortOrder: 4 },
+      { templateId: mapaTemplate.id, name: 'Galvanizli', value: 'GALVANIZED', category: 'coating', sortOrder: 1 },
+      { templateId: mapaTemplate.id, name: 'Paslanmaz', value: 'STAINLESS', category: 'coating', sortOrder: 2 },
+      { templateId: mapaTemplate.id, name: 'Ham Çelik', value: 'RAW_STEEL', category: 'coating', sortOrder: 3 }
     ]
   })
 
@@ -227,6 +255,19 @@ async function main() {
       icon: 'i-lucide-layers',
       organizationId: organization.id,
       templateId: membranTemplate.id,
+      templateVersion: '1.0',
+      isSystemBased: true
+    }
+  })
+
+  const mapaCategory = await prisma.category.create({
+    data: {
+      name: 'Mapa',
+      description: 'Halat ucu mapaları, germe mapaları ve mapa aksesuarları',
+      color: '#F97316',
+      icon: 'i-lucide-link',
+      organizationId: organization.id,
+      templateId: mapaTemplate.id,
       templateVersion: '1.0',
       isSystemBased: true
     }
@@ -359,6 +400,148 @@ async function main() {
           part_number: 'X1-CONN-001',
           client: 'Müşteri X A.Ş.',
           specifications: 'AISI 316 paslanmaz çelik, özel boyutlar'
+        }
+      },
+      
+      // ASMAGERME Gerçek Mapa Stok Verileri
+      {
+        name: 'Asma Germe Galvaniz Mapa 1 1/8"',
+        description: 'ASMAGERME Fabrikası - Asma Germe Galvaniz Mapa - 1 1/8 inç',
+        sku: 'AGM-1-1/8',
+        unit: 'adet',
+        currentStock: 28,
+        minStockLevel: 15,
+        maxStockLevel: 50,
+        lastPurchasePrice: 45.50,
+        organizationId: organization.id,
+        categoryId: mapaCategory.id,
+        userId: user.id,
+        standardValues: {
+          type: 'ASMA_GERME_GALVANIZ',
+          size_inch: '1 1/8',
+          coating: 'GALVANIZED',
+          supplier: 'ASMAGERME Fabrikası',
+          status: 'Kullanıldı'
+        }
+      },
+      {
+        name: 'Asma Germe Galvaniz Mapa 1 3/4"',
+        description: 'ASMAGERME Fabrikası - Asma Germe Galvaniz Mapa - 1 3/4 inç',
+        sku: 'AGM-1-3/4',
+        unit: 'adet',
+        currentStock: 4,
+        minStockLevel: 10,
+        maxStockLevel: 30,
+        lastPurchasePrice: 68.75,
+        organizationId: organization.id,
+        categoryId: mapaCategory.id,
+        userId: user.id,
+        standardValues: {
+          type: 'ASMA_GERME_GALVANIZ',
+          size_inch: '1 3/4',
+          coating: 'GALVANIZED',
+          supplier: 'ASMAGERME Fabrikası',
+          status: 'Stok'
+        }
+      },
+      {
+        name: 'Asma Germe Galvaniz Mapa 1"',
+        description: 'ASMAGERME Fabrikası - Asma Germe Galvaniz Mapa - 1 inç',
+        sku: 'AGM-1',
+        unit: 'adet',
+        currentStock: 1,
+        minStockLevel: 8,
+        maxStockLevel: 25,
+        lastPurchasePrice: 38.20,
+        organizationId: organization.id,
+        categoryId: mapaCategory.id,
+        userId: user.id,
+        standardValues: {
+          type: 'ASMA_GERME_GALVANIZ',
+          size_inch: '1',
+          coating: 'GALVANIZED',
+          supplier: 'ASMAGERME Fabrikası',
+          status: 'Proje İçin Ayrılan'
+        }
+      },
+      {
+        name: 'Asma Germe Galvaniz Mapa 7/8"',
+        description: 'ASMAGERME Fabrikası - Asma Germe Galvaniz Mapa - 7/8 inç',
+        sku: 'AGM-7/8',
+        unit: 'adet',
+        currentStock: 1,
+        minStockLevel: 6,
+        maxStockLevel: 20,
+        lastPurchasePrice: 32.80,
+        organizationId: organization.id,
+        categoryId: mapaCategory.id,
+        userId: user.id,
+        standardValues: {
+          type: 'ASMA_GERME_GALVANIZ',
+          size_inch: '7/8',
+          coating: 'GALVANIZED',
+          supplier: 'ASMAGERME Fabrikası',
+          status: 'Stok'
+        }
+      },
+      {
+        name: 'Asma Germe Galvaniz Mapa 5/8"',
+        description: 'ASMAGERME Fabrikası - Asma Germe Galvaniz Mapa - 5/8 inç',
+        sku: 'AGM-5/8',
+        unit: 'adet',
+        currentStock: 4,
+        minStockLevel: 8,
+        maxStockLevel: 25,
+        lastPurchasePrice: 28.45,
+        organizationId: organization.id,
+        categoryId: mapaCategory.id,
+        userId: user.id,
+        standardValues: {
+          type: 'ASMA_GERME_GALVANIZ',
+          size_inch: '5/8',
+          coating: 'GALVANIZED',
+          supplier: 'ASMAGERME Fabrikası',
+          status: 'Stok'
+        }
+      },
+      {
+        name: 'Asma Germe Galvaniz Mapa 1 1/4"',
+        description: 'ASMAGERME Fabrikası - Asma Germe Galvaniz Mapa - 1 1/4 inç',
+        sku: 'AGM-1-1/4',
+        unit: 'adet',
+        currentStock: 2,
+        minStockLevel: 5,
+        maxStockLevel: 18,
+        lastPurchasePrice: 52.30,
+        organizationId: organization.id,
+        categoryId: mapaCategory.id,
+        userId: user.id,
+        standardValues: {
+          type: 'ASMA_GERME_GALVANIZ',
+          size_inch: '1 1/4',
+          coating: 'GALVANIZED',
+          supplier: 'ASMAGERME Fabrikası',
+          status: 'Stok'
+        }
+      },
+      {
+        name: 'Asma Germe Galvaniz Mapa 1/2"',
+        description: 'ASMAGERME Fabrikası - Asma Germe Galvaniz Mapa - 1/2 inç',
+        sku: 'AGM-1/2',
+        unit: 'adet',
+        currentStock: 10,
+        minStockLevel: 12,
+        maxStockLevel: 35,
+        lastPurchasePrice: 22.90,
+        organizationId: organization.id,
+        categoryId: mapaCategory.id,
+        userId: user.id,
+        standardValues: {
+          type: 'ASMA_GERME_GALVANIZ',
+          size_inch: '1/2',
+          coating: 'GALVANIZED',
+          supplier: 'ASMAGERME Fabrikası',
+          status: 'Stok'
         }
       }
     ]
