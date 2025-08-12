@@ -77,15 +77,13 @@
     </div>
 
     <!-- Advanced Filters Panel -->
-    <UCollapse v-model="showAdvancedFilters">
-      <div class="advanced-filters-panel">
-        <AdvancedStockFilters
-          :items="paginatedData"
-          v-model="advancedFilters"
-          @filters-changed="handleAdvancedFilters"
-        />
-      </div>
-    </UCollapse>
+    <div v-show="showAdvancedFilters" class="advanced-filters-panel">
+      <AdvancedStockFilters
+        :items="paginatedData"
+        v-model="advancedFilters"
+        @filters-changed="handleAdvancedFilters"
+      />
+    </div>
 
     <!-- Loading State -->
     <div v-if="loading" class="loading-state">

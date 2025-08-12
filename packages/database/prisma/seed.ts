@@ -405,8 +405,8 @@ async function main() {
       
       // ASMAGERME Gerçek Mapa Stok Verileri
       {
-        name: 'Asma Germe Galvaniz Mapa 1 1/8"',
-        description: 'ASMAGERME Fabrikası - Asma Germe Galvaniz Mapa - 1 1/8 inç',
+        name: 'Mapa 1 1/8"',
+        description: 'Galvanizli asma germe mapası - 1 1/8 inç',
         sku: 'AGM-1-1/8',
         unit: 'adet',
         currentStock: 28,
@@ -425,8 +425,8 @@ async function main() {
         }
       },
       {
-        name: 'Asma Germe Galvaniz Mapa 1 3/4"',
-        description: 'ASMAGERME Fabrikası - Asma Germe Galvaniz Mapa - 1 3/4 inç',
+        name: 'Mapa 1 3/4"',
+        description: 'Galvanizli asma germe mapası - 1 3/4 inç',
         sku: 'AGM-1-3/4',
         unit: 'adet',
         currentStock: 4,
@@ -445,8 +445,8 @@ async function main() {
         }
       },
       {
-        name: 'Asma Germe Galvaniz Mapa 1"',
-        description: 'ASMAGERME Fabrikası - Asma Germe Galvaniz Mapa - 1 inç',
+        name: 'Mapa 1"',
+        description: 'Galvanizli asma germe mapası - 1 inç - Proje için ayrılan stok',
         sku: 'AGM-1',
         unit: 'adet',
         currentStock: 1,
@@ -465,8 +465,8 @@ async function main() {
         }
       },
       {
-        name: 'Asma Germe Galvaniz Mapa 7/8"',
-        description: 'ASMAGERME Fabrikası - Asma Germe Galvaniz Mapa - 7/8 inç',
+        name: 'Mapa 7/8"',
+        description: 'Galvanizli asma germe mapası - 7/8 inç',
         sku: 'AGM-7/8',
         unit: 'adet',
         currentStock: 1,
@@ -485,8 +485,8 @@ async function main() {
         }
       },
       {
-        name: 'Asma Germe Galvaniz Mapa 5/8"',
-        description: 'ASMAGERME Fabrikası - Asma Germe Galvaniz Mapa - 5/8 inç',
+        name: 'Mapa 5/8"',
+        description: 'Galvanizli asma germe mapası - 5/8 inç',
         sku: 'AGM-5/8',
         unit: 'adet',
         currentStock: 4,
@@ -505,8 +505,8 @@ async function main() {
         }
       },
       {
-        name: 'Asma Germe Galvaniz Mapa 1 1/4"',
-        description: 'ASMAGERME Fabrikası - Asma Germe Galvaniz Mapa - 1 1/4 inç',
+        name: 'Mapa 1 1/4"',
+        description: 'Galvanizli asma germe mapası - 1 1/4 inç',
         sku: 'AGM-1-1/4',
         unit: 'adet',
         currentStock: 2,
@@ -525,8 +525,8 @@ async function main() {
         }
       },
       {
-        name: 'Asma Germe Galvaniz Mapa 1/2"',
-        description: 'ASMAGERME Fabrikası - Asma Germe Galvaniz Mapa - 1/2 inç',
+        name: 'Mapa 1/2"',
+        description: 'Galvanizli asma germe mapası - 1/2 inç',
         sku: 'AGM-1/2',
         unit: 'adet',
         currentStock: 10,
