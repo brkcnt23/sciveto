@@ -47,15 +47,17 @@ export class StockItemsController {
     );
   }
 
-  // Public endpoint - no auth required
+  // Protected endpoint - auth required - TEMPORARILY DISABLED FOR DEBUG  
+  // @UseGuards(JwtAuthGuard)
   @Get('category/:categoryId')
   findByCategory(
     @Param('categoryId') categoryId: string,
     @Query() queryDto: StockItemQueryDto,
     @Request() req,
   ) {
-    const organizationId = req.user?.organizationId || 'default-org-id';
-    return this.stockItemsService.findByCategory(categoryId, queryDto, organizationId);
+    console.log('🔍 FindByCategory - CategoryId:', categoryId, 'NO AUTH - using demo org');
+    // Temporarily use demo org ID
+    return this.stockItemsService.findByCategory(categoryId, queryDto, 'cmdx0yamq0000e4kwlmpedajf');
   }
 
   @UseGuards(JwtAuthGuard)

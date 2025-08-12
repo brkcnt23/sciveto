@@ -97,7 +97,7 @@ export const useStockItemManager = () => {
       lowStockItems,
       outOfStockItems,
       totalValue,
-      activeItems: items.filter(item => item.status === 'ACTIVE').length,
+      activeItems: items.filter(item => item.status === 'ACTIVE' || item.status === 'active').length,
       categories: [...new Set(items.map(item => item.categoryId).filter(Boolean))].length
     }
   })
@@ -129,7 +129,7 @@ export const useStockItemManager = () => {
           unit: 'm²',
           minStockLevel: 50,
           maxStockLevel: 500,
-          status: 'ACTIVE',
+          status: 'ACTIVE' as const,
           location: 'Warehouse A-1',
           supplier: 'Ferrari Textiles',
           categoryId: 'cat-1',
@@ -154,7 +154,7 @@ export const useStockItemManager = () => {
           unit: 'm',
           minStockLevel: 20,
           maxStockLevel: 200,
-          status: 'ACTIVE',
+          status: 'ACTIVE' as const,
           location: 'Warehouse B-2',
           supplier: 'Steel Tech Ltd',
           categoryId: 'cat-2',
@@ -179,7 +179,7 @@ export const useStockItemManager = () => {
           unit: 'pcs',
           minStockLevel: 5,
           maxStockLevel: 50,
-          status: 'ACTIVE',
+          status: 'ACTIVE' as const,
           location: 'Yard C',
           supplier: 'Metro Steel',
           categoryId: 'cat-3',
@@ -261,21 +261,21 @@ export const useStockItemManager = () => {
       const newItem: StockItem = {
         id: Date.now().toString(),
         name: data.name,
-        sku: data.sku,
+        sku: data.sku || undefined,
         description: data.description || '', // Ensure description is always a string
-        price: data.price,
+        price: data.price || undefined,
         stock: data.currentStock || data.stock || 0,
         unit: data.unit,
-        minStockLevel: data.minStock || data.minStockLevel,
-        maxStockLevel: data.maxStock || data.maxStockLevel,
-        status: data.status || 'ACTIVE',
-        location: data.location,
-        supplier: data.supplier,
-        notes: data.notes,
+        minStockLevel: data.minStock || data.minStockLevel || undefined,
+        maxStockLevel: data.maxStock || data.maxStockLevel || undefined,
+        status: (data.status as any) || 'ACTIVE',
+        location: data.location || undefined,
+        supplier: data.supplier || undefined,
+        notes: data.notes || undefined,
         categoryId: data.categoryId,
         category: data.categoryId, // Simplified category mapping
-        imageUrl: data.imageUrl,
-        customProperties: data.properties || data.customProperties,
+        imageUrl: data.imageUrl || undefined,
+        customProperties: data.properties || data.customProperties || undefined,
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -304,11 +304,11 @@ export const useStockItemManager = () => {
         throw new Error('Stock item not found')
       }
 
-      const updatedItem = {
+      const updatedItem: StockItem = {
         ...stockItems.value[index],
         ...data,
         updatedAt: new Date()
-      }
+      } as StockItem
 
       stockItems.value[index] = updatedItem
       return updatedItem

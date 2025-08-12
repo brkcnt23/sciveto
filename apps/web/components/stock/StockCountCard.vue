@@ -23,12 +23,12 @@
       
       <!-- Category Badge -->
       <UBadge 
-        :color="getCategoryColor(item.category ?? '')"
+        :color="getCategoryColor(getCategoryName(item.category))"
         variant="soft"
         size="sm"
         class="ml-2 shrink-0"
       >
-        {{ item.category }}
+        {{ getCategoryName(item.category) }}
       </UBadge>
     </div>
 
@@ -160,24 +160,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import type { StockEntry } from '~/types/stock'
-
-// Props
-interface StockItem {
-  id: string
-  name: string
-  description: string
-  category?: string // Made optional to match the frontend usage
-  unit?: string // Made optional to match the frontend usage
-  currentStock?: number
-  minStock?: number
-  originalRef?: any
-  stockInfo?: {
-    defaultMinStock: number
-    defaultMaxStock: number
-    preferredSupplier?: string
-  }
-}
+import type { StockItem, StockEntry } from '~/types/stock'
 
 interface Props {
   item: StockItem
@@ -247,6 +230,12 @@ const saveCount = async () => {
   if (newCount !== currentCount.value) {
     await updateStock(newCount)
   }
+}
+
+const getCategoryName = (category: any): string => {
+  if (typeof category === 'string') return category
+  if (category && typeof category === 'object' && category.name) return category.name
+  return ''
 }
 
 const getCategoryColor = (category: string): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {

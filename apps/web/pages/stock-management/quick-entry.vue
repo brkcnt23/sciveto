@@ -56,7 +56,7 @@
             :key="category.id"
             :variant="selectedCategory === category.id ? 'solid' : 'outline'"
             size="sm"
-            @click="filterByCategory(category.id)"
+            @click="filterByCategory(category.id || 'all')"
           >
             {{ category.name }}
           </UButton>

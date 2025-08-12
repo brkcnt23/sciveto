@@ -108,5 +108,10 @@ export default defineNuxtConfig({
     public: {
       apiBase: process.env.API_BASE_URL || 'http://localhost:3001/api'
     }
+  },
+
+  // Development server configuration
+  devServer: {
+    port: 3000
   }
 })

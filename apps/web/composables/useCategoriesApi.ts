@@ -112,14 +112,24 @@ export const useCategoriesApi = () => {
     error.value = null
 
     try {
+      console.log('Fetching category with ID:', id)
+      console.log('API Base URL:', config.public.apiBase)
+      console.log('Full URL:', `${config.public.apiBase}/categories/${id}`)
+      
       const data = await $fetch<ApiCategory>(`${config.public.apiBase}/categories/${id}`, {
         method: 'GET',
         headers: useRequestHeaders(['cookie'])
       })
       
+      console.log('Raw API response:', data)
       return data ? transformApiCategory(data) : null
     } catch (err: any) {
       console.error('Category fetch error:', err)
+      console.error('Error details:', {
+        status: err.status,
+        statusText: err.statusText,
+        data: err.data
+      })
       error.value = err.message || 'Kategori bulunamadı'
       return null
     } finally {

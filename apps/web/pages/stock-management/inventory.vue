@@ -46,7 +46,7 @@
             :variant="selectedCategory === category.id ? 'solid' : 'outline'"
             :color="selectedCategory === category.id ? 'primary' : 'neutral'"
             size="sm"
-            @click="selectedCategory = category.id"
+            @click="selectedCategory = category.id || 'all'"
           >
             {{ category.name }}
             <UBadge 

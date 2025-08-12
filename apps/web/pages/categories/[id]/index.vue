@@ -1,235 +1,145 @@
 <template>
   <div class="space-y-6">
-    <!-- Category Header -->
-    <div v-if="category" class="flex items-center gap-4">
-      <div class="flex-shrink-0">
-        <div 
-          class="w-12 h-12 rounded-lg flex items-center justify-center text-white font-medium"
-          :style="{ backgroundColor: category.color }"
-        >
-          <UIcon :name="category.icon || 'i-lucide-folder'" size="20" />
-        </div>
-      </div>
-      <div class="flex-1">
-        <h1 class="text-2xl font-semibold text-neutral-900 dark:text-white">
-          {{ category.name }}
-        </h1>
-        <p class="text-neutral-600 dark:text-neutral-400">
-          {{ category.description }}
-        </p>
-      </div>
-      <div class="flex items-center gap-2">
-        <UButton 
-          @click="addItem"
-          icon="i-lucide-plus"
-          color="primary"
-          variant="solid"
-        >
-          Ürün Ekle
-        </UButton>
+    <!-- Loading State -->
+    <div v-if="loading" class="flex items-center justify-center py-12">
+      <div class="text-center">
+        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
+        <p class="mt-2 text-neutral-600 dark:text-neutral-400">Kategori yükleniyor...</p>
       </div>
     </div>
 
-    <!-- Enhanced Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-      <div class="bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 p-4">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center">
-            <UIcon name="i-lucide-package" size="16" class="text-blue-600 dark:text-blue-400" />
-          </div>
-          <div>
-            <p class="text-sm text-neutral-600 dark:text-neutral-400">Toplam Ürün Çeşidi</p>
-            <p class="text-lg font-semibold text-neutral-900 dark:text-white">{{ stockItems.length }}</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 p-4">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded bg-green-100 dark:bg-green-900/20 flex items-center justify-center">
-            <UIcon name="i-lucide-trending-up" size="16" class="text-green-600 dark:text-green-400" />
-          </div>
-          <div>
-            <p class="text-sm text-neutral-600 dark:text-neutral-400">Toplam Stok Değeri</p>
-            <p class="text-lg font-semibold text-neutral-900 dark:text-white">{{ formatCurrency(totalStockValue) }}</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 p-4">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded bg-orange-100 dark:bg-orange-900/20 flex items-center justify-center">
-            <UIcon name="i-lucide-alert-triangle" size="16" class="text-orange-600 dark:text-orange-400" />
-          </div>
-          <div>
-            <p class="text-sm text-neutral-600 dark:text-neutral-400">Düşük Stok Uyarısı</p>
-            <p class="text-lg font-semibold text-neutral-900 dark:text-white">{{ lowStockItems }}</p>
-          </div>
-        </div>
-      </div>
+    <!-- Content -->
+    <template v-else-if="category">
+      <!-- Modern Page Header -->
+      <PageHeader
+        :title="category?.name || 'Kategori'"
+        :subtitle="category?.description || 'Kategori malzemeleri'"
+        :icon="category?.icon || 'i-lucide-folder'"
+        :icon-color="category?.color"
+        item-type="Ürün"
+        @add-item="addItem"
+        @export="exportData"
+      />
 
-      <div class="bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 p-4">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center">
-            <UIcon name="i-lucide-users" size="16" class="text-purple-600 dark:text-purple-400" />
-          </div>
-          <div>
-            <p class="text-sm text-neutral-600 dark:text-neutral-400">Aktif Projeler</p>
-            <p class="text-lg font-semibold text-neutral-900 dark:text-white">{{ activeProjectsCount }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+      <!-- Enhanced Stats Cards -->
+      <StatsGrid :statistics="categoryStats" />
 
-    <!-- Advanced Filters -->
-    <div class="bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 p-4">
-      <h3 class="text-lg font-medium mb-4">Filtreler</h3>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div>
-          <label class="block text-sm font-medium mb-1">Stok Durumu</label>
-          <USelectMenu
-            v-model="filters.stockStatus"
-            :options="stockStatusOptions"
-            placeholder="Stok durumu seçin"
-          />
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Proje</label>
-          <USelectMenu
-            v-model="filters.project"
-            :options="projectOptions"
-            placeholder="Proje seçin"
-            option-attribute="name"
-            value-attribute="id"
-          />
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Lokasyon</label>
-          <UInput
-            v-model="filters.location"
-            placeholder="Depo/Raf ara"
-          />
-        </div>
-        <div class="flex items-end">
-          <UButton @click="clearFilters" variant="outline" block>
-            Filtreleri Temizle
-          </UButton>
-        </div>
-      </div>
-    </div>
+      <!-- Modern Filters Section -->
+      <FiltersSection
+        :filters="filters"
+        :search-text="searchQuery"
+      :filter-groups="filterGroups"
+      :quick-filters="quickFilters"
+      @filter-change="onFilterChange"
+      @search-change="onSearchChange"
+      @clear-filters="clearFilters"
+      @show-stock-only="showStockOnly"
+      @show-project-assigned="showProjectAssigned"
+    />
 
-    <!-- Stock Items Table -->
-    <div class="bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
+    <!-- Data Table -->
+    <div class="bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden">
       <div class="px-6 py-4 border-b border-neutral-200 dark:border-neutral-700">
-        <h2 class="text-lg font-medium text-neutral-900 dark:text-white">Stok Ürünleri</h2>
-      </div>
-      
-      <ScivetoDataTable 
-        v-if="filteredStockItems.length > 0"
-        :rows="filteredStockItems" 
-        :columns="tableColumns"
-        :loading="loading"
-        @select="editItem"
-      >
-        <!-- Project Allocations Slot -->
-        <template #projectAllocations-data="{ row }">
-          <div class="space-y-1">
-            <div v-if="(row as unknown as StockItem).allocations && (row as unknown as StockItem).allocations!.length > 0" class="space-y-1">
-              <div 
-                v-for="allocation in (row as unknown as StockItem).allocations" 
-                :key="allocation.id"
-                class="flex items-center justify-between text-xs bg-gray-50 dark:bg-gray-800 rounded px-2 py-1"
-              >
-                <span class="font-medium">
-                  {{ allocation.allocatedQuantity }}/{{ (row as unknown as StockItem).currentStock || 0 }}
-                </span>
-                <UBadge 
-                  :color="allocation.project?.status === 'COMPLETED' ? 'success' : 'primary'"
-                  variant="soft"
-                  size="xs"
-                >
-                  {{ allocation.project?.name || 'Unknown Project' }}
-                </UBadge>
-              </div>
-            </div>
-            <div v-else class="text-xs text-gray-500">
-              Atama yok
-            </div>
-          </div>
-        </template>
-        
-        <!-- Stock Status Slot -->
-        <template #stockStatus-data="{ row }">
-          <div class="flex items-center space-x-2">
-            <UBadge 
-              :color="getStockStatusColor(row as unknown as StockItem)"
-              variant="soft"
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">
+            Ürün Listesi
+          </h3>
+          <div class="flex items-center gap-2">
+            <UButton
+              @click="toggleView"
+              :icon="viewMode === 'table' ? 'i-lucide-grid-3x3' : 'i-lucide-list'"
+              variant="outline"
               size="sm"
             >
-              {{ getStockStatusLabel(row as unknown as StockItem) }}
-            </UBadge>
-            <span class="text-xs text-gray-500">
-              {{ getAvailableStock(row as unknown as StockItem) }}/{{ (row as unknown as StockItem).currentStock || 0 }}
-            </span>
+              {{ viewMode === 'table' ? 'Kart Görünümü' : 'Tablo Görünümü' }}
+            </UButton>
           </div>
+        </div>
+      </div>
+
+      <!-- BaseDataTable -->
+      <BaseDataTable
+        title="Ürün Listesi"
+        item-type="ürün"
+        :paginated-data="paginatedStockItems"
+        :filtered-count="filteredStockItems.length"
+        :total-items="filteredStockItems.length"
+        :current-page="pagination.page"
+        :items-per-page="pagination.pageSize"
+        :current-density="viewMode === 'table' ? 'normal' : 'compact'"
+        :loading="loading"
+        :error="error"
+        :selectable="true"
+        :selected-items="[]"
+        empty-message="Bu kategoride henüz ürün bulunmuyor"
+        @add-item="addItem"
+        @edit-item="editItem"
+        @view-item="viewItem"
+        @duplicate-item="duplicateItem"
+        @delete-item="deleteItem"
+        @show-stock-only="showStockOnly"
+        @show-project-assigned="showProjectAssigned"
+        @clear-filters="clearFilters"
+        @density-change="onDensityChange"
+        @page-change="onPageChange"
+        @items-change="onItemsPerPageChange"
+      >
+        <template #table-head>
+          <th>Ürün Adı</th>
+          <th>Açıklama</th>
+          <th>Birim</th>
+          <th>Mevcut Stok</th>
+          <th>Min. Stok</th>
+          <th>Birim Fiyat</th>
+          <th>Toplam Değer</th>
+          <th>Lokasyon</th>
+          <th>Durum</th>
         </template>
         
-        <!-- Location Slot -->
-        <template #location-data="{ row }">
-          <div class="flex items-center space-x-2">
-            <UIcon name="i-heroicons-map-pin" class="w-4 h-4 text-gray-400" />
-            <span class="text-sm">{{ (row as unknown as StockItem).location || 'Belirtilmemiş' }}</span>
-          </div>
-        </template>
-        
-        <!-- Actions Slot -->
-        <template #actions-data="{ row }">
-          <div class="flex items-center space-x-1">
-            <UButton
-              icon="i-heroicons-pencil-square"
-              size="xs"
-              variant="ghost"
-              @click="editItem(row as unknown as StockItem)"
-            />
-            <UButton
-              icon="i-heroicons-plus"
-              size="xs"
-              variant="ghost"
-              color="primary"
-              @click="allocateStock(row as unknown as StockItem)"
-            />
-            <UButton
-              icon="i-heroicons-arrow-path"
-              size="xs"
-              variant="ghost"
-              color="success"
-              @click="adjustStock(row as unknown as StockItem)"
-            />
-          </div>
-        </template>
-        
-        <template #templateFields-data="{ row }">
-          <div v-if="(row as any).templateFields && Object.keys((row as any).templateFields).length > 0" class="space-y-1">
-            <div v-for="(value, key) in (row as any).templateFields" :key="key" class="text-sm">
-              <span class="font-medium capitalize">{{ String(key).replace('_', ' ') }}:</span> {{ value }}
+        <template #table-body="{ item }">
+          <td>
+            <div class="flex items-center gap-3">
+              <div 
+                class="w-8 h-8 rounded flex items-center justify-center text-white text-xs font-medium"
+                :style="{ backgroundColor: getItemColor(item) }"
+              >
+                {{ getItemInitials(item.name) }}
+              </div>
+              <div>
+                <div class="font-medium text-neutral-900 dark:text-white">
+                  {{ item.name }}
+                </div>
+                <div class="text-sm text-neutral-500">
+                  {{ item.description || '-' }}
+                </div>
+              </div>
             </div>
-          </div>
-          <span v-else class="text-neutral-400 text-sm">-</span>
+          </td>
+          <td>{{ item.description || '-' }}</td>
+          <td>{{ item.unit || 'adet' }}</td>
+          <td class="text-center">
+            <span :class="getStockBadgeClass(item)">
+              {{ item.currentStock || 0 }}
+            </span>
+          </td>
+          <td class="text-center">{{ item.minStockLevel || 0 }}</td>
+          <td class="text-right">
+            {{ formatCurrency(item.value || 0) }}
+          </td>
+          <td class="text-right font-semibold">
+            {{ formatCurrency((item.currentStock || 0) * (item.value || 0)) }}
+          </td>
+          <td>{{ item.location || '-' }}</td>
+          <td>
+            <span :class="getStatusBadgeClass(item)">
+              {{ getStatusText(item) }}
+            </span>
+          </td>
         </template>
-      </ScivetoDataTable>
-      
-      <div v-else-if="!loading" class="p-8 text-center text-neutral-600 dark:text-neutral-400">
-        <UIcon name="i-lucide-package-x" size="48" class="mx-auto mb-4 opacity-50" />
-        <p>Bu kategoride henüz ürün bulunmuyor.</p>
-        <UButton @click="addItem" class="mt-4" variant="outline">
-          İlk Ürünü Ekle
-        </UButton>
-      </div>
-      
-      <div v-else class="p-8 text-center">
-        <UIcon name="i-lucide-loader" size="24" class="animate-spin mx-auto" />
-      </div>
+      </BaseDataTable>
     </div>
+
+
 
     <!-- Add/Edit Item Modal -->
     <UModal v-model="showItemModal">
@@ -304,7 +214,8 @@
               <div>
                 <label class="block text-sm font-medium mb-1">{{ standard.name }} *</label>
                 <USelectMenu
-                  v-model="itemForm.standards[standard.id]"
+                  :model-value="itemForm.standards[standard.id]"
+                  @update:model-value="(value: any) => { itemForm.standards[standard.id] = value as string }"
                   :options="standard.values"
                   :placeholder="`${standard.name} seçin`"
                 />
@@ -320,19 +231,22 @@
                 <label class="block text-sm font-medium mb-1">{{ field.label }} {{ field.required ? '*' : '' }}</label>
                 <UInput
                   v-if="field.type === 'text'"
-                  v-model="itemForm.templateFields[field.name]"
+                  :model-value="itemForm.templateFields[field.name]"
+                  @update:model-value="(value: any) => { itemForm.templateFields[field.name] = value as string }"
                   :placeholder="field.placeholder"
                 />
                 <UInput
                   v-else-if="field.type === 'number'"
-                  v-model.number="itemForm.templateFields[field.name]"
+                  :model-value="itemForm.templateFields[field.name]"
+                  @update:model-value="(value: any) => { itemForm.templateFields[field.name] = value as number }"
                   type="number"
                   :step="field.step || '0.01'"
                   :placeholder="field.placeholder"
                 />
                 <USelectMenu
                   v-else-if="field.type === 'select'"
-                  v-model="itemForm.templateFields[field.name]"
+                  :model-value="itemForm.templateFields[field.name]"
+                  @update:model-value="(value: any) => { itemForm.templateFields[field.name] = value as string }"
                   :options="field.options"
                   :placeholder="field.placeholder"
                 />
@@ -372,6 +286,17 @@
         </template>
       </UCard>
     </UModal>
+    </template>
+
+    <!-- Error State -->
+    <div v-else-if="!loading" class="flex items-center justify-center py-12">
+      <div class="text-center">
+        <div class="text-neutral-400 mb-4">
+          <Icon name="i-lucide-alert-circle" class="w-12 h-12 mx-auto" />
+        </div>
+        <p class="text-neutral-600 dark:text-neutral-400">Kategori bulunamadı</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -380,7 +305,7 @@ import type { StockItem, Category, ItemForm, TableColumn } from '~/types'
 
 const route = useRoute()
 const toast = useToast()
-const { getCategory } = useCategoriesApi()
+const { fetchCategories } = useCategoriesApi()
 const { getStockItemsByCategory, createStockItem, updateStockItem } = useStockItemsApi()
 
 // Page metadata
@@ -395,9 +320,19 @@ const stockItems = ref<StockItem[]>([])
 const projects = ref<any[]>([])
 const templateData = ref<any>(null)
 const loading = ref(false)
+const error = ref<string | null>(null)
 const showItemModal = ref(false)
 const editingItem = ref<StockItem | null>(null)
 const savingItem = ref(false)
+
+// Modern UI state
+const viewMode = ref<'table' | 'cards'>('table')
+const searchQuery = ref('')
+const pagination = ref({
+  page: 1,
+  pageSize: 20,
+  total: 0
+})
 
 // Filters
 const filters = ref({
@@ -406,6 +341,95 @@ const filters = ref({
   location: '',
   search: ''
 })
+
+// Modern filter groups for FiltersSection component
+const filterGroups = computed(() => ({
+  stockStatus: {
+    label: 'Stok Durumu',
+    key: 'stockStatus',
+    type: 'select' as const,
+    options: [
+      { label: 'Tümü', value: '' },
+      { label: 'Stokta Var', value: 'in_stock' },
+      { label: 'Düşük Stok', value: 'low_stock' },
+      { label: 'Stok Yok', value: 'out_of_stock' },
+      { label: 'Projede Kullanılıyor', value: 'allocated' }
+    ]
+  },
+  project: {
+    label: 'Proje',
+    key: 'project',
+    type: 'select' as const,
+    options: projectOptions.value.map(p => ({ label: p.name, value: p.id }))
+  },
+  location: {
+    label: 'Lokasyon',
+    key: 'location',
+    type: 'input' as const,
+    placeholder: 'Depo/Raf ara...',
+    options: []
+  }
+}))
+
+// Quick filters for modern UI
+const quickFilters = computed(() => [
+  {
+    key: 'low_stock',
+    label: 'Düşük Stok',
+    value: 'low_stock',
+    count: lowStockItems.value,
+    color: 'orange' as const,
+    event: 'show-stock-only' as const
+  },
+  {
+    key: 'out_of_stock',
+    label: 'Stok Yok',
+    value: 'out_of_stock',
+    count: Array.isArray(stockItems.value) ? stockItems.value.filter(item => {
+      const available = (item.currentStock || 0) - ((item as any).reservedStock || 0)
+      return available <= 0
+    }).length : 0,
+    color: 'red' as const,
+    event: 'show-stock-only' as const
+  },
+  {
+    key: 'allocated',
+    label: 'Projede Kullanılıyor',
+    value: 'allocated',
+    count: Array.isArray(stockItems.value) ? stockItems.value.filter(item => ((item as any).reservedStock || 0) > 0).length : 0,
+    color: 'blue' as const,
+    event: 'show-project-assigned' as const
+  }
+])
+
+// Statistics for modern UI
+const categoryStats = computed(() => [
+  {
+    label: 'Toplam Ürün',
+    value: Array.isArray(stockItems.value) ? stockItems.value.length : 0,
+    icon: 'i-lucide-package',
+    color: 'blue'
+  },
+  {
+    label: 'Toplam Stok Değeri',
+    value: totalStockValue.value,
+    icon: 'i-lucide-coins',
+    color: 'green',
+    format: 'currency' as const
+  },
+  {
+    label: 'Düşük Stok Uyarısı',
+    value: lowStockItems.value,
+    icon: 'i-lucide-alert-triangle',
+    color: 'orange'
+  },
+  {
+    label: 'Aktif Projeler',
+    value: activeProjectsCount.value,
+    icon: 'i-lucide-users',
+    color: 'purple'
+  }
+])
 
 // Filter options
 const stockStatusOptions = [
@@ -471,6 +495,16 @@ const filteredStockItems = computed(() => {
   
   let filtered = stockItems.value
   
+  // Search filter
+  if (filters.value.search || searchQuery.value) {
+    const query = (filters.value.search || searchQuery.value).toLowerCase()
+    filtered = filtered.filter(item => 
+      item.name.toLowerCase().includes(query) ||
+      item.description?.toLowerCase().includes(query) ||
+      item.location?.toLowerCase().includes(query)
+    )
+  }
+  
   // Stock status filter
   if (filters.value.stockStatus) {
     filtered = filtered.filter(item => {
@@ -535,30 +569,171 @@ const projectOptions = computed(() => {
   ]
 })
 
-// Methods
-const loadCategory = async () => {
-  loading.value = true
-  try {
-    const data = await getCategory(categoryId.value)
-    category.value = data
+// Modern UI Methods
+const toggleView = () => {
+  viewMode.value = viewMode.value === 'table' ? 'cards' : 'table'
+}
 
-    // Template verilerini yükle
-    if (data?.templateId) {
-      await loadTemplateData(data.templateId)
-    }
+const onFilterChange = (updatedFilters: Record<string, any>) => {
+  filters.value = { ...filters.value, ...updatedFilters }
+}
 
-    // Stok ürünlerini yükle
-    await loadStockItems()
-  } catch (err: any) {
-    console.error('Error loading category:', err)
-    toast.add({
-      title: 'Hata',
-      description: err.message || 'Kategori yüklenirken hata oluştu',
-      color: 'error'
-    })
-  } finally {
-    loading.value = false
+const onSearchChange = (value: string) => {
+  searchQuery.value = value
+  filters.value.search = value
+}
+
+const onDensityChange = (density: 'compact' | 'normal' | 'detailed') => {
+  // Handle density change
+  console.log('Density changed to:', density)
+}
+
+const onPageChange = (page: number) => {
+  pagination.value.page = page
+}
+
+const onItemsPerPageChange = (count: string) => {
+  pagination.value.pageSize = parseInt(count)
+  pagination.value.page = 1
+}
+
+const showStockOnly = () => {
+  filters.value.stockStatus = 'in_stock'
+}
+
+const showProjectAssigned = () => {
+  filters.value.stockStatus = 'allocated'
+}
+
+const clearFilters = () => {
+  filters.value = {
+    stockStatus: '',
+    project: '',
+    location: '',
+    search: ''
   }
+  searchQuery.value = ''
+}
+
+const exportData = () => {
+  // TODO: Implement data export functionality
+  console.log('Exporting data...')
+}
+
+// Computed for pagination
+const paginatedStockItems = computed(() => {
+  if (!Array.isArray(filteredStockItems.value)) return []
+  
+  const start = (pagination.value.page - 1) * pagination.value.pageSize
+  const end = start + pagination.value.pageSize
+  return filteredStockItems.value.slice(start, end)
+})
+
+// Helper functions for table display
+const getItemColor = (item: StockItem) => {
+  const colors = ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B', '#EF4444', '#6366F1', '#EC4899']
+  const index = (item.name || '').length % colors.length
+  return colors[index]
+}
+
+const getItemInitials = (name: string) => {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('')
+    .substring(0, 2)
+    .toUpperCase()
+}
+
+const getStockBadgeClass = (item: StockItem) => {
+  const current = item.currentStock || 0
+  const min = item.minStockLevel || 0
+  
+  if (current === 0) {
+    return 'px-2 py-1 text-xs rounded-full bg-red-100 text-red-800'
+  } else if (current <= min && min > 0) {
+    return 'px-2 py-1 text-xs rounded-full bg-orange-100 text-orange-800'
+  } else {
+    return 'px-2 py-1 text-xs rounded-full bg-green-100 text-green-800'
+  }
+}
+
+const getStatusBadgeClass = (item: StockItem) => {
+  const current = item.currentStock || 0
+  const min = item.minStockLevel || 0
+  
+  if (current === 0) {
+    return 'px-2 py-1 text-xs rounded-full bg-red-100 text-red-800'
+  } else if (current <= min && min > 0) {
+    return 'px-2 py-1 text-xs rounded-full bg-orange-100 text-orange-800'
+  } else {
+    return 'px-2 py-1 text-xs rounded-full bg-green-100 text-green-800'
+  }
+}
+
+const getStatusText = (item: StockItem) => {
+  const current = item.currentStock || 0
+  const min = item.minStockLevel || 0
+  
+  if (current === 0) {
+    return 'Stok Yok'
+  } else if (current <= min && min > 0) {
+    return 'Düşük Stok'
+  } else {
+    return 'Normal'
+  }
+}
+
+const getStockColorClass = (item: StockItem) => {
+  const available = (item.currentStock || 0) - ((item as any).reservedStock || 0)
+  if (available <= 0) return 'text-red-600 dark:text-red-400'
+  if (available <= (item.minStockLevel || 0)) return 'text-orange-600 dark:text-orange-400'
+  return 'text-green-600 dark:text-green-400'
+}
+
+const getStockBadgeColor = (item: StockItem) => {
+  const available = (item.currentStock || 0) - ((item as any).reservedStock || 0)
+  if (available <= 0) return 'error'
+  if (available <= (item.minStockLevel || 0)) return 'warning'
+  if ((item as any).reservedStock > 0) return 'primary'
+  return 'success'
+}
+
+const getStockStatusText = (item: StockItem) => {
+  const available = (item.currentStock || 0) - ((item as any).reservedStock || 0)
+  if (available <= 0) return 'Stokta Yok'
+  if (available <= (item.minStockLevel || 0)) return 'Düşük Stok'
+  if ((item as any).reservedStock > 0) return 'Rezerve Edilmiş'
+  return 'Mevcut'
+}
+
+const viewItem = (item: StockItem) => {
+  // TODO: Navigate to item detail page or open modal
+  console.log('Viewing item:', item.id)
+}
+
+const duplicateItem = (item: StockItem) => {
+  // TODO: Duplicate item functionality
+  console.log('Duplicating item:', item.id)
+  // Open modal with pre-filled data from the original item
+  editingItem.value = null
+  itemForm.value = {
+    name: `${item.name} (Kopya)`,
+    description: item.description || '',
+    unit: item.unit || 'adet',
+    currentStock: 0, // Reset stock for duplicated item
+    minStock: item.minStockLevel || 0,
+    value: item.value || 0,
+    location: item.location || '',
+    standards: { ...((item as any).standards || {}) },
+    templateFields: { ...((item as any).templateFields || {}) }
+  }
+  showItemModal.value = true
+}
+
+const deleteItem = (item: StockItem) => {
+  // TODO: Implement delete functionality
+  console.log('Deleting item:', item.id)
 }
 
 const loadTemplateData = async (templateId: string) => {
@@ -572,12 +747,68 @@ const loadTemplateData = async (templateId: string) => {
   }
 }
 
+const loadCategory = async () => {
+  try {
+    loading.value = true
+    error.value = null
+    console.log('Loading category:', categoryId.value)
+    
+    // Geçici çözüm: Tüm kategorileri çek ve client-side'da filtrele
+    const { fetchCategories } = useCategoriesApi()
+    await fetchCategories()
+    const categories = await fetchCategories() // İkinci çağrı cached veriyi döner
+    
+    const categoryData = categories.find(cat => cat.id === categoryId.value)
+    
+    if (!categoryData) {
+      error.value = 'Kategori bulunamadı'
+      console.error('Category not found with ID:', categoryId.value)
+      return
+    }
+    
+    category.value = categoryData
+    console.log('Category loaded:', categoryData)
+    
+    // Stok ürünlerini yükle
+    await loadStockItems()
+    
+    // Template verisi varsa yükle
+    if (categoryData?.templateId) {
+      await loadTemplateData(categoryData.templateId)
+    }
+  } catch (err: any) {
+    console.error('Error loading category:', err)
+    error.value = err.message || 'Kategori yüklenirken hata oluştu'
+    toast.add({
+      title: 'Hata',
+      description: err.message || 'Kategori yüklenirken hata oluştu',
+      color: 'error'
+    })
+  } finally {
+    loading.value = false
+  }
+}
+
 const loadStockItems = async () => {
   try {
+    console.log('Loading stock items for category:', categoryId.value)
     const items = await getStockItemsByCategory(categoryId.value)
-    stockItems.value = items
+    console.log('Raw stock items response:', items)
+    
+    // Ensure items is an array
+    if (Array.isArray(items)) {
+      stockItems.value = items
+    } else if (items && typeof items === 'object' && 'data' in items && Array.isArray((items as any).data)) {
+      stockItems.value = (items as any).data
+    } else {
+      console.warn('Stock items response is not an array:', items)
+      stockItems.value = []
+    }
+    
+    console.log('Final stock items:', stockItems.value)
   } catch (err: any) {
     console.error('Error loading stock items:', err)
+    stockItems.value = [] // Fallback to empty array
     toast.add({
       title: 'Hata',
       description: err.message || 'Ürünler yüklenirken hata oluştu',
@@ -605,15 +836,6 @@ const getStockStatusLabel = (item: StockItem) => {
 
 const getAvailableStock = (item: StockItem) => {
   return (item.currentStock || 0) - (item.reservedStock || 0)
-}
-
-const clearFilters = () => {
-  filters.value = {
-    stockStatus: '',
-    project: '',
-    location: '',
-    search: ''
-  }
 }
 
 // Stock action functions
@@ -667,7 +889,7 @@ const editItem = (item: StockItem) => {
       ...item.templateFields 
     },
     location: item.location || '',
-    specifications: item.specifications || '',
+    specifications: typeof item.specifications === 'string' ? item.specifications : (item.specifications ? JSON.stringify(item.specifications) : ''),
     reservedStock: item.reservedStock || 0
   }
 

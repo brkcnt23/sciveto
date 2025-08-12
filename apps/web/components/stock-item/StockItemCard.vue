@@ -53,9 +53,9 @@
             
             <!-- Category -->
             <div v-if="item.category" class="flex items-center space-x-1 mt-2">
-              <UIcon :name="getCategoryIcon(item.category)" class="h-3 w-3" :class="getCategoryColorClass(item.category)" />
+              <UIcon :name="getCategoryIcon(getCategoryName(item.category))" class="h-3 w-3" :class="getCategoryColorClass(item.category)" />
               <span class="text-xs" :class="getCategoryTextClass(item.category)">
-                {{ item.category }}
+                {{ getCategoryName(item.category) }}
               </span>
             </div>
           </div>
@@ -211,7 +211,8 @@ const imageError = ref(false)
 
 // Computed properties
 const categoryIcon = computed(() => {
-  return getCategoryIcon(props.item.category || '')
+  const categoryName = typeof props.item.category === 'string' ? props.item.category : (props.item.category?.name || '')
+  return getCategoryIcon(categoryName)
 })
 
 const getCategoryIcon = (category: string): string => {
@@ -225,7 +226,14 @@ const getCategoryIcon = (category: string): string => {
   return categoryIconMap[category] || 'i-heroicons-cube'
 }
 
-const getCategoryColorClass = (category: string): string => {
+const getCategoryName = (category: any): string => {
+  if (typeof category === 'string') return category
+  if (category && typeof category === 'object' && category.name) return category.name
+  return ''
+}
+
+const getCategoryColorClass = (category: any): string => {
+  const categoryName = getCategoryName(category)
   const categoryColorMap: Record<string, string> = {
     'Membran': 'text-blue-500',
     'Halat': 'text-green-500',
@@ -233,10 +241,11 @@ const getCategoryColorClass = (category: string): string => {
     'Plaka': 'text-purple-500',
     'Profil': 'text-orange-500'
   }
-  return categoryColorMap[category] || 'text-neutral-500'
+  return categoryColorMap[categoryName] || 'text-neutral-500'
 }
 
-const getCategoryTextClass = (category: string): string => {
+const getCategoryTextClass = (category: any): string => {
+  const categoryName = getCategoryName(category)
   const categoryColorMap: Record<string, string> = {
     'Membran': 'text-blue-600',
     'Halat': 'text-green-600',
@@ -244,16 +253,25 @@ const getCategoryTextClass = (category: string): string => {
     'Plaka': 'text-purple-600',
     'Profil': 'text-orange-600'
   }
-  return categoryColorMap[category] || 'text-neutral-600'
+  return categoryColorMap[categoryName] || 'text-neutral-600'
 }
 
 const statusColor = computed((): 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' => {
-  switch (props.item.status) {
-    case 'ACTIVE': return 'success'
-    case 'INACTIVE': return 'warning'
-    case 'DISCONTINUED': return 'error'
-    case 'ARCHIVED': return 'neutral'
-    default: return 'neutral'
+  const status = props.item.status
+  switch (status) {
+    case 'ACTIVE':
+    case 'active': 
+      return 'success'
+    case 'INACTIVE':
+    case 'inactive': 
+      return 'warning'
+    case 'DISCONTINUED':
+    case 'discontinued': 
+      return 'error'
+    case 'ARCHIVED': 
+      return 'neutral'
+    default: 
+      return 'neutral'
   }
 })
 

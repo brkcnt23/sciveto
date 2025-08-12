@@ -46,6 +46,8 @@ export class StockItemsService {
       sortOrder = 'desc',
     } = queryDto;
 
+    console.log('StockItemsService.findAll - Query:', { categoryId, organizationId, userId, search, status, page, limit });
+
     const skip = (page - 1) * limit;
 
     const where: any = { organizationId };
@@ -71,6 +73,8 @@ export class StockItemsService {
     if (userId) {
       where.userId = userId;
     }
+
+    console.log('StockItemsService.findAll - Where clause:', where);
 
     const [stockItems, total] = await Promise.all([
       this.prisma.stockItem.findMany({
@@ -211,7 +215,10 @@ export class StockItemsService {
   }
 
   async findByCategory(categoryId: string, queryDto: StockItemQueryDto, organizationId: string): Promise<any>  {
-    return this.findAll({ ...queryDto, categoryId }, organizationId);
+    console.log('StockItemsService.findByCategory - CategoryId:', categoryId, 'OrgId:', organizationId, 'QueryDto:', queryDto);
+    const result = await this.findAll({ ...queryDto, categoryId }, organizationId);
+    console.log('StockItemsService.findByCategory - Result:', { total: result.meta?.total, itemCount: result.data?.length });
+    return result;
   }
 
   async updateStatus(id: string, status: StockStatus, userId: string, organizationId: string): Promise<any>  {

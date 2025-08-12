@@ -11,26 +11,35 @@ export const useInventoryCount = () => {
   const stockEntries = reactive<Record<string, StockEntry>>({})
   const autoSaving = ref(false)
 
+  // Helper function to get category name
+  const getCategoryName = (category: Category | string | undefined): string => {
+    if (!category) return 'Genel'
+    if (typeof category === 'string') return category
+    return category.name || 'Genel'
+  }
+
   // Computed
   const categories = computed<CategoryWithCount[]>(() => {
     const categoryMap = new Map<string, number>()
     
     stockItems.value.forEach(item => {
-      const categoryName = item.category || 'Genel'
+      const categoryName = getCategoryName(item.category)
       categoryMap.set(categoryName, (categoryMap.get(categoryName) || 0) + 1)
     })
 
     const colors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4']
     
     const categoriesArray: CategoryWithCount[] = [
-      { id: 'all', name: 'Tümü', count: stockItems.value.length }
+      { id: 'all', category: 'all', name: 'Tümü', count: stockItems.value.length, color: '#6B7280' }
     ]
 
     categoryMap.forEach((count, name) => {
       categoriesArray.push({
         id: name.toLowerCase(),
+        category: name,
         name,
-        count
+        count,
+        color: colors[categoriesArray.length % colors.length]
       })
     })
 
@@ -43,7 +52,7 @@ export const useInventoryCount = () => {
     // Category filter
     if (selectedCategory.value !== 'all') {
       items = items.filter(item => 
-        (item.category || 'genel').toLowerCase() === selectedCategory.value
+        getCategoryName(item.category).toLowerCase() === selectedCategory.value
       )
     }
 
@@ -53,7 +62,7 @@ export const useInventoryCount = () => {
       items = items.filter(item => 
         item.name.toLowerCase().includes(searchTerm) ||
         item.description.toLowerCase().includes(searchTerm) ||
-        (item.category || '').toLowerCase().includes(searchTerm)
+        getCategoryName(item.category).toLowerCase().includes(searchTerm)
       )
     }
 

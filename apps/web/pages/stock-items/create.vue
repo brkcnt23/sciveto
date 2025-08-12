@@ -346,9 +346,10 @@ const saveStockItem = async () => {
       description: form.description,
       categoryId: selectedCategory.value.id,
       unit: form.unit,
-      stock: form.currentStock,
-      minStockLevel: form.minStock || undefined,
-      maxStockLevel: form.maxStock || undefined,
+      currentStock: form.currentStock,
+      minStock: form.minStock || 0,
+      maxStock: form.maxStock || 0,
+      value: 0, // Add required value property
       customProperties: form.properties
     })
     

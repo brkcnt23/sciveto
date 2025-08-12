@@ -61,29 +61,27 @@ export const useAuthStore = defineStore('auth', {
       this.isLoading = true
       
       try {
-        // Mock login for development
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        // Real API login
+        const response = await $fetch<{
+          user: User;
+          access_token: string;
+        }>('/auth/login', {
+          baseURL: useRuntimeConfig().public.apiBase,
+          method: 'POST',
+          body: credentials
+        })
         
-        const mockUser: User = {
-          id: 'user_' + Date.now(),
-          email: credentials.email,
-          firstName: 'Demo',
-          lastName: 'User',
-          role: 'ORG_ADMIN',
-          organizationId: 'org_demo',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
+        if (response && response.access_token && response.user) {
+          this.setAuth(response.user, response.access_token)
+          return { success: true }
+        } else {
+          throw new Error('Invalid response from server')
         }
-        
-        const mockToken = 'mock_token_' + Date.now()
-        this.setAuth(mockUser, mockToken)
-        
-        return { success: true }
       } catch (error: any) {
         console.error('Login failed:', error)
         return { 
           success: false, 
-          error: error.message || 'Login failed' 
+          error: error.data?.message || error.message || 'Login failed' 
         }
       } finally {
         this.isLoading = false
