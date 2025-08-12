@@ -184,10 +184,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, withDefaults } from 'vue'
+import { computed } from 'vue'
 
 // Props
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   title: string
   itemType: string
   paginatedData: any[]
@@ -203,15 +203,16 @@ const props = withDefaults(defineProps<{
   emptyMessage?: string
   lowStockThreshold?: number
   criticalStockThreshold?: number
-}>(), {
-  loading: false,
-  error: null,
-  selectable: true,
-  selectedItems: () => [],
-  emptyMessage: '',
-  lowStockThreshold: 20,
-  criticalStockThreshold: 10
-})
+}>()
+
+// Default values for optional props
+const loading = props.loading ?? false
+const error = props.error ?? null
+const selectable = props.selectable ?? true
+const selectedItems = props.selectedItems ?? []
+const emptyMessage = props.emptyMessage ?? ''
+const lowStockThreshold = props.lowStockThreshold ?? 20
+const criticalStockThreshold = props.criticalStockThreshold ?? 10
 
 // Emits
 defineEmits<{
@@ -276,13 +277,13 @@ const visiblePages = computed(() => {
 
 const isAllSelected = computed(() => {
   return props.paginatedData.length > 0 && 
-         props.selectedItems.length === props.paginatedData.length &&
-         props.paginatedData.every(item => props.selectedItems.includes(getItemId(item)))
+         selectedItems.length === props.paginatedData.length &&
+         props.paginatedData.every(item => selectedItems.includes(getItemId(item)))
 })
 
 const isPartiallySelected = computed(() => {
   const selectedInPage = props.paginatedData.filter(item => 
-    props.selectedItems.includes(getItemId(item))
+    selectedItems.includes(getItemId(item))
   ).length
   return selectedInPage > 0 && selectedInPage < props.paginatedData.length
 })
@@ -307,7 +308,7 @@ const getStockPercentage = (item: any): number => {
 const getRowClasses = (item: any): string[] => {
   const classes: string[] = []
   
-  if (props.selectedItems.includes(getItemId(item))) {
+  if (selectedItems.includes(getItemId(item))) {
     classes.push('selected-row')
   }
   
