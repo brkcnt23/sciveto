@@ -592,8 +592,8 @@ const onPageChange = (page: number) => {
   pagination.value.page = page
 }
 
-const onItemsPerPageChange = (count: string) => {
-  pagination.value.pageSize = parseInt(count)
+const onItemsPerPageChange = (count: number) => {
+  pagination.value.pageSize = count
   pagination.value.page = 1
 }
 

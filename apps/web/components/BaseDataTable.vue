@@ -1,51 +1,91 @@
 <template>
   <div class="base-data-table">
-    <!-- Header -->
+    <!-- Head          <USelectMenu
+            :model-value="itemsPerPage"
+            @update:model-value="handleItemsChange"-->
     <div class="table-header">
       <div class="table-info">
         <h3>{{ title }}</h3>
         <span class="item-count">{{ filteredCount }} {{ itemType }} gösteriliyor</span>
+        
+        <!-- Performance indicator -->
+        <UBadge
+          v-if="shouldUseVirtualScroll"
+          color="primary"
+          variant="soft"
+          size="xs"
+        >
+          🚀 Virtual Scroll Aktif
+        </UBadge>
       </div>
       <div class="table-controls">
+        <!-- Advanced Stock Filters Toggle -->
+        <UButton
+          @click="showAdvancedFilters = !showAdvancedFilters"
+          variant="outline"
+          size="sm"
+          :color="showAdvancedFilters ? 'primary' : 'neutral'"
+        >
+          <UIcon name="i-heroicons-funnel" />
+          Gelişmiş Filtreler
+        </UButton>
+        
         <div class="stock-filter-actions">
-          <button @click="$emit('show-stock-only')" class="btn btn-info">
+          <UButton @click="$emit('show-stock-only')" variant="soft" color="primary" size="sm">
             📦 Sadece Stok
-          </button>
-          <button @click="$emit('show-project-assigned')" class="btn btn-secondary">
+          </UButton>
+          <UButton @click="$emit('show-project-assigned')" variant="soft" color="neutral" size="sm">
             📋 Projeye Atanmış
-          </button>
-          <button @click="$emit('clear-filters')" class="btn btn-outline">
+          </UButton>
+          <UButton @click="$emit('clear-filters')" variant="outline" size="sm">
             🔄 Tümünü Göster
-          </button>
+          </UButton>
         </div>
         
         <div class="view-density">
           <label>Görünüm:</label>
-          <button 
+          <UButton 
             v-for="density in viewDensities" 
             :key="density.value"
             @click="$emit('density-change', density.value)"
-            :class="['btn-density', { active: currentDensity === density.value }]"
+            :variant="currentDensity === density.value ? 'solid' : 'outline'"
+            :color="currentDensity === density.value ? 'primary' : 'neutral'"
+            size="sm"
             :title="density.label"
           >
             {{ density.icon }}
-          </button>
+          </UButton>
         </div>
 
         <div class="items-per-page">
-          <select :value="itemsPerPage" @change="e => $emit('items-change', (e.target as HTMLSelectElement).value)">
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
-          <span>kayıt</span>
+          <USelectMenu
+            :model-value="itemsPerPage"
+            @update:model-value="handleItemsChange"
+            :options="[
+              { value: 25, label: '25 kayıt' },
+              { value: 50, label: '50 kayıt' },
+              { value: 100, label: '100 kayıt' },
+              { value: 500, label: '500 kayıt' }
+            ]"
+          />
         </div>
 
-        <button @click="$emit('add-item')" class="btn btn-primary">
+        <UButton @click="$emit('add-item')" color="primary" size="sm">
           ➕ Yeni Ürün Ekle
-        </button>
+        </UButton>
       </div>
     </div>
+
+    <!-- Advanced Filters Panel -->
+    <UCollapse v-model="showAdvancedFilters">
+      <div class="advanced-filters-panel">
+        <AdvancedStockFilters
+          :items="paginatedData"
+          v-model="advancedFilters"
+          @filters-changed="handleAdvancedFilters"
+        />
+      </div>
+    </UCollapse>
 
     <!-- Loading State -->
     <div v-if="loading" class="loading-state">
@@ -184,7 +224,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 // Props
 const props = defineProps<{
@@ -214,10 +254,38 @@ const emptyMessage = props.emptyMessage ?? ''
 const lowStockThreshold = props.lowStockThreshold ?? 20
 const criticalStockThreshold = props.criticalStockThreshold ?? 10
 
+// Advanced features state
+const showAdvancedFilters = ref(false)
+const advancedFilters = ref({
+  statuses: [],
+  stockRange: { min: 0, max: 1000 },
+  abcCategories: [],
+  timeFrames: [],
+  valueRange: { min: null, max: null }
+})
+
+// Composables
+const { getStockStatus } = useStockOptimization()
+const {
+  visibleItems,
+  totalHeight,
+  offsetY,
+  handleScroll,
+  shouldUseVirtualScroll
+} = useVirtualScroll(
+  computed(() => props.paginatedData),
+  {
+    itemHeight: props.currentDensity === 'compact' ? 40 : props.currentDensity === 'detailed' ? 80 : 56,
+    containerHeight: 400,
+    buffer: 5,
+    threshold: 100
+  }
+)
+
 // Emits
-defineEmits<{
+const emit = defineEmits<{
   'density-change': [density: 'compact' | 'normal' | 'detailed']
-  'items-change': [count: string]
+  'items-change': [count: number]
   'show-stock-only': []
   'show-project-assigned': []
   'clear-filters': []
@@ -231,6 +299,7 @@ defineEmits<{
   'delete-item': [item: any]
   'add-item': []
   'retry': []
+  'filters-changed': [filters: any]
 }>()
 
 // Constants
@@ -239,6 +308,15 @@ const viewDensities = [
   { value: 'normal' as const, icon: '🔍', label: 'Normal' },
   { value: 'detailed' as const, icon: '🔍+', label: 'Detaylı' }
 ]
+
+// Methods
+const handleAdvancedFilters = (filters: any) => {
+  emit('filters-changed', filters)
+}
+
+const handleItemsChange = (value: any) => {
+  emit('items-change', value?.value || value)
+}
 
 // Computed
 const totalPages = computed(() => Math.ceil(props.totalItems / props.itemsPerPage))
