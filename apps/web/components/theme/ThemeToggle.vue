@@ -91,8 +91,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useTheme } from '~/composables/useTheme'
-import type { ThemeConfig, ThemeEvents } from '~/composables/useTheme'
 
 interface Props {
   // Appearance
@@ -111,10 +109,6 @@ interface Props {
   class?: string
   iconClass?: string
   buttonClass?: string
-  
-  // Theme config override
-  themeConfig?: Partial<ThemeConfig>
-  themeEvents?: Partial<ThemeEvents>
   
   // Button props passthrough
   [key: string]: any
@@ -138,18 +132,35 @@ const emit = defineEmits<{
   beforeChange: [theme: 'light' | 'dark']
   afterChange: [theme: 'light' | 'dark']
   toggle: []
-  change: [theme: 'light' | 'dark' | 'auto']
+  change: [theme: 'light' | 'dark' | 'system']
 }>()
 
-// Use theme composable with props config
-const { state, toggle, setTheme } = useTheme(
-  props.themeConfig,
-  {
-    onBeforeChange: (theme: 'light' | 'dark') => emit('beforeChange', theme),
-    onAfterChange: (theme: 'light' | 'dark') => emit('afterChange', theme),
-    ...props.themeEvents
-  }
-)
+// Use Nuxt's built-in color mode
+const colorMode = useColorMode()
+
+// Create state object similar to useTheme for compatibility
+const state = computed(() => ({
+  preference: colorMode.preference,
+  current: colorMode.value,
+  isSystemDark: window?.matchMedia?.('(prefers-color-scheme: dark)')?.matches || false,
+  isTransitioning: false
+}))
+
+// Theme toggle function
+const toggle = () => {
+  emit('toggle')
+  emit('beforeChange', colorMode.value === 'dark' ? 'light' : 'dark')
+  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+  emit('afterChange', colorMode.value as 'light' | 'dark')
+}
+
+// Set theme function
+const setTheme = (theme: 'light' | 'dark' | 'system') => {
+  emit('beforeChange', theme as 'light' | 'dark')
+  colorMode.preference = theme
+  emit('change', theme)
+  emit('afterChange', theme as 'light' | 'dark')
+}
 
 // Theme options for dropdown
 const themeOptions = computed(() => [
@@ -168,7 +179,7 @@ const themeOptions = computed(() => [
     iconClass: 'text-blue-400'
   },
   {
-    value: 'auto' as const,
+    value: 'system' as const,
     label: 'System',
     description: 'Use system setting',
     icon: 'i-lucide-monitor',
@@ -182,14 +193,14 @@ const currentThemeOption = computed(() => {
 })
 
 const currentIcon = computed(() => {
-  if (state.value.preference === 'auto') {
+  if (state.value.preference === 'system') {
     return state.value.isSystemDark ? 'i-lucide-moon' : 'i-lucide-sun'
   }
   return currentThemeOption.value.icon
 })
 
 const currentLabel = computed(() => {
-  if (state.value.preference === 'auto') {
+  if (state.value.preference === 'system') {
     return `System (${state.value.current})`
   }
   return currentThemeOption.value.label
@@ -216,8 +227,6 @@ const buttonProps = computed(() => {
     class: className,
     iconClass,
     buttonClass,
-    themeConfig,
-    themeEvents,
     ...rest
   } = props
   
@@ -227,19 +236,11 @@ const buttonProps = computed(() => {
 // Handlers
 const handleToggle = async () => {
   emit('toggle')
-  await toggle()
+  toggle()
 }
 
-const handleThemeChange = async (newTheme: 'light' | 'dark' | 'auto') => {
+const handleThemeChange = async (newTheme: 'light' | 'dark' | 'system') => {
   emit('change', newTheme)
-  await setTheme(newTheme)
+  setTheme(newTheme)
 }
-
-// Keyboard shortcut hint
-const shortcutHint = computed(() => {
-  if (process.client && navigator.platform.includes('Mac')) {
-    return '⌘ ⇧ T'
-  }
-  return 'Ctrl + Shift + T'
-})
 </script>

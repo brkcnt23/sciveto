@@ -238,7 +238,7 @@ const onThemeToggle = () => {
   console.log('[AppHeader] Theme toggled')
 }
 
-const onThemeChange = (newTheme: 'light' | 'dark' | 'auto') => {
-  console.log(`[AppHeader] Theme changed to: ${newTheme}`)
+const onThemeChange = (newTheme: 'light' | 'dark' | 'system') => {
+  console.log('Theme changed to:', newTheme)
 }
 </script>

@@ -10,941 +10,667 @@
 
     <!-- Content -->
     <template v-else-if="category">
-      <!-- Modern Page Header -->
+      <!-- Page Header -->
       <PageHeader
-        :title="category?.name || 'Kategori'"
-        :subtitle="category?.description || 'Kategori malzemeleri'"
-        :icon="category?.icon || 'i-lucide-folder'"
-        :icon-color="category?.color"
-        item-type="Ürün"
-        @add-item="addItem"
-        @export="exportData"
-      />
+        :title="category.name"
+        :description="category.description"
+        :breadcrumb="[
+          { name: 'Ana Sayfa', path: '/' },
+          { name: 'Kategoriler', path: '/categories' },
+          { name: category.name }
+        ]"
+      >
+        <template #actions>
+          <UButton
+            icon="i-lucide-plus"
+            @click="openAddModal"
+          >
+            Yeni Ürün Ekle
+          </UButton>
+        </template>
+      </PageHeader>
 
-      <!-- Enhanced Stats Cards -->
-      <StatsGrid :statistics="categoryStats" />
-
-      <!-- Modern Filters Section -->
-      <FiltersSection
-        :filters="filters"
-        :search-text="searchQuery"
-      :filter-groups="filterGroups"
-      :quick-filters="quickFilters"
-      @filter-change="onFilterChange"
-      @search-change="onSearchChange"
-      @clear-filters="clearFilters"
-      @show-stock-only="showStockOnly"
-      @show-project-assigned="showProjectAssigned"
-    />
-
-    <!-- Data Table -->
-    <div class="bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden">
-      <div class="px-6 py-4 border-b border-neutral-200 dark:border-neutral-700">
-        <div class="flex items-center justify-between">
-          <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">
-            Ürün Listesi
-          </h3>
-          <div class="flex items-center gap-2">
-            <UButton
-              @click="toggleView"
-              :icon="viewMode === 'table' ? 'i-lucide-grid-3x3' : 'i-lucide-list'"
-              variant="outline"
-              size="sm"
-            >
-              {{ viewMode === 'table' ? 'Kart Görünümü' : 'Tablo Görünümü' }}
-            </UButton>
-          </div>
-        </div>
-      </div>
-
-      <!-- BaseDataTable -->
+      <!-- Data Table -->
       <BaseDataTable
-        title="Ürün Listesi"
+        :title="`${category?.name || 'Kategori'} Ürünleri`"
         item-type="ürün"
-        :paginated-data="paginatedStockItems"
-        :filtered-count="filteredStockItems.length"
-        :total-items="filteredStockItems.length"
-        :current-page="pagination.page"
-        :items-per-page="pagination.pageSize"
-        :current-density="viewMode === 'table' ? 'normal' : 'compact'"
+        :paginatedData="paginatedData"
+        :filteredCount="filteredCount"
+        :totalItems="totalItems"
+        :currentPage="currentPage"
+        :itemsPerPage="itemsPerPage"
+        :currentDensity="currentDensity"
         :loading="loading"
-        :error="error"
-        :selectable="true"
-        :selected-items="[]"
-        empty-message="Bu kategoride henüz ürün bulunmuyor"
-        @add-item="addItem"
-        @edit-item="editItem"
-        @view-item="viewItem"
-        @duplicate-item="duplicateItem"
-        @delete-item="deleteItem"
-        @show-stock-only="showStockOnly"
-        @show-project-assigned="showProjectAssigned"
-        @clear-filters="clearFilters"
-        @density-change="onDensityChange"
-        @page-change="onPageChange"
-        @items-change="onItemsPerPageChange"
+        :selectable="false"
+        @edit-item="openEditModal"
+        @view-item="handleViewItem"
+        @duplicate-item="handleDuplicateItem" 
+        @delete-item="handleDeleteItem"
+        @add-item="openAddModal"
+        @open-import="openImportModal"
+        @open-export="openExportModal"
+        @page-change="handlePageChange"
+        @items-change="handleItemsChange"
+        @density-change="handleDensityChange"
       >
         <template #table-head>
-          <th>Ürün Adı</th>
-          <th>Açıklama</th>
-          <th>Birim</th>
-          <th>Mevcut Stok</th>
-          <th>Min. Stok</th>
-          <th>Birim Fiyat</th>
-          <th>Toplam Değer</th>
-          <th>Lokasyon</th>
-          <th>Durum</th>
+          <th v-for="column in tableColumns" :key="column.key" :class="column.class">
+            {{ column.label }}
+          </th>
         </template>
         
         <template #table-body="{ item }">
-          <td>
-            <div class="flex items-center gap-3">
-              <div 
-                class="w-8 h-8 rounded flex items-center justify-center text-white text-xs font-medium"
-                :style="{ backgroundColor: getItemColor(item) }"
-              >
-                {{ getItemInitials(item.name) }}
-              </div>
-              <div>
-                <div class="font-medium text-neutral-900 dark:text-white">
-                  {{ item.name }}
-                </div>
-                <div class="text-sm text-neutral-500">
-                  {{ item.description || '-' }}
-                </div>
-              </div>
-            </div>
-          </td>
-          <td>{{ item.description || '-' }}</td>
-          <td>{{ item.unit || 'adet' }}</td>
-          <td class="text-center">
-            <span :class="getStockBadgeClass(item)">
-              {{ item.currentStock || 0 }}
-            </span>
-          </td>
-          <td class="text-center">{{ item.minStockLevel || 0 }}</td>
-          <td class="text-right">
-            {{ formatCurrency(item.value || 0) }}
-          </td>
-          <td class="text-right font-semibold">
-            {{ formatCurrency((item.currentStock || 0) * (item.value || 0)) }}
-          </td>
-          <td>{{ item.location || '-' }}</td>
-          <td>
-            <span :class="getStatusBadgeClass(item)">
-              {{ getStatusText(item) }}
-            </span>
+          <td v-for="column in tableColumns" :key="column.key" :class="column.class">
+            <template v-if="column.key === 'name'">
+              <div class="font-medium text-neutral-900 dark:text-white">{{ item.name }}</div>
+            </template>
+            <template v-else-if="column.key === 'description'">
+              <div class="text-neutral-600 dark:text-neutral-300">{{ item.description || '-' }}</div>
+            </template>
+            <template v-else-if="column.key === 'currentStock'">
+              <span class="text-neutral-700 dark:text-neutral-300">{{ item.currentStock }}</span>
+            </template>
+            <template v-else-if="column.key === 'value'">
+              <span class="text-neutral-700 dark:text-neutral-300">{{ item.value }}</span>
+            </template>
           </td>
         </template>
       </BaseDataTable>
-    </div>
 
-
-
-    <!-- Add/Edit Item Modal -->
-    <UModal v-model="showItemModal">
-      <UCard>
-        <template #header>
-          <h3 class="text-lg font-medium">{{ editingItem ? 'Ürün Düzenle' : 'Yeni Ürün Ekle' }}</h3>
-        </template>
-
-        <div class="space-y-4">
-          <!-- Basic Fields -->
-          <div>
-            <label class="block text-sm font-medium mb-1">Ürün Adı *</label>
-            <UInput v-model="itemForm.name" placeholder="Ürün adını girin" />
+      <!-- Add/Edit Modal -->
+      <UModal v-model="showModal">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">
+              {{ editingItem ? 'Ürünü Düzenle' : 'Yeni Ürün Ekle' }}
+            </h3>
+            <UButton
+              icon="i-lucide-x"
+              variant="ghost"
+              size="sm"
+              @click="closeModal"
+            />
           </div>
 
-          <div>
-            <label class="block text-sm font-medium mb-1">Açıklama</label>
-            <UTextarea v-model="itemForm.description" placeholder="Ürün açıklamasını girin" />
-          </div>
-
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-medium mb-1">Birim *</label>
-              <USelectMenu
-                v-model="itemForm.unit"
-                :options="['adet', 'kg', 'm', 'm²', 'm³', 'lt', 'ton']"
-                placeholder="Birim seçin"
-              />
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium mb-1">Değer (₺) *</label>
-              <UInput v-model.number="itemForm.value" type="number" step="0.01" />
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-medium mb-1">Mevcut Stok *</label>
-              <UInput v-model.number="itemForm.currentStock" type="number" />
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium mb-1">Minimum Stok *</label>
-              <UInput v-model.number="itemForm.minStock" type="number" />
-            </div>
-          </div>
-
-          <!-- Location and Reserved Stock -->
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-medium mb-1">Lokasyon</label>
-              <UInput v-model="itemForm.location" placeholder="Depo/Raf bilgisi" />
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium mb-1">Rezerve Stok</label>
-              <UInput v-model.number="itemForm.reservedStock" type="number" readonly />
-            </div>
-          </div>
-
-          <!-- Specifications -->
-          <div>
-            <label class="block text-sm font-medium mb-1">Özellikler</label>
-            <UTextarea v-model="itemForm.specifications" placeholder="Teknik özellikler, boyutlar vb." />
-          </div>
-
-          <!-- Template-based Standards (Mapa Ölçüleri) -->
-          <div v-if="templateData?.standards?.length" class="space-y-4">
-            <h4 class="font-medium text-neutral-900 dark:text-white">Standartlar</h4>
-            <div v-for="standard in templateData.standards" :key="standard.id" class="space-y-2">
+          <form @submit.prevent="handleSave" class="space-y-4">
+            <!-- Basic Fields -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-medium mb-1">{{ standard.name }} *</label>
-                <USelectMenu
-                  :model-value="itemForm.standards[standard.id]"
-                  @update:model-value="(value: any) => { itemForm.standards[standard.id] = value as string }"
-                  :options="standard.values"
-                  :placeholder="`${standard.name} seçin`"
+                <label class="block text-sm font-medium mb-1">Ürün Adı *</label>
+                <UInput
+                  v-model="formData.name"
+                  placeholder="Ürün adını girin"
+                  required
                 />
               </div>
-            </div>
-          </div>
 
-          <!-- Template-based Fields (Mapa özel alanları) -->
-          <div v-if="templateData?.fields?.length" class="space-y-4">
-            <h4 class="font-medium text-neutral-900 dark:text-white">{{ templateData.name }} Özellikleri</h4>
-            <div v-for="field in templateData.fields" :key="field.name" class="space-y-2">
               <div>
-                <label class="block text-sm font-medium mb-1">{{ field.label }} {{ field.required ? '*' : '' }}</label>
+                <label class="block text-sm font-medium mb-1">Birim</label>
                 <UInput
-                  v-if="field.type === 'text'"
-                  :model-value="itemForm.templateFields[field.name]"
-                  @update:model-value="(value: any) => { itemForm.templateFields[field.name] = value as string }"
-                  :placeholder="field.placeholder"
+                  v-model="formData.unit"
+                  placeholder="adet, kg, litre vb."
                 />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium mb-1">Mevcut Stok</label>
                 <UInput
-                  v-else-if="field.type === 'number'"
-                  :model-value="itemForm.templateFields[field.name]"
-                  @update:model-value="(value: any) => { itemForm.templateFields[field.name] = value as number }"
+                  v-model="formData.currentStock"
                   type="number"
-                  :step="field.step || '0.01'"
-                  :placeholder="field.placeholder"
+                  placeholder="0"
                 />
-                <USelectMenu
-                  v-else-if="field.type === 'select'"
-                  :model-value="itemForm.templateFields[field.name]"
-                  @update:model-value="(value: any) => { itemForm.templateFields[field.name] = value as string }"
-                  :options="field.options"
-                  :placeholder="field.placeholder"
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium mb-1">Minimum Stok</label>
+                <UInput
+                  v-model="formData.minStock"
+                  type="number"
+                  placeholder="0"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium mb-1">Değer (₺)</label>
+                <UInput
+                  v-model="formData.value"
+                  type="number"
+                  step="0.01"
+                  placeholder="0.00"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium mb-1">Konum</label>
+                <UInput
+                  v-model="formData.location"
+                  placeholder="Depo konumu"
                 />
               </div>
             </div>
-          </div>
 
-          <!-- Mapa için özel alanlar -->
-          <div v-if="category?.name === 'Mapa'" class="space-y-4">
-            <h4 class="font-medium text-neutral-900 dark:text-white">Proje Bilgileri</h4>
             <div>
-              <label class="block text-sm font-medium mb-1">Kullanıldığı Proje</label>
-              <UInput 
-                v-model="itemForm.templateFields.used_project" 
-                placeholder="Proje adını girin"
+              <label class="block text-sm font-medium mb-1">Açıklama</label>
+              <UTextarea
+                v-model="formData.description"
+                placeholder="Ürün açıklaması"
+                :rows="3"
               />
             </div>
+
             <div>
-              <label class="block text-sm font-medium mb-1">Ek Açıklama</label>
-              <UTextarea 
-                v-model="itemForm.templateFields.additional_notes" 
-                placeholder="Ek açıklama girin"
+              <label class="block text-sm font-medium mb-1">Teknik Özellikler</label>
+              <UTextarea
+                v-model="formData.specifications"
+                placeholder="Teknik özellikler ve detaylar"
+                :rows="3"
               />
+            </div>
+
+            <!-- Dynamic Template Fields -->
+            <div v-if="templateData?.fields?.length" class="border-t pt-4">
+              <h4 class="text-md font-medium mb-3">{{ templateData.name }} Alanları</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div v-for="field in templateData.fields" :key="field.name">
+                  <label class="block text-sm font-medium mb-1">{{ field.label }} {{ field.required ? '*' : '' }}</label>
+                  
+                  <!-- Text Input -->
+                  <UInput
+                    v-if="field.type === 'text'"
+                    v-model="formData.templateFields[field.name]"
+                    :placeholder="field.placeholder"
+                  />
+                  
+                  <!-- Number Input -->
+                  <UInput
+                    v-else-if="field.type === 'number'"
+                    v-model="formData.templateFields[field.name]"
+                    type="number"
+                    :step="field.validation?.step || 'any'"
+                    :min="field.validation?.min"
+                    :max="field.validation?.max"
+                    :placeholder="field.placeholder"
+                  />
+                  
+                  <!-- Textarea -->
+                  <UTextarea
+                    v-else-if="field.type === 'textarea'"
+                    v-model="formData.templateFields[field.name]"
+                    :placeholder="field.placeholder"
+                  />
+                  
+                  <!-- Select -->
+                  <USelectMenu
+                    v-else-if="field.type === 'select' || field.type === 'enum'"
+                    v-model="formData.templateFields[field.name]"
+                    :options="field.options || []"
+                    :placeholder="`${field.label} seçin`"
+                  />
+                  
+                  <!-- Date -->
+                  <UInput
+                    v-else-if="field.type === 'date'"
+                    v-model="formData.templateFields[field.name]"
+                    type="date"
+                  />
+                  
+                  <!-- Boolean/Checkbox -->
+                  <UCheckbox
+                    v-else-if="field.type === 'boolean'"
+                    v-model="formData.templateFields[field.name]"
+                    :label="field.label"
+                  />
+                  
+                  <!-- Default Text Input -->
+                  <UInput
+                    v-else
+                    v-model="formData.templateFields[field.name]"
+                    :placeholder="field.placeholder"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="flex justify-end gap-3 pt-6 border-t">
+              <UButton
+                type="button"
+                variant="outline"
+                @click="closeModal"
+              >
+                İptal
+              </UButton>
+              <UButton
+                type="submit"
+                :loading="saving"
+                :disabled="!formData.name"
+              >
+                {{ editingItem ? 'Güncelle' : 'Kaydet' }}
+              </UButton>
+            </div>
+          </form>
+        </div>
+      </UModal>
+
+      <!-- Import Modal -->
+      <UModal v-model="showImportModal">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">
+              Ürün İçe Aktar
+            </h3>
+            <UButton
+              icon="i-lucide-x"
+              variant="ghost"
+              size="sm"
+              @click="showImportModal = false"
+            />
+          </div>
+
+          <div class="space-y-4">
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">
+              CSV dosyası seçerek ürünleri toplu olarak içe aktarabilirsiniz.
+            </p>
+            
+            <div class="border-2 border-dashed border-neutral-300 dark:border-neutral-600 rounded-lg p-6 text-center">
+              <div class="space-y-2">
+                <UIcon name="i-lucide-upload" class="h-8 w-8 mx-auto text-neutral-400" />
+                <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                  Dosyayı buraya sürükleyin veya seçin
+                </p>
+                <UButton size="sm" variant="outline">
+                  Dosya Seç
+                </UButton>
+              </div>
+            </div>
+
+            <div class="flex justify-end gap-3">
+              <UButton
+                variant="outline"
+                @click="showImportModal = false"
+              >
+                İptal
+              </UButton>
+              <UButton disabled>
+                İçe Aktar
+              </UButton>
             </div>
           </div>
         </div>
+      </UModal>
 
-        <template #footer>
-          <div class="flex justify-end gap-3">
-            <UButton @click="showItemModal = false" variant="outline">
-              İptal
-            </UButton>
-            <UButton @click="saveItem" :loading="savingItem" color="primary">
-              {{ editingItem ? 'Güncelle' : 'Kaydet' }}
-            </UButton>
+      <!-- Export Modal -->
+      <UModal v-model="showExportModal">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">
+              Ürün Dışa Aktar
+            </h3>
+            <UButton
+              icon="i-lucide-x"
+              variant="ghost"
+              size="sm"
+              @click="showExportModal = false"
+            />
           </div>
-        </template>
-      </UCard>
-    </UModal>
+
+          <div class="space-y-4">
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">
+              Kategori ürünlerini CSV formatında dışa aktarabilirsiniz.
+            </p>
+            
+            <div class="space-y-3">
+              <UCheckbox v-model="exportOptions.includeTemplateFields" label="Template alanlarını dahil et" />
+              <UCheckbox v-model="exportOptions.includeStockInfo" label="Stok bilgilerini dahil et" />
+              <UCheckbox v-model="exportOptions.includeFinancialInfo" label="Mali bilgileri dahil et" />
+            </div>
+
+            <div class="flex justify-end gap-3">
+              <UButton
+                variant="outline"
+                @click="showExportModal = false"
+              >
+                İptal
+              </UButton>
+              <UButton @click="handleExport">
+                Dışa Aktar
+              </UButton>
+            </div>
+          </div>
+        </div>
+      </UModal>
     </template>
 
     <!-- Error State -->
-    <div v-else-if="!loading" class="flex items-center justify-center py-12">
-      <div class="text-center">
-        <div class="text-neutral-400 mb-4">
-          <Icon name="i-lucide-alert-circle" class="w-12 h-12 mx-auto" />
-        </div>
-        <p class="text-neutral-600 dark:text-neutral-400">Kategori bulunamadı</p>
-      </div>
+    <div v-else class="text-center py-12">
+      <UIcon name="i-lucide-alert-circle" class="h-12 w-12 mx-auto text-red-500 mb-4" />
+      <h3 class="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
+        Kategori bulunamadı
+      </h3>
+      <p class="text-neutral-600 dark:text-neutral-400 mb-4">
+        Bu kategori mevcut değil veya silinmiş olabilir.
+      </p>
+      <UButton @click="$router.push('/categories')">
+        Kategorilere Dön
+      </UButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { StockItem, Category, ItemForm, TableColumn } from '~/types'
+import { computed } from 'vue'
+import type { StockItem, Category } from '~/types'
+import PageHeader from '~/components/ui/PageHeader.vue'
 
-const route = useRoute()
-const toast = useToast()
-const { fetchCategories } = useCategoriesApi()
-const { getStockItemsByCategory, createStockItem, updateStockItem } = useStockItemsApi()
+// Local types
+interface TemplateField {
+  name: string
+  label: string
+  type: string
+  required?: boolean
+  placeholder?: string
+  defaultValue?: any
+  validation?: {
+    step?: string
+    min?: number
+    max?: number
+  }
+  options?: string[]
+}
 
-// Page metadata
+// Page Meta
 definePageMeta({
-  middleware: 'auth'
+  title: 'Kategori Ürünleri',
+  description: 'Kategori ürünlerini yönetin'
 })
 
-// Reactive data
-const categoryId = computed(() => route.params.id as string)
+// Route
+const route = useRoute()
+const categoryId = route.params.id as string
+
+// Reactive State
+const loading = ref(true)
 const category = ref<Category | null>(null)
 const stockItems = ref<StockItem[]>([])
-const projects = ref<any[]>([])
 const templateData = ref<any>(null)
-const loading = ref(false)
-const error = ref<string | null>(null)
-const showItemModal = ref(false)
+
+// Pagination state for BaseDataTable
+const currentPage = ref(1)
+const itemsPerPage = ref(25)
+const currentDensity = ref<'compact' | 'normal' | 'detailed'>('normal')
+
+// Modal States
+const showModal = ref(false)
+const showImportModal = ref(false) 
+const showExportModal = ref(false)
 const editingItem = ref<StockItem | null>(null)
-const savingItem = ref(false)
+const saving = ref(false)
 
-// Modern UI state
-const viewMode = ref<'table' | 'cards'>('table')
-const searchQuery = ref('')
-const pagination = ref({
-  page: 1,
-  pageSize: 20,
-  total: 0
-})
-
-// Filters
-const filters = ref({
-  stockStatus: '',
-  project: '',
-  location: '',
-  search: ''
-})
-
-// Modern filter groups for FiltersSection component
-const filterGroups = computed(() => ({
-  stockStatus: {
-    label: 'Stok Durumu',
-    key: 'stockStatus',
-    type: 'select' as const,
-    options: [
-      { label: 'Tümü', value: '' },
-      { label: 'Stokta Var', value: 'in_stock' },
-      { label: 'Düşük Stok', value: 'low_stock' },
-      { label: 'Stok Yok', value: 'out_of_stock' },
-      { label: 'Projede Kullanılıyor', value: 'allocated' }
-    ]
-  },
-  project: {
-    label: 'Proje',
-    key: 'project',
-    type: 'select' as const,
-    options: projectOptions.value.map(p => ({ label: p.name, value: p.id }))
-  },
-  location: {
-    label: 'Lokasyon',
-    key: 'location',
-    type: 'input' as const,
-    placeholder: 'Depo/Raf ara...',
-    options: []
+// API Functions
+const loadCategory = async () => {
+  try {
+    const response = await $fetch(`/api/categories/${categoryId}`, {
+      baseURL: 'http://localhost:3001'
+    }) as any
+    category.value = response
+  } catch (error) {
+    console.error('Error loading category:', error)
   }
-}))
+}
 
-// Quick filters for modern UI
-const quickFilters = computed(() => [
-  {
-    key: 'low_stock',
-    label: 'Düşük Stok',
-    value: 'low_stock',
-    count: lowStockItems.value,
-    color: 'orange' as const,
-    event: 'show-stock-only' as const
-  },
-  {
-    key: 'out_of_stock',
-    label: 'Stok Yok',
-    value: 'out_of_stock',
-    count: Array.isArray(stockItems.value) ? stockItems.value.filter(item => {
-      const available = (item.currentStock || 0) - ((item as any).reservedStock || 0)
-      return available <= 0
-    }).length : 0,
-    color: 'red' as const,
-    event: 'show-stock-only' as const
-  },
-  {
-    key: 'allocated',
-    label: 'Projede Kullanılıyor',
-    value: 'allocated',
-    count: Array.isArray(stockItems.value) ? stockItems.value.filter(item => ((item as any).reservedStock || 0) > 0).length : 0,
-    color: 'blue' as const,
-    event: 'show-project-assigned' as const
+const loadStockItems = async () => {
+  try {
+    const response = await $fetch(`/api/stock-items/category/${categoryId}`, {
+      baseURL: 'http://localhost:3001'
+    }) as any
+    
+    // API response has data array, map to our StockItem format
+    if (response.data) {
+      stockItems.value = response.data.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+        description: item.description,
+        unit: 'adet', // Default unit
+        currentStock: item.stock || 0,
+        minStock: 0,
+        value: item.price || 0,
+        location: '',
+        specifications: '',
+        reservedStock: 0,
+        standards: {},
+        templateFields: {}
+      }))
+    }
+  } catch (error) {
+    console.error('Error loading stock items:', error)
+    stockItems.value = []
   }
-])
+}
 
-// Statistics for modern UI
-const categoryStats = computed(() => [
-  {
-    label: 'Toplam Ürün',
-    value: Array.isArray(stockItems.value) ? stockItems.value.length : 0,
-    icon: 'i-lucide-package',
-    color: 'blue'
-  },
-  {
-    label: 'Toplam Stok Değeri',
-    value: totalStockValue.value,
-    icon: 'i-lucide-coins',
-    color: 'green',
-    format: 'currency' as const
-  },
-  {
-    label: 'Düşük Stok Uyarısı',
-    value: lowStockItems.value,
-    icon: 'i-lucide-alert-triangle',
-    color: 'orange'
-  },
-  {
-    label: 'Aktif Projeler',
-    value: activeProjectsCount.value,
-    icon: 'i-lucide-users',
-    color: 'purple'
-  }
-])
+// Form State
+interface FormDataType {
+  name: string
+  description: string
+  unit: string
+  currentStock: number
+  minStock: number
+  value: number
+  location: string
+  specifications: string
+  reservedStock: number
+  standards: Record<string, any>
+  templateFields: Record<string, any>
+}
 
-// Filter options
-const stockStatusOptions = [
-  { label: 'Tümü', value: '' },
-  { label: 'Stokta Var', value: 'in_stock' },
-  { label: 'Düşük Stok', value: 'low_stock' },
-  { label: 'Stok Yok', value: 'out_of_stock' },
-  { label: 'Projede Kullanılıyor', value: 'allocated' }
-]
-
-// Form state
-const itemForm = ref<ItemForm>({
+const formData = ref<FormDataType>({
   name: '',
   description: '',
   unit: 'adet',
   currentStock: 0,
   minStock: 0,
   value: 0,
+  location: '',
+  specifications: '',
+  reservedStock: 0,
   standards: {},
   templateFields: {}
 })
 
-// Table config
+// Export Options
+const exportOptions = ref({
+  includeTemplateFields: true,
+  includeStockInfo: true,
+  includeFinancialInfo: false
+})
+
+// Table Columns for BaseDataTable
 const tableColumns = [
-  {
-    key: 'name',
-    label: 'Ürün Adı / Kodu',
-    sortable: true
+  { 
+    key: 'name', 
+    label: 'Ürün Adı', 
+    sortable: true,
+    searchable: true
   },
-  {
-    key: 'specifications',
-    label: 'Boyut/Özellik'
+  { 
+    key: 'description', 
+    label: 'Açıklama',
+    searchable: true
   },
-  {
-    key: 'stockInfo',
-    label: 'Stok Durumu'
+  { 
+    key: 'currentStock', 
+    label: 'Stok', 
+    type: 'number',
+    sortable: true,
+    class: 'text-center'
   },
-  {
-    key: 'projectAllocations',
-    label: 'Proje Atamaları'
-  },
-  {
-    key: 'location',
-    label: 'Lokasyon'
-  },
-  {
-    key: 'value',
-    label: 'Birim Fiyat'
-  },
-  {
-    key: 'totalValue',
-    label: 'Toplam Değer'
-  },
-  {
-    key: 'actions',
-    label: 'İşlemler'
+  { 
+    key: 'value', 
+    label: 'Değer (₺)', 
+    type: 'currency',
+    sortable: true,
+    class: 'text-right'
   }
 ]
 
-// Computed
-const filteredStockItems = computed(() => {
-  if (!Array.isArray(stockItems.value)) return []
-  
-  let filtered = stockItems.value
-  
-  // Search filter
-  if (filters.value.search || searchQuery.value) {
-    const query = (filters.value.search || searchQuery.value).toLowerCase()
-    filtered = filtered.filter(item => 
-      item.name.toLowerCase().includes(query) ||
-      item.description?.toLowerCase().includes(query) ||
-      item.location?.toLowerCase().includes(query)
-    )
-  }
-  
-  // Stock status filter
-  if (filters.value.stockStatus) {
-    filtered = filtered.filter(item => {
-      const available = (item.currentStock || 0) - ((item as any).reservedStock || 0)
-      switch (filters.value.stockStatus) {
-        case 'in_stock':
-          return available > (item.minStockLevel || 0)
-        case 'low_stock':
-          return available <= (item.minStockLevel || 0) && available > 0
-        case 'out_of_stock':
-          return available <= 0
-        case 'allocated':
-          return ((item as any).reservedStock || 0) > 0
-        default:
-          return true
-      }
-    })
-  }
-  
-  // Project filter
-  if (filters.value.project) {
-    filtered = filtered.filter(item => 
-      (item as any).allocations?.some((alloc: any) => alloc.projectId === filters.value.project)
-    )
-  }
-  
-  // Location filter
-  if (filters.value.location) {
-    filtered = filtered.filter(item => 
-      item.location?.toLowerCase().includes(filters.value.location.toLowerCase())
-    )
-  }
-  
-  return filtered
+// Computed values for BaseDataTable
+const filteredCount = computed(() => stockItems.value.length)
+const totalItems = computed(() => stockItems.value.length)
+
+const paginatedData = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value
+  const end = start + itemsPerPage.value
+  return stockItems.value.slice(start, end)
 })
 
-const totalStockValue = computed(() => {
-  if (!Array.isArray(stockItems.value)) return 0
-  return stockItems.value.reduce((total, item) => {
-    return total + ((item.currentStock || 0) * ((item as any).lastPurchasePrice || item.value || 0))
-  }, 0)
-})
-
-const lowStockItems = computed(() => {
-  if (!Array.isArray(stockItems.value)) return 0
-  return stockItems.value.filter((item: StockItem) => {
-    const available = (item.currentStock || 0) - ((item as any).reservedStock || 0)
-    return available <= (item.minStockLevel || 0)
-  }).length
-})
-
-const activeProjectsCount = computed(() => {
-  if (!Array.isArray(projects.value)) return 0
-  return projects.value.filter(p => p.status === 'IN_PROGRESS').length
-})
-
-const projectOptions = computed(() => {
-  if (!Array.isArray(projects.value)) return []
-  return [
-    { id: '', name: 'Tüm Projeler' },
-    ...projects.value.map(p => ({ id: p.id, name: p.name }))
-  ]
-})
-
-// Modern UI Methods
-const toggleView = () => {
-  viewMode.value = viewMode.value === 'table' ? 'cards' : 'table'
+// Event handlers for BaseDataTable
+const handlePageChange = (page: number) => {
+  currentPage.value = page
 }
 
-const onFilterChange = (updatedFilters: Record<string, any>) => {
-  filters.value = { ...filters.value, ...updatedFilters }
+const handleItemsChange = (count: number) => {
+  itemsPerPage.value = count
+  currentPage.value = 1
 }
 
-const onSearchChange = (value: string) => {
-  searchQuery.value = value
-  filters.value.search = value
+const handleDensityChange = (density: 'compact' | 'normal' | 'detailed') => {
+  currentDensity.value = density
 }
 
-const onDensityChange = (density: 'compact' | 'normal' | 'detailed') => {
-  // Handle density change
-  console.log('Density changed to:', density)
-}
-
-const onPageChange = (page: number) => {
-  pagination.value.page = page
-}
-
-const onItemsPerPageChange = (count: number) => {
-  pagination.value.pageSize = count
-  pagination.value.page = 1
-}
-
-const showStockOnly = () => {
-  filters.value.stockStatus = 'in_stock'
-}
-
-const showProjectAssigned = () => {
-  filters.value.stockStatus = 'allocated'
-}
-
-const clearFilters = () => {
-  filters.value = {
-    stockStatus: '',
-    project: '',
-    location: '',
-    search: ''
-  }
-  searchQuery.value = ''
-}
-
-const exportData = () => {
-  // TODO: Implement data export functionality
-  console.log('Exporting data...')
-}
-
-// Computed for pagination
-const paginatedStockItems = computed(() => {
-  if (!Array.isArray(filteredStockItems.value)) return []
-  
-  const start = (pagination.value.page - 1) * pagination.value.pageSize
-  const end = start + pagination.value.pageSize
-  return filteredStockItems.value.slice(start, end)
-})
-
-// Helper functions for table display
-const getItemColor = (item: StockItem) => {
-  const colors = ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B', '#EF4444', '#6366F1', '#EC4899']
-  const index = (item.name || '').length % colors.length
-  return colors[index]
-}
-
-const getItemInitials = (name: string) => {
-  return name
-    .split(' ')
-    .map(word => word.charAt(0))
-    .join('')
-    .substring(0, 2)
-    .toUpperCase()
-}
-
-const getStockBadgeClass = (item: StockItem) => {
-  const current = item.currentStock || 0
-  const min = item.minStockLevel || 0
-  
-  if (current === 0) {
-    return 'px-2 py-1 text-xs rounded-full bg-red-100 text-red-800'
-  } else if (current <= min && min > 0) {
-    return 'px-2 py-1 text-xs rounded-full bg-orange-100 text-orange-800'
-  } else {
-    return 'px-2 py-1 text-xs rounded-full bg-green-100 text-green-800'
-  }
-}
-
-const getStatusBadgeClass = (item: StockItem) => {
-  const current = item.currentStock || 0
-  const min = item.minStockLevel || 0
-  
-  if (current === 0) {
-    return 'px-2 py-1 text-xs rounded-full bg-red-100 text-red-800'
-  } else if (current <= min && min > 0) {
-    return 'px-2 py-1 text-xs rounded-full bg-orange-100 text-orange-800'
-  } else {
-    return 'px-2 py-1 text-xs rounded-full bg-green-100 text-green-800'
-  }
-}
-
-const getStatusText = (item: StockItem) => {
-  const current = item.currentStock || 0
-  const min = item.minStockLevel || 0
-  
-  if (current === 0) {
-    return 'Stok Yok'
-  } else if (current <= min && min > 0) {
-    return 'Düşük Stok'
-  } else {
-    return 'Normal'
-  }
-}
-
-const getStockColorClass = (item: StockItem) => {
-  const available = (item.currentStock || 0) - ((item as any).reservedStock || 0)
-  if (available <= 0) return 'text-red-600 dark:text-red-400'
-  if (available <= (item.minStockLevel || 0)) return 'text-orange-600 dark:text-orange-400'
-  return 'text-green-600 dark:text-green-400'
-}
-
-const getStockBadgeColor = (item: StockItem) => {
-  const available = (item.currentStock || 0) - ((item as any).reservedStock || 0)
-  if (available <= 0) return 'error'
-  if (available <= (item.minStockLevel || 0)) return 'warning'
-  if ((item as any).reservedStock > 0) return 'primary'
-  return 'success'
-}
-
-const getStockStatusText = (item: StockItem) => {
-  const available = (item.currentStock || 0) - ((item as any).reservedStock || 0)
-  if (available <= 0) return 'Stokta Yok'
-  if (available <= (item.minStockLevel || 0)) return 'Düşük Stok'
-  if ((item as any).reservedStock > 0) return 'Rezerve Edilmiş'
-  return 'Mevcut'
-}
-
-const viewItem = (item: StockItem) => {
-  // TODO: Navigate to item detail page or open modal
-  console.log('Viewing item:', item.id)
-}
-
-const duplicateItem = (item: StockItem) => {
-  // TODO: Duplicate item functionality
-  console.log('Duplicating item:', item.id)
-  // Open modal with pre-filled data from the original item
-  editingItem.value = null
-  itemForm.value = {
-    name: `${item.name} (Kopya)`,
-    description: item.description || '',
-    unit: item.unit || 'adet',
-    currentStock: 0, // Reset stock for duplicated item
-    minStock: item.minStockLevel || 0,
-    value: item.value || 0,
-    location: item.location || '',
-    standards: { ...((item as any).standards || {}) },
-    templateFields: { ...((item as any).templateFields || {}) }
-  }
-  showItemModal.value = true
-}
-
-const deleteItem = (item: StockItem) => {
-  // TODO: Implement delete functionality
-  console.log('Deleting item:', item.id)
-}
-
-const loadTemplateData = async (templateId: string) => {
-  try {
-    const runtimeConfig = useRuntimeConfig()
-    const template = await $fetch(`${runtimeConfig.public.apiBase}/templates/${templateId}`) as any
-    console.log('Template data loaded:', template)
-    templateData.value = template
-  } catch (err) {
-    console.error('Error loading template data:', err)
-  }
-}
-
-const loadCategory = async () => {
-  try {
-    loading.value = true
-    error.value = null
-    console.log('Loading category:', categoryId.value)
-    
-    // Geçici çözüm: Tüm kategorileri çek ve client-side'da filtrele
-    const { fetchCategories } = useCategoriesApi()
-    await fetchCategories()
-    const categories = await fetchCategories() // İkinci çağrı cached veriyi döner
-    
-    const categoryData = categories.find(cat => cat.id === categoryId.value)
-    
-    if (!categoryData) {
-      error.value = 'Kategori bulunamadı'
-      console.error('Category not found with ID:', categoryId.value)
-      return
-    }
-    
-    category.value = categoryData
-    console.log('Category loaded:', categoryData)
-    
-    // Stok ürünlerini yükle
-    await loadStockItems()
-    
-    // Template verisi varsa yükle
-    if (categoryData?.templateId) {
-      await loadTemplateData(categoryData.templateId)
-    }
-  } catch (err: any) {
-    console.error('Error loading category:', err)
-    error.value = err.message || 'Kategori yüklenirken hata oluştu'
-    toast.add({
-      title: 'Hata',
-      description: err.message || 'Kategori yüklenirken hata oluştu',
-      color: 'error'
-    })
-  } finally {
-    loading.value = false
-  }
-}
-
-const loadStockItems = async () => {
-  try {
-    console.log('Loading stock items for category:', categoryId.value)
-    const items = await getStockItemsByCategory(categoryId.value)
-    console.log('Raw stock items response:', items)
-    
-    // Ensure items is an array
-    if (Array.isArray(items)) {
-      stockItems.value = items
-    } else if (items && typeof items === 'object' && 'data' in items && Array.isArray((items as any).data)) {
-      stockItems.value = (items as any).data
-    } else {
-      console.warn('Stock items response is not an array:', items)
-      stockItems.value = []
-    }
-    
-    console.log('Final stock items:', stockItems.value)
-  } catch (err: any) {
-    console.error('Error loading stock items:', err)
-    stockItems.value = [] // Fallback to empty array
-    toast.add({
-      title: 'Hata',
-      description: err.message || 'Ürünler yüklenirken hata oluştu',
-      color: 'error'
-    })
-  }
-}
-
-// Helper functions
-const getStockStatusColor = (item: StockItem) => {
-  const available = (item.currentStock || 0) - (item.reservedStock || 0)
-  if (available <= 0) return 'error'
-  if (available <= (item.minStockLevel || 0)) return 'warning'
-  if ((item.reservedStock || 0) > 0) return 'primary'
-  return 'success'
-}
-
-const getStockStatusLabel = (item: StockItem) => {
-  const available = (item.currentStock || 0) - (item.reservedStock || 0)
-  if (available <= 0) return 'Stokta Yok'
-  if (available <= (item.minStockLevel || 0)) return 'Düşük Stok'
-  if ((item.reservedStock || 0) > 0) return 'Rezerve Edilmiş'
-  return 'Mevcut'
-}
-
-const getAvailableStock = (item: StockItem) => {
-  return (item.currentStock || 0) - (item.reservedStock || 0)
-}
-
-// Stock action functions
-const allocateStock = (item: StockItem) => {
-  // Implementation for stock allocation to projects
-  console.log('Allocating stock for item:', item.id)
-  // TODO: Open allocation modal
-}
-
-const adjustStock = (item: StockItem) => {
-  // Implementation for manual stock adjustment
-  console.log('Adjusting stock for item:', item.id)
-  // TODO: Open stock adjustment modal
-}
-
-const addItem = () => {
-  editingItem.value = null
-  // Form değerlerini sıfırla
-  itemForm.value = {
+// Reset Form
+const resetForm = () => {
+  formData.value = {
     name: '',
     description: '',
     unit: 'adet',
     currentStock: 0,
     minStock: 0,
     value: 0,
-    standards: {},
-    templateFields: {
-      used_project: '',
-      additional_notes: ''
-    },
     location: '',
     specifications: '',
-    reservedStock: 0
+    reservedStock: 0,
+    standards: {},
+    templateFields: {}
   }
-  showItemModal.value = true
+  
+  // Initialize template fields
+  if (templateData.value?.fields) {
+    templateData.value.fields.forEach((field: TemplateField) => {
+      formData.value.templateFields[field.name] = field.defaultValue || ''
+    })
+  }
 }
-const editItem = (item: StockItem) => {
+
+// Modal Functions
+const openAddModal = () => {
+  editingItem.value = null
+  resetForm()
+  showModal.value = true
+}
+
+const openEditModal = (item: StockItem) => {
   editingItem.value = item
-  // Formu ürün ile doldur
-  itemForm.value = {
+  
+  // Load item data into form
+  formData.value = {
     name: item.name,
     description: item.description || '',
     unit: item.unit || 'adet',
     currentStock: item.currentStock || 0,
     minStock: item.minStock || 0,
     value: item.value || 0,
-    standards: { ...item.standards },
-    templateFields: { 
-      used_project: (item.templateFields as any)?.used_project || '',
-      additional_notes: (item.templateFields as any)?.additional_notes || '',
-      ...item.templateFields 
-    },
     location: item.location || '',
-    specifications: typeof item.specifications === 'string' ? item.specifications : (item.specifications ? JSON.stringify(item.specifications) : ''),
-    reservedStock: item.reservedStock || 0
+    specifications: (item.specifications as string) || '',
+    reservedStock: item.reservedStock || 0,
+    standards: item.standards || {},
+    templateFields: item.templateFields || {}
   }
-
-  showItemModal.value = true
+  
+  showModal.value = true
 }
 
-const saveItem = async () => {
-  savingItem.value = true
+const closeModal = () => {
+  showModal.value = false
+  editingItem.value = null
+}
+
+const openImportModal = () => {
+  showImportModal.value = true
+}
+
+const openExportModal = () => {
+  showExportModal.value = true
+}
+
+// CRUD Functions
+const handleViewItem = (item: StockItem) => {
+  console.log('Viewing item:', item.id)
+  // TODO: Navigate to item detail page
+}
+
+const handleDuplicateItem = (item: StockItem) => {
+  editingItem.value = null
+  
+  // Copy item data but reset some fields
+  formData.value = {
+    name: `${item.name} (Kopya)`,
+    description: item.description || '',
+    unit: item.unit || 'adet',
+    currentStock: 0,
+    minStock: item.minStock || 0,
+    value: item.value || 0,
+    location: item.location || '',
+    specifications: (item.specifications as string) || '',
+    reservedStock: 0,
+    standards: item.standards || {},
+    templateFields: item.templateFields || {}
+  }
+  
+  showModal.value = true
+}
+
+const handleDeleteItem = (item: StockItem) => {
+  console.log('Deleting item:', item.id)
+  // TODO: Implement delete functionality
+}
+
+const handleSave = async () => {
+  saving.value = true
   try {
     if (editingItem.value) {
-      // Ürün güncelle
-      await updateStockItem(editingItem.value.id, {
-        ...itemForm.value,
-        categoryId: categoryId.value
-      })
-      toast.add({
-        title: 'Başarılı',
-        description: 'Ürün güncellendi',
-        color: 'success'
-      })
+      // Update existing item
+      console.log('Updating item:', editingItem.value.id, formData.value)
     } else {
-      // Yeni ürün oluştur
-      await createStockItem({
-        ...itemForm.value,
-        categoryId: categoryId.value
-      })
-      toast.add({
-        title: 'Başarılı',
-        description: 'Ürün eklendi',
-        color: 'success'
-      })
+      // Create new item
+      console.log('Creating new item:', formData.value)
     }
-
-    showItemModal.value = false
-    await loadStockItems()
-  } catch (err: any) {
-    toast.add({
-      title: 'Hata',
-      description: err.message || 'Ürün kaydedilirken hata oluştu',
-      color: 'error'
-    })
+    
+    showModal.value = false
+    await loadStockItems() // Reload data
+  } catch (error) {
+    console.error('Error saving item:', error)
   } finally {
-    savingItem.value = false
+    saving.value = false
   }
 }
 
-const formatCurrency = (value: number) => {
-  return new Intl.NumberFormat('tr-TR', {
-    style: 'currency',
-    currency: 'TRY'
-  }).format(value)
+// Export Function
+const handleExport = () => {
+  console.log('Exporting with options:', exportOptions.value)
+  showExportModal.value = false
+  // TODO: Implement actual export functionality
 }
 
-// Initialize
-onMounted(() => {
-  loadCategory()
+// Lifecycle
+// Lifecycle
+onMounted(async () => {
+  loading.value = true
+  try {
+    await loadCategory()
+    await loadStockItems()
+  } catch (error) {
+    console.error('Error initializing page:', error)
+  } finally {
+    loading.value = false
+  }
 })
 </script>

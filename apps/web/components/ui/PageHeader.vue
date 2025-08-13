@@ -18,24 +18,35 @@
     </div>
     <div class="header-actions">
       <slot name="actions">
-        <UButton
-          v-if="showAddButton"
-          @click="$emit('add-item')"
-          icon="i-lucide-plus"
-          color="primary"
-          variant="solid"
-        >
-          Yeni {{ itemType || 'Öğe' }} Ekle
-        </UButton>
-        <UButton
-          v-if="showExportButton"
-          @click="$emit('export')"
-          icon="i-lucide-download"
-          color="neutral"
-          variant="outline"
-        >
-          {{ exportLabel || 'Dışa Aktar' }}
-        </UButton>
+        <div class="flex items-center gap-3">
+          <UButton
+            v-if="showImportButton"
+            @click="$emit('import')"
+            icon="i-lucide-upload"
+            color="neutral"
+            variant="outline"
+          >
+            {{ importLabel || 'İçe Aktar' }}
+          </UButton>
+          <UButton
+            v-if="showExportButton"
+            @click="$emit('export')"
+            icon="i-lucide-download"
+            color="neutral"
+            variant="outline"
+          >
+            {{ exportLabel || 'Dışa Aktar' }}
+          </UButton>
+          <UButton
+            v-if="showAddButton"
+            @click="$emit('add-item')"
+            icon="i-lucide-plus"
+            color="primary"
+            variant="solid"
+          >
+            Yeni {{ itemType || 'Öğe' }} Ekle
+          </UButton>
+        </div>
       </slot>
     </div>
   </div>
@@ -49,21 +60,26 @@ interface Props {
   iconColor?: string
   itemType?: string
   exportLabel?: string
+  importLabel?: string
   showAddButton?: boolean
   showExportButton?: boolean
+  showImportButton?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
   subtitle: '',
   itemType: 'Öğe',
   exportLabel: 'Dışa Aktar',
+  importLabel: 'İçe Aktar',
   showAddButton: true,
-  showExportButton: true
+  showExportButton: true,
+  showImportButton: true
 })
 
 defineEmits<{
   'add-item': []
   'export': []
+  'import': []
 }>()
 </script>
 

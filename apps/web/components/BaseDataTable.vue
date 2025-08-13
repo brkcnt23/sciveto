@@ -32,13 +32,28 @@
         
         <div class="stock-filter-actions">
           <UButton @click="$emit('show-stock-only')" variant="soft" color="primary" size="sm">
-            📦 Sadece Stok
+            <UIcon name="i-lucide-package" />
+            Sadece Stok
           </UButton>
           <UButton @click="$emit('show-project-assigned')" variant="soft" color="neutral" size="sm">
-            📋 Projeye Atanmış
+            <UIcon name="i-lucide-clipboard-list" />
+            Projeye Atanmış
           </UButton>
           <UButton @click="$emit('clear-filters')" variant="outline" size="sm">
-            🔄 Tümünü Göster
+            <UIcon name="i-lucide-refresh-cw" />
+            Tümünü Göster
+          </UButton>
+        </div>
+
+        <!-- Import/Export Actions -->
+        <div class="import-export-actions">
+          <UButton @click="$emit('open-import')" variant="soft" color="success" size="sm">
+            <UIcon name="i-lucide-download" />
+            İçe Aktar
+          </UButton>
+          <UButton @click="$emit('open-export')" variant="soft" color="info" size="sm">
+            <UIcon name="i-lucide-upload" />
+            Dışa Aktar
           </UButton>
         </div>
         
@@ -69,20 +84,14 @@
             ]"
           />
         </div>
-
-        <UButton @click="$emit('add-item')" color="primary" size="sm">
-          ➕ Yeni Ürün Ekle
-        </UButton>
       </div>
     </div>
 
     <!-- Advanced Filters Panel -->
     <div v-show="showAdvancedFilters" class="advanced-filters-panel">
-      <AdvancedStockFilters
-        :items="paginatedData"
-        v-model="advancedFilters"
-        @filters-changed="handleAdvancedFilters"
-      />
+      <div class="p-4 bg-gray-50 border rounded-lg">
+        <p class="text-sm text-gray-600">Gelişmiş filtreler yakında eklenecek...</p>
+      </div>
     </div>
 
     <!-- Loading State -->
@@ -121,9 +130,6 @@
               <div class="empty-state">
                 <div class="empty-icon">📭</div>
                 <p>{{ emptyMessage || 'Gösterilecek veri bulunamadı' }}</p>
-                <button @click="$emit('add-item')" class="btn btn-primary">
-                  ➕ İlk Ürünü Ekle
-                </button>
               </div>
             </td>
           </tr>
@@ -153,28 +159,28 @@
                   class="btn-icon btn-info" 
                   title="Detayları Görüntüle"
                 >
-                  👁️
+                  <UIcon name="i-lucide-eye" />
                 </button>
                 <button 
                   @click.stop="$emit('edit-item', item)" 
                   class="btn-icon btn-warning" 
                   title="Düzenle"
                 >
-                  ✏️
+                  <UIcon name="i-lucide-edit" />
                 </button>
                 <button 
                   @click.stop="$emit('duplicate-item', item)" 
                   class="btn-icon btn-secondary" 
                   title="Kopyala"
                 >
-                  📋
+                  <UIcon name="i-lucide-copy" />
                 </button>
                 <button 
                   @click.stop="$emit('delete-item', item)" 
                   class="btn-icon btn-danger" 
                   title="Sil"
                 >
-                  🗑️
+                  <UIcon name="i-lucide-trash-2" />
                 </button>
               </div>
             </td>
@@ -262,23 +268,8 @@ const advancedFilters = ref({
   valueRange: { min: null, max: null }
 })
 
-// Composables
-const { getStockStatus } = useStockOptimization()
-const {
-  visibleItems,
-  totalHeight,
-  offsetY,
-  handleScroll,
-  shouldUseVirtualScroll
-} = useVirtualScroll(
-  computed(() => props.paginatedData),
-  {
-    itemHeight: props.currentDensity === 'compact' ? 40 : props.currentDensity === 'detailed' ? 80 : 56,
-    containerHeight: 400,
-    buffer: 5,
-    threshold: 100
-  }
-)
+// Simple virtual scroll alternative
+const shouldUseVirtualScroll = computed(() => props.paginatedData.length > 100)
 
 // Emits
 const emit = defineEmits<{
@@ -287,6 +278,8 @@ const emit = defineEmits<{
   'show-stock-only': []
   'show-project-assigned': []
   'clear-filters': []
+  'open-import': []
+  'open-export': []
   'toggle-select-all': []
   'item-select': [id: string]
   'page-change': [page: number]
@@ -302,9 +295,9 @@ const emit = defineEmits<{
 
 // Constants
 const viewDensities = [
-  { value: 'compact' as const, icon: '🔍-', label: 'Kompakt' },
-  { value: 'normal' as const, icon: '🔍', label: 'Normal' },
-  { value: 'detailed' as const, icon: '🔍+', label: 'Detaylı' }
+  { value: 'compact' as const, icon: 'S', label: 'Kompakt' },
+  { value: 'normal' as const, icon: 'M', label: 'Normal' },
+  { value: 'detailed' as const, icon: 'L', label: 'Detaylı' }
 ]
 
 // Methods
@@ -443,6 +436,11 @@ const getRowClasses = (item: any): string[] => {
 }
 
 .stock-filter-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.import-export-actions {
   display: flex;
   gap: 8px;
 }

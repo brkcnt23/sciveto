@@ -310,8 +310,8 @@ const onThemeToggle = () => {
   console.log('[AppSidebar] Theme toggled')
 }
 
-const onThemeChange = (newTheme: 'light' | 'dark' | 'auto') => {
-  console.log(`[AppSidebar] Theme changed to: ${newTheme}`)
+const onThemeChange = (newTheme: 'light' | 'dark' | 'system') => {
+  console.log('Theme changed to:', newTheme)
 }
 </script>
 
