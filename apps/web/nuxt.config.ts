@@ -5,7 +5,9 @@ export default defineNuxtConfig({
   ssr: false,
 
   // CSS imports
-  css: ['~/assets/css/main.css'],
+  css: [
+    '~/assets/css/main.css'
+  ],
 
   // Auto-imports configuration
   imports: {
