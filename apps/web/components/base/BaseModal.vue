@@ -187,8 +187,8 @@ onUnmounted(() => {
 }
 
 .modal-content {
-  background: rgb(var(--color-white));
-  border: 1px solid rgb(var(--color-gray-200));
+  background: white;
+  border: 1px solid #e5e7eb;
   border-radius: 12px;
   width: 100%;
   max-height: 90vh;
@@ -199,14 +199,14 @@ onUnmounted(() => {
     0 20px 25px -5px rgba(0, 0, 0, 0.1), 
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
   user-select: auto;
-  color: rgb(var(--color-gray-900));
+  color: #111827;
 }
 
 /* Dark theme content */
 .modal-content.theme-dark {
-  background: rgb(var(--color-gray-900));
-  border-color: rgb(var(--color-gray-800));
-  color: rgb(var(--color-gray-50));
+  background: #1f2937;
+  border-color: #374151;
+  color: #f9fafb;
   box-shadow: 
     0 20px 25px -5px rgba(0, 0, 0, 0.4), 
     0 10px 10px -5px rgba(0, 0, 0, 0.2);
@@ -227,35 +227,35 @@ onUnmounted(() => {
 
 .modal-header {
   padding: 20px;
-  border-bottom: 1px solid rgb(var(--color-gray-200));
+  border-bottom: 1px solid #e5e7eb;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgb(var(--color-gray-50));
+  background: #f9fafb;
   flex-shrink: 0;
 }
 
 .modal-content.theme-dark .modal-header {
-  background: rgb(var(--color-gray-800));
-  border-bottom-color: rgb(var(--color-gray-700));
+  background: #374151;
+  border-bottom-color: #4b5563;
 }
 
 .modal-header h3 {
   margin: 0;
-  color: rgb(var(--color-gray-900));
+  color: #111827;
   font-size: 1.4rem;
   font-weight: 600;
 }
 
 .modal-content.theme-dark .modal-header h3 {
-  color: rgb(var(--color-gray-50));
+  color: #f9fafb;
 }
 
 .close-btn {
   background: none;
   border: none;
   cursor: pointer;
-  color: rgb(var(--color-gray-500));
+  color: #6b7280;
   padding: 8px;
   border-radius: 6px;
   transition: all 0.2s;
@@ -268,22 +268,22 @@ onUnmounted(() => {
 }
 
 .close-btn:hover {
-  background: rgb(var(--color-gray-100));
-  color: rgb(var(--color-gray-700));
+  background: #f3f4f6;
+  color: #374151;
 }
 
 .close-btn:focus {
-  outline: 2px solid rgb(var(--color-primary-500));
+  outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
 
 .modal-content.theme-dark .close-btn {
-  color: rgb(var(--color-gray-400));
+  color: #9ca3af;
 }
 
 .modal-content.theme-dark .close-btn:hover {
-  background: rgb(var(--color-gray-700));
-  color: rgb(var(--color-gray-200));
+  background: #4b5563;
+  color: #e5e7eb;
 }
 
 .modal-body {
@@ -291,17 +291,17 @@ onUnmounted(() => {
   overflow-y: auto;
   flex: 1;
   user-select: text;
-  background: rgb(var(--color-white));
+  background: white;
 }
 
 .modal-content.theme-dark .modal-body {
-  background: rgb(var(--color-gray-900));
+  background: #1f2937;
 }
 
 .modal-footer {
   padding: 20px;
-  border-top: 1px solid rgb(var(--color-gray-200));
-  background: rgb(var(--color-gray-50));
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
   display: flex;
   justify-content: flex-end;
   gap: 12px;
@@ -309,8 +309,8 @@ onUnmounted(() => {
 }
 
 .modal-content.theme-dark .modal-footer {
-  background: rgb(var(--color-gray-800));
-  border-top-color: rgb(var(--color-gray-700));
+  background: #374151;
+  border-top-color: #4b5563;
 }
 
 /* Enhanced modal transitions with custom theme system */
@@ -384,53 +384,77 @@ onUnmounted(() => {
 }
 
 .modal-body::-webkit-scrollbar-track {
-  background: rgb(var(--color-gray-100));
+  background: #f3f4f6;
   border-radius: 3px;
 }
 
 .modal-body::-webkit-scrollbar-thumb {
-  background: rgb(var(--color-gray-300));
+  background: #d1d5db;
   border-radius: 3px;
 }
 
 .modal-body::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--color-gray-400));
+  background: #9ca3af;
 }
 
 .modal-content.theme-dark .modal-body::-webkit-scrollbar-track {
-  background: rgb(var(--color-gray-700));
+  background: #4b5563;
 }
 
 .modal-content.theme-dark .modal-body::-webkit-scrollbar-thumb {
-  background: rgb(var(--color-gray-600));
+  background: #6b7280;
 }
 
 .modal-content.theme-dark .modal-body::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--color-gray-500));
+  background: #9ca3af;
 }
 
 /* Enhanced focus states */
 .modal-content :deep(input:focus),
 .modal-content :deep(textarea:focus),
 .modal-content :deep(select:focus) {
-  outline: 2px solid rgb(var(--color-primary-500));
+  outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
 
 /* Form element theming for your custom system */
-.modal-content :deep(.form-group label) {
-  color: rgb(var(--color-gray-700));
-  font-weight: 500;
+.modal-content :deep(.form-group label),
+.modal-content :deep(label) {
+  color: #374151 !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
 }
 
-.modal-content.theme-dark :deep(.form-group label) {
-  color: rgb(var(--color-gray-300));
+.modal-content.theme-dark :deep(.form-group label),
+.modal-content.theme-dark :deep(label) {
+  color: #d1d5db !important;
 }
 
 /* Enhanced button theming for Nuxt UI compatibility */
 .modal-content :deep(.btn),
 .modal-content :deep(button) {
   transition: all 0.2s ease-in-out;
+}
+
+/* Modal içerik net görünüm için */
+.modal-content :deep(*) {
+  color: inherit;
+}
+
+.modal-content :deep(input),
+.modal-content :deep(textarea),
+.modal-content :deep(select) {
+  background: white !important;
+  border: 1px solid #d1d5db !important;
+  color: #111827 !important;
+}
+
+.modal-content.theme-dark :deep(input),
+.modal-content.theme-dark :deep(textarea),
+.modal-content.theme-dark :deep(select) {
+  background: #374151 !important;
+  border-color: #4b5563 !important;
+  color: #f9fafb !important;
 }
 
 /* Global modal open class for body */
@@ -441,12 +465,12 @@ onUnmounted(() => {
 
 /* Theme-aware selection */
 .modal-content.theme-dark ::selection {
-  background: rgb(var(--color-primary-500));
+  background: #3b82f6;
   color: white;
 }
 
 .modal-content.theme-light ::selection {
-  background: rgb(var(--color-primary-100));
-  color: rgb(var(--color-primary-900));
+  background: #dbeafe;
+  color: #1e40af;
 }
 </style>

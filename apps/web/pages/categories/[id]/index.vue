@@ -1,3 +1,4 @@
+<!-- pages/categories/[id]/index.vue -->
 <template>
   <div class="space-y-6">
     <!-- Loading State -->
@@ -10,279 +11,211 @@
 
     <!-- Content -->
     <template v-else-if="category">
-      <!-- Page Header -->
+      <!-- Modern Page Header -->
       <PageHeader
-        :title="category.name"
-        :description="category.description"
-        organization="Asma Germe A.Ş."
-        :breadcrumb="[
-          { name: 'Ana Sayfa', path: '/' },
-          { name: 'Kategoriler', path: '/categories' },
-          { name: category.name }
-        ]"
-      >
-        <template #actions>
-          <div class="flex items-center gap-3">
-            <UButton
-              icon="i-heroicons-arrow-down-tray"
-              variant="outline"
-              @click="openImportModal"
-            >
-              İçe Aktar
-            </UButton>
-            <UButton
-              icon="i-heroicons-arrow-up-tray"
-              variant="outline"
-              @click="openExportModal"
-            >
-              Dışa Aktar
-            </UButton>
-          </div>
-        </template>
-      </PageHeader>
+        :title="category?.name || 'Kategori'"
+        :subtitle="category?.description || 'Kategori malzemeleri'"
+        :icon="category?.icon || 'i-lucide-folder'"
+        :icon-color="category?.color"
+        item-type="Ürün"
+        @add-item="addItem"
+        @export="exportData"
+      />
 
-      <!-- Add Product Button -->
-      <div class="flex justify-between items-center mb-6">
-        <div>
-          <h2 class="text-lg font-semibold text-neutral-900 dark:text-white">
-            Ürün Listesi
-          </h2>
-          <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
-            Bu kategorideki tüm ürünleri görüntüleyebilir ve yönetebilirsiniz
-          </p>
-        </div>
-        <UButton
-          icon="i-heroicons-plus"
-          color="primary"
-          size="md"
-          @click="openAddModal"
-        >
-          Yeni Ürün Ekle
-        </UButton>
-      </div>
+      <!-- Enhanced Stats Cards -->
+      <StatsGrid :statistics="categoryStats" />
+
+      <!-- Modern Filters Section -->
+      <FiltersSection
+        :filters="filters"
+        :search-text="searchQuery"
+        :filter-groups="filterGroups"
+        :quick-filters="quickFilters"
+        @filter-change="onFilterChange"
+        @search-change="onSearchChange"
+        @clear-filters="clearFilters"
+        @show-stock-only="showStockOnly"
+        @show-project-assigned="showProjectAssigned"
+      />
 
       <!-- Data Table -->
+      <div class="bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden">
+        <div class="px-6 py-4 border-b border-neutral-200 dark:border-neutral-700">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">
+              Ürün Listesi
+            </h3>
+            <div class="flex items-center gap-2">
+              <UButton
+                @click="toggleView"
+                :icon="viewMode === 'table' ? 'i-lucide-grid-3x3' : 'i-lucide-list'"
+                variant="outline"
+                size="sm"
+              >
+                {{ viewMode === 'table' ? 'Kart Görünümü' : 'Tablo Görünümü' }}
+              </UButton>
+            </div>
+          </div>
+        </div>
+
+      <!-- BaseDataTable -->
       <BaseDataTable
-        :title="`${category?.name || 'Kategori'} Ürünleri`"
+        :title="category?.name || 'Ürün Listesi'"
         item-type="ürün"
-        :paginatedData="paginatedData"
-        :filteredCount="filteredCount"
-        :totalItems="totalItems"
-        :currentPage="currentPage"
-        :itemsPerPage="itemsPerPage"
-        :currentDensity="currentDensity"
+        :paginatedData="paginatedStockItems"
+        :filteredCount="filteredStockItems.length"
+        :totalItems="filteredStockItems.length"
+        :currentPage="pagination.page"
+        :itemsPerPage="pagination.pageSize"
+        :currentDensity="viewMode === 'table' ? 'normal' : 'compact'"
         :loading="loading"
-        :selectable="false"
-        @edit-item="openEditModal"
-        @view-item="handleViewItem"
-        @duplicate-item="handleDuplicateItem" 
-        @delete-item="handleDeleteItem"
-        @page-change="handlePageChange"
-        @items-change="handleItemsChange"
-        @density-change="handleDensityChange"
+        :error="null"
+        :selectable="true"
+        :selectedItems="[]"
+        emptyMessage="Bu kategoride henüz ürün bulunmuyor"
+        @density-change="onDensityChange"
+        @items-change="onItemsPerPageChange"
+        @show-stock-only="showStockOnly"
+        @show-project-assigned="showProjectAssigned"
+        @clear-filters="clearFilters"
+        @page-change="onPageChange"
+        @view-item="viewItem"
+        @edit-item="editItem"
+        @duplicate-item="duplicateItem"
+        @delete-item="deleteItem"
       >
         <template #table-head>
-          <th v-for="column in tableColumns" :key="column.key" :class="column.class">
-            {{ column.label }}
-          </th>
+          <th>Ürün Adı</th>
+          <th>Açıklama</th>
+          <th>Birim</th>
+          <th>Mevcut Stok</th>
+          <th>Min. Stok</th>
+          <th>Birim Fiyat</th>
+          <th>Toplam Değer</th>
+          <th>Lokasyon</th>
+          <th>Durum</th>
         </template>
         
         <template #table-body="{ item }">
-          <td v-for="column in tableColumns" :key="column.key" :class="column.class">
-            <template v-if="column.key === 'name'">
-              <div class="font-medium text-neutral-900 dark:text-white">{{ item.name }}</div>
-            </template>
-            <template v-else-if="column.key === 'description'">
-              <div class="text-neutral-600 dark:text-neutral-300">{{ item.description || '-' }}</div>
-            </template>
-            <template v-else-if="column.key === 'currentStock'">
-              <span class="text-neutral-700 dark:text-neutral-300">{{ item.currentStock }}</span>
-            </template>
-            <template v-else-if="column.key === 'value'">
-              <span class="text-neutral-700 dark:text-neutral-300">{{ item.value }}</span>
-            </template>
+          <td class="font-medium text-gray-900">{{ item.name }}</td>
+          <td class="text-gray-600 max-w-xs truncate">{{ item.description || '-' }}</td>
+          <td class="text-gray-900">{{ item.unit || '-' }}</td>
+          <td class="text-gray-900 font-medium">{{ item.currentStock || 0 }}</td>
+          <td class="text-gray-600">{{ item.minStock || 0 }}</td>
+          <td class="text-gray-900">₺{{ item.unitPrice?.toFixed(2) || '0.00' }}</td>
+          <td class="text-gray-900 font-medium">₺{{ ((item.currentStock || 0) * (item.unitPrice || 0)).toFixed(2) }}</td>
+          <td class="text-gray-600">{{ item.location || '-' }}</td>
+          <td>
+            <span :class="getStockStatusClass(item)" class="px-2 py-1 text-xs font-medium rounded-full">
+              {{ getStockStatusText(item) }}
+            </span>
           </td>
         </template>
       </BaseDataTable>
+      </div>
+
+      <!-- Empty State -->
+      <div v-if="!loading && stockItems.length === 0" class="bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 p-12">
+        <div class="text-center">
+          <UIcon name="i-lucide-package" class="w-16 h-16 mx-auto text-gray-400 mb-4" />
+          <h3 class="text-lg font-medium text-neutral-900 dark:text-white mb-2">Henüz ürün eklenmemiş</h3>
+          <p class="text-neutral-500 mb-4">Bu kategoriye ilk ürünü ekleyerek başlayın</p>
+          <UButton
+            icon="i-lucide-plus"
+            label="İlk Ürünü Ekle"
+            color="primary"
+            @click="addItem"
+          />
+        </div>
+      </div>
     </template>
 
     <!-- Error State -->
-    <div v-else class="text-center py-12">
-      <UIcon name="i-lucide-alert-circle" class="h-12 w-12 mx-auto text-red-500 mb-4" />
-      <h3 class="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
-        Kategori bulunamadı
-      </h3>
-      <p class="text-neutral-600 dark:text-neutral-400 mb-4">
-        Bu kategori mevcut değil veya silinmiş olabilir.
-      </p>
-      <UButton @click="$router.push('/categories')">
-        Kategorilere Dön
-      </UButton>
+    <div v-else-if="!loading" class="flex items-center justify-center py-12">
+      <div class="text-center">
+        <div class="text-neutral-400 mb-4">
+          <UIcon name="i-lucide-alert-circle" class="w-12 h-12 mx-auto" />
+        </div>
+        <p class="text-neutral-600 dark:text-neutral-400">Kategori bulunamadı</p>
+      </div>
     </div>
 
-    <!-- Add/Edit Modal -->
-    <BaseModal 
-      v-if="showAddEditModal"
-      :title="editingItem ? 'Ürünü Düzenle' : 'Yeni Ürün Ekle'"
-      :icon="editingItem ? 'i-heroicons-pencil' : 'i-heroicons-plus'"
+    <!-- Add/Edit Item Modal -->
+    <BaseModal
+      v-if="showItemModal"
+      :title="editingItem ? 'Ürün Düzenle' : 'Yeni Ürün Ekle'"
       size="large"
-      @close="closeAddEditModal"
-      show-close-notification
+      @close="showItemModal = false"
     >
-      <form @submit.prevent="handleSave" class="space-y-4">
+      <div class="space-y-4">
         <!-- Basic Fields -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-medium mb-1">Ürün Adı *</label>
-            <UInput
-              v-model="formData.name"
-              placeholder="Ürün adını girin"
-              required
-            />
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium mb-1">Birim</label>
-            <UInput
-              v-model="formData.unit"
-              placeholder="adet, kg, litre vb."
-            />
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium mb-1">Mevcut Stok</label>
-            <UInput
-              v-model="formData.currentStock"
-              type="number"
-              placeholder="0"
-            />
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium mb-1">Minimum Stok</label>
-            <UInput
-              v-model="formData.minStock"
-              type="number"
-              placeholder="0"
-            />
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium mb-1">Değer (₺)</label>
-            <UInput
-              v-model="formData.value"
-              type="number"
-              step="0.01"
-              placeholder="0.00"
-            />
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium mb-1">Konum</label>
-            <UInput
-              v-model="formData.location"
-              placeholder="Depo konumu"
-            />
-          </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Ürün Adı *</label>
+          <UInput v-model="itemForm.name" placeholder="Ürün adını girin" />
         </div>
 
         <div>
           <label class="block text-sm font-medium mb-1">Açıklama</label>
-          <UTextarea
-            v-model="formData.description"
-            placeholder="Ürün açıklaması"
-            :rows="3"
-          />
+          <UTextarea v-model="itemForm.description" placeholder="Ürün açıklamasını girin" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Birim *</label>
+            <USelectMenu
+              v-model="itemForm.unit"
+              :options="['adet', 'kg', 'm', 'm²', 'm³', 'lt', 'ton']"
+              placeholder="Birim seçin"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1">Birim Fiyat (₺) *</label>
+            <UInput v-model.number="itemForm.value" type="number" step="0.01" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Mevcut Stok *</label>
+            <UInput v-model.number="itemForm.currentStock" type="number" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1">Minimum Stok *</label>
+            <UInput v-model.number="itemForm.minStock" type="number" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">SKU/Kod</label>
+            <UInput v-model="itemForm.sku" placeholder="Ürün kodu" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1">Lokasyon</label>
+            <UInput v-model="itemForm.location" placeholder="Depo/Raf bilgisi" />
+          </div>
         </div>
 
         <div>
-          <label class="block text-sm font-medium mb-1">Teknik Özellikler</label>
-          <UTextarea
-            v-model="formData.specifications"
-            placeholder="Teknik özellikler ve detaylar"
-            :rows="3"
-          />
+          <label class="block text-sm font-medium mb-1">Tedarikçi</label>
+          <UInput v-model="itemForm.supplier" placeholder="Tedarikçi adı" />
         </div>
 
-        <!-- Dynamic Template Fields -->
-        <div v-if="templateData?.fields?.length" class="border-t pt-4">
-          <h4 class="text-md font-medium mb-3">{{ templateData.name }} Alanları</h4>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div v-for="field in templateData.fields" :key="field.name">
-              <label class="block text-sm font-medium mb-1">{{ field.label }} {{ field.required ? '*' : '' }}</label>
-              
-              <!-- Text Input -->
-              <UInput
-                v-if="field.type === 'text'"
-                v-model="formData.templateFields[field.name]"
-                :placeholder="field.placeholder"
-              />
-              
-              <!-- Number Input -->
-              <UInput
-                v-else-if="field.type === 'number'"
-                v-model="formData.templateFields[field.name]"
-                type="number"
-                :step="field.validation?.step || 'any'"
-                :min="field.validation?.min"
-                :max="field.validation?.max"
-                :placeholder="field.placeholder"
-              />
-              
-              <!-- Textarea -->
-              <UTextarea
-                v-else-if="field.type === 'textarea'"
-                v-model="formData.templateFields[field.name]"
-                :placeholder="field.placeholder"
-              />
-              
-              <!-- Select -->
-              <USelectMenu
-                v-else-if="field.type === 'select' || field.type === 'enum'"
-                v-model="formData.templateFields[field.name]"
-                :options="field.options || []"
-                :placeholder="`${field.label} seçin`"
-              />
-              
-              <!-- Date -->
-              <UInput
-                v-else-if="field.type === 'date'"
-                v-model="formData.templateFields[field.name]"
-                type="date"
-              />
-              
-              <!-- Boolean/Checkbox -->
-              <UCheckbox
-                v-else-if="field.type === 'boolean'"
-                v-model="formData.templateFields[field.name]"
-                :label="field.label"
-              />
-              
-              <!-- Default Text Input -->
-              <UInput
-                v-else
-                v-model="formData.templateFields[field.name]"
-                :placeholder="field.placeholder"
-              />
-            </div>
-          </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Özellikler</label>
+          <UTextarea v-model="itemForm.specifications" placeholder="Teknik özellikler, boyutlar vb." />
         </div>
-      </form>
+      </div>
 
       <template #footer>
         <div class="flex justify-end gap-3">
-          <UButton
-            variant="outline"
-            @click="closeAddEditModal"
-          >
+          <UButton @click="showItemModal = false" variant="outline">
             İptal
           </UButton>
-          <UButton
-            color="primary"
-            @click="handleSave"
-            :loading="saving"
-            :disabled="!formData.name"
-          >
+          <UButton @click="saveItem" :loading="savingItem" color="primary">
             {{ editingItem ? 'Güncelle' : 'Kaydet' }}
           </UButton>
         </div>
@@ -290,524 +223,667 @@
     </BaseModal>
 
     <!-- Import Modal -->
-    <BaseModal 
+    <BaseModal
       v-if="showImportModal"
-      title="Ürün İçe Aktar"
-      icon="i-heroicons-arrow-down-tray"
+      title="Veri İçe Aktar"
       size="medium"
-      @close="closeImportModal"
+      @close="showImportModal = false"
     >
       <div class="space-y-4">
-        <p class="text-sm text-neutral-600 dark:text-neutral-400">
-          CSV dosyası seçerek ürünleri toplu olarak içe aktarabilirsiniz.
-        </p>
-        
-        <div class="border-2 border-dashed border-neutral-300 dark:border-neutral-600 rounded-lg p-6 text-center">
-          <div class="space-y-2">
-            <UIcon name="i-heroicons-arrow-up-tray" class="h-8 w-8 mx-auto text-neutral-400" />
-            <p class="text-sm text-neutral-600 dark:text-neutral-400">
-              Dosyayı buraya sürükleyin veya seçin
-            </p>
-            <UButton size="sm" variant="outline">
-              Dosya Seç
-            </UButton>
-          </div>
+        <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+          <UIcon name="i-lucide-upload" class="w-12 h-12 mx-auto text-gray-400 mb-4" />
+          <p class="text-sm text-muted mb-2">Excel veya CSV dosyası seçin</p>
+          <UButton variant="outline" size="sm">Dosya Seç</UButton>
         </div>
       </div>
-
+      
       <template #footer>
-        <div class="flex justify-end gap-3">
-          <UButton
-            variant="outline"
-            @click="closeImportModal"
-          >
-            İptal
-          </UButton>
-          <UButton color="primary" disabled>
-            İçe Aktar
-          </UButton>
-        </div>
+        <UButton variant="outline" @click="showImportModal = false">İptal</UButton>
+        <UButton color="primary">İçe Aktar</UButton>
       </template>
     </BaseModal>
 
     <!-- Export Modal -->
-    <BaseModal 
+    <BaseModal
       v-if="showExportModal"
-      title="Ürün Dışa Aktar"
-      icon="i-heroicons-arrow-up-tray"
+      title="Veri Dışa Aktar"
       size="medium"
-      @close="closeExportModal"
+      @close="showExportModal = false"
     >
       <div class="space-y-4">
-        <p class="text-sm text-neutral-600 dark:text-neutral-400">
-          Kategori ürünlerini CSV formatında dışa aktarabilirsiniz.
-        </p>
-        
-        <div class="space-y-3">
-          <UCheckbox v-model="exportOptions.includeTemplateFields" label="Template alanlarını dahil et" />
-          <UCheckbox v-model="exportOptions.includeStockInfo" label="Stok bilgilerini dahil et" />
-          <UCheckbox v-model="exportOptions.includeFinancialInfo" label="Mali bilgileri dahil et" />
+        <div>
+          <label class="block text-sm font-medium mb-2">Format Seçin</label>
+          <URadioGroup
+            v-model="exportFormat"
+            :options="[
+              { label: 'Excel (.xlsx)', value: 'xlsx' },
+              { label: 'CSV (.csv)', value: 'csv' },
+              { label: 'JSON (.json)', value: 'json' }
+            ]"
+          />
         </div>
       </div>
-
+      
       <template #footer>
-        <div class="flex justify-end gap-3">
-          <UButton
-            variant="outline"
-            @click="closeExportModal"
-          >
-            İptal
-          </UButton>
-          <UButton color="primary" @click="handleExport">
-            Dışa Aktar
-          </UButton>
-        </div>
+        <UButton variant="outline" @click="showExportModal = false">İptal</UButton>
+        <UButton color="primary" @click="exportData">Dışa Aktar</UButton>
       </template>
     </BaseModal>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import type { StockItem, Category } from '~/types'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { useDualToast } from '~/composables/useDualToast'
+import { useTheme } from '~/composables/useTheme'
+import { useStockItemsApi } from '~/composables/useStockItemsApi'
+import { useCategoriesApi } from '~/composables/useCategoriesApi'
+
+// Components
 import PageHeader from '~/components/ui/PageHeader.vue'
+import StatsGrid from '~/components/ui/StatsGrid.vue'
+import FiltersSection from '~/components/ui/FiltersSection.vue'
+import BaseDataTable from '~/components/BaseDataTable.vue'
 import BaseModal from '~/components/base/BaseModal.vue'
 
-// Local types
-interface TemplateField {
+// Types
+interface StockItem {
+  id: string
   name: string
-  label: string
-  type: string
-  required?: boolean
-  placeholder?: string
-  defaultValue?: any
-  validation?: {
-    step?: string
-    min?: number
-    max?: number
-  }
-  options?: string[]
+  description?: string
+  sku?: string
+  code?: string
+  price: number
+  stock?: number
+  currentStock?: number
+  unit: string
+  status: string
+  location?: string
+  supplier?: string
+  minStock?: number
+  minStockLevel?: number
+  value?: number
+  categoryId: string
+  reservedStock?: number
+  specifications?: string | object
+  templateFields?: Record<string, any>
+  standards?: Record<string, any>
 }
 
-// Page Meta
-definePageMeta({
-  title: 'Kategori Ürünleri',
-  description: 'Kategori ürünlerini yönetin'
-})
+interface Category {
+  id: string
+  name: string
+  description: string
+  icon: string
+  color: string
+  templateId?: string
+}
 
-// Route
+interface ApiResponse {
+  data: Array<{
+    id: string
+    name: string
+    description: string
+    sku: string
+    price: number
+    stock: number
+    unit?: string
+    status: string
+    location?: string
+    supplier?: string
+    minStock?: number
+    categoryId: string
+    category: Category
+  }>
+}
+
+// Setup
 const route = useRoute()
-const categoryId = route.params.id as string
+const { success, error } = useDualToast()
+const { isDark } = useTheme()
+const { getStockItemsByCategory, createStockItem, updateStockItem } = useStockItemsApi()
+const { fetchCategories } = useCategoriesApi()
 
-// Custom composables
-const { state: themeState } = useTheme()
-const { success, error, warning, info, dataSaved, projectUpdate } = useDualToast()
-
-// Reactive State
+// State
 const loading = ref(true)
-const saving = ref(false)
 const category = ref<Category | null>(null)
 const stockItems = ref<StockItem[]>([])
-const templateData = ref<any>(null)
-
-// Pagination state for BaseDataTable
-const currentPage = ref(1)
-const itemsPerPage = ref(25)
-const currentDensity = ref<'compact' | 'normal' | 'detailed'>('normal')
-
-// Modal States - Simple and clean
-const showAddEditModal = ref(false)
+const showItemModal = ref(false)
 const showImportModal = ref(false)
 const showExportModal = ref(false)
 const editingItem = ref<StockItem | null>(null)
+const savingItem = ref(false)
+const exportFormat = ref('xlsx')
 
-// Form State
-interface FormDataType {
-  name: string
-  description: string
-  unit: string
-  currentStock: number
-  minStock: number
-  value: number
-  location: string
-  specifications: string
-  reservedStock: number
-  standards: Record<string, any>
-  templateFields: Record<string, any>
-}
+// Modern UI state
+const viewMode = ref<'table' | 'cards'>('table')
+const searchQuery = ref('')
+const pagination = ref({
+  page: 1,
+  pageSize: 20,
+  total: 0
+})
 
-const formData = ref<FormDataType>({
+// Filters
+const filters = ref({
+  stockStatus: '',
+  project: '',
+  location: '',
+  search: ''
+})
+
+// Form data
+const itemForm = ref({
   name: '',
+  sku: '',
   description: '',
-  unit: 'adet',
   currentStock: 0,
   minStock: 0,
   value: 0,
+  unit: 'adet',
   location: '',
+  supplier: '',
   specifications: '',
-  reservedStock: 0,
-  standards: {},
-  templateFields: {}
+  standards: {} as Record<string, any>,
+  templateFields: {} as Record<string, any>
 })
 
-// Export Options
-const exportOptions = ref({
-  includeTemplateFields: true,
-  includeStockInfo: true,
-  includeFinancialInfo: false
-})
-
-// Table Columns for BaseDataTable
-const tableColumns = [
-  { 
-    key: 'name', 
-    label: 'Ürün Adı', 
-    sortable: true,
-    searchable: true
+// Filter groups for FiltersSection component
+const filterGroups = computed(() => ({
+  stockStatus: {
+    label: 'Stok Durumu',
+    key: 'stockStatus',
+    type: 'select' as const,
+    options: [
+      { label: 'Tümü', value: '' },
+      { label: 'Stokta Var', value: 'in_stock' },
+      { label: 'Düşük Stok', value: 'low_stock' },
+      { label: 'Stok Yok', value: 'out_of_stock' },
+      { label: 'Projede Kullanılıyor', value: 'allocated' }
+    ]
   },
-  { 
-    key: 'description', 
-    label: 'Açıklama',
-    searchable: true
-  },
-  { 
-    key: 'currentStock', 
-    label: 'Stok', 
-    type: 'number',
-    sortable: true,
-    class: 'text-center'
-  },
-  { 
-    key: 'value', 
-    label: 'Değer (₺)', 
-    type: 'currency',
-    sortable: true,
-    class: 'text-right'
+  location: {
+    label: 'Lokasyon',
+    key: 'location',
+    type: 'input' as const,
+    placeholder: 'Depo/Raf ara...',
+    options: []
   }
-]
+}))
 
-// Computed values for BaseDataTable
-const filteredCount = computed(() => stockItems.value.length)
-const totalItems = computed(() => stockItems.value.length)
+// Quick filters for modern UI
+const quickFilters = computed(() => [
+  {
+    key: 'low_stock',
+    label: 'Düşük Stok',
+    value: 'low_stock',
+    count: lowStockCount.value,
+    color: 'orange' as const,
+    event: 'show-stock-only' as const
+  },
+  {
+    key: 'out_of_stock',
+    label: 'Stok Yok',
+    value: 'out_of_stock',
+    count: outOfStockCount.value,
+    color: 'red' as const,
+    event: 'show-stock-only' as const
+  }
+])
 
-const paginatedData = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage.value
-  const end = start + itemsPerPage.value
-  return stockItems.value.slice(start, end)
+// Statistics for modern UI
+const categoryStats = computed(() => [
+  {
+    label: 'Toplam Ürün',
+    value: stockItems.value.length,
+    icon: 'i-lucide-package',
+    variant: 'primary' as const
+  },
+  {
+    label: 'Toplam Stok Değeri',
+    value: totalValue.value,
+    icon: 'i-lucide-coins',
+    variant: 'success' as const,
+    format: 'currency' as const
+  },
+  {
+    label: 'Düşük Stok Uyarısı',
+    value: lowStockCount.value,
+    icon: 'i-lucide-alert-triangle',
+    variant: 'warning' as const
+  },
+  {
+    label: 'Aktif Ürün',
+    value: activeCount.value,
+    icon: 'i-lucide-check-circle',
+    variant: 'success' as const
+  }
+])
+
+// Computed
+const filteredStockItems = computed(() => {
+  let filtered = stockItems.value
+  
+  // Search filter
+  if (filters.value.search || searchQuery.value) {
+    const query = (filters.value.search || searchQuery.value).toLowerCase()
+    filtered = filtered.filter(item => 
+      item.name.toLowerCase().includes(query) ||
+      item.description?.toLowerCase().includes(query) ||
+      item.location?.toLowerCase().includes(query) ||
+      item.sku?.toLowerCase().includes(query)
+    )
+  }
+  
+  // Stock status filter
+  if (filters.value.stockStatus) {
+    filtered = filtered.filter(item => {
+      const current = item.currentStock || item.stock || 0
+      const min = item.minStock || item.minStockLevel || 0
+      const reserved = item.reservedStock || 0
+      const available = current - reserved
+      
+      switch (filters.value.stockStatus) {
+        case 'in_stock':
+          return available > min
+        case 'low_stock':
+          return available <= min && available > 0
+        case 'out_of_stock':
+          return available <= 0
+        case 'allocated':
+          return reserved > 0
+        default:
+          return true
+      }
+    })
+  }
+  
+  // Location filter
+  if (filters.value.location) {
+    filtered = filtered.filter(item => 
+      item.location?.toLowerCase().includes(filters.value.location.toLowerCase())
+    )
+  }
+  
+  return filtered
 })
 
-// API Functions
+const paginatedStockItems = computed(() => {
+  const start = (pagination.value.page - 1) * pagination.value.pageSize
+  const end = start + pagination.value.pageSize
+  return filteredStockItems.value.slice(start, end)
+})
+
+const activeCount = computed(() => {
+  return stockItems.value.filter(item => item.status === 'ACTIVE').length
+})
+
+const lowStockCount = computed(() => {
+  return stockItems.value.filter(item => {
+    const current = item.currentStock || item.stock || 0
+    const min = item.minStock || item.minStockLevel || 10
+    return current <= min
+  }).length
+})
+
+const outOfStockCount = computed(() => {
+  return stockItems.value.filter(item => {
+    const current = item.currentStock || item.stock || 0
+    const reserved = item.reservedStock || 0
+    return (current - reserved) <= 0
+  }).length
+})
+
+const totalValue = computed(() => {
+  return stockItems.value.reduce((sum, item) => {
+    const stock = item.currentStock || item.stock || 0
+    const price = item.price || item.value || 0
+    return sum + (stock * price)
+  }, 0)
+})
+
+// Methods
+const getItemColor = (item: StockItem) => {
+  const colors = ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B', '#EF4444', '#6366F1', '#EC4899']
+  const index = (item.name || '').length % colors.length
+  return colors[index]
+}
+
+const getItemInitials = (name: string) => {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('')
+    .substring(0, 2)
+    .toUpperCase()
+}
+
+const getStockBadgeClass = (item: StockItem) => {
+  const current = item.currentStock || item.stock || 0
+  const min = item.minStock || item.minStockLevel || 0
+  
+  if (current === 0) {
+    return 'px-2 py-1 text-xs rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+  } else if (current <= min && min > 0) {
+    return 'px-2 py-1 text-xs rounded-full bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
+  } else {
+    return 'px-2 py-1 text-xs rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+  }
+}
+
+const getStatusBadgeClass = (item: StockItem) => {
+  const current = item.currentStock || item.stock || 0
+  const min = item.minStock || item.minStockLevel || 0
+  
+  if (current === 0) {
+    return 'px-2 py-1 text-xs rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+  } else if (current <= min && min > 0) {
+    return 'px-2 py-1 text-xs rounded-full bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
+  } else {
+    return 'px-2 py-1 text-xs rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+  }
+}
+
+const getStatusText = (item: StockItem) => {
+  const current = item.currentStock || item.stock || 0
+  const min = item.minStock || item.minStockLevel || 0
+  
+  if (current === 0) {
+    return 'Stok Yok'
+  } else if (current <= min && min > 0) {
+    return 'Düşük Stok'
+  } else {
+    return 'Normal'
+  }
+}
+
+const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat('tr-TR', {
+    style: 'currency',
+    currency: 'TRY'
+  }).format(value)
+}
+
+// Modern UI Methods
+const toggleView = () => {
+  viewMode.value = viewMode.value === 'table' ? 'cards' : 'table'
+}
+
+const onFilterChange = (updatedFilters: Record<string, any>) => {
+  filters.value = { ...filters.value, ...updatedFilters }
+}
+
+const onSearchChange = (value: string) => {
+  searchQuery.value = value
+  filters.value.search = value
+}
+
+const onPageChange = (page: number) => {
+  pagination.value.page = page
+}
+
+const onItemsPerPageChange = (count: string) => {
+  pagination.value.pageSize = parseInt(count, 10)
+  pagination.value.page = 1
+}
+
+const onDensityChange = (density: 'compact' | 'normal' | 'detailed') => {
+  console.log('Density changed to:', density)
+}
+
+const showStockOnly = () => {
+  filters.value.stockStatus = 'in_stock'
+}
+
+const showProjectAssigned = () => {
+  filters.value.stockStatus = 'allocated'
+}
+
+const clearFilters = () => {
+  filters.value = {
+    stockStatus: '',
+    project: '',
+    location: '',
+    search: ''
+  }
+  searchQuery.value = ''
+}
+
+const addItem = () => {
+  editingItem.value = null
+  resetForm()
+  showItemModal.value = true
+}
+
+const editItem = (item: StockItem) => {
+  editingItem.value = item
+  itemForm.value = {
+    name: item.name,
+    sku: item.sku || '',
+    description: item.description || '',
+    currentStock: item.currentStock || item.stock || 0,
+    minStock: item.minStock || item.minStockLevel || 0,
+    value: item.price || item.value || 0,
+    unit: item.unit || 'adet',
+    location: item.location || '',
+    supplier: item.supplier || '',
+    specifications: typeof item.specifications === 'string' ? item.specifications : JSON.stringify(item.specifications || {}),
+    standards: item.standards ? { ...item.standards } : {},
+    templateFields: item.templateFields ? { ...item.templateFields } : {}
+  }
+  showItemModal.value = true
+}
+
+const viewItem = (item: StockItem) => {
+  console.log('View item:', item)
+}
+
+const duplicateItem = (item: StockItem) => {
+  editingItem.value = null
+  itemForm.value = {
+    name: `${item.name} (Kopya)`,
+    sku: '',
+    description: item.description || '',
+    currentStock: 0,
+    minStock: item.minStock || item.minStockLevel || 0,
+    value: item.price || item.value || 0,
+    unit: item.unit || 'adet',
+    location: item.location || '',
+    supplier: item.supplier || '',
+    specifications: typeof item.specifications === 'string' ? item.specifications : JSON.stringify(item.specifications || {}),
+    standards: item.standards ? { ...item.standards } : {},
+    templateFields: item.templateFields ? { ...item.templateFields } : {}
+  }
+  showItemModal.value = true
+}
+
+const deleteItem = async (item: StockItem) => {
+  if (confirm(`"${item.name}" ürününü silmek istediğinize emin misiniz?`)) {
+    try {
+      const index = stockItems.value.findIndex(i => i.id === item.id)
+      if (index > -1) {
+        stockItems.value.splice(index, 1)
+        success('Ürün başarıyla silindi')
+      }
+    } catch (err) {
+      error('Ürün silinemedi')
+    }
+  }
+}
+
+const saveItem = async () => {
+  try {
+    savingItem.value = true
+    
+    if (editingItem.value) {
+      const updatedItem = await updateStockItem(editingItem.value.id, itemForm.value)
+      const index = stockItems.value.findIndex(i => i.id === editingItem.value!.id)
+      if (index > -1) {
+        stockItems.value[index] = updatedItem as StockItem
+      }
+      success('Ürün güncellendi')
+    } else {
+      const newItem = await createStockItem(itemForm.value)
+      stockItems.value.unshift(newItem as StockItem)
+      success('Ürün eklendi')
+    }
+    
+    showItemModal.value = false
+    resetForm()
+  } catch (err: any) {
+    error(err.message || 'İşlem başarısız')
+  } finally {
+    savingItem.value = false
+  }
+}
+
+const resetForm = () => {
+  itemForm.value = {
+    name: '',
+    sku: '',
+    description: '',
+    currentStock: 0,
+    minStock: 0,
+    value: 0,
+    unit: 'adet',
+    location: '',
+    supplier: '',
+    specifications: '',
+    standards: {},
+    templateFields: {}
+  }
+}
+
+const exportData = () => {
+  console.log('Export format:', exportFormat.value)
+  success(`Veriler ${exportFormat.value} formatında dışa aktarıldı`)
+  showExportModal.value = false
+}
+
 const loadCategory = async () => {
   try {
-    const response = await $fetch(`/api/categories/${categoryId}`, {
-      baseURL: 'http://localhost:3001'
-    }) as any
-    category.value = response
+    loading.value = true
+    const categoryId = route.params.id as string
     
-    if (response) {
-      info('Kategori Yüklendi', `${response.name} kategorisi hazır`, {
-        icon: 'i-heroicons-folder-open',
-        timeout: 3000
-      })
+    console.log('Loading category:', categoryId)
+    
+    // Kategorileri yükle
+    const categories = await fetchCategories()
+    const categoryData = categories.find(cat => cat.id === categoryId)
+    
+    if (!categoryData) {
+      error('Kategori bulunamadı')
+      return
     }
-  } catch (err) {
+    
+    category.value = {
+      id: categoryData.id,
+      name: categoryData.name,
+      description: categoryData.description || '',
+      icon: categoryData.icon || 'i-heroicons-folder',
+      color: categoryData.color || '#3B82F6',
+      templateId: categoryData.templateId
+    }
+    console.log('Category loaded:', category.value)
+    
+    // Stok ürünlerini yükle
+    await loadStockItems()
+  } catch (err: any) {
     console.error('Error loading category:', err)
-    error('Kategori Yüklenemedi', 'Kategori bilgileri alınamadı', {
-      icon: 'i-heroicons-exclamation-circle'
-    })
+    error(err.message || 'Kategori yüklenirken hata oluştu')
+  } finally {
+    loading.value = false
   }
 }
 
 const loadStockItems = async () => {
   try {
-    const response = await $fetch(`/api/stock-items/category/${categoryId}`, {
-      baseURL: 'http://localhost:3001'
-    }) as any
+    const categoryId = route.params.id as string
+    console.log('Loading stock items for category:', categoryId)
     
-    // API response has data array, map to our StockItem format
-    if (response.data) {
-      stockItems.value = response.data.map((item: any) => ({
-        id: item.id,
-        name: item.name,
-        description: item.description,
-        unit: 'adet', // Default unit
-        currentStock: item.stock || 0,
-        minStock: 0,
-        value: item.price || 0,
-        location: '',
-        specifications: '',
-        reservedStock: 0,
-        standards: {},
-        templateFields: {}
-      }))
-      
-      if (response.data.length > 0) {
-        projectUpdate('Stok Listesi', 100) // Custom project update toast
-      }
+    const items = await getStockItemsByCategory(categoryId)
+    console.log('Raw stock items response:', items)
+    
+    if (Array.isArray(items)) {
+      stockItems.value = items.map(item => ({
+        ...item,
+        price: item.price || item.value || 0,
+        description: item.description || '',
+        unit: item.unit || 'adet'
+      } as StockItem))
+    } else if (items && typeof items === 'object' && 'data' in items && Array.isArray((items as any).data)) {
+      stockItems.value = ((items as any).data as any[]).map(item => ({
+        ...item,
+        price: item.price || item.value || 0,
+        description: item.description || '',
+        unit: item.unit || 'adet'
+      } as StockItem))
+    } else {
+      console.warn('Stock items response is not an array:', items)
+      stockItems.value = []
     }
-  } catch (err) {
+    
+    console.log('Final stock items:', stockItems.value)
+  } catch (err: any) {
     console.error('Error loading stock items:', err)
     stockItems.value = []
-    warning('Veri Yüklenemedi', 'Stok ürünleri yüklenirken sorun oluştu', {
-      icon: 'i-heroicons-server'
-    })
+    error(err.message || 'Ürünler yüklenirken hata oluştu')
   }
 }
 
-// Form Management
-const resetForm = () => {
-  formData.value = {
-    name: '',
-    description: '',
-    unit: 'adet',
-    currentStock: 0,
-    minStock: 0,
-    value: 0,
-    location: '',
-    specifications: '',
-    reservedStock: 0,
-    standards: {},
-    templateFields: {}
-  }
+// Helper methods for stock status
+const getStockStatusClass = (item: any) => {
+  const currentStock = item.currentStock || 0
+  const minStock = item.minStock || 0
   
-  // Initialize template fields
-  if (templateData.value?.fields) {
-    templateData.value.fields.forEach((field: TemplateField) => {
-      formData.value.templateFields[field.name] = field.defaultValue || ''
-    })
+  if (currentStock === 0) {
+    return 'bg-red-100 text-red-800'
+  } else if (currentStock <= minStock) {
+    return 'bg-yellow-100 text-yellow-800'
+  } else {
+    return 'bg-green-100 text-green-800'
   }
 }
 
-// Modal Functions - Simple and clean
-const openAddModal = () => {
-  editingItem.value = null
-  resetForm()
-  showAddEditModal.value = true
-}
-
-const openEditModal = (item: StockItem) => {
-  editingItem.value = item
+const getStockStatusText = (item: any) => {
+  const currentStock = item.currentStock || 0
+  const minStock = item.minStock || 0
   
-  // Load item data into form
-  formData.value = {
-    name: item.name,
-    description: item.description || '',
-    unit: item.unit || 'adet',
-    currentStock: item.currentStock || 0,
-    minStock: item.minStock || 0,
-    value: item.value || 0,
-    location: item.location || '',
-    specifications: (item.specifications as string) || '',
-    reservedStock: item.reservedStock || 0,
-    standards: item.standards || {},
-    templateFields: item.templateFields || {}
-  }
-  
-  showAddEditModal.value = true
-}
-
-const closeAddEditModal = () => {
-  showAddEditModal.value = false
-  editingItem.value = null
-}
-
-const openImportModal = () => {
-  showImportModal.value = true
-}
-
-const closeImportModal = () => {
-  showImportModal.value = false
-}
-
-const openExportModal = () => {
-  showExportModal.value = true
-}
-
-const closeExportModal = () => {
-  showExportModal.value = false
-}
-
-// Event handlers for BaseDataTable
-const handlePageChange = (page: number) => {
-  currentPage.value = page
-}
-
-const handleItemsChange = (count: number) => {
-  itemsPerPage.value = count
-  currentPage.value = 1
-}
-
-const handleDensityChange = (density: 'compact' | 'normal' | 'detailed') => {
-  currentDensity.value = density
-}
-
-// CRUD Functions
-const handleViewItem = (item: StockItem) => {
-  console.log('Viewing item:', item.id)
-  
-  info('Ürün Detayları', `${item.name} detay sayfası yüklenecek`, {
-    icon: 'i-lucide-eye',
-    timeout: 3000
-  })
-  
-  // TODO: Navigate to item detail page
-  // await navigateTo(`/categories/${categoryId}/items/${item.id}`)
-}
-
-const handleDuplicateItem = (item: StockItem) => {
-  editingItem.value = null
-  
-  // Copy item data but reset some fields
-  formData.value = {
-    name: `${item.name} (Kopya)`,
-    description: item.description || '',
-    unit: item.unit || 'adet',
-    currentStock: 0,
-    minStock: item.minStock || 0,
-    value: item.value || 0,
-    location: item.location || '',
-    specifications: (item.specifications as string) || '',
-    reservedStock: 0,
-    standards: item.standards || {},
-    templateFields: item.templateFields || {}
-  }
-  
-  showAddEditModal.value = true
-  
-  info('Ürün Kopyalandı', `${item.name} temel alınarak yeni ürün formu hazırlandı`, {
-    icon: 'i-heroicons-document-duplicate',
-    timeout: 4000
-  })
-}
-
-const handleDeleteItem = async (item: StockItem) => {
-  const confirmed = confirm(`"${item.name}" ürününü silmek istediğinizden emin misiniz?\n\nBu işlem geri alınamaz!`)
-  
-  if (!confirmed) return
-  
-  try {
-    console.log('Deleting item:', item.id)
-    
-    // TODO: API call here
-    await new Promise(resolve => setTimeout(resolve, 500)) // Simulated delay
-    
-    success('Silme Başarılı', `${item.name} başarıyla silindi`, {
-      icon: 'i-heroicons-trash'
-    })
-    
-    await loadStockItems() // Reload data
-    
-  } catch (err) {
-    console.error('Error deleting item:', err)
-    error('Silme Hatası', 'Ürün silinirken bir hata oluştu', {
-      icon: 'i-heroicons-exclamation-circle'
-    })
-  }
-}
-
-const handleSave = async () => {
-  if (!formData.value.name.trim()) {
-    warning('Eksik Bilgi', 'Ürün adı zorunludur', { icon: 'i-heroicons-exclamation-triangle' })
-    return
-  }
-
-  saving.value = true
-  
-  try {
-    if (editingItem.value) {
-      // Update existing item
-      console.log('Updating item:', editingItem.value.id, formData.value)
-      
-      // TODO: API call here
-      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulated delay
-      
-      success('Güncelleme Başarılı', `${formData.value.name} başarıyla güncellendi`, {
-        icon: 'i-heroicons-check-circle'
-      })
-    } else {
-      // Create new item
-      console.log('Creating new item:', formData.value)
-      
-      // TODO: API call here
-      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulated delay
-      
-      dataSaved(formData.value.name)
-    }
-    
-    closeAddEditModal()
-    await loadStockItems() // Reload data
-    
-    info('Veriler Yenilendi', 'Stok listesi güncellendi', {
-      icon: 'i-heroicons-arrow-path'
-    })
-    
-  } catch (err) {
-    console.error('Error saving item:', err)
-    error('Kayıt Hatası', 'Ürün kaydedilirken bir hata oluştu', {
-      icon: 'i-heroicons-x-circle',
-      timeout: 8000
-    })
-  } finally {
-    saving.value = false
-  }
-}
-
-// Export Function
-const handleExport = async () => {
-  try {
-    console.log('Exporting with options:', exportOptions.value)
-    
-    // TODO: Implement actual export functionality
-    await new Promise(resolve => setTimeout(resolve, 1500)) // Simulated delay
-    
-    success('Dışa Aktarma Başarılı', 'Veriler CSV formatında indirildi', {
-      icon: 'i-heroicons-arrow-down-tray',
-      timeout: 6000
-    })
-    
-    closeExportModal()
-    
-  } catch (err) {
-    console.error('Export error:', err)
-    error('Dışa Aktarma Hatası', 'Veriler dışa aktarılırken bir hata oluştu', {
-      icon: 'i-heroicons-document-minus'
-    })
+  if (currentStock === 0) {
+    return 'Stokta Yok'
+  } else if (currentStock <= minStock) {
+    return 'Az Stok'
+  } else {
+    return 'Stokta Var'
   }
 }
 
 // Lifecycle
-onMounted(async () => {
-  loading.value = true
+onMounted(() => {
+  // Modal state'lerini sıfırla
+  showItemModal.value = false
+  showImportModal.value = false
+  showExportModal.value = false
   
-  // Initial loading toast
-  const loadingToastId = info('Yükleniyor', 'Kategori verileri getiriliyor', {
-    icon: 'i-heroicons-arrow-path',
-    timeout: 0, // Don't auto-dismiss
-    closable: false
+  // Body'deki modal açık durumunu temizle
+  document.body.style.overflow = ''
+  document.body.style.paddingRight = ''
+  document.body.classList.remove('modal-open')
+  
+  console.log('Modal states after reset:', {
+    showItemModal: showItemModal.value,
+    showImportModal: showImportModal.value,
+    showExportModal: showExportModal.value
   })
   
-  try {
-    await Promise.all([
-      loadCategory(),
-      loadStockItems()
-    ])
-    
-    // Clear loading toast and show success
-    setTimeout(() => {
-      success('Sayfa Hazır', 'Tüm veriler başarıyla yüklendi', {
-        icon: 'i-heroicons-check-circle',
-        timeout: 4000
-      })
-    }, 100)
-    
-  } catch (err) {
-    console.error('Error initializing page:', err)
-    error('Başlatma Hatası', 'Sayfa yüklenirken bir sorun oluştu', {
-      icon: 'i-heroicons-exclamation-triangle',
-      timeout: 8000
-    })
-  } finally {
-    loading.value = false
-  }
+  loadCategory()
+})
+
+onUnmounted(() => {
+  // Page'den çıkarken body'yi temizle
+  document.body.style.overflow = ''
+  document.body.style.paddingRight = ''
+  document.body.classList.remove('modal-open')
 })
 </script>

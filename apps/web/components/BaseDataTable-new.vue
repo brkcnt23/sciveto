@@ -139,15 +139,15 @@
             <td class="actions-cell">
               <div class="action-buttons">
                 <UButton
-                  @click.stop="$emit('view-item', item)"
-                  color="primary"
+                  @click.stop="handleViewItem(item)"
+                  color="info"
                   variant="ghost"
                   size="sm"
                   icon="i-heroicons-eye"
                   title="Görüntüle"
                 />
                 <UButton
-                  @click.stop="$emit('edit-item', item)"
+                  @click.stop="handleEditItem(item)"
                   color="warning"
                   variant="ghost"
                   size="sm"
@@ -155,7 +155,7 @@
                   title="Düzenle"
                 />
                 <UButton
-                  @click.stop="$emit('duplicate-item', item)"
+                  @click.stop="handleDuplicateItem(item)"
                   color="success"
                   variant="ghost"
                   size="sm"
@@ -163,7 +163,7 @@
                   title="Kopyala"
                 />
                 <UButton
-                  @click.stop="$emit('delete-item', item)"
+                  @click.stop="handleDeleteItem(item)"
                   color="error"
                   variant="ghost"
                   size="sm"
