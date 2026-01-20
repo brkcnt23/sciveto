@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
-import cytoscape from 'cytoscape'
+import cytoscape, { type Core, type ElementDefinition } from 'cytoscape'
 
 const props = defineProps<{
   canvasId?: string
@@ -35,7 +35,7 @@ const emit = defineEmits<{
 }>()
 
 const cyContainer = ref<HTMLElement | null>(null)
-let cy: any = null
+let cy: Core | null = null
 
 onMounted(() => {
   if (!cyContainer.value) return

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateCardDto, UpdateCardDto, CreateCardCommentDto } from './dto';
