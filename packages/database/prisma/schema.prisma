@@ -21,6 +21,7 @@ model Organization {
   categories  Category[]
   items       StockItem[]
   projects    Project[]
+  tags        Tag[]
 }
 
 model User {
@@ -39,6 +40,8 @@ model User {
   stockItems     StockItem[]
   projects       Project[]
   allocations    ProjectAllocation[]
+  assignedCards  Card[]
+  cardComments   CardComment[]
   
   @@index([organizationId])
 }
@@ -215,6 +218,8 @@ model Project {
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   manager        User         @relation(fields: [managerId], references: [id])
   allocations    ProjectAllocation[]
+  cards          Card[]
+  canvases       Canvas[]
   
   @@index([organizationId])
   @@index([status])
@@ -340,4 +345,181 @@ enum FieldType {
   boolean
   date
   enum
+}
+
+// ===============================
+// TRELLO-LIKE CARDS & COLLABORATION
+// ===============================
+
+model Card {
+  id             String    @id @default(cuid())
+  title          String
+  description    String?
+  position       Int       @default(0)
+  columnId       String    // Which column/list the card is in
+  
+  // Project Association
+  projectId      String
+  
+  // Card Metadata
+  dueDate        DateTime?
+  priority       CardPriority @default(MEDIUM)
+  status         CardStatus   @default(TODO)
+  assignedToId   String?
+  
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // Relations
+  project        Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assignedTo     User?     @relation(fields: [assignedToId], references: [id], onDelete: SetNull)
+  comments       CardComment[]
+  tags           CardTag[]
+  
+  @@index([projectId])
+  @@index([columnId])
+  @@index([assignedToId])
+}
+
+model CardComment {
+  id             String    @id @default(cuid())
+  content        String
+  cardId         String
+  userId         String
+  
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // Relations
+  card           Card      @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([cardId])
+  @@index([userId])
+}
+
+model Tag {
+  id             String    @id @default(cuid())
+  name           String
+  color          String    @default("#3B82F6")
+  organizationId String
+  
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // Relations
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  cards          CardTag[]
+  
+  @@unique([name, organizationId])
+  @@index([organizationId])
+}
+
+model CardTag {
+  id             String    @id @default(cuid())
+  cardId         String
+  tagId          String
+  
+  createdAt      DateTime  @default(now())
+  
+  // Relations
+  card           Card      @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  tag            Tag       @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  
+  @@unique([cardId, tagId])
+  @@index([cardId])
+  @@index([tagId])
+}
+
+// ===============================
+// CANVAS SYSTEM (Obsidian-like)
+// ===============================
+
+model Canvas {
+  id             String    @id @default(cuid())
+  name           String
+  description    String?
+  projectId      String
+  
+  // Canvas Settings
+  viewport       Json?     // { x, y, zoom }
+  settings       Json?     // Custom canvas settings
+  
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // Relations
+  project        Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  nodes          CanvasNode[]
+  edges          CanvasEdge[]
+  
+  @@index([projectId])
+}
+
+model CanvasNode {
+  id             String    @id @default(cuid())
+  canvasId       String
+  type           String    // 'text', 'image', 'card', 'note', etc.
+  
+  // Position & Size
+  positionX      Float
+  positionY      Float
+  width          Float?
+  height         Float?
+  
+  // Node Data
+  data           Json      // Node-specific data (text, images, etc.)
+  style          Json?     // Custom styling
+  
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // Relations
+  canvas         Canvas    @relation(fields: [canvasId], references: [id], onDelete: Cascade)
+  sourceEdges    CanvasEdge[] @relation("EdgeSource")
+  targetEdges    CanvasEdge[] @relation("EdgeTarget")
+  
+  @@index([canvasId])
+}
+
+model CanvasEdge {
+  id             String    @id @default(cuid())
+  canvasId       String
+  sourceId       String
+  targetId       String
+  
+  // Edge Properties
+  type           String?   @default("default")
+  label          String?
+  style          Json?     // Custom styling
+  
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // Relations
+  canvas         Canvas    @relation(fields: [canvasId], references: [id], onDelete: Cascade)
+  source         CanvasNode @relation("EdgeSource", fields: [sourceId], references: [id], onDelete: Cascade)
+  target         CanvasNode @relation("EdgeTarget", fields: [targetId], references: [id], onDelete: Cascade)
+  
+  @@index([canvasId])
+  @@index([sourceId])
+  @@index([targetId])
+}
+
+// ===============================
+// NEW ENUMS FOR CARDS & CANVAS
+// ===============================
+
+enum CardPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum CardStatus {
+  TODO
+  IN_PROGRESS
+  REVIEW
+  DONE
 }
