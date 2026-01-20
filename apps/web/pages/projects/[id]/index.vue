@@ -141,11 +141,50 @@
         </div>
       </div>
 
-      <!-- Main Content -->
+      <!-- Tabs Section -->
       <div class="px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <!-- Left Column -->
-          <div class="lg:col-span-2 space-y-6">
+        <UCard>
+          <UTabs v-model="selectedTab" :items="tabs" class="w-full">
+            <template #item="{ item }">
+              <!-- Kanban Board Tab -->
+              <div v-if="item.key === 'kanban'" class="py-4">
+                <KanbanBoard
+                  :project-id="project.id"
+                  :cards="projectCards"
+                  @open-card-detail="openCardDetail"
+                  @open-create-card="openCreateCard"
+                  @update-card="updateCard"
+                />
+              </div>
+
+              <!-- Canvas Tab -->
+              <div v-if="item.key === 'canvas'" class="py-4" style="height: 600px;">
+                <CanvasEditor
+                  v-if="selectedCanvas"
+                  :canvas-id="selectedCanvas.id"
+                  :project-id="project.id"
+                  :initial-nodes="selectedCanvas.nodes"
+                  :initial-edges="selectedCanvas.edges"
+                  @save="saveCanvas"
+                  @node-added="addCanvasNode"
+                  @node-updated="updateCanvasNode"
+                  @edge-added="addCanvasEdge"
+                />
+                <div v-else class="flex items-center justify-center h-full">
+                  <div class="text-center">
+                    <UIcon name="i-lucide-pencil-ruler" class="w-16 h-16 text-neutral-400 mx-auto mb-4" />
+                    <h3 class="text-lg font-semibold text-neutral-900 dark:text-white mb-2">No canvas yet</h3>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-4">Create a canvas to start drawing</p>
+                    <UButton @click="createCanvas">Create Canvas</UButton>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Overview Tab -->
+              <div v-if="item.key === 'overview'" class="py-4">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  <!-- Left Column -->
+                  <div class="lg:col-span-2 space-y-6">
             <!-- Stock Allocation -->
             <UCard>
               <template #header>
@@ -356,6 +395,10 @@
             </UCard>
           </div>
         </div>
+              </div>
+            </template>
+          </UTabs>
+        </UCard>
       </div>
     </div>
 
@@ -370,12 +413,27 @@
         </UButton>
       </div>
     </div>
+
+    <!-- Card Detail Modal -->
+    <CardDetailModal
+      v-if="selectedCard"
+      v-model="showCardDetail"
+      :card="selectedCard"
+      :comments="[]"
+      @save="updateCard"
+      @delete="() => {}"
+      @add-comment="() => {}"
+      @remove-tag="() => {}"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useDualToast } from '~/composables/useDualToast'
+import KanbanBoard from '~/components/kanban/KanbanBoard.vue'
+import CanvasEditor from '~/components/canvas/CanvasEditor.vue'
+import CardDetailModal from '~/components/kanban/CardDetailModal.vue'
 
 // Types
 type ProjectStatus = 'planning' | 'in-progress' | 'completed' | 'on-hold'
@@ -409,6 +467,24 @@ const toast = useDualToast()
 // State
 const loading = ref(true)
 const project = ref<Project | null>(null)
+
+// Tabs
+const selectedTab = ref(0)
+const tabs = [
+  { key: 'kanban', label: 'Kanban Board', icon: 'i-lucide-layout-dashboard' },
+  { key: 'canvas', label: 'Canvas', icon: 'i-lucide-pencil-ruler' },
+  { key: 'overview', label: 'Overview', icon: 'i-lucide-eye' }
+]
+
+// Cards
+const projectCards = ref<any[]>([])
+const selectedCard = ref<any | null>(null)
+const showCardDetail = ref(false)
+
+// Canvas
+const selectedCanvas = ref<any | null>(null)
+const canvases = ref<any[]>([])
+
 
 // Mock data
 const mockProject: Project = {
@@ -637,6 +713,54 @@ const isOverdue = (deadline: string) => {
 const editProject = () => {
   router.push(`/projects/${route.params.id}/edit`)
 }
+
+// Kanban methods
+const openCardDetail = (card: any) => {
+  selectedCard.value = card
+  showCardDetail.value = true
+}
+
+const openCreateCard = (columnId: string) => {
+  // TODO: Implement create card modal
+  console.log('Create card for column:', columnId)
+}
+
+const updateCard = async (card: any) => {
+  // TODO: Implement API call
+  console.log('Update card:', card)
+}
+
+// Canvas methods
+const createCanvas = async () => {
+  // TODO: Implement API call to create canvas
+  selectedCanvas.value = {
+    id: 'new-canvas',
+    name: 'New Canvas',
+    nodes: [],
+    edges: []
+  }
+}
+
+const saveCanvas = async (data: any) => {
+  // TODO: Implement API call to save canvas
+  console.log('Save canvas:', data)
+}
+
+const addCanvasNode = async (node: any) => {
+  // TODO: Implement API call
+  console.log('Add node:', node)
+}
+
+const updateCanvasNode = async (node: any) => {
+  // TODO: Implement API call
+  console.log('Update node:', node)
+}
+
+const addCanvasEdge = async (edge: any) => {
+  // TODO: Implement API call
+  console.log('Add edge:', edge)
+}
+
 
 // Lifecycle
 onMounted(async () => {
