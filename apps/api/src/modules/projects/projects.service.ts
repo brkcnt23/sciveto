@@ -1,18 +1,26 @@
 // @ts-nocheck
 import { Injectable, NotFoundException, ForbiddenException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { CreateProjectDto, UpdateProjectDto, ProjectQueryDto, AllocateStockDto } from './dto';
+import { PrismaTenantRepository } from '../../prisma/prisma.repository.base';
+import { AllocationsService } from '../allocations/allocations.service';
+import { CreateProjectDto, UpdateProjectDto, ProjectQueryDto, AllocateStockDto } from '@sciveto/shared-types';
 
 @Injectable()
 export class ProjectsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private allocationsService: AllocationsService,
+  ) {}
+
+  private repo(organizationId: string) {
+    return new PrismaTenantRepository(this.prisma, 'project', organizationId);
+  }
 
   async create(createProjectDto: CreateProjectDto, managerId: string, organizationId: string) {
-    return this.prisma.project.create({
+    return this.repo(organizationId).create({
       data: {
         ...createProjectDto,
         managerId,
-        organizationId,
         actualCost: 0,
       },
       include: {
@@ -52,7 +60,7 @@ export class ProjectsService {
     } = queryDto;
 
     const skip = (page - 1) * limit;
-    const where: any = { organizationId };
+    const where: any = {};
 
     // Add filters
     if (search) {
@@ -69,7 +77,7 @@ export class ProjectsService {
     if (managerId) where.managerId = managerId;
 
     const [projects, total] = await Promise.all([
-      this.prisma.project.findMany({
+      this.repo(organizationId).findMany({
         where,
         skip,
         take: limit,
@@ -90,7 +98,7 @@ export class ProjectsService {
           },
         },
       }),
-      this.prisma.project.count({ where }),
+      this.repo(organizationId).count({ where }),
     ]);
 
     return {
@@ -105,8 +113,8 @@ export class ProjectsService {
   }
 
   async findOne(id: string, organizationId: string): Promise<any> {
-    const project = await this.prisma.project.findFirst({
-      where: { id, organizationId },
+    const project = await this.repo(organizationId).findFirst({
+      where: { id },
       include: {
         manager: {
           select: {
@@ -158,25 +166,16 @@ export class ProjectsService {
       throw new ForbiddenException('You can only update your own projects');
     }
 
-    return this.prisma.project.update({
+    const result = await this.repo(organizationId).updateMany({
       where: { id },
       data: updateProjectDto,
-      include: {
-        manager: {
-          select: {
-            id: true,
-            email: true,
-            firstName: true,
-            lastName: true,
-          },
-        },
-        _count: {
-          select: {
-            allocations: true,
-          },
-        },
-      },
     });
+
+    if (!result?.count) {
+      throw new NotFoundException('Project not found');
+    }
+
+    return this.findOne(id, organizationId);
   }
 
   async remove(id: string, userId: string, organizationId: string) {
@@ -186,85 +185,23 @@ export class ProjectsService {
       throw new ForbiddenException('You can only delete your own projects');
     }
 
-    return this.prisma.project.delete({
+    await this.repo(organizationId).deleteMany({
       where: { id },
     });
+
+    return project;
   }
 
   async allocateStock(projectId: string, allocateStockDto: AllocateStockDto, userId: string, organizationId: string): Promise<any> {
-    const project = await this.findOne(projectId, organizationId);
-    
-    // Check if stock item exists and belongs to organization
-    const stockItem = await this.prisma.stockItem.findFirst({
-      where: {
-        id: allocateStockDto.stockItemId,
-        organizationId,
-      },
+    return this.allocationsService.allocateItem({
+      projectId,
+      stockItemId: allocateStockDto.stockItemId,
+      quantity: allocateStockDto.allocatedQuantity,
+      allocatedPrice: allocateStockDto.allocatedPrice,
+      notes: allocateStockDto.notes,
+      userId,
+      organizationId,
     });
-
-    if (!stockItem) {
-      throw new NotFoundException('Stock item not found');
-    }
-
-    // Check if enough stock is available
-    if (stockItem.availableStock < allocateStockDto.allocatedQuantity) {
-      throw new BadRequestException(
-        `Insufficient stock. Available: ${stockItem.availableStock}, Requested: ${allocateStockDto.allocatedQuantity}`
-      );
-    }
-
-    // Create allocation
-    const allocation = await this.prisma.projectAllocation.create({
-      data: {
-        projectId,
-        stockItemId: allocateStockDto.stockItemId,
-        userId,
-        allocatedQuantity: allocateStockDto.allocatedQuantity,
-        allocatedPrice: allocateStockDto.allocatedPrice,
-        totalAllocatedCost: allocateStockDto.allocatedQuantity * allocateStockDto.allocatedPrice,
-        notes: allocateStockDto.notes,
-      },
-      include: {
-        stockItem: {
-          include: {
-            category: true,
-          },
-        },
-        user: {
-          select: {
-            id: true,
-            email: true,
-            firstName: true,
-            lastName: true,
-          },
-        },
-      },
-    });
-
-    // Update stock item
-    await this.prisma.stockItem.update({
-      where: { id: allocateStockDto.stockItemId },
-      data: {
-        reservedStock: {
-          increment: allocateStockDto.allocatedQuantity,
-        },
-        availableStock: {
-          decrement: allocateStockDto.allocatedQuantity,
-        },
-      },
-    });
-
-    // Update project cost
-    await this.prisma.project.update({
-      where: { id: projectId },
-      data: {
-        actualCost: {
-          increment: allocation.totalAllocatedCost,
-        },
-      },
-    });
-
-    return allocation;
   }
 
   async getProjectAllocations(projectId: string, organizationId: string): Promise<any> {

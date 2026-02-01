@@ -11,7 +11,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
-import { CreateProjectDto, UpdateProjectDto, ProjectQueryDto, AllocateStockDto } from './dto';
+import { CreateProjectDto, UpdateProjectDto, ProjectQueryDto, AllocateStockDto } from '@sciveto/shared-types';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('projects')

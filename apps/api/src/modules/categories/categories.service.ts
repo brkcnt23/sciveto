@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { CreateCategoryDto, UpdateCategoryDto } from './dto';
+import { CreateCategoryDto, UpdateCategoryDto } from '@sciveto/shared-types';
 
 @Injectable()
 export class CategoriesService {

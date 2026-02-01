@@ -145,7 +145,7 @@ const updateHtmlClass = () => {
 // Navigation items
 const navigationItems = [
   { name: 'Dashboard', href: '/dashboard', icon: 'i-heroicons-home' },
-  { name: 'Stock Items', href: '/stock-items', icon: 'i-heroicons-cube' },
+  { name: 'Inventory', href: '/inventory', icon: 'i-heroicons-cube' },
   { name: 'Categories', href: '/categories', icon: 'i-heroicons-folder' },
   { name: 'Projects', href: '/projects', icon: 'i-heroicons-briefcase' }
 ]

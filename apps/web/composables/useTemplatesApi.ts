@@ -1,5 +1,6 @@
 // composables/useTemplatesApi.ts
 import { ref, readonly } from 'vue'
+import { useAuthStore } from '~/stores/auth'
 
 export interface TemplateField {
   id: string
@@ -46,6 +47,16 @@ export interface TemplateListResponse {
 export const useTemplatesApi = () => {
   const loading = ref(false)
   const error = ref<string | null>(null)
+  const config = useRuntimeConfig()
+  const authStore = useAuthStore()
+
+  const getAuthHeaders = (): HeadersInit => {
+    const headers: HeadersInit = {}
+    if (authStore.token) {
+      headers['Authorization'] = `Bearer ${authStore.token}`
+    }
+    return headers
+  }
 
   // Fetch all templates
   const fetchTemplates = async (): Promise<SystemTemplate[]> => {
@@ -53,8 +64,9 @@ export const useTemplatesApi = () => {
     error.value = null
 
     try {
-      const data = await $fetch<TemplateListResponse>('http://localhost:3001/api/templates', {
-        method: 'GET'
+      const data = await $fetch<TemplateListResponse>(`${config.public.apiBase}/templates`, {
+        method: 'GET',
+        headers: getAuthHeaders()
       })
       
       return data.templates || []
@@ -75,9 +87,10 @@ export const useTemplatesApi = () => {
     console.log('🔍 fetchTemplate called with ID:', id)
 
     try {
-      console.log('📡 Making API request to:', `http://localhost:3001/api/templates/${id}`)
-      const data = await $fetch<SystemTemplate>(`http://localhost:3001/api/templates/${id}`, {
-        method: 'GET'
+      console.log('📡 Making API request to:', `${config.public.apiBase}/templates/${id}`)
+      const data = await $fetch<SystemTemplate>(`${config.public.apiBase}/templates/${id}`, {
+        method: 'GET',
+        headers: getAuthHeaders()
       })
       console.log('✅ Template API response:', data)
       
@@ -102,9 +115,10 @@ export const useTemplatesApi = () => {
     error.value = null
 
     try {
-      const data = await $fetch<{ success: boolean; category?: any; message?: string }>('http://localhost:3001/api/templates/create-category', {
+      const data = await $fetch<{ success: boolean; category?: any; message?: string }>(`${config.public.apiBase}/templates/create-category`, {
         method: 'POST',
-        body: payload
+        body: payload,
+        headers: getAuthHeaders()
       })
       
       return data

@@ -1,6 +1,7 @@
 // composables/useCategoriesApi.ts - Real API Integration
 import { ref, readonly } from 'vue'
 import type { Category } from '~/types/category'
+import { useAuthStore } from '~/stores/auth'
 
 export interface ApiCategory {
   id: string
@@ -34,6 +35,16 @@ export const useCategoriesApi = () => {
   const loading = ref(false)
   const error = ref<string | null>(null)
   const config = useRuntimeConfig()
+  const authStore = useAuthStore()
+
+  // Helper to get auth headers
+  const getAuthHeaders = (): HeadersInit => {
+    const headers: HeadersInit = {}
+    if (authStore.token) {
+      headers['Authorization'] = `Bearer ${authStore.token}`
+    }
+    return headers
+  }
 
   // Dönüştürme yardımcı fonksiyonu: API yanıtını UI'a uygun hale getiriyoruz
   const transformApiCategory = (category: ApiCategory): ApiCategory => {
@@ -68,7 +79,7 @@ export const useCategoriesApi = () => {
     try {
       const data = await $fetch<ApiCategory[]>(`${config.public.apiBase}/categories`, {
         method: 'GET',
-        headers: useRequestHeaders(['cookie'])
+        headers: getAuthHeaders()
       })
       
       // API yanıtlarını dönüştür
@@ -93,7 +104,7 @@ export const useCategoriesApi = () => {
       const data = await $fetch<ApiCategory>(`${config.public.apiBase}/categories`, {
         method: 'POST',
         body: payload,
-        headers: useRequestHeaders(['cookie'])
+        headers: getAuthHeaders()
       })
       
       return data ? transformApiCategory(data) : null
@@ -118,7 +129,7 @@ export const useCategoriesApi = () => {
       
       const data = await $fetch<ApiCategory>(`${config.public.apiBase}/categories/${id}`, {
         method: 'GET',
-        headers: useRequestHeaders(['cookie'])
+        headers: getAuthHeaders()
       })
       
       console.log('Raw API response:', data)
@@ -146,7 +157,7 @@ export const useCategoriesApi = () => {
       const data = await $fetch<ApiCategory>(`${config.public.apiBase}/categories/${id}`, {
         method: 'PATCH',
         body: payload,
-        headers: useRequestHeaders(['cookie'])
+        headers: getAuthHeaders()
       })
       
       return data ? transformApiCategory(data) : null
@@ -167,7 +178,7 @@ export const useCategoriesApi = () => {
     try {
       await $fetch(`${config.public.apiBase}/categories/${id}`, {
         method: 'DELETE',
-        headers: useRequestHeaders(['cookie'])
+        headers: getAuthHeaders()
       })
       
       return true

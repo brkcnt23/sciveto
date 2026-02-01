@@ -10,6 +10,10 @@ export const useInventoryCount = () => {
   const loading = ref(false)
   const stockEntries = reactive<Record<string, StockEntry>>({})
   const autoSaving = ref(false)
+  const statusFilter = ref<'all' | 'low' | 'medium' | 'high'>('all')
+  const page = ref(1)
+  const pageSize = ref(24)
+  const loadingMore = ref(false)
 
   // Helper function to get category name
   const getCategoryName = (category: Category | string | undefined): string => {
@@ -68,6 +72,20 @@ export const useInventoryCount = () => {
 
     return items
   })
+
+  const displayedItems = computed(() => {
+    let items = filteredItems.value
+
+    if (statusFilter.value !== 'all') {
+      items = items.filter(item => getStockStatus(item) === statusFilter.value)
+    }
+
+    return items.slice(0, page.value * pageSize.value)
+  })
+
+  const remainingCount = computed(() => Math.max(filteredItems.value.length - displayedItems.value.length, 0))
+  const hasMore = computed(() => displayedItems.value.length < filteredItems.value.length)
+  const updatedCount = computed(() => Object.keys(stockEntries).length)
 
   // Methods
   const loadStockData = async () => {
@@ -230,6 +248,18 @@ export const useInventoryCount = () => {
   const clearFilters = () => {
     search.value = ''
     selectedCategory.value = 'all'
+    statusFilter.value = 'all'
+    page.value = 1
+  }
+
+  const loadMore = async () => {
+    if (!hasMore.value) return
+    loadingMore.value = true
+    try {
+      page.value += 1
+    } finally {
+      loadingMore.value = false
+    }
   }
 
   const saveAllStocks = async (selectedItems: StockItem[]) => {
@@ -283,6 +313,10 @@ export const useInventoryCount = () => {
     // Computed
     categories,
     filteredItems,
+    displayedItems,
+    remainingCount,
+    updatedCount,
+    hasMore,
     
     // Methods
     loadStockData,
@@ -291,6 +325,11 @@ export const useInventoryCount = () => {
     saveAllStocks,
     getStockStatus,
     getStockColor,
-    clearFilters
+    clearFilters,
+    loadMore,
+
+    // Pagination/filters
+    statusFilter,
+    loadingMore
   }
 }

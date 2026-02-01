@@ -10,6 +10,7 @@ export * from './categories/update-category.dto'
 export * from './stock-items/create-stock-item.dto'
 export * from './stock-items/update-stock-item.dto'
 export * from './stock-items/stock-item-query.dto'
+export * from './stock-items/quick-add-stock-item.dto'
 
 // Projects DTOs
 export * from './projects/create-project.dto'

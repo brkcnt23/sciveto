@@ -269,8 +269,10 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
 import { useDualToast } from '~/composables/useDualToast'
 import type { TableColumn } from '@nuxt/ui'
+import { useProjects } from '~/composables/useProjects'
 
 // Components - Import path düzeltildi
 import ProjectCard from '~/components/projects/ProjectCard.vue'
@@ -278,9 +280,10 @@ import ProjectCard from '~/components/projects/ProjectCard.vue'
 // Composables
 const toast = useDualToast()
 const router = useRouter()
+const { fetchProjects } = useProjects()
 
 // Types for better TypeScript support
-type ProjectStatus = 'planning' | 'in-progress' | 'completed' | 'on-hold'
+type ProjectStatus = 'planning' | 'in-progress' | 'completed' | 'on-hold' | 'cancelled'
 type ProjectPriority = 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
 
 interface Project {
@@ -299,8 +302,35 @@ interface Project {
   categoryId: string
 }
 
+const toApiStatus = (status: string) => {
+  if (!status) return undefined
+  return status.replace('-', '_').toUpperCase()
+}
+
+const mapProject = (project: any): Project => {
+  const status = typeof project.status === 'string'
+    ? project.status.toLowerCase().replace('_', '-')
+    : 'planning'
+
+  return {
+    id: project.id,
+    name: project.name,
+    projectCode: project.projectCode || 'N/A',
+    description: project.description || '',
+    status: status as ProjectStatus,
+    priority: project.priority || 'MEDIUM',
+    completionPercentage: project.completionPercentage ?? 0,
+    clientName: project.clientName || '',
+    estimatedCost: project.estimatedBudget ?? project.estimatedCost ?? 0,
+    actualCost: project.actualCost ?? 0,
+    deadline: project.endDate || project.deadline || project.startDate || project.createdAt,
+    createdAt: project.createdAt || new Date().toISOString(),
+    categoryId: project.categoryId || ''
+  }
+}
+
 // State
-const loading = ref(true)
+const loading = ref(false)
 const creating = ref(false)
 const searching = ref(false)
 const viewMode = ref<'grid' | 'table'>('grid')
@@ -315,54 +345,8 @@ const categoryFilter = ref('')
 const currentPage = ref(1)
 const pageSize = ref(12)
 
-// Mock data - Replace with real API calls
-const projects = ref([
-  {
-    id: '1',
-    name: 'Website Redesign',
-    projectCode: 'WEB-2024-001',
-    description: 'Complete website redesign with modern UI/UX',
-    status: 'in-progress',
-    priority: 'HIGH',
-    completionPercentage: 65,
-    clientName: 'Tech Solutions Inc.',
-    estimatedCost: 25000,
-    actualCost: 15000,
-    deadline: '2024-12-15',
-    createdAt: '2024-10-01',
-    categoryId: 'web-dev'
-  },
-  {
-    id: '2',
-    name: 'Mobile App Development',
-    projectCode: 'APP-2024-002',
-    description: 'Native mobile application for iOS and Android',
-    status: 'planning',
-    priority: 'URGENT',
-    completionPercentage: 25,
-    clientName: 'StartupX',
-    estimatedCost: 45000,
-    actualCost: 8000,
-    deadline: '2024-11-30',
-    createdAt: '2024-09-15',
-    categoryId: 'mobile-dev'
-  },
-  {
-    id: '3',
-    name: 'E-commerce Platform',
-    projectCode: 'ECOM-2024-003',
-    description: 'Full-featured e-commerce platform',
-    status: 'completed',
-    priority: 'MEDIUM',
-    completionPercentage: 100,
-    clientName: 'Retail Masters',
-    estimatedCost: 60000,
-    actualCost: 58000,
-    deadline: '2024-10-30',
-    createdAt: '2024-08-01',
-    categoryId: 'web-dev'
-  }
-])
+const projects = ref<Project[]>([])
+const totalProjects = ref(0)
 
 // Filter options
 const statusOptions = [
@@ -370,7 +354,8 @@ const statusOptions = [
   { label: 'Planning', value: 'planning' },
   { label: 'In Progress', value: 'in-progress' },
   { label: 'Completed', value: 'completed' },
-  { label: 'On Hold', value: 'on-hold' }
+  { label: 'On Hold', value: 'on-hold' },
+  { label: 'Cancelled', value: 'cancelled' }
 ]
 
 const priorityOptions = [
@@ -446,32 +431,12 @@ const projectStats = computed(() => [
 const filteredProjects = computed(() => {
   let filtered = projects.value
 
-  if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase()
-    filtered = filtered.filter(project => 
-      project.name.toLowerCase().includes(query) ||
-      project.projectCode.toLowerCase().includes(query) ||
-      project.description.toLowerCase().includes(query) ||
-      project.clientName.toLowerCase().includes(query)
-    )
-  }
-
-  if (statusFilter.value) {
-    filtered = filtered.filter(project => project.status === statusFilter.value)
-  }
-
-  if (priorityFilter.value) {
-    filtered = filtered.filter(project => project.priority === priorityFilter.value)
-  }
-
   if (categoryFilter.value) {
     filtered = filtered.filter(project => project.categoryId === categoryFilter.value)
   }
 
   return filtered
 })
-
-const totalProjects = computed(() => filteredProjects.value.length)
 const totalPages = computed(() => Math.ceil(totalProjects.value / pageSize.value))
 const visiblePages = computed(() => {
   const pages = []
@@ -491,7 +456,8 @@ const getStatusColor = (status: string): 'primary' | 'secondary' | 'success' | '
     'planning': 'info',
     'in-progress': 'warning',
     'completed': 'success',
-    'on-hold': 'neutral'
+    'on-hold': 'neutral',
+    'cancelled': 'error'
   }
   return colors[status as ProjectStatus] || 'neutral'
 }
@@ -505,7 +471,8 @@ const getStatusLabel = (status: string) => {
     'planning': 'Planning',
     'in-progress': 'In Progress',
     'completed': 'Completed',
-    'on-hold': 'On Hold'
+    'on-hold': 'On Hold',
+    'cancelled': 'Cancelled'
   }
   return labels[status as ProjectStatus] || status
 }
@@ -543,20 +510,55 @@ const exportProjects = () => {
   toast.success('Export Started', 'Your projects export will be ready shortly.')
 }
 
+const loadProjects = async () => {
+  loading.value = true
+  try {
+    const response = await fetchProjects<Project>({
+      search: searchQuery.value || undefined,
+      status: toApiStatus(statusFilter.value),
+      priority: priorityFilter.value || undefined,
+      page: currentPage.value,
+      limit: pageSize.value,
+      sortBy: 'createdAt',
+      sortOrder: 'desc'
+    })
+
+    const items = Array.isArray(response) ? response : response?.data || []
+    const meta = Array.isArray(response) ? undefined : response?.meta
+
+    projects.value = items.map(mapProject)
+    totalProjects.value = meta?.total ?? items.length
+  } catch (error) {
+    console.error('Error fetching projects:', error)
+  } finally {
+    loading.value = false
+  }
+}
+
 // Watchers
-watch([searchQuery], () => {
+const debouncedSearch = useDebounceFn(async () => {
   searching.value = true
-  setTimeout(() => {
-    searching.value = false
-  }, 500)
+  currentPage.value = 1
+  await loadProjects()
+  searching.value = false
+}, 400)
+
+watch([searchQuery], () => {
+  debouncedSearch()
+})
+
+watch([statusFilter, priorityFilter], () => {
+  currentPage.value = 1
+  loadProjects()
+})
+
+watch([currentPage, pageSize], () => {
+  loadProjects()
 })
 
 // Lifecycle
 onMounted(async () => {
-  // Simulate loading
-  setTimeout(() => {
-    loading.value = false
-  }, 1000)
+  await loadProjects()
 })
 
 // Meta

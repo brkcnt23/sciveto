@@ -1,5 +1,2 @@
 // @ts-nocheck
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateStockItemDto } from './create-stock-item.dto';
-
-export class UpdateStockItemDto extends PartialType(CreateStockItemDto) {}
+export { UpdateStockItemDto } from '@sciveto/shared-types';

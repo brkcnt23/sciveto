@@ -91,11 +91,25 @@ export interface StockItem {
   standards?: Record<string, string>
   templateFields?: Record<string, any>
   reservedStock?: number
+  availableStock?: number
   specifications?: string | Record<string, any> // Allow both formats
   allocations?: ProjectAllocation[]
   stockInfo?: StockInfo // Add stockInfo property
   customProperties?: Record<string, any> // Add customProperties
   originalRef?: any // Add originalRef for data mapping
+  // Legacy fields (Dual-Mode Support)
+  shelfCode?: string // Raf No / Kat
+  brand?: string // Marka
+  color?: string // Renk
+  size?: string // Beden
+  purchasePrice?: number // Alış Fiyatı
+  salePrice?: number // Satış Fiyatı 1
+  salePrice2?: number // Satış Fiyatı 2 / Vadeli
+  vatRate?: number // KDV %
+  specialCode1?: string // Özel Kod 1
+  specialCode2?: string // Özel Kod 2
+  entryMode?: 'QUICK' | 'DETAILED' // Dual-Mode entry type
+  isComplete?: boolean // Whether item has full details
   createdAt: Date
   updatedAt: Date
 }

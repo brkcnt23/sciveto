@@ -352,32 +352,21 @@ const createCategory = async () => {
       options: prop.options && prop.options.length > 0 ? prop.options : undefined
     }))
 
-    // Create category data
-    const categoryData: CreateCategoryData = {
+    // Real API call to create category
+    const categoriesApi = useCategoriesApi()
+    const result = await categoriesApi.createCategory({
       name: formData.name,
       description: formData.description || undefined,
       color: formData.color,
-      icon: formData.icon,
-      properties
-    }
-
-    // TODO: API call to create category
-    // const result = await createCategoryAPI(categoryData)
+      customFields: {
+        icon: formData.icon,
+        properties: properties
+      }
+    })
     
-    // Mock success for now
-    await new Promise(resolve => setTimeout(resolve, 1000))
-
-    // Save to localStorage for demo
-    const existingCategories = JSON.parse(localStorage.getItem('custom_categories') || '[]')
-    const newCategory = {
-      id: `custom-${Date.now()}`,
-      ...categoryData,
-      isDefault: false,
-      createdAt: new Date(),
-      updatedAt: new Date()
+    if (!result) {
+      throw new Error(categoriesApi.error.value || 'Kategori oluşturulamadı')
     }
-    existingCategories.push(newCategory)
-    localStorage.setItem('custom_categories', JSON.stringify(existingCategories))
 
     notification.show = true
     notification.type = 'success'
@@ -389,11 +378,12 @@ const createCategory = async () => {
       navigateTo('/categories')
     }, 1500)
 
-  } catch (error) {
+  } catch (error: any) {
+    console.error('Category creation error:', error)
     notification.show = true
     notification.type = 'error'
     notification.title = 'Hata!'
-    notification.message = 'Kategori oluşturulamadı'
+    notification.message = error.message || 'Kategori oluşturulamadı'
   } finally {
     loading.value = false
   }

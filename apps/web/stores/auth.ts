@@ -88,39 +88,46 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    // Register fonksiyonu - mevcut register sayfası ile uyumlu
+    // Register fonksiyonu - gerçek API çağrısı
     async register(userData: {
       email: string
       password: string
       firstName: string
       lastName?: string
       organizationName?: string
+      industry?: string
       marketingEmails?: boolean
     }) {
       this.isLoading = true
       
       try {
-        // Mock registration for development
-        await new Promise(resolve => setTimeout(resolve, 1500))
+        // Real API registration
+        const response = await $fetch<{
+          user: User;
+          access_token: string;
+        }>('/auth/register', {
+          baseURL: useRuntimeConfig().public.apiBase,
+          method: 'POST',
+          body: {
+            email: userData.email,
+            password: userData.password,
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            organizationName: userData.organizationName,
+            industry: userData.industry
+          }
+        })
         
-        const mockUser: User = {
-          id: 'user_' + Date.now(),
-          email: userData.email,
-          firstName: userData.firstName,
-          lastName: userData.lastName || '',
-          role: 'ORG_ADMIN',
-          organizationId: userData.organizationName ? 'org_' + Date.now() : 'org_default',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
+        if (response && response.access_token && response.user) {
+          this.setAuth(response.user, response.access_token)
+          
+          // Redirect to dashboard after successful registration
+          await navigateTo('/dashboard')
+          
+          return { success: true }
+        } else {
+          throw new Error('Invalid response from server')
         }
-        
-        const mockToken = 'mock_token_' + Date.now()
-        this.setAuth(mockUser, mockToken)
-        
-        // Redirect to dashboard after successful registration
-        await navigateTo('/dashboard')
-        
-        return { success: true }
       } catch (error: any) {
         console.error('Registration failed:', error)
         throw error // Let the component handle the error

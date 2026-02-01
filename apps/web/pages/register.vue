@@ -58,6 +58,30 @@
             help-text="Leave empty to join the default organization"
           />
 
+          <!-- Industry Selection (shown when org name is provided) -->
+          <div v-if="registerForm.organizationName" class="space-y-2">
+            <label class="block text-sm font-medium text-white">Sektörünüz</label>
+            <div class="grid grid-cols-2 gap-3">
+              <div
+                v-for="ind in industries"
+                :key="ind.value"
+                @click="registerForm.industry = ind.value"
+                class="p-4 rounded-lg cursor-pointer transition-all border-2"
+                :class="registerForm.industry === ind.value 
+                  ? 'border-emerald-400 bg-emerald-500/20' 
+                  : 'border-white/20 bg-white/5 hover:bg-white/10'"
+              >
+                <div class="flex items-center gap-3">
+                  <Icon :name="ind.icon" class="w-6 h-6 text-white" />
+                  <div>
+                    <div class="font-medium text-white">{{ ind.label }}</div>
+                    <div class="text-xs text-white/60">{{ ind.description }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Password Field -->
           <FormInput
             v-model="registerForm.password"
@@ -226,11 +250,40 @@ const registerForm = reactive({
   lastName: '',
   email: '',
   organizationName: '',
+  industry: 'general',
   password: '',
   confirmPassword: '',
   acceptTerms: false,
   marketingEmails: false
 })
+
+// Industry options
+const industries = [
+  { 
+    value: 'steel-manufacturing', 
+    label: 'Demir-Çelik', 
+    icon: 'i-heroicons-cube',
+    description: 'Profil, plaka, yapısal çelik'
+  },
+  { 
+    value: 'tensile-architecture', 
+    label: 'Asma Gergi Mimarlık', 
+    icon: 'i-heroicons-home-modern',
+    description: 'Membran, halat, mapa'
+  },
+  { 
+    value: 'electronics', 
+    label: 'Elektronik', 
+    icon: 'i-heroicons-cpu-chip',
+    description: 'Elektronik bileşenler'
+  },
+  { 
+    value: 'general', 
+    label: 'Genel / Diğer', 
+    icon: 'i-heroicons-squares-2x2',
+    description: 'Özel sektör kategorileri'
+  },
+]
 
 const errors = reactive({
   firstName: '',
@@ -354,8 +407,11 @@ const handleRegister = async () => {
       firstName: registerForm.firstName,
       lastName: registerForm.lastName || undefined,
       organizationName: registerForm.organizationName || undefined,
+      industry: registerForm.organizationName ? registerForm.industry : undefined,
       marketingEmails: registerForm.marketingEmails
     }
+    
+    console.log('📝 Registration data being sent:', JSON.stringify(registrationData, null, 2))
     
     await authStore.register(registrationData)
     

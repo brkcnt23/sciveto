@@ -8,283 +8,231 @@ datasource db {
 }
 
 model Organization {
-  id          String   @id @default(cuid())
-  name        String
-  subdomain   String   @unique
-  domain      String?
-  settings    Json?    // Custom organization settings
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  // Relations
-  users       User[]
-  categories  Category[]
-  items       StockItem[]
-  projects    Project[]
+  id         String      @id @default(cuid())
+  name       String
+  subdomain  String      @unique
+  domain     String?
+  settings   Json?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  categories Category[]
+  projects   Project[]
+  items      StockItem[]
+  users      User[]
 }
 
 model User {
-  id             String   @id @default(cuid())
-  email          String   @unique
+  id             String              @id @default(cuid())
+  email          String              @unique
   password       String
   firstName      String?
   lastName       String?
-  role           UserRole @default(USER)
+  role           UserRole            @default(USER)
   organizationId String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  
-  // Relations
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  stockItems     StockItem[]
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
   projects       Project[]
   allocations    ProjectAllocation[]
-  
+  stockItems     StockItem[]
+  organization   Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
   @@index([organizationId])
 }
 
-// ===============================
-// TEMPLATE SYSTEM TABLES - NEW
-// ===============================
-
 model SystemCategoryTemplate {
-  id             String   @id @default(cuid())
-  name           String   // "Profil", "Plaka", "Halat", etc.
-  version        String   @default("1.0")
-  isLatest       Boolean  @default(true)
-  description    String?
-  industry       String?  // "steel-manufacturing", "tensile-architecture", etc.
-  icon           String?  // UI ikonu
-  
-  // Metadata
-  changelog      String?  // "3 yeni standart eklendi"
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  
-  // Relations
-  standards      TemplateStandard[]
-  fields         TemplateField[]
-  categories     Category[]         // Bu template'den oluşturulan kategoriler
-  
+  id          String             @id @default(cuid())
+  name        String
+  version     String             @default("1.0")
+  isLatest    Boolean            @default(true)
+  description String?
+  industry    String?
+  icon        String?
+  changelog   String?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  categories  Category[]
+  fields      TemplateField[]
+  standards   TemplateStandard[]
+
   @@unique([name, version])
   @@index([name])
   @@index([isLatest])
 }
 
 model TemplateStandard {
-  id         String @id @default(cuid())
+  id         String                 @id @default(cuid())
   templateId String
-  name       String // "HEA", "S235JR", "6x19_FC", etc.
-  value      String // Actual value
-  category   String? // "profile_type", "material", "construction", etc.
-  sortOrder  Int    @default(0)
-  
-  // Relations
+  name       String
+  value      String
+  category   String?
+  sortOrder  Int                    @default(0)
   template   SystemCategoryTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
-  
+
   @@index([templateId])
   @@index([category])
 }
 
 model TemplateField {
-  id            String      @id @default(cuid())
-  templateId    String
-  name          String      // "dimensions", "material", "thickness_mm"
-  label         String      // "Dimensions", "Material", "Thickness (mm)"
-  type          FieldType
-  required      Boolean     @default(false)
-  defaultValue  String?
-  options       Json?       // For select/enum fields
-  validation    Json?       // Validation rules
-  unit          String?     // "mm", "kg", "m", etc.
-  sortOrder     Int         @default(0)
-  
-  // Relations
-  template      SystemCategoryTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
-  
+  id           String                 @id @default(cuid())
+  templateId   String
+  name         String
+  label        String
+  type         FieldType
+  required     Boolean                @default(false)
+  defaultValue String?
+  options      Json?
+  validation   Json?
+  unit         String?
+  sortOrder    Int                    @default(0)
+  template     SystemCategoryTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
   @@index([templateId])
 }
 
-// ===============================
-// EXISTING TABLES - UPDATED
-// ===============================
-
 model Category {
-  id               String   @id @default(cuid())
-  name             String
-  description      String?
-  color            String   @default("#3B82F6")
-  icon             String?  // UI icon name - NEW
-  organizationId   String
-  
-  // Template integration - NEW
-  templateId       String?  // Hangi template'den oluşturuldu
-  templateVersion  String?  // Hangi version
-  isSystemBased    Boolean  @default(false) // Template'den mi oluştu
-  customFields     Json?    // Template'e ek olarak eklenen custom alanlar
-  
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  
-  // Relations
-  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  template         SystemCategoryTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
-  stockItems       StockItem[]
-  
+  id              String                  @id @default(cuid())
+  name            String
+  description     String?
+  color           String                  @default("#3B82F6")
+  icon            String?
+  organizationId  String
+  templateId      String?
+  templateVersion String?
+  isSystemBased   Boolean                 @default(false)
+  customFields    Json?
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+  organization    Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  template        SystemCategoryTemplate? @relation(fields: [templateId], references: [id])
+  stockItems      StockItem[]
+
   @@unique([name, organizationId])
   @@index([organizationId])
   @@index([templateId])
 }
 
 model StockItem {
-  id             String    @id @default(cuid())
-  name           String
-  description    String?
-  sku            String?
-  unit           String    @default("pcs")
-  
-  // Stock Information
-  currentStock   Float     @default(0)
-  reservedStock  Float     @default(0)
-  availableStock Float     @default(0)
-  minStockLevel  Float     @default(0)
-  maxStockLevel  Float?
-  
-  // Cost Information
-  lastPurchasePrice  Float?
-  averageCost        Float?
-  totalValue         Float     @default(0)
-  
-  // Template integration - UPDATED
-  standardValues     Json?     // Template'den gelen standart değerler
-  customValues       Json?     // Şirkete özel değerler
-  specifications     Json?     // Backward compatibility için
-  
-  // Organization & Category
-  organizationId String
-  categoryId     String?
-  userId         String
-  
-  // Status & Metadata
-  status         StockStatus @default(ACTIVE)
-  location       String?
-  supplier       String?
-  notes          String?
-  
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  
-  // Relations
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  category       Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  user           User         @relation(fields: [userId], references: [id])
-  allocations    ProjectAllocation[]
-  transactions   StockTransaction[]
-  
+  id                String              @id @default(cuid())
+  name              String
+  description       String?
+  sku               String?             @unique
+  barcode           String?             @unique
+  unit              String              @default("pcs")
+  currentStock      Float               @default(0)
+  reservedStock     Float               @default(0)
+  availableStock    Float               @default(0)
+  minStockLevel     Float               @default(0)
+  maxStockLevel     Float?
+  // Legacy Fields (Dual-Mode Support)
+  shelfCode         String?             // Raf No / Kat
+  brand             String?             // Marka
+  color             String?             // Renk
+  size              String?             // Beden
+  purchasePrice     Float?              // Alış Fiyatı
+  salePrice         Float?              // Satış Fiyatı 1
+  salePrice2        Float?              // Satış Fiyatı 2 / Vadeli
+  vatRate           Int?                @default(20) // KDV %
+  specialCode1      String?             // Özel Kod 1
+  specialCode2      String?             // Özel Kod 2
+  // Existing fields
+  lastPurchasePrice Float?
+  averageCost       Float?
+  totalValue        Float               @default(0)
+  standardValues    Json?
+  customValues      Json?
+  specifications    Json?
+  organizationId    String
+  categoryId        String?
+  userId            String
+  status            StockStatus         @default(ACTIVE)
+  location          String?
+  supplier          String?
+  notes             String?
+  entryMode         EntryMode           @default(DETAILED)
+  isComplete        Boolean             @default(false)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  allocations       ProjectAllocation[]
+  category          Category?           @relation(fields: [categoryId], references: [id])
+  organization      Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user              User                @relation(fields: [userId], references: [id])
+  transactions      StockTransaction[]
+
   @@index([organizationId])
   @@index([categoryId])
   @@index([status])
-}
-
-model Project {
-  id             String    @id @default(cuid())
-  name           String
-  description    String?
-  projectCode    String?
-  
-  // Project Information
-  clientName     String?
-  location       String?
-  startDate      DateTime?
-  endDate        DateTime?
-  estimatedBudget Float?
-  actualCost     Float     @default(0)
-  
-  // Organization
-  organizationId String
-  managerId      String
-  
-  // Status
-  status         ProjectStatus @default(PLANNING)
-  priority       ProjectPriority @default(MEDIUM)
-  
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  
-  // Relations
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  manager        User         @relation(fields: [managerId], references: [id])
-  allocations    ProjectAllocation[]
-  
-  @@index([organizationId])
-  @@index([status])
-}
-
-model ProjectAllocation {
-  id             String    @id @default(cuid())
-  
-  // Project & Item
-  projectId      String
-  stockItemId    String
-  userId         String
-  
-  // Allocation Details
-  allocatedQuantity  Float
-  usedQuantity       Float     @default(0)
-  allocatedPrice     Float
-  totalAllocatedCost Float
-  
-  // Status & Metadata
-  status         AllocationStatus @default(RESERVED)
-  notes          String?
-  allocationDate DateTime         @default(now())
-  usageDate      DateTime?
-  
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  
-  // Relations
-  project        Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  stockItem      StockItem @relation(fields: [stockItemId], references: [id], onDelete: Cascade)
-  user           User      @relation(fields: [userId], references: [id])
-  
-  @@index([projectId])
-  @@index([stockItemId])
-  @@index([status])
+  @@index([isComplete])
+  @@index([entryMode])
 }
 
 model StockTransaction {
-  id             String    @id @default(cuid())
-  
-  // Transaction Details
-  stockItemId    String
-  type           TransactionType
-  quantity       Float
-  unitPrice      Float?
-  totalCost      Float?
-  
-  // Reference Information
-  referenceType  String?
-  referenceId    String?
-  
-  // Metadata
-  description    String?
-  performedBy    String?
-  supplier       String?
-  
-  createdAt      DateTime  @default(now())
-  
-  // Relations
-  stockItem      StockItem @relation(fields: [stockItemId], references: [id], onDelete: Cascade)
-  
+  id            String          @id @default(cuid())
+  stockItemId   String
+  type          TransactionType
+  quantity      Float
+  unitPrice     Float?
+  totalCost     Float?
+  referenceType String?
+  referenceId   String?
+  description   String?
+  performedBy   String?
+  supplier      String?
+  createdAt     DateTime        @default(now())
+  stockItem     StockItem       @relation(fields: [stockItemId], references: [id], onDelete: Cascade)
+
   @@index([stockItemId])
   @@index([type])
   @@index([createdAt])
 }
 
-// ===============================
-// ENUMS - UPDATED
-// ===============================
+model Project {
+  id              String              @id @default(cuid())
+  name            String
+  description     String?
+  projectCode     String?
+  clientName      String?
+  location        String?
+  startDate       DateTime?
+  endDate         DateTime?
+  estimatedBudget Float?
+  actualCost      Float               @default(0)
+  organizationId  String
+  managerId       String
+  status          ProjectStatus       @default(PLANNING)
+  priority        ProjectPriority     @default(MEDIUM)
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  manager         User                @relation(fields: [managerId], references: [id])
+  organization    Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  allocations     ProjectAllocation[]
+
+  @@index([organizationId])
+  @@index([status])
+}
+
+model ProjectAllocation {
+  id                 String           @id @default(cuid())
+  projectId          String
+  stockItemId        String
+  userId             String
+  allocatedQuantity  Float
+  usedQuantity       Float            @default(0)
+  allocatedPrice     Float
+  totalAllocatedCost Float
+  status             AllocationStatus @default(RESERVED)
+  notes              String?
+  allocationDate     DateTime         @default(now())
+  usageDate          DateTime?
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  project            Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  stockItem          StockItem        @relation(fields: [stockItemId], references: [id], onDelete: Cascade)
+  user               User             @relation(fields: [userId], references: [id])
+
+  @@index([projectId])
+  @@index([stockItemId])
+  @@index([status])
+}
 
 enum UserRole {
   SUPER_ADMIN
@@ -331,7 +279,6 @@ enum TransactionType {
   TRANSFER
 }
 
-// NEW ENUM
 enum FieldType {
   text
   number
@@ -340,4 +287,9 @@ enum FieldType {
   boolean
   date
   enum
+}
+
+enum EntryMode {
+  QUICK
+  DETAILED
 }

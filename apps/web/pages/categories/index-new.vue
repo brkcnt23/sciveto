@@ -316,7 +316,7 @@ const deleteCategory = async (category: Category) => {
 }
 
 const viewCategoryItems = (category: Category) => {
-  navigateTo(`/stock-items?category=${category.id}`)
+  navigateTo(`/inventory?category=${category.id}`)
 }
 
 onMounted(() => {

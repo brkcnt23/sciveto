@@ -100,11 +100,11 @@
                 <p class="text-3xl font-bold text-neutral-900 dark:text-white">${{ formatCurrency(project.estimatedCost) }}</p>
                 <p :class="[
                   'text-sm mt-1',
-                  project.actualCost > project.estimatedCost 
+                  allocationsTotalCost > project.estimatedCost 
                     ? 'text-red-600 dark:text-red-400' 
                     : 'text-green-600 dark:text-green-400'
                 ]">
-                  ${{ formatCurrency(project.actualCost) }} spent
+                  ${{ formatCurrency(allocationsTotalCost) }} allocated
                 </p>
               </div>
               <div class="p-3 bg-green-100 dark:bg-green-900 rounded-full">
@@ -146,19 +146,85 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <!-- Left Column -->
           <div class="lg:col-span-2 space-y-6">
-            <!-- Stock Allocation -->
-            <UCard>
+            <!-- Tabs -->
+            <div class="flex flex-wrap items-center gap-2">
+              <UButton
+                :variant="activeTab === 'overview' ? 'solid' : 'outline'"
+                color="primary"
+                size="sm"
+                @click="activeTab = 'overview'"
+              >
+                Overview
+              </UButton>
+              <UButton
+                :variant="activeTab === 'materials' ? 'solid' : 'outline'"
+                color="primary"
+                size="sm"
+                @click="activeTab = 'materials'"
+              >
+                Materials / BOM
+              </UButton>
+              <UButton
+                :variant="activeTab === 'activity' ? 'solid' : 'outline'"
+                color="primary"
+                size="sm"
+                @click="activeTab = 'activity'"
+              >
+                Activity
+              </UButton>
+            </div>
+
+            <!-- Overview Tab -->
+            <UCard v-if="activeTab === 'overview'">
+              <template #header>
+                <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">Budget vs Actual</h3>
+              </template>
+
+              <div class="space-y-6">
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="p-4 rounded-lg bg-neutral-50 dark:bg-neutral-800">
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">Budget</p>
+                    <p class="text-2xl font-bold text-neutral-900 dark:text-white">
+                      ${{ formatCurrency(project.estimatedCost) }}
+                    </p>
+                  </div>
+                  <div class="p-4 rounded-lg bg-neutral-50 dark:bg-neutral-800">
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">Allocated</p>
+                    <p class="text-2xl font-bold text-neutral-900 dark:text-white">
+                      ${{ formatCurrency(allocationsTotalCost) }}
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between text-sm text-neutral-600 dark:text-neutral-400 mb-2">
+                    <span>Budget usage</span>
+                    <span class="font-medium text-neutral-900 dark:text-white">{{ budgetUsagePercent }}%</span>
+                  </div>
+                  <div class="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2">
+                    <div class="h-2 rounded-full bg-primary-500" :style="{ width: budgetUsagePercent + '%' }"></div>
+                  </div>
+                </div>
+              </div>
+            </UCard>
+
+            <!-- Materials Tab -->
+            <UCard v-else-if="activeTab === 'materials'">
               <template #header>
                 <div class="flex items-center justify-between">
-                  <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">Stock Allocation</h3>
-                  <UButton variant="outline" size="sm" icon="i-lucide-plus">
-                    Add Item
+                  <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">Materials / BOM</h3>
+                  <UButton variant="outline" size="sm" icon="i-lucide-plus" @click="showMaterialModal = true">
+                    Add Material
                   </UButton>
                 </div>
               </template>
 
               <div class="space-y-4">
-                <div v-for="allocation in stockAllocations" :key="allocation.id" 
+                <div v-if="allocationItems.length === 0" class="text-sm text-neutral-500">
+                  No materials allocated yet.
+                </div>
+
+                <div v-for="allocation in allocationItems" :key="allocation.id" 
                      class="p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors">
                   <div class="flex items-center justify-between mb-3">
                     <div class="flex items-center gap-3">
@@ -174,17 +240,17 @@
                     
                     <div class="text-right">
                       <div class="text-sm font-medium text-neutral-900 dark:text-white">
-                        {{ allocation.usedQuantity }}/{{ allocation.allocatedQuantity }} {{ allocation.unit }}
+                        {{ allocation.allocatedQuantity }}/{{ allocation.requiredQuantity }} {{ allocation.unit }}
                       </div>
                       <div class="text-xs text-neutral-600 dark:text-neutral-400">
-                        {{ getUsagePercentage(allocation) }}% used
+                        {{ getUsagePercentage(allocation) }}% allocated
                       </div>
                     </div>
                   </div>
 
                   <div class="space-y-2">
                     <div class="flex items-center justify-between text-xs">
-                      <span class="text-neutral-600 dark:text-neutral-400">Usage Progress</span>
+                      <span class="text-neutral-600 dark:text-neutral-400">Allocation Progress</span>
                       <span class="font-medium">{{ getUsagePercentage(allocation) }}%</span>
                     </div>
                     <div class="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2">
@@ -201,16 +267,17 @@
                       Cost: ${{ formatCurrency(allocation.totalCost) }}
                     </div>
                     <div class="flex items-center gap-2">
-                      <UButton variant="ghost" size="xs" icon="i-lucide-edit">Edit</UButton>
-                      <UButton variant="ghost" size="xs" icon="i-lucide-eye">Details</UButton>
+                      <UBadge :color="allocation.status === 'RESERVED' ? 'info' : 'success'" variant="soft">
+                        {{ allocation.status }}
+                      </UBadge>
                     </div>
                   </div>
                 </div>
               </div>
             </UCard>
 
-            <!-- Recent Activity -->
-            <UCard>
+            <!-- Activity Tab -->
+            <UCard v-else>
               <template #header>
                 <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">Recent Activity</h3>
               </template>
@@ -357,6 +424,59 @@
           </div>
         </div>
       </div>
+
+      <!-- Add Material Modal -->
+      <UModal v-model="showMaterialModal">
+        <UCard>
+          <template #header>
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">Add Material</h3>
+              <UButton variant="ghost" icon="i-lucide-x" @click="showMaterialModal = false" />
+            </div>
+          </template>
+
+          <div class="space-y-4">
+            <UFormGroup label="Inventory Item" required>
+              <USelect
+                v-model="allocationForm.stockItemId"
+                :options="inventoryItems.map(item => ({ label: item.name, value: item.id }))"
+                placeholder="Select inventory item"
+                @change="setAllocationDefaults"
+              />
+            </UFormGroup>
+
+            <div v-if="selectedInventoryItem" class="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4 text-sm text-neutral-600 dark:text-neutral-400">
+              <div class="flex items-center justify-between">
+                <span>Available</span>
+                <span class="font-medium text-neutral-900 dark:text-white">
+                  {{ selectedInventoryItem.availableStock ?? selectedInventoryItem.stock ?? 0 }} {{ selectedInventoryItem.unit || 'pcs' }}
+                </span>
+              </div>
+            </div>
+
+            <UFormGroup label="Quantity" required>
+              <UInput v-model.number="allocationForm.allocatedQuantity" type="number" min="1" />
+            </UFormGroup>
+
+            <UFormGroup label="Unit Price" required>
+              <UInput v-model.number="allocationForm.allocatedPrice" type="number" min="0" step="0.01" />
+            </UFormGroup>
+
+            <UFormGroup label="Notes">
+              <UTextarea v-model="allocationForm.notes" :rows="3" placeholder="Add optional notes" />
+            </UFormGroup>
+          </div>
+
+          <template #footer>
+            <div class="flex justify-end gap-3">
+              <UButton variant="outline" @click="showMaterialModal = false">Cancel</UButton>
+              <UButton color="primary" :loading="submittingAllocation" :disabled="!canSubmitAllocation" @click="submitAllocation">
+                Allocate Material
+              </UButton>
+            </div>
+          </template>
+        </UCard>
+      </UModal>
     </div>
 
     <!-- Error State -->
@@ -374,11 +494,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { useDualToast } from '~/composables/useDualToast'
+import { useProjects } from '~/composables/useProjects'
+import { useInventory } from '~/composables/useInventory'
+import type { StockItem } from '~/types/stock'
 
 // Types
-type ProjectStatus = 'planning' | 'in-progress' | 'completed' | 'on-hold'
+type ProjectStatus = 'planning' | 'in-progress' | 'completed' | 'on-hold' | 'cancelled'
 type ProjectPriority = 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
 
 interface Project {
@@ -405,95 +528,34 @@ interface Project {
 const route = useRoute()
 const router = useRouter()
 const toast = useDualToast()
+const { fetchProject, fetchProjectAllocations, allocateMaterial } = useProjects()
+const { fetchInventory } = useInventory()
 
 // State
 const loading = ref(true)
 const project = ref<Project | null>(null)
+const allocations = ref<any[]>([])
+const inventoryItems = ref<StockItem[]>([])
+const activeTab = ref<'overview' | 'materials' | 'activity'>('overview')
+const showMaterialModal = ref(false)
+const submittingAllocation = ref(false)
 
-// Mock data
-const mockProject: Project = {
-  id: String(route.params.id),
-  name: 'Villa Asma Tavan - Beylikdüzü',
-  projectCode: 'ASM-2024-001',
-  description: 'Villa projesinde asma tavan uygulaması. Membran germe, profil montajı ve fitil işlemleri dahil.',
-  status: 'in-progress',
-  priority: 'HIGH',
-  completionPercentage: 67,
-  clientName: 'Beylikdüzü Yapı A.Ş.',
-  estimatedCost: 25000,
-  actualCost: 18500,
-  deadline: '2024-12-15',
-  createdAt: '2024-10-01',
-  categoryId: 'construction',
-  manager: {
-    name: 'Ahmet Yılmaz',
-    email: 'ahmet@company.com'
-  }
-}
+const allocationForm = reactive({
+  stockItemId: '',
+  allocatedQuantity: 1,
+  allocatedPrice: 0,
+  notes: ''
+})
 
-const stockAllocations = ref([
-  {
-    id: '1',
-    itemName: 'PVC Membran Premium',
-    category: 'Membran',
-    allocatedQuantity: 50,
-    usedQuantity: 37.5,
-    unit: 'm²',
-    totalCost: 8500,
-    lastUpdated: '2024-07-17T14:30:00Z'
-  },
-  {
-    id: '2', 
-    itemName: 'Çelik Fitil 3mm',
-    category: 'Fitil',
-    allocatedQuantity: 120,
-    usedQuantity: 95,
-    unit: 'm',
-    totalCost: 2400,
-    lastUpdated: '2024-07-17T13:15:00Z'
-  },
-  {
-    id: '3',
-    itemName: 'Alüminyum L Profil',
-    category: 'Profil', 
-    allocatedQuantity: 30,
-    usedQuantity: 18,
-    unit: 'm',
-    totalCost: 4500,
-    lastUpdated: '2024-07-17T12:00:00Z'
-  }
-])
-
-const teamMembers = ref([
-  { id: '1', name: 'Mehmet Usta', role: 'Operations Lead', isActive: true },
-  { id: '2', name: 'Ali Çelik', role: 'Technical', isActive: true },
-  { id: '3', name: 'Fatma Kaya', role: 'Quality Control', isActive: false }
-])
-
+// Mock activity (until audit trail is available)
 const recentActivities = ref([
   {
     id: '1',
     type: 'progress',
-    title: 'Membran germe güncellendi',
-    description: 'Progress %67 olarak güncellendi',
-    user: 'Mehmet Usta',
-    timestamp: '2024-07-17T14:30:00Z'
-  },
-  {
-    id: '2',
-    type: 'stock',
-    title: 'Stok kullanımı kaydedildi',
-    description: 'Çelik fitil 25m kullanıldı',
-    user: 'Ali Çelik',
-    timestamp: '2024-07-17T13:15:00Z'
-  },
-  {
-    id: '3',
-    type: 'note',
-    title: 'Not eklendi',
-    description: 'Sol köşe işlemi zorlandı',
-    user: 'Mehmet Usta',
-    timestamp: '2024-07-17T12:45:00Z'
+    title: 'Project progress updated',
+    description: 'Progress updated based on allocations',
+    user: 'System',
+    timestamp: new Date().toISOString()
   }
 ])
 
@@ -506,7 +568,155 @@ const remainingDays = computed(() => {
   return Math.max(0, diffDays)
 })
 
+const getCategoryName = (category?: StockItem['category']) => {
+  if (!category) return 'Uncategorized'
+  return typeof category === 'string' ? category : category.name || 'Uncategorized'
+}
+
+const allocationItems = computed(() => {
+  return allocations.value.map(allocation => ({
+    id: allocation.id,
+    itemName: allocation.stockItem?.name || 'Unnamed Item',
+    category: getCategoryName(allocation.stockItem?.category),
+    allocatedQuantity: allocation.allocatedQuantity,
+    usedQuantity: allocation.usedQuantity,
+    requiredQuantity: allocation.requiredQuantity ?? allocation.allocatedQuantity,
+    unit: allocation.stockItem?.unit || 'pcs',
+    totalCost: allocation.totalAllocatedCost,
+    status: allocation.status
+  }))
+})
+
+const allocationsTotalCost = computed(() => {
+  return allocationItems.value.reduce((sum, item) => sum + (item.totalCost || 0), 0)
+})
+
+const budgetUsagePercent = computed(() => {
+  if (!project.value?.estimatedCost) return 0
+  return Math.min(100, Math.round((allocationsTotalCost.value / project.value.estimatedCost) * 100))
+})
+
+const selectedInventoryItem = computed(() => {
+  return inventoryItems.value.find(item => item.id === allocationForm.stockItemId)
+})
+
+const canSubmitAllocation = computed(() => {
+  if (!allocationForm.stockItemId) return false
+  if (allocationForm.allocatedQuantity <= 0) return false
+  if (allocationForm.allocatedPrice <= 0) return false
+
+  const available = selectedInventoryItem.value?.availableStock ?? selectedInventoryItem.value?.stock ?? 0
+  return allocationForm.allocatedQuantity <= available
+})
+
+const teamMembers = computed(() => {
+  const members = new Map<string, { id: string; name: string; role: string; isActive: boolean }>()
+
+  if (project.value?.manager?.name) {
+    members.set('manager', {
+      id: 'manager',
+      name: project.value.manager.name,
+      role: 'Manager',
+      isActive: true
+    })
+  }
+
+  allocations.value.forEach((allocation: any) => {
+    const user = allocation.user
+    if (!user) return
+    const name = [user.firstName, user.lastName].filter(Boolean).join(' ') || user.email
+    members.set(user.id, {
+      id: user.id,
+      name,
+      role: 'Contributor',
+      isActive: true
+    })
+  })
+
+  return Array.from(members.values())
+})
+
 // Methods
+const normalizeStatus = (status: string): ProjectStatus => {
+  if (!status) return 'planning'
+  return status.toLowerCase().replace('_', '-') as ProjectStatus
+}
+
+const mapProject = (data: any): Project => {
+  const managerName = data.manager
+    ? [data.manager.firstName, data.manager.lastName].filter(Boolean).join(' ')
+    : undefined
+
+  return {
+    id: data.id,
+    name: data.name,
+    projectCode: data.projectCode || 'N/A',
+    description: data.description || '',
+    status: normalizeStatus(data.status),
+    priority: data.priority || 'MEDIUM',
+    completionPercentage: data.completionPercentage ?? 0,
+    clientName: data.clientName || '',
+    estimatedCost: data.estimatedBudget ?? 0,
+    actualCost: data.actualCost ?? 0,
+    deadline: data.endDate || data.startDate || data.createdAt,
+    createdAt: data.createdAt,
+    categoryId: data.categoryId || 'general',
+    manager: managerName
+      ? {
+          name: managerName,
+          email: data.manager.email
+        }
+      : undefined
+  }
+}
+
+const loadProject = async () => {
+  const data = await fetchProject(route.params.id as string)
+  project.value = mapProject(data)
+}
+
+const loadAllocations = async () => {
+  allocations.value = await fetchProjectAllocations(route.params.id as string)
+}
+
+const loadInventoryItems = async () => {
+  const response = await fetchInventory({ page: 1, limit: 200 })
+  inventoryItems.value = Array.isArray(response) ? response : response?.data || []
+}
+
+const setAllocationDefaults = () => {
+  if (!selectedInventoryItem.value) return
+  allocationForm.allocatedPrice = selectedInventoryItem.value.price || selectedInventoryItem.value.lastPurchasePrice || 0
+}
+
+const submitAllocation = async () => {
+  if (!allocationForm.stockItemId || allocationForm.allocatedQuantity <= 0) return
+
+  submittingAllocation.value = true
+  try {
+    await allocateMaterial(route.params.id as string, {
+      stockItemId: allocationForm.stockItemId,
+      allocatedQuantity: allocationForm.allocatedQuantity,
+      allocatedPrice: allocationForm.allocatedPrice,
+      notes: allocationForm.notes || undefined
+    })
+
+    showMaterialModal.value = false
+    allocationForm.stockItemId = ''
+    allocationForm.allocatedQuantity = 1
+    allocationForm.allocatedPrice = 0
+    allocationForm.notes = ''
+
+    await Promise.all([loadProject(), loadAllocations(), loadInventoryItems()])
+    toast.success('Allocation added', 'Material allocated successfully')
+  } catch (error) {
+    console.error('Allocation error:', error)
+    toast.error('Allocation failed', 'Unable to allocate material')
+  } finally {
+    submittingAllocation.value = false
+  }
+}
+
 const getProjectIcon = (categoryId: string) => {
   const icons: Record<string, string> = {
     'construction': 'i-lucide-hammer',
@@ -519,9 +729,10 @@ const getProjectIcon = (categoryId: string) => {
 const getProjectIconBg = (status: string) => {
   const backgrounds: Record<ProjectStatus, string> = {
     'planning': 'bg-blue-100 dark:bg-blue-900',
-    'in-progress': 'bg-amber-100 dark:bg-amber-900', 
+    'in-progress': 'bg-amber-100 dark:bg-amber-900',
     'completed': 'bg-green-100 dark:bg-green-900',
-    'on-hold': 'bg-neutral-100 dark:bg-neutral-700'
+    'on-hold': 'bg-neutral-100 dark:bg-neutral-700',
+    'cancelled': 'bg-red-100 dark:bg-red-900'
   }
   return backgrounds[status as ProjectStatus] || 'bg-neutral-100 dark:bg-neutral-700'
 }
@@ -530,8 +741,9 @@ const getProjectIconColor = (status: string) => {
   const colors: Record<ProjectStatus, string> = {
     'planning': 'text-blue-600 dark:text-blue-400',
     'in-progress': 'text-amber-600 dark:text-amber-400',
-    'completed': 'text-green-600 dark:text-green-400', 
-    'on-hold': 'text-neutral-600 dark:text-neutral-400'
+    'completed': 'text-green-600 dark:text-green-400',
+    'on-hold': 'text-neutral-600 dark:text-neutral-400',
+    'cancelled': 'text-red-600 dark:text-red-400'
   }
   return colors[status as ProjectStatus] || 'text-neutral-600 dark:text-neutral-400'
 }
@@ -541,7 +753,8 @@ const getStatusColor = (status: string): 'primary' | 'secondary' | 'success' | '
     'planning': 'info',
     'in-progress': 'warning',
     'completed': 'success',
-    'on-hold': 'neutral'
+    'on-hold': 'neutral',
+    'cancelled': 'error'
   }
   return colors[status as ProjectStatus] || 'neutral'
 }
@@ -553,9 +766,10 @@ const getStatusVariant = (status: string) => {
 const getStatusLabel = (status: string) => {
   const labels: Record<ProjectStatus, string> = {
     'planning': 'Planning',
-    'in-progress': 'In Progress', 
+    'in-progress': 'In Progress',
     'completed': 'Completed',
-    'on-hold': 'On Hold'
+    'on-hold': 'On Hold',
+    'cancelled': 'Cancelled'
   }
   return labels[status as ProjectStatus] || status
 }
@@ -580,15 +794,15 @@ const getCategoryIcon = (category: string) => {
 }
 
 const getUsagePercentage = (allocation: any) => {
-  return Math.round((allocation.usedQuantity / allocation.allocatedQuantity) * 100)
+  if (!allocation.requiredQuantity) return 0
+  return Math.round((allocation.allocatedQuantity / allocation.requiredQuantity) * 100)
 }
 
 const getUsageColor = (percentage: number) => {
-  if (percentage >= 90) return 'bg-red-500'
+  if (percentage >= 90) return 'bg-green-500'
   if (percentage >= 70) return 'bg-yellow-500'
-  return 'bg-green-500'
+  return 'bg-blue-500'
 }
-
 
 const getActivityIcon = (type: string) => {
   const icons: Record<string, string> = {
@@ -613,8 +827,8 @@ const formatCurrency = (amount: number) => {
 }
 
 const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('en-US', { 
-    month: 'short', 
+  return new Date(dateString).toLocaleDateString('en-US', {
+    month: 'short',
     day: 'numeric',
     year: 'numeric'
   })
@@ -624,7 +838,7 @@ const formatRelativeTime = (dateString: string) => {
   const date = new Date(dateString)
   const now = new Date()
   const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60))
-  
+
   if (diffInHours < 1) return 'Just now'
   if (diffInHours < 24) return `${diffInHours}h ago`
   return `${Math.floor(diffInHours / 24)}d ago`
@@ -641,9 +855,8 @@ const editProject = () => {
 // Lifecycle
 onMounted(async () => {
   try {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    project.value = mockProject
+    await Promise.all([loadProject(), loadAllocations()])
+    await loadInventoryItems()
   } catch (error) {
     toast.error('Error', 'Failed to load project')
   } finally {
@@ -656,7 +869,6 @@ definePageMeta({
   title: 'Project Detail',
   layout: 'default'
 })
-
 
 useSeoMeta({
   title: 'Project Detail - Sciveto'
