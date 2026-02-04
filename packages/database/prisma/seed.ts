@@ -13,14 +13,20 @@ async function main() {
     update: {},
     create: {
       name: 'Sciveto Demo Factory',
+      code: 'ORG-001',
       subdomain: 'demo',
       domain: 'demo.sciveto.com',
+      plan: 'BASIC',
+      maxUsers: 10,
+      maxProjects: 50,
+      userCount: 1,
+      status: 'ACTIVE',
       settings: { currency: 'TRY', language: 'tr' }
     }
   })
-  console.log('✅ Fabrika (Organization) kuruldu.')
+  console.log('✅ Fabrika (Organization) kuruldu:', org.code)
 
-  // 2. Admin Kullanıcısını Kur
+  // 2. Admin Kullanıcısını Kur (Organization Owner)
   // Şifre: "password123" (Hashlenmiş hali)
   const user = await prisma.user.upsert({
     where: { email: 'admin@demo.com' },
@@ -30,7 +36,9 @@ async function main() {
       password: '$2b$10$K7L/VGGykHT9TiKqRlwBAepEBV1CHTCWVBm2LLLQPEDovV.2pJGOS', 
       firstName: 'Admin',
       lastName: 'User',
-      role: 'ORG_ADMIN',
+      role: 'ORGANIZATION_OWNER',
+      isActive: true,
+      isOnline: false,
       organizationId: org.id
     }
   })

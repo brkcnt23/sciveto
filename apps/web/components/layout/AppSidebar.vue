@@ -1,4 +1,4 @@
-<!-- components/layout/AppSidebar.vue - Enhanced with Theme Toggle -->
+<!-- components/layout/AppSidebar.vue - Role-based Navigation with User Counter -->
 <template>
   <aside 
     class="fixed inset-y-0 left-0 z-50 bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800 shadow-lg transition-width duration-300 ease-in-out flex flex-col"
@@ -38,10 +38,10 @@
       </UButton>
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation - Role Based -->
     <nav class="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin">
       <div class="px-2 pt-4 pb-0 min-w-0">
-        <div v-for="section in navigationSections" :key="section.id" class="mb-6 last:mb-0 min-w-0">
+        <div v-for="section in visibleSections" :key="section.id" class="mb-6 last:mb-0 min-w-0">
           <SidebarSection :title="section.label" :collapsed="collapsed && !showExpandedContent" />
           <div class="space-y-1 mt-2 min-w-0">
             <SidebarItem
@@ -59,6 +59,44 @@
 
     <!-- Fixed Footer - Always at bottom -->
     <div class="border-t border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 mt-auto">
+      <!-- User Counter - Only for ORGANIZATION_OWNER -->
+      <div 
+        v-if="authStore.isSuperAdmin && (!collapsed || showExpandedContent)"
+        class="px-4 py-3 border-b border-neutral-100 dark:border-neutral-800"
+      >
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-medium text-muted">Kullanıcılar</span>
+          <span class="text-xs font-semibold text-highlighted">
+            {{ authStore.userCount }}/{{ authStore.maxUsers }}
+          </span>
+        </div>
+        <UProgress 
+          :value="authStore.userProgress" 
+          size="xs"
+          :color="authStore.userProgress > 80 ? 'error' : authStore.userProgress > 60 ? 'warning' : 'primary'"
+        />
+        <p class="text-xs text-muted mt-1">
+          {{ authStore.maxUsers - authStore.userCount }} kullanıcı daha eklenebilir
+        </p>
+      </div>
+
+      <!-- User Counter - Collapsed state icon only -->
+      <div 
+        v-if="authStore.isSuperAdmin && collapsed && !showExpandedContent"
+        class="px-4 py-3 flex justify-center border-b border-neutral-100 dark:border-neutral-800"
+      >
+        <UTooltip :text="`${authStore.userCount}/${authStore.maxUsers} Kullanıcı`">
+          <div class="relative">
+            <UIcon name="i-lucide-users" class="w-5 h-5 text-muted" />
+            <span 
+              class="absolute -top-1 -right-2 text-[10px] font-bold text-primary"
+            >
+              {{ authStore.userCount }}
+            </span>
+          </div>
+        </UTooltip>
+      </div>
+
       <!-- Actions Section (Theme + Quick Actions) -->
       <div class="p-4 pb-3">
         <!-- Actions Title - Always same height -->
@@ -67,7 +105,7 @@
             v-if="!collapsed || showExpandedContent"
             class="text-xs font-semibold text-muted uppercase tracking-wider"
           >
-            Actions
+            Hızlı İşlemler
           </span>
         </div>
         
@@ -88,32 +126,30 @@
             />
           </div>
           
-          <!-- Quick Actions -->
-          <div 
-            v-for="action in quickActions"
-            :key="action.id"
-            class="h-10 flex items-center"
-          >
-            <UButton
-              :color="action.color"
-              variant="ghost"
-              size="sm"
-              class="w-full h-full flex items-center"
-              :class="collapsed && !showExpandedContent ? 'justify-center' : 'justify-start'"
-              @click="action.action"
-            >
-              <UIcon 
-                :name="action.icon" 
-                class="w-4 h-4 shrink-0"
-              />
-              <span 
-                v-if="!collapsed || showExpandedContent"
-                class="text-sm ml-3"
+          <!-- Quick Actions - Role based -->
+          <template v-for="action in visibleQuickActions" :key="action.id">
+            <div class="h-10 flex items-center">
+              <UButton
+                :color="action.color"
+                variant="ghost"
+                size="sm"
+                class="w-full h-full flex items-center"
+                :class="collapsed && !showExpandedContent ? 'justify-center' : 'justify-start'"
+                @click="action.action"
               >
-                {{ action.label }}
-              </span>
-            </UButton>
-          </div>
+                <UIcon 
+                  :name="action.icon" 
+                  class="w-4 h-4 shrink-0"
+                />
+                <span 
+                  v-if="!collapsed || showExpandedContent"
+                  class="text-sm ml-3"
+                >
+                  {{ action.label }}
+                </span>
+              </UButton>
+            </div>
+          </template>
         </div>
       </div>
 
@@ -127,29 +163,53 @@
             :class="collapsed && !showExpandedContent ? 'justify-center' : 'justify-start'"
             @click="handleUserMenuClick"
           >
-            <UAvatar
-              src="/avatar-placeholder.jpg"
-              alt="User avatar"
-              size="xs"
-              class="shrink-0"
-              :ui="{ fallback: 'bg-primary-500 dark:bg-primary-400 text-white' }"
-            >
-              JD
-            </UAvatar>
+            <!-- Avatar with Online Status -->
+            <div class="relative shrink-0">
+              <UAvatar
+                :src="authStore.user?.avatar"
+                :alt="authStore.fullName"
+                size="xs"
+                :ui="{ fallback: 'bg-primary-500 dark:bg-primary-400 text-white' }"
+              >
+                {{ authStore.userInitials }}
+              </UAvatar>
+              <!-- Online indicator -->
+              <span 
+                v-if="authStore.user?.isOnline"
+                class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white dark:border-neutral-900 rounded-full"
+              />
+            </div>
             
             <div 
               v-if="!collapsed || showExpandedContent"
-              class="flex-1 text-left ml-3"
+              class="flex-1 text-left ml-3 min-w-0"
             >
-              <div class="text-sm font-medium text-highlighted">John Doe</div>
-              <div class="text-xs text-muted">john@example.com</div>
+              <div class="text-sm font-medium text-highlighted truncate">{{ authStore.fullName }}</div>
+              <div class="text-xs text-muted truncate">{{ roleLabel }}</div>
             </div>
             
             <UIcon 
               v-if="!collapsed || showExpandedContent"
-              class="w-4 h-4 text-muted group-hover:text-highlighted ml-auto"
+              class="w-4 h-4 text-muted group-hover:text-highlighted ml-auto shrink-0"
               name="i-lucide-more-horizontal" 
             />
+          </UButton>
+        </div>
+        
+        <!-- Logout Button -->
+        <div class="mt-2">
+          <UButton
+            variant="ghost"
+            color="error"
+            size="sm"
+            class="w-full flex items-center"
+            :class="collapsed && !showExpandedContent ? 'justify-center' : 'justify-start'"
+            @click="handleLogout"
+          >
+            <UIcon name="i-lucide-log-out" class="w-4 h-4 shrink-0" />
+            <span v-if="!collapsed || showExpandedContent" class="ml-3">
+              Çıkış Yap
+            </span>
           </UButton>
         </div>
       </div>
@@ -161,7 +221,8 @@
 import SidebarSection from './SidebarSection.vue'
 import SidebarItem from './SidebarItem.vue'
 import { computed, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '~/stores/auth'
 
 // NavigationItem arayüzünü SidebarItem.vue ile uyumlu hale getiriyoruz
 interface NavigationItem {
@@ -169,8 +230,9 @@ interface NavigationItem {
   label: string
   to: string
   icon: string
-  badge?: { label: string; color: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' } // badge artık strict type olmalı
+  badge?: { label: string; color: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' }
   children?: NavigationItem[]
+  roles?: string[] // Which roles can see this item (empty = all roles)
 }
 
 interface NavigationSection {
@@ -179,6 +241,7 @@ interface NavigationSection {
   icon: string
   color: 'primary' | 'secondary' | 'success' | 'warning' | 'error'
   items: NavigationItem[]
+  roles?: string[] // Which roles can see this section (empty = all roles)
 }
 
 interface QuickAction {
@@ -187,6 +250,7 @@ interface QuickAction {
   icon: string
   color: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral'
   action: () => void
+  roles?: string[] // Which roles can see this action (empty = all roles)
 }
 
 // Props
@@ -205,63 +269,143 @@ defineEmits<{
 
 // Composables
 const route = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
 const isHovered = ref(false)
 
 // Computed properties
 const showExpandedContent = computed(() => isHovered.value)
 
-// Navigation data - Enhanced for theme system
+// Role labels in Turkish
+const roleLabels: Record<string, string> = {
+  'ORGANIZATION_OWNER': 'Organizasyon Sahibi',
+  'ORG_ADMIN': 'Organizasyon Sahibi',
+  'PROCUREMENT_MANAGER': 'Satın Alma Müdürü',
+  'ACCOUNTANT': 'Muhasebeci',
+  'PRODUCTION_MANAGER': 'Üretim Müdürü',
+  'HR_MANAGER': 'İK Müdürü',
+  'WAREHOUSE_SUPERVISOR': 'Depo Sorumlusu',
+  'PRODUCTION_SUPERVISOR': 'Üretim Sorumlusu'
+}
+
+const roleLabel = computed(() => {
+  const role = authStore.user?.role || ''
+  return roleLabels[role] || role
+})
+
+// Navigation data - Role-based for ERP
 const navigationSections: NavigationSection[] = [
   {
     id: 'main',
-    label: 'Main',
+    label: 'Ana Menü',
     icon: 'i-lucide-layout-grid',
     color: 'primary',
     items: [
-      { id: 'dashboard', label: 'Dashboard', to: '/dashboard', icon: 'i-lucide-home' },
-      { id: 'analytics', label: 'Analytics', to: '/analytics', icon: 'i-lucide-bar-chart-3' },
-      { id: 'reports', label: 'Reports', to: '/reports', icon: 'i-lucide-file-text', badge: { label: '3', color: 'primary' } }
+      { id: 'dashboard', label: 'Gösterge Paneli', to: '/dashboard', icon: 'i-lucide-home' },
+      { id: 'analytics', label: 'Raporlar', to: '/analytics', icon: 'i-lucide-bar-chart-3' }
     ]
   },
   {
-    id: 'content',
-    label: 'Content',
-    icon: 'i-lucide-folder',
-    color: 'secondary',
-    items: [
-      { id: 'projects', label: 'Projects', to: '/projects', icon: 'i-lucide-folder-open' },
-      { id: 'tasks', label: 'Tasks', to: '/tasks', icon: 'i-lucide-check-square', badge: { label: '12', color: 'primary' } },
-      { 
-        id: 'resources',
-        label: 'Resources', 
-        to: '/resources', 
-        icon: 'i-lucide-archive',
-        children: [
-          { id: 'images', label: 'Images', to: '/resources/images', icon: 'i-lucide-image' },
-          { id: 'documents', label: 'Documents', to: '/resources/documents', icon: 'i-lucide-file' },
-          { id: 'videos', label: 'Videos', to: '/resources/videos', icon: 'i-lucide-video' }
-        ]
-      }
-    ]
-  },
-  {
-    id: 'tools',
-    label: 'Tools',
-    icon: 'i-lucide-wrench',
+    id: 'production',
+    label: 'Üretim',
+    icon: 'i-lucide-factory',
     color: 'success',
+    roles: ['ORGANIZATION_OWNER', 'PRODUCTION_MANAGER', 'PRODUCTION_SUPERVISOR'],
     items: [
-      { id: 'showcase', label: 'Showcase', to: '/showcase', icon: 'i-lucide-palette' },
-      { id: 'components', label: 'Components', to: '/components', icon: 'i-lucide-component' },
-      { id: 'settings', label: 'Settings', to: '/settings', icon: 'i-lucide-settings' }
+      { id: 'production-orders', label: 'Üretim Emirleri', to: '/production/orders', icon: 'i-lucide-clipboard-list' },
+      { id: 'production-planning', label: 'Üretim Planlama', to: '/production/planning', icon: 'i-lucide-calendar-days', roles: ['ORGANIZATION_OWNER', 'PRODUCTION_MANAGER'] },
+      { id: 'production-tracking', label: 'Üretim Takibi', to: '/production/tracking', icon: 'i-lucide-activity' },
+      { id: 'quality-control', label: 'Kalite Kontrol', to: '/production/quality', icon: 'i-lucide-shield-check' }
+    ]
+  },
+  {
+    id: 'warehouse',
+    label: 'Depo & Stok',
+    icon: 'i-lucide-warehouse',
+    color: 'warning',
+    roles: ['ORGANIZATION_OWNER', 'WAREHOUSE_SUPERVISOR', 'PROCUREMENT_MANAGER'],
+    items: [
+      { id: 'inventory', label: 'Stok Yönetimi', to: '/warehouse/inventory', icon: 'i-lucide-package' },
+      { id: 'stock-movements', label: 'Stok Hareketleri', to: '/warehouse/movements', icon: 'i-lucide-truck' },
+      { id: 'warehouses', label: 'Depolar', to: '/warehouse/locations', icon: 'i-lucide-building-2', roles: ['ORGANIZATION_OWNER', 'WAREHOUSE_SUPERVISOR'] }
+    ]
+  },
+  {
+    id: 'procurement',
+    label: 'Satın Alma',
+    icon: 'i-lucide-shopping-cart',
+    color: 'secondary',
+    roles: ['ORGANIZATION_OWNER', 'PROCUREMENT_MANAGER', 'ACCOUNTANT'],
+    items: [
+      { id: 'suppliers', label: 'Tedarikçiler', to: '/procurement/suppliers', icon: 'i-lucide-users' },
+      { id: 'purchase-orders', label: 'Satın Alma Siparişleri', to: '/procurement/orders', icon: 'i-lucide-file-text' },
+      { id: 'purchase-requests', label: 'Talep Yönetimi', to: '/procurement/requests', icon: 'i-lucide-inbox', badge: { label: '5', color: 'warning' } }
+    ]
+  },
+  {
+    id: 'hr',
+    label: 'İnsan Kaynakları',
+    icon: 'i-lucide-users',
+    color: 'primary',
+    roles: ['ORGANIZATION_OWNER', 'HR_MANAGER'],
+    items: [
+      { id: 'employees', label: 'Çalışanlar', to: '/hr/employees', icon: 'i-lucide-contact' },
+      { id: 'attendance', label: 'Puantaj', to: '/hr/attendance', icon: 'i-lucide-clock' },
+      { id: 'shifts', label: 'Vardiya Yönetimi', to: '/hr/shifts', icon: 'i-lucide-calendar-clock' }
+    ]
+  },
+  {
+    id: 'finance',
+    label: 'Finans',
+    icon: 'i-lucide-banknote',
+    color: 'error',
+    roles: ['ORGANIZATION_OWNER', 'ACCOUNTANT'],
+    items: [
+      { id: 'invoices', label: 'Faturalar', to: '/finance/invoices', icon: 'i-lucide-receipt' },
+      { id: 'payments', label: 'Ödemeler', to: '/finance/payments', icon: 'i-lucide-credit-card' },
+      { id: 'reports', label: 'Finansal Raporlar', to: '/finance/reports', icon: 'i-lucide-pie-chart', roles: ['ORGANIZATION_OWNER', 'ACCOUNTANT'] }
+    ]
+  },
+  {
+    id: 'settings',
+    label: 'Yönetim',
+    icon: 'i-lucide-settings',
+    color: 'primary',
+    roles: ['ORGANIZATION_OWNER'],
+    items: [
+      { id: 'users', label: 'Kullanıcılar', to: '/settings/users', icon: 'i-lucide-user-cog' },
+      { id: 'organization', label: 'Organizasyon', to: '/settings/organization', icon: 'i-lucide-building' },
+      { id: 'integrations', label: 'Entegrasyonlar', to: '/settings/integrations', icon: 'i-lucide-plug' }
     ]
   }
 ]
 
-// Quick actions - Enhanced with theme-aware actions
+// Filter sections and items based on user role
+const visibleSections = computed(() => {
+  return navigationSections
+    .filter(section => {
+      // If section has no role restriction, show to all
+      if (!section.roles || section.roles.length === 0) return true
+      // Check if user has any of the required roles
+      return authStore.hasAnyRole(section.roles)
+    })
+    .map(section => ({
+      ...section,
+      items: section.items.filter(item => {
+        // If item has no role restriction, show to all
+        if (!item.roles || item.roles.length === 0) return true
+        // Check if user has any of the required roles
+        return authStore.hasAnyRole(item.roles)
+      })
+    }))
+    .filter(section => section.items.length > 0) // Remove empty sections
+})
+
+// Quick actions - Role based
 const quickActions: QuickAction[] = [
   {
     id: 'search',
-    label: 'Quick Search',
+    label: 'Hızlı Arama',
     icon: 'i-lucide-search',
     color: 'neutral',
     action: () => {
@@ -269,27 +413,47 @@ const quickActions: QuickAction[] = [
     }
   },
   {
-    id: 'new-project',
-    label: 'New Project',
+    id: 'new-order',
+    label: 'Yeni Sipariş',
     icon: 'i-lucide-plus',
     color: 'primary',
+    roles: ['ORGANIZATION_OWNER', 'PROCUREMENT_MANAGER'],
     action: () => {
-      console.log('Create new project')
+      router.push('/procurement/orders/new')
+    }
+  },
+  {
+    id: 'add-employee',
+    label: 'Çalışan Ekle',
+    icon: 'i-lucide-user-plus',
+    color: 'success',
+    roles: ['ORGANIZATION_OWNER', 'HR_MANAGER'],
+    action: () => {
+      router.push('/hr/employees/new')
     }
   }
 ]
+
+// Filter quick actions based on user role
+const visibleQuickActions = computed(() => {
+  return quickActions.filter(action => {
+    if (!action.roles || action.roles.length === 0) return true
+    return authStore.hasAnyRole(action.roles)
+  })
+})
 
 // Methods
 const isCurrentRoute = (to: string) => {
   return route.path === to || route.path.startsWith(to + '/')
 }
 
-const hasActiveChild = (children: NavigationItem[]) => {
-  return children.some(child => isCurrentRoute(child.to))
+const handleUserMenuClick = () => {
+  router.push('/profile')
 }
 
-const handleUserMenuClick = () => {
-  console.log('User menu clicked')
+// Logout handler
+const handleLogout = () => {
+  authStore.logout()
 }
 
 // Mouse events

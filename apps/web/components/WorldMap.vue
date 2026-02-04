@@ -3,13 +3,14 @@
     <div 
       ref="chartContainer" 
       :name="name"
-      class="w-full" 
-      :style="{ height: height + 'px' }"
+      class="w-full h-full" 
+      :style="height ? { height: height + 'px' } : { minHeight: '400px' }"
     >
       <VChart 
         v-if="mounted" 
         :option="chartOptions" 
         autoresize 
+        class="w-full h-full"
         @click="handleClick" 
       />
     </div>
@@ -34,7 +35,7 @@ const props = defineProps({
   },
   height: {
     type: Number,
-    default: 500
+    default: null // null = container'ın height'ını kullan
   },
   autoRotate: {
     type: Boolean,
@@ -199,9 +200,9 @@ const chartOptions = computed(() => ({
       panSensitivity: 1,
       panMouseButton: 'left',
       rotateMouseButton: 'left',
-      distance: 150,
-      minDistance: 100,
-      maxDistance: 400,
+      distance: 180,
+      minDistance: 50,
+      maxDistance: 500,
       orthographicSize: 150,
       maxOrthographicSize: 400,
       minOrthographicSize: 20,

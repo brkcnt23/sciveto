@@ -26,6 +26,7 @@ export * from './templates/template-query.dto'
 // Common types
 export * from './common/api-response.types'
 export * from './common/pagination.types'
+export * from './common/organization.types'
 
 // Stock types
 export * from './stock/stock.types'

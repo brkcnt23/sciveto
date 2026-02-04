@@ -2,6 +2,7 @@
 import { Injectable, ConflictException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../../prisma/prisma.service';
+import { CodeGeneratorService } from '../organizations/code-generator.service';
 import { RegisterDto, LoginDto } from '@sciveto/shared-types';
 import * as bcrypt from 'bcrypt';
 
@@ -10,6 +11,7 @@ export class AuthService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
+    private codeGenerator: CodeGeneratorService,
   ) {}
 
   async register(registerDto: RegisterDto) {
@@ -23,7 +25,18 @@ export class AuthService {
     });
 
     if (existingUser) {
-      throw new ConflictException('User with this email already exists');
+      throw new ConflictException('Bu e-posta adresi zaten kullanılıyor');
+    }
+
+    // Check if organization name is unique (if provided)
+    if (organizationName && organizationName.trim()) {
+      const existingOrg = await this.prisma.organization.findUnique({
+        where: { name: organizationName.trim() },
+      });
+      
+      if (existingOrg) {
+        throw new ConflictException('Bu organizasyon adı zaten kullanılıyor');
+      }
     }
 
     // Hash password
@@ -34,28 +47,28 @@ export class AuthService {
     let isNewOrg = false;
     
     if (organizationName && organizationName.trim()) {
-      // Create new organization for user
-      const subdomain = organizationName.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
+      // Generate organization code and subdomain
+      const orgCode = await this.codeGenerator.generateOrgCode();
+      const subdomain = this.codeGenerator.generateSubdomain(organizationName);
       
-      // Check if subdomain exists
-      const existingOrg = await this.prisma.organization.findUnique({
-        where: { subdomain },
+      // Create new organization with code
+      organization = await this.prisma.organization.create({
+        data: {
+          name: organizationName.trim(),
+          code: orgCode,
+          subdomain: subdomain,
+          plan: 'BASIC',
+          maxUsers: 10,
+          maxProjects: 50,
+          userCount: 1,
+          projectCount: 0,
+          employeeCount: 0,
+          status: 'ACTIVE',
+          settings: { industry: industry || 'general' },
+        },
       });
-      
-      if (existingOrg) {
-        organization = existingOrg;
-      } else {
-        // Create new organization
-        organization = await this.prisma.organization.create({
-          data: {
-            name: organizationName.trim(),
-            subdomain: subdomain + '-' + Date.now(),
-            settings: { industry: industry || 'general' },
-          },
-        });
-        isNewOrg = true;
-        console.log('✅ Created new organization:', organization.name, organization.id);
-      }
+      isNewOrg = true;
+      console.log('✅ Created new organization:', organization.name, `(${organization.code})`);
     } else {
       // Use or create default organization
       organization = await this.prisma.organization.findFirst({
@@ -63,14 +76,27 @@ export class AuthService {
       });
 
       if (!organization) {
+        const orgCode = await this.codeGenerator.generateOrgCode();
         organization = await this.prisma.organization.create({
           data: {
             name: 'Default Organization',
+            code: orgCode,
             subdomain: 'default',
+            plan: 'BASIC',
+            maxUsers: 10,
+            maxProjects: 50,
+            userCount: 1,
+            status: 'ACTIVE',
           },
         });
         isNewOrg = true;
         console.log('✅ Created default organization');
+      } else {
+        // Increment user count for existing org
+        await this.prisma.organization.update({
+          where: { id: organization.id },
+          data: { userCount: { increment: 1 } },
+        });
       }
     }
 
@@ -79,7 +105,9 @@ export class AuthService {
       await this.createCategoriesForIndustry(organization.id, industry || 'general');
     }
 
-    // Create user
+    // Create user - ORGANIZATION_OWNER if they created the org, otherwise lower role
+    const userRole = isNewOrg ? 'ORGANIZATION_OWNER' : 'PRODUCTION_SUPERVISOR';
+    
     const user = await this.prisma.user.create({
       data: {
         email,
@@ -87,7 +115,10 @@ export class AuthService {
         firstName: firstName || null,
         lastName: lastName || null,
         organizationId: organization.id,
-        role: organizationName ? 'ORG_ADMIN' : 'USER', // Organization creator becomes admin
+        role: userRole,
+        isActive: true,
+        isOnline: true,
+        lastLoginAt: new Date(),
       },
       select: {
         id: true,
@@ -95,19 +126,25 @@ export class AuthService {
         firstName: true,
         lastName: true,
         role: true,
+        isActive: true,
+        isOnline: true,
         organizationId: true,
         createdAt: true,
         organization: {
           select: {
             id: true,
             name: true,
+            code: true,
             subdomain: true,
+            plan: true,
+            maxUsers: true,
+            userCount: true,
           },
         },
       },
     });
     
-    console.log('✅ User created:', user.email, 'Organization:', user.organization?.name);
+    console.log('✅ User created:', user.email, `Role: ${user.role}`, 'Organization:', user.organization?.name);
 
     // Generate JWT token
     const payload = { 

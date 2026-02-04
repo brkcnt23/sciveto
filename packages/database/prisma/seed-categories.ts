@@ -14,7 +14,10 @@ async function seedCategories() {
       organization = await prisma.organization.create({
         data: {
           name: 'Default Organization',
+          code: 'ORG-000',
           subdomain: 'default',
+          plan: 'BASIC',
+          status: 'ACTIVE',
         },
       });
     }

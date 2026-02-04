@@ -1,239 +1,266 @@
-<!-- apps/web/pages/register.vue -->
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-800 flex items-center justify-center p-6">
-    <div class="w-full max-w-md">
-      <!-- Logo/Brand Section -->
-      <div class="text-center mb-8">
-        <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full mb-4">
-          <Icon name="i-heroicons-building-office" class="w-8 h-8 text-white" />
-        </div>
-        <h1 class="text-3xl font-bold text-white mb-2">Create Account</h1>
-        <p class="text-emerald-100">Join us and start managing your projects</p>
+  <div class="min-h-screen bg-neutral-950 flex">
+    <!-- Left Side - Branding -->
+    <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary-600 to-primary-800 p-12 flex-col justify-between relative overflow-hidden">
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-white rounded-full translate-x-1/3 translate-y-1/3"></div>
       </div>
-
-      <!-- Registration Form -->
-      <UCard class="backdrop-blur-sm bg-white/10 border border-white/20">
-        <form @submit.prevent="handleRegister" class="space-y-6">
-          <!-- Name Fields -->
-          <div class="grid grid-cols-2 gap-4">
-            <FormInput
-              v-model="registerForm.firstName"
-              label="First Name"
-              placeholder="First name"
-              leading-icon="i-heroicons-user"
-              :error="errors.firstName"
-              :disabled="loading"
-              required
-            />
-            <FormInput
-              v-model="registerForm.lastName"
-              label="Last Name"
-              placeholder="Last name"
-              leading-icon="i-heroicons-user"
-              :error="errors.lastName"
-              :disabled="loading"
-            />
+      
+      <!-- Logo & Title -->
+      <div class="relative z-10">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center">
+            <span class="text-2xl font-bold text-white">S</span>
           </div>
-
-          <!-- Email Field -->
-          <FormInput
-            v-model="registerForm.email"
-            type="email"
-            label="Email Address"
-            placeholder="Enter your email"
-            leading-icon="i-heroicons-envelope"
-            :error="errors.email"
-            :disabled="loading"
-            required
-          />
-
-          <!-- Organization Name -->
-          <FormInput
-            v-model="registerForm.organizationName"
-            label="Organization Name"
-            placeholder="Your company name (optional)"
-            leading-icon="i-heroicons-building-office"
-            :error="errors.organizationName"
-            :disabled="loading"
-            help-text="Leave empty to join the default organization"
-          />
-
-          <!-- Industry Selection (shown when org name is provided) -->
-          <div v-if="registerForm.organizationName" class="space-y-2">
-            <label class="block text-sm font-medium text-white">Sektörünüz</label>
-            <div class="grid grid-cols-2 gap-3">
-              <div
-                v-for="ind in industries"
-                :key="ind.value"
-                @click="registerForm.industry = ind.value"
-                class="p-4 rounded-lg cursor-pointer transition-all border-2"
-                :class="registerForm.industry === ind.value 
-                  ? 'border-emerald-400 bg-emerald-500/20' 
-                  : 'border-white/20 bg-white/5 hover:bg-white/10'"
-              >
-                <div class="flex items-center gap-3">
-                  <Icon :name="ind.icon" class="w-6 h-6 text-white" />
-                  <div>
-                    <div class="font-medium text-white">{{ ind.label }}</div>
-                    <div class="text-xs text-white/60">{{ ind.description }}</div>
+          <span class="text-2xl font-bold text-white">Sciveto</span>
+        </div>
+        <h1 class="text-4xl font-bold text-white leading-tight">
+          Organizasyonunuzu<br/>
+          <span class="text-primary-200">oluşturun</span>
+        </h1>
+        <p class="text-primary-100 mt-4 text-lg max-w-md">
+          Hemen başlayın, 14 gün ücretsiz deneyin. Kredi kartı gerekmez.
+        </p>
+      </div>
+      
+      <!-- Features -->
+      <div class="relative z-10 space-y-4">
+        <div class="flex items-center gap-3 text-white/90">
+          <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+            <UIcon name="i-lucide-check" class="w-4 h-4" />
+          </div>
+          <span>10 kullanıcıya kadar ücretsiz</span>
+        </div>
+        <div class="flex items-center gap-3 text-white/90">
+          <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+            <UIcon name="i-lucide-check" class="w-4 h-4" />
+          </div>
+          <span>50 proje kapasitesi</span>
+        </div>
+        <div class="flex items-center gap-3 text-white/90">
+          <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+            <UIcon name="i-lucide-check" class="w-4 h-4" />
+          </div>
+          <span>Sınırsız çalışan kaydı</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Side - Register Form -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-8 overflow-y-auto">
+      <div class="w-full max-w-lg">
+        <!-- Mobile Logo -->
+        <div class="lg:hidden text-center mb-6">
+          <div class="inline-flex items-center gap-3">
+            <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
+              <span class="text-2xl font-bold text-white">S</span>
+            </div>
+            <span class="text-2xl font-bold text-white">Sciveto</span>
+          </div>
+        </div>
+        
+        <!-- Success Message -->
+        <div 
+          v-if="registrationSuccess" 
+          class="bg-neutral-900 border border-neutral-800 rounded-2xl p-8 text-center"
+        >
+          <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <UIcon name="i-lucide-check-circle" class="w-8 h-8 text-green-500" />
+          </div>
+          <h2 class="text-2xl font-bold text-white mb-2">Tebrikler! 🎉</h2>
+          <p class="text-neutral-400 mb-4">Organizasyonunuz başarıyla oluşturuldu</p>
+          
+          <div class="bg-neutral-800 rounded-xl p-4 mb-6">
+            <p class="text-neutral-400 text-sm mb-1">Organizasyon Kodunuz</p>
+            <p class="text-3xl font-mono font-bold text-primary">{{ orgCode }}</p>
+          </div>
+          
+          <p class="text-neutral-500 text-sm mb-4">Dashboard'a yönlendiriliyorsunuz...</p>
+          
+          <div class="flex justify-center">
+            <UIcon name="i-lucide-loader-2" class="w-6 h-6 text-primary animate-spin" />
+          </div>
+        </div>
+        
+        <!-- Form Card -->
+        <div v-else class="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 lg:p-8">
+          <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-white">Organizasyon Oluştur</h2>
+            <p class="text-neutral-400 mt-2">Bilgilerinizi girin ve hemen başlayın</p>
+          </div>
+          
+          <form @submit.prevent="handleRegister" class="space-y-4">
+            <!-- Organization Name -->
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">
+                Organizasyon Adı <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <UIcon 
+                  name="i-lucide-building-2" 
+                  class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500"
+                />
+                <input
+                  v-model="form.organizationName"
+                  type="text"
+                  placeholder="Şirket Adı"
+                  class="w-full h-12 pl-12 pr-4 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  :class="errors.organizationName ? 'border-red-500' : ''"
+                />
+              </div>
+              <p v-if="errors.organizationName" class="text-red-400 text-sm mt-1">{{ errors.organizationName }}</p>
+            </div>
+            
+            <!-- Name Row -->
+            <div class="grid grid-cols-2 gap-4">
+              <!-- First Name -->
+              <div>
+                <label class="block text-sm font-medium text-neutral-300 mb-2">
+                  Adınız <span class="text-red-500">*</span>
+                </label>
+                <input
+                  v-model="form.firstName"
+                  type="text"
+                  placeholder="Adınız"
+                  class="w-full h-12 px-4 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  :class="errors.firstName ? 'border-red-500' : ''"
+                />
+                <p v-if="errors.firstName" class="text-red-400 text-sm mt-1">{{ errors.firstName }}</p>
+              </div>
+              
+              <!-- Last Name -->
+              <div>
+                <label class="block text-sm font-medium text-neutral-300 mb-2">
+                  Soyadınız <span class="text-red-500">*</span>
+                </label>
+                <input
+                  v-model="form.lastName"
+                  type="text"
+                  placeholder="Soyadınız"
+                  class="w-full h-12 px-4 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  :class="errors.lastName ? 'border-red-500' : ''"
+                />
+                <p v-if="errors.lastName" class="text-red-400 text-sm mt-1">{{ errors.lastName }}</p>
+              </div>
+            </div>
+            
+            <!-- Email -->
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">
+                E-posta Adresi <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <UIcon 
+                  name="i-lucide-mail" 
+                  class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500"
+                />
+                <input
+                  v-model="form.email"
+                  type="email"
+                  placeholder="ornek@sirket.com"
+                  class="w-full h-12 pl-12 pr-4 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  :class="errors.email ? 'border-red-500' : ''"
+                />
+              </div>
+              <p v-if="errors.email" class="text-red-400 text-sm mt-1">{{ errors.email }}</p>
+            </div>
+            
+            <!-- Password -->
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">
+                Şifre <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <UIcon 
+                  name="i-lucide-lock" 
+                  class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500"
+                />
+                <input
+                  v-model="form.password"
+                  :type="showPassword ? 'text' : 'password'"
+                  placeholder="En az 6 karakter"
+                  class="w-full h-12 pl-12 pr-12 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  :class="errors.password ? 'border-red-500' : ''"
+                />
+                <button
+                  type="button"
+                  @click="showPassword = !showPassword"
+                  class="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-neutral-300"
+                >
+                  <UIcon :name="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'" class="w-5 h-5" />
+                </button>
+              </div>
+              <p v-if="errors.password" class="text-red-400 text-sm mt-1">{{ errors.password }}</p>
+            </div>
+            
+            <!-- Industry -->
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">
+                Sektör <span class="text-neutral-500 text-xs">(opsiyonel)</span>
+              </label>
+              <div class="grid grid-cols-2 gap-2">
+                <button
+                  v-for="ind in industries"
+                  :key="ind.value"
+                  type="button"
+                  @click="form.industry = ind.value"
+                  class="p-3 rounded-xl text-left transition-all border"
+                  :class="form.industry === ind.value 
+                    ? 'border-primary bg-primary/10 text-white' 
+                    : 'border-neutral-700 bg-neutral-800/50 text-neutral-400 hover:border-neutral-600'"
+                >
+                  <div class="flex items-center gap-2">
+                    <UIcon :name="ind.icon" class="w-4 h-4" :class="form.industry === ind.value ? 'text-primary' : ''" />
+                    <span class="text-sm font-medium">{{ ind.label }}</span>
                   </div>
-                </div>
+                </button>
               </div>
             </div>
-          </div>
-
-          <!-- Password Field -->
-          <FormInput
-            v-model="registerForm.password"
-            :type="showPassword ? 'text' : 'password'"
-            label="Password"
-            placeholder="Create a password"
-            leading-icon="i-heroicons-lock-closed"
-            :trailing-icon="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
-            :error="errors.password"
-            :disabled="loading"
-            @trailing-click="showPassword = !showPassword"
-            help-text="At least 8 characters with uppercase, lowercase, and number"
-            required
-          />
-
-          <!-- Confirm Password Field -->
-          <FormInput
-            v-model="registerForm.confirmPassword"
-            :type="showConfirmPassword ? 'text' : 'password'"
-            label="Confirm Password"
-            placeholder="Confirm your password"
-            leading-icon="i-heroicons-lock-closed"
-            :trailing-icon="showConfirmPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
-            :error="errors.confirmPassword"
-            :disabled="loading"
-            @trailing-click="showConfirmPassword = !showConfirmPassword"
-            required
-          />
-
-          <!-- Password Strength Indicator -->
-          <div v-if="registerForm.password" class="space-y-2">
-            <div class="flex items-center space-x-2">
-              <div class="flex-1 bg-white/20 rounded-full h-2">
-                <div
-                  class="h-2 rounded-full transition-all duration-300"
-                  :class="passwordStrengthColor"
-                  :style="{ width: `${passwordStrength}%` }"
-                ></div>
-              </div>
-              <span class="text-xs text-white/70">{{ passwordStrengthText }}</span>
-            </div>
-          </div>
-
-          <!-- Terms and Privacy -->
-          <div class="space-y-3">
-            <label class="flex items-start">
-              <input
-                v-model="registerForm.acceptTerms"
-                type="checkbox"
-                class="mt-1 rounded border-white/30 text-emerald-600 focus:ring-emerald-500 focus:ring-offset-0"
-                :disabled="loading"
-                required
-              >
-              <span class="ml-2 text-sm text-white">
-                I agree to the
-                <NuxtLink to="/terms" class="text-emerald-200 hover:text-white">Terms of Service</NuxtLink>
-                and
-                <NuxtLink to="/privacy" class="text-emerald-200 hover:text-white">Privacy Policy</NuxtLink>
-              </span>
-            </label>
-
-            <label class="flex items-start">
-              <input
-                v-model="registerForm.marketingEmails"
-                type="checkbox"
-                class="mt-1 rounded border-white/30 text-emerald-600 focus:ring-emerald-500 focus:ring-offset-0"
-                :disabled="loading"
-              >
-              <span class="ml-2 text-sm text-white">
-                Send me product updates and marketing emails (optional)
-              </span>
-            </label>
-          </div>
-
-          <!-- Error Message -->
-          <ErrorMessage
-            v-if="errors.general"
-            type="error"
-            :error="errors.general"
-            dismissible
-            @dismiss="errors.general = ''"
-          />
-
-          <!-- Submit Button -->
-          <UButton
-            type="submit"
-            color="neutral"
-            variant="solid"
-            size="lg"
-            :loading="loading"
-            :disabled="loading || !registerForm.acceptTerms"
-            class="w-full justify-center"
-          >
-            {{ loading ? 'Creating Account...' : 'Create Account' }}
-          </UButton>
-        </form>
-
-        <!-- Divider -->
-        <div class="relative my-6">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-white/20"></div>
-          </div>
-          <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-transparent text-white/70">Or continue with</span>
-          </div>
-        </div>
-
-        <!-- Social Login Buttons -->
-        <div class="grid grid-cols-2 gap-3">
-          <UButton
-            variant="outline"
-            color="neutral"
-            size="sm"
-            :disabled="loading"
-            @click="handleSocialRegister('google')"
-            class="justify-center"
-          >
-            <Icon name="i-logos-google-icon" class="w-4 h-4 mr-2" />
-            Google
-          </UButton>
-          <UButton
-            variant="outline"
-            color="neutral"
-            size="sm"
-            :disabled="loading"
-            @click="handleSocialRegister('github')"
-            class="justify-center"
-          >
-            <Icon name="i-logos-github-icon" class="w-4 h-4 mr-2" />
-            GitHub
-          </UButton>
-        </div>
-
-        <!-- Sign In Link -->
-        <div class="text-center mt-6">
-          <p class="text-white/70">
-            Already have an account?
-            <NuxtLink
-              to="/login"
-              class="text-white font-medium hover:text-emerald-200 transition-colors"
+            
+            <!-- General Error -->
+            <div 
+              v-if="errors.general" 
+              class="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400"
             >
-              Sign in
-            </NuxtLink>
-          </p>
+              <UIcon name="i-lucide-alert-circle" class="w-5 h-5 shrink-0" />
+              <span class="text-sm">{{ errors.general }}</span>
+            </div>
+            
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              :disabled="loading"
+              class="w-full h-12 bg-primary hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all mt-2"
+            >
+              <UIcon v-if="loading" name="i-lucide-loader-2" class="w-5 h-5 animate-spin" />
+              <UIcon v-else name="i-lucide-rocket" class="w-5 h-5" />
+              <span>{{ loading ? 'Oluşturuluyor...' : 'Organizasyon Oluştur' }}</span>
+            </button>
+          </form>
+          
+          <!-- Login Link -->
+          <div class="text-center mt-6 pt-6 border-t border-neutral-800">
+            <p class="text-neutral-400">
+              Zaten hesabınız var mı?
+              <NuxtLink to="/login" class="text-primary hover:underline font-semibold ml-1">
+                Giriş Yapın
+              </NuxtLink>
+            </p>
+          </div>
         </div>
-      </UCard>
+        
+        <!-- Footer -->
+        <p class="text-center text-neutral-600 text-sm mt-6">
+          © 2026 Sciveto. Tüm hakları saklıdır.
+        </p>
+      </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref, reactive, computed } from 'vue'
+<script setup lang="ts">
 import { useAuthStore } from '~/stores/auth'
 
 definePageMeta({
@@ -243,218 +270,147 @@ definePageMeta({
 
 const authStore = useAuthStore()
 const router = useRouter()
+const toast = useToast()
 
 // Form state
-const registerForm = reactive({
+const form = ref({
+  organizationName: '',
   firstName: '',
   lastName: '',
   email: '',
-  organizationName: '',
-  industry: 'general',
   password: '',
-  confirmPassword: '',
-  acceptTerms: false,
-  marketingEmails: false
+  industry: 'general'
 })
 
 // Industry options
 const industries = [
-  { 
-    value: 'steel-manufacturing', 
-    label: 'Demir-Çelik', 
-    icon: 'i-heroicons-cube',
-    description: 'Profil, plaka, yapısal çelik'
-  },
-  { 
-    value: 'tensile-architecture', 
-    label: 'Asma Gergi Mimarlık', 
-    icon: 'i-heroicons-home-modern',
-    description: 'Membran, halat, mapa'
-  },
-  { 
-    value: 'electronics', 
-    label: 'Elektronik', 
-    icon: 'i-heroicons-cpu-chip',
-    description: 'Elektronik bileşenler'
-  },
-  { 
-    value: 'general', 
-    label: 'Genel / Diğer', 
-    icon: 'i-heroicons-squares-2x2',
-    description: 'Özel sektör kategorileri'
-  },
+  { value: 'steel-manufacturing', label: 'Demir-Çelik', icon: 'i-lucide-factory' },
+  { value: 'tensile-architecture', label: 'Asma Gergi', icon: 'i-lucide-tent' },
+  { value: 'electronics', label: 'Elektronik', icon: 'i-lucide-cpu' },
+  { value: 'general', label: 'Genel', icon: 'i-lucide-box' },
 ]
 
-const errors = reactive({
+const errors = ref({
+  organizationName: '',
   firstName: '',
   lastName: '',
   email: '',
-  organizationName: '',
   password: '',
-  confirmPassword: '',
   general: ''
 })
 
 const loading = ref(false)
 const showPassword = ref(false)
-const showConfirmPassword = ref(false)
+const registrationSuccess = ref(false)
+const orgCode = ref('')
 
-// Password strength calculation
-const passwordStrength = computed(() => {
-  const password = registerForm.password
-  if (!password) return 0
-  
-  let strength = 0
-  
-  // Length check
-  if (password.length >= 8) strength += 25
-  if (password.length >= 12) strength += 10
-  
-  // Character type checks
-  if (/[a-z]/.test(password)) strength += 15
-  if (/[A-Z]/.test(password)) strength += 15
-  if (/[0-9]/.test(password)) strength += 15
-  if (/[^a-zA-Z0-9]/.test(password)) strength += 20
-  
-  return Math.min(strength, 100)
-})
+// Clear errors when form changes
+watch(form, () => {
+  errors.value = {
+    organizationName: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    general: ''
+  }
+}, { deep: true })
 
-const passwordStrengthText = computed(() => {
-  if (passwordStrength.value < 25) return 'Weak'
-  if (passwordStrength.value < 50) return 'Fair'
-  if (passwordStrength.value < 75) return 'Good'
-  return 'Strong'
-})
-
-const passwordStrengthColor = computed(() => {
-  if (passwordStrength.value < 25) return 'bg-red-500'
-  if (passwordStrength.value < 50) return 'bg-yellow-500'
-  if (passwordStrength.value < 75) return 'bg-blue-500'
-  return 'bg-green-500'
-})
-
-// Clear errors when user types
-const clearErrors = () => {
-  Object.keys(errors).forEach(key => {
-    if (key !== 'general') errors[key] = ''
-  })
-  errors.general = ''
-}
-
-watch(() => registerForm.email, clearErrors)
-watch(() => registerForm.password, clearErrors)
-watch(() => registerForm.confirmPassword, clearErrors)
-
+// Validate form
 const validateForm = () => {
   let isValid = true
-  clearErrors()
   
-  // First name validation
-  if (!registerForm.firstName.trim()) {
-    errors.firstName = 'First name is required'
+  if (!form.value.organizationName.trim()) {
+    errors.value.organizationName = 'Organizasyon adı gereklidir'
     isValid = false
   }
   
-  // Email validation
-  if (!registerForm.email) {
-    errors.email = 'Email is required'
-    isValid = false
-  } else if (!/\S+@\S+\.\S+/.test(registerForm.email)) {
-    errors.email = 'Please enter a valid email address'
+  if (!form.value.firstName.trim()) {
+    errors.value.firstName = 'Ad gereklidir'
     isValid = false
   }
   
-  // Password validation
-  if (!registerForm.password) {
-    errors.password = 'Password is required'
-    isValid = false
-  } else if (registerForm.password.length < 8) {
-    errors.password = 'Password must be at least 8 characters'
-    isValid = false
-  } else if (passwordStrength.value < 50) {
-    errors.password = 'Password is too weak. Please use a stronger password.'
+  if (!form.value.lastName.trim()) {
+    errors.value.lastName = 'Soyad gereklidir'
     isValid = false
   }
   
-  // Confirm password validation
-  if (!registerForm.confirmPassword) {
-    errors.confirmPassword = 'Please confirm your password'
+  if (!form.value.email.trim()) {
+    errors.value.email = 'E-posta gereklidir'
     isValid = false
-  } else if (registerForm.password !== registerForm.confirmPassword) {
-    errors.confirmPassword = 'Passwords do not match'
+  } else if (!/\S+@\S+\.\S+/.test(form.value.email)) {
+    errors.value.email = 'Geçerli bir e-posta adresi girin'
     isValid = false
   }
   
-  // Terms acceptance
-  if (!registerForm.acceptTerms) {
-    errors.general = 'You must accept the Terms of Service and Privacy Policy'
+  if (!form.value.password) {
+    errors.value.password = 'Şifre gereklidir'
+    isValid = false
+  } else if (form.value.password.length < 6) {
+    errors.value.password = 'Şifre en az 6 karakter olmalıdır'
     isValid = false
   }
   
   return isValid
 }
 
+// Handle registration
 const handleRegister = async () => {
   if (!validateForm()) return
   
   loading.value = true
-  errors.general = ''
+  errors.value.general = ''
   
   try {
-    const registrationData = {
-      email: registerForm.email,
-      password: registerForm.password,
-      firstName: registerForm.firstName,
-      lastName: registerForm.lastName || undefined,
-      organizationName: registerForm.organizationName || undefined,
-      industry: registerForm.organizationName ? registerForm.industry : undefined,
-      marketingEmails: registerForm.marketingEmails
-    }
+    const response = await authStore.register({
+      organizationName: form.value.organizationName.trim(),
+      firstName: form.value.firstName.trim(),
+      lastName: form.value.lastName.trim(),
+      email: form.value.email.trim(),
+      password: form.value.password,
+      industry: form.value.industry
+    })
     
-    console.log('📝 Registration data being sent:', JSON.stringify(registrationData, null, 2))
+    // Show success
+    registrationSuccess.value = true
+    orgCode.value = response.organization?.code || 'ORG-001'
     
-    await authStore.register(registrationData)
+    // Show toast
+    toast.add({
+      title: 'Tebrikler! 🎉',
+      description: `${response.organization?.name || form.value.organizationName} organizasyonu oluşturuldu.`,
+      color: 'success',
+      icon: 'i-lucide-check-circle'
+    })
     
-    // Redirect will be handled by the store
-  } catch (error) {
+    // Redirect after showing success
+    setTimeout(() => {
+      router.push('/dashboard')
+    }, 2500)
+    
+  } catch (error: any) {
     console.error('Registration error:', error)
     
-    if (error.status === 409) {
-      errors.email = 'An account with this email already exists'
-    } else if (error.status === 422) {
-      errors.general = 'Please check your information and try again'
+    // Handle specific errors
+    const message = error.data?.message || error.message || ''
+    
+    if (message.toLowerCase().includes('organizasyon') || message.toLowerCase().includes('organization')) {
+      errors.value.organizationName = 'Bu organizasyon adı zaten kullanılıyor'
+    } else if (message.toLowerCase().includes('email') || message.toLowerCase().includes('e-posta')) {
+      errors.value.email = 'Bu e-posta adresi zaten kullanılıyor'
     } else {
-      errors.general = error.data?.message || 'An error occurred during registration. Please try again.'
+      errors.value.general = message || 'Kayıt işlemi başarısız oldu. Lütfen tekrar deneyin.'
     }
   } finally {
     loading.value = false
   }
 }
 
-const handleSocialRegister = (provider) => {
-  // TODO: Implement social registration
-  console.log(`Social registration with ${provider}`)
-  errors.general = `${provider} registration will be implemented soon`
-}
-
 // Page metadata
 useHead({
-  title: 'Create Account - Sciveto',
+  title: 'Kayıt Ol - Sciveto',
   meta: [
-    { name: 'description', content: 'Create your Sciveto account and start managing projects' }
+    { name: 'description', content: 'Sciveto hesabınızı oluşturun ve projelerinizi yönetmeye başlayın' }
   ]
 })
 </script>
-
-<style scoped>
-/* Custom checkbox styling for dark theme */
-input[type="checkbox"] {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-input[type="checkbox"]:checked {
-  background-color: #10b981;
-  border-color: #10b981;
-}
-</style>

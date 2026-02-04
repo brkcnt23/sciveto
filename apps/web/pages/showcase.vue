@@ -218,10 +218,11 @@
 
           <!-- Original Showcase Components -->
           <UCard 
-            class="relative overflow-hidden"
+            class="relative overflow-hidden h-[550px]"
             :ui="{ 
-              body: 'p-0',
-              header: 'bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm'
+              root: 'h-full',
+              body: 'p-0 h-full absolute inset-0',
+              header: 'absolute top-0 left-0 right-0 z-20 bg-transparent'
             }"
           >
             <!-- Background Image -->
@@ -236,12 +237,12 @@
             ></div>
 
             <template #header>
-              <div class="flex items-center gap-2 relative z-10" style="color: white !important;">
-                🌍 <span class="font-semibold" style="color: white !important;">Global Project Map</span>
+              <div class="flex items-center gap-2 relative z-10">
+                🌍 <span class="font-semibold text-white drop-shadow-lg">Global Project Map</span>
               </div>
             </template>
 
-            <div class="relative z-10 p-6">
+            <div class="absolute inset-0 z-10">
               <WorldMap name="world-map" />
             </div>
           </UCard>

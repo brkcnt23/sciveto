@@ -7,36 +7,149 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ============================================
+// ORGANIZATION - Multi-tenant root entity
+// ============================================
 model Organization {
-  id         String      @id @default(cuid())
-  name       String
-  subdomain  String      @unique
-  domain     String?
-  settings   Json?
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id String @id @default(cuid())
+
+  // Identity
+  code      String  @unique // ORG-001, ORG-002 (sequential)
+  name      String  @unique // Company display name
+  legalName String? // Official legal name
+  taxId     String? @unique // Tax identification number
+  subdomain String  @unique
+  domain    String?
+
+  // Subscription & Limits
+  plan        SubscriptionPlan @default(BASIC)
+  maxUsers    Int              @default(10)
+  maxProjects Int              @default(50)
+
+  // Counters (auto-managed)
+  userCount     Int @default(1) // Starts at 1 (owner)
+  projectCount  Int @default(0)
+  employeeCount Int @default(0)
+
+  // Status
+  status OrgStatus @default(ACTIVE)
+
+  // Settings
+  settings Json?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
   categories Category[]
   projects   Project[]
   items      StockItem[]
   users      User[]
+  employees  Employee[]
 }
 
+// ============================================
+// ENUMS - Organization related
+// ============================================
+enum SubscriptionPlan {
+  TRIAL
+  BASIC
+  PROFESSIONAL
+  ENTERPRISE
+}
+
+enum OrgStatus {
+  ACTIVE
+  SUSPENDED
+  TRIAL
+  EXPIRED
+}
+
+// ============================================
+// USER - System login users (limited per org)
+// ============================================
 model User {
-  id             String              @id @default(cuid())
-  email          String              @unique
-  password       String
-  firstName      String?
-  lastName       String?
-  role           UserRole            @default(USER)
+  id        String  @id @default(cuid())
+  email     String  @unique
+  password  String
+  firstName String?
+  lastName  String?
+
+  // Role & Permissions
+  role UserRole @default(ORGANIZATION_OWNER)
+
+  // Profile
+  position String? // Job title
+  phone    String?
+  avatar   String?
+
+  // Status
+  isActive    Boolean   @default(true)
+  isOnline    Boolean   @default(false)
+  lastLoginAt DateTime?
+
+  // Organization relation
   organizationId String
-  createdAt      DateTime            @default(now())
-  updatedAt      DateTime            @updatedAt
-  projects       Project[]
-  allocations    ProjectAllocation[]
-  stockItems     StockItem[]
-  organization   Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  projects           Project[]
+  allocations        ProjectAllocation[]
+  stockItems         StockItem[]
+  projectAssignments ProjectAssignment[]
 
   @@index([organizationId])
+  @@index([role])
+  @@index([isActive])
+}
+
+// ============================================
+// EMPLOYEE - Factory workers (no login, unlimited)
+// HR Manager creates these, assigned to projects
+// ============================================
+model Employee {
+  id String @id @default(cuid())
+
+  // Identity
+  code      String @unique // EMP-001, EMP-002 (per org sequential)
+  firstName String
+  lastName  String
+
+  // NO email, NO password - cannot login!
+
+  // Employment
+  position        String // "Kaynak Ustası", "Testereci", "Montajcı"
+  department      String?
+  hireDate        DateTime  @default(now())
+  terminationDate DateTime?
+
+  // Payroll
+  salary          Decimal?  @db.Decimal(12, 2)
+  insuranceStatus Boolean   @default(false)
+  insuranceDate   DateTime?
+
+  // Status
+  isActive Boolean @default(true)
+
+  // Organization relation
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  projectAssignments ProjectAssignment[]
+
+  @@index([organizationId])
+  @@index([code])
+  @@index([isActive])
 }
 
 model SystemCategoryTemplate {
@@ -124,16 +237,16 @@ model StockItem {
   minStockLevel     Float               @default(0)
   maxStockLevel     Float?
   // Legacy Fields (Dual-Mode Support)
-  shelfCode         String?             // Raf No / Kat
-  brand             String?             // Marka
-  color             String?             // Renk
-  size              String?             // Beden
-  purchasePrice     Float?              // Alış Fiyatı
-  salePrice         Float?              // Satış Fiyatı 1
-  salePrice2        Float?              // Satış Fiyatı 2 / Vadeli
+  shelfCode         String? // Raf No / Kat
+  brand             String? // Marka
+  color             String? // Renk
+  size              String? // Beden
+  purchasePrice     Float? // Alış Fiyatı
+  salePrice         Float? // Satış Fiyatı 1
+  salePrice2        Float? // Satış Fiyatı 2 / Vadeli
   vatRate           Int?                @default(20) // KDV %
-  specialCode1      String?             // Özel Kod 1
-  specialCode2      String?             // Özel Kod 2
+  specialCode1      String? // Özel Kod 1
+  specialCode2      String? // Özel Kod 2
   // Existing fields
   lastPurchasePrice Float?
   averageCost       Float?
@@ -187,9 +300,10 @@ model StockTransaction {
 
 model Project {
   id              String              @id @default(cuid())
+  code            String? // PRJ-2026-001 (auto-generated)
   name            String
   description     String?
-  projectCode     String?
+  projectCode     String? // Legacy field - can be deprecated
   clientName      String?
   location        String?
   startDate       DateTime?
@@ -205,9 +319,41 @@ model Project {
   manager         User                @relation(fields: [managerId], references: [id])
   organization    Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   allocations     ProjectAllocation[]
+  assignments     ProjectAssignment[]
 
   @@index([organizationId])
   @@index([status])
+  @@index([code])
+}
+
+// ============================================
+// PROJECT ASSIGNMENT - Links Users OR Employees to Projects
+// ============================================
+model ProjectAssignment {
+  id String @id @default(cuid())
+
+  // Project relation
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  // Can assign either User OR Employee (not both)
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  employeeId String?
+  employee   Employee? @relation(fields: [employeeId], references: [id], onDelete: SetNull)
+
+  // Assignment details
+  role  String? // "Lead Welder", "Assistant", "Supervisor"
+  notes String?
+
+  // Timestamps
+  assignedAt   DateTime  @default(now())
+  unassignedAt DateTime?
+
+  @@index([projectId])
+  @@index([userId])
+  @@index([employeeId])
 }
 
 model ProjectAllocation {
@@ -234,11 +380,17 @@ model ProjectAllocation {
   @@index([status])
 }
 
+// ============================================
+// USER ROLES - Industry standard naming
+// ============================================
 enum UserRole {
-  SUPER_ADMIN
-  ORG_ADMIN
-  MANAGER
-  USER
+  ORGANIZATION_OWNER // Super admin - created org, full access
+  PROCUREMENT_MANAGER // Purchasing - suppliers, purchase orders, stock view
+  ACCOUNTANT // Finance - invoices, income/expense, payroll view
+  PRODUCTION_MANAGER // Engineering - projects, task assignments, employee work
+  HR_MANAGER // Human resources - employees, leave, payroll management
+  WAREHOUSE_SUPERVISOR // Inventory - stock in/out, receiving, warehouse ops
+  PRODUCTION_SUPERVISOR // Shop floor foreman - assigned projects, task completion
 }
 
 enum StockStatus {
