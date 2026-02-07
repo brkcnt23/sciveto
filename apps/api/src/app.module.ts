@@ -10,7 +10,9 @@ import { CategoriesModule } from './modules/categories/categories.module';
 import { ProjectsModule } from './modules/projects/projects.module';
 import { PrismaService } from './prisma/prisma.service';
 import { TemplatesModule } from './modules/templates/templates.module';
+import { InventoryModule } from './modules/inventory/inventory.module';
 import { AllocationsModule } from './modules/allocations/allocations.module';
+import { SuppliersModule } from './modules/suppliers/suppliers.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { AllocationsModule } from './modules/allocations/allocations.module';
     ProjectsModule,
     AllocationsModule,
     TemplatesModule,
+    InventoryModule,
+    SuppliersModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

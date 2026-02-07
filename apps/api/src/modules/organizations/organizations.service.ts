@@ -1,10 +1,14 @@
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Organization, Prisma } from '@prisma/client';
+import { CodeGeneratorService } from './code-generator.service';
 
 @Injectable()
 export class OrganizationsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly codeGenerator: CodeGeneratorService,
+  ) {}
 
   async create(data: {
     name: string;
@@ -12,9 +16,11 @@ export class OrganizationsService {
     settings?: Record<string, any>;
   }): Promise<Organization> {
     try {
+      const code = await this.codeGenerator.generateOrgCode(data.name);
       return await this.prisma.organization.create({
         data: {
           name: data.name,
+          code: code,
           subdomain: data.subdomain,
           settings: data.settings || {},
         },

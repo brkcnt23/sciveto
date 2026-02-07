@@ -12,12 +12,14 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 
+import { UserRole } from '@prisma/client';
+
 class CreateUserDto {
   email: string;
   password: string;
   firstName?: string;
   lastName?: string;
-  role?: 'USER' | 'MANAGER' | 'ORG_ADMIN' | 'SUPER_ADMIN';
+  role?: UserRole;
   organizationId: string;
 }
 
@@ -25,7 +27,7 @@ class UpdateUserDto {
   email?: string;
   firstName?: string;
   lastName?: string;
-  role?: 'USER' | 'MANAGER' | 'ORG_ADMIN' | 'SUPER_ADMIN';
+  role?: UserRole;
 }
 
 @Controller('users')
@@ -39,7 +41,7 @@ export class UsersController {
       password: createUserDto.password,
       firstName: createUserDto.firstName,
       lastName: createUserDto.lastName,
-      role: createUserDto.role || 'USER',
+      role: createUserDto.role || 'PRODUCTION_SUPERVISOR',
       organization: {
         connect: { id: createUserDto.organizationId },
       },

@@ -1,45 +1,70 @@
-<!-- layouts/default.vue - Global Layout with Sidebar -->
+<!-- layouts/default.vue - DOĞRU HALİ -->
 <template>
   <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
-    <!-- Sidebar -->
-    <AppSidebar 
+    <AppHeader 
       :collapsed="sidebarCollapsed" 
-      @update:collapsed="sidebarCollapsed = $event"
+      @toggle-sidebar="toggleSidebar" 
     />
     
-    <!-- Main Content Area -->
-    <div 
-      class="transition-all duration-300 ease-in-out"
-      :class="sidebarCollapsed ? 'ml-16' : 'ml-64'"
+    <AppSidebar 
+      ref="sidebarRef" 
+      :collapsed="sidebarCollapsed"
+      @update:collapsed="handleCollapsedUpdate"
+    />
+    
+    <main 
+      class="pt-16 transition-all duration-300"
+      :class="{
+        'lg:ml-64': !sidebarCollapsed,
+        'lg:ml-16': sidebarCollapsed,
+        'ml-0': true
+      }"
     >
-      <!-- Header -->
-      <AppHeader @toggle-sidebar="sidebarCollapsed = !sidebarCollapsed" />
-      
-      <!-- Page Content -->
-      <main class="p-6">
+      <div class="p-6">
         <slot />
-      </main>
-    </div>
+      </div>
+    </main>
   </div>
 </template>
 
 <script setup lang="ts">
-// Sidebar state - Global for all pages
-const sidebarCollapsed = ref(true) // Default collapsed
+import { ref, watch, onMounted } from 'vue'
+import type AppSidebar from '~/components/layout/AppSidebar.vue'
 
-// Persist sidebar state to localStorage
+const sidebarRef = ref<InstanceType<typeof AppSidebar> | null>(null)
+const sidebarCollapsed = ref(true)
+
+// Handle collapsed update from sidebar
+const handleCollapsedUpdate = (value: boolean) => {
+  console.log('[Layout] 🔥 Received update:', value)
+  sidebarCollapsed.value = value
+}
+
+// Debug watch
+watch(sidebarCollapsed, (newVal, oldVal) => {
+  console.log('[Layout] 🟢 State changed:', oldVal, '→', newVal)
+})
+
+// Mobile sidebar toggle
+const toggleSidebar = () => {
+  console.log('[Layout] 🔵 Toggle mobile')
+  sidebarRef.value?.toggleMobile()
+}
+
+// LocalStorage persistence
 watch(sidebarCollapsed, (newValue) => {
   if (process.client) {
     localStorage.setItem('sidebar-collapsed', newValue.toString())
   }
 })
 
-// Restore sidebar state on mount
+// Restore on mount
 onMounted(() => {
   if (process.client) {
     const saved = localStorage.getItem('sidebar-collapsed')
     if (saved !== null) {
       sidebarCollapsed.value = saved === 'true'
+      console.log('[Layout] 📂 Restored:', sidebarCollapsed.value)
     }
   }
 })

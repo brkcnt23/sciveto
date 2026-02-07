@@ -43,10 +43,13 @@ model Organization {
 
   // Relations
   categories Category[]
+  stockCategories StockCategory[]
   projects   Project[]
   items      StockItem[]
   users      User[]
   employees  Employee[]
+  suppliers  Supplier[]
+  purchaseOrders PurchaseOrder[]
 }
 
 // ============================================
@@ -101,6 +104,8 @@ model User {
   projects           Project[]
   allocations        ProjectAllocation[]
   stockItems         StockItem[]
+  createdItems       StockItem[]      @relation("CreatedItems")
+  transactions       StockTransaction[]
   projectAssignments ProjectAssignment[]
 
   @@index([organizationId])
@@ -224,77 +229,178 @@ model Category {
   @@index([templateId])
 }
 
+// Stock categories: per-organization category list with icon/color
+model StockCategory {
+  id              String   @id @default(cuid())
+  name            String
+  slug            String
+  icon            String
+  color           String
+  description     String?
+
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  items           StockItem[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([organizationId, slug])
+  @@index([organizationId])
+}
+
 model StockItem {
-  id                String              @id @default(cuid())
-  name              String
-  description       String?
-  sku               String?             @unique
-  barcode           String?             @unique
-  unit              String              @default("pcs")
-  currentStock      Float               @default(0)
-  reservedStock     Float               @default(0)
-  availableStock    Float               @default(0)
-  minStockLevel     Float               @default(0)
-  maxStockLevel     Float?
-  // Legacy Fields (Dual-Mode Support)
-  shelfCode         String? // Raf No / Kat
-  brand             String? // Marka
-  color             String? // Renk
-  size              String? // Beden
-  purchasePrice     Float? // Alış Fiyatı
-  salePrice         Float? // Satış Fiyatı 1
-  salePrice2        Float? // Satış Fiyatı 2 / Vadeli
-  vatRate           Int?                @default(20) // KDV %
-  specialCode1      String? // Özel Kod 1
-  specialCode2      String? // Özel Kod 2
-  // Existing fields
-  lastPurchasePrice Float?
-  averageCost       Float?
-  totalValue        Float               @default(0)
-  standardValues    Json?
-  customValues      Json?
+  id              String   @id @default(cuid())
+
+  // Basic Info
+  name            String
+  code            String?  @unique
+  barcode         String?  @unique
+  icon            String?
+  images          String[] @default([])
+
+  // Category & Classification
+  categoryId      String?
+  category        Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  stockCategoryId String?
+  stockCategory   StockCategory? @relation(fields: [stockCategoryId], references: [id], onDelete: SetNull)
+
+  // Stock Management
+  quantity        Decimal  @default(0)
+  unit            String   @default("pcs")
+  minQuantity     Decimal? @default(10)
+  maxQuantity     Decimal? @default(1000)
+
+  // Location
+  warehouseLocation String?
+  zone              String?
+
+  // Pricing
+  purchasePrice     Decimal?
+  sellingPrice      Decimal?
+  currency          String    @default("TRY")
+
+  // Supplier Info
+  supplierId        String?
+  supplier          Supplier? @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  supplierCode      String?
+  leadTime          Int?
+
+  // Tracking
+  serialNumber      String?
+  lotNumber         String?
+  expiryDate        DateTime?
+  warrantyMonths    Int?
+
+  // Dates
+  lastPurchaseDate  DateTime?
+  lastUsedDate      DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Technical Specs
   specifications    Json?
+
+  // Status
+  isActive          Boolean   @default(true)
+  isCritical        Boolean   @default(false)
+
+  // Relations
   organizationId    String
-  categoryId        String?
-  userId            String
-  status            StockStatus         @default(ACTIVE)
-  location          String?
-  supplier          String?
-  notes             String?
-  entryMode         EntryMode           @default(DETAILED)
-  isComplete        Boolean             @default(false)
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  allocations       ProjectAllocation[]
-  category          Category?           @relation(fields: [categoryId], references: [id])
-  organization      Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  user              User                @relation(fields: [userId], references: [id])
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdById       String?
+  createdBy         User?     @relation("CreatedItems", fields: [createdById], references: [id], onDelete: SetNull)
+
+  userId            String?
+  user              User?     @relation(fields: [userId], references: [id])
+
+  // Transaction history
   transactions      StockTransaction[]
+  projectAllocations ProjectAllocation[]
 
   @@index([organizationId])
   @@index([categoryId])
-  @@index([status])
-  @@index([isComplete])
-  @@index([entryMode])
+  @@index([stockCategoryId])
+  @@index([supplierId])
+  @@index([code])
+  @@index([barcode])
+  @@index([warehouseLocation])
+}
+
+// New model: Supplier
+model Supplier {
+  id              String   @id @default(cuid())
+
+  name            String
+  code            String   @unique
+  contactPerson   String?
+  email           String?
+  phone           String?
+  address         String?
+  taxId           String?
+
+  rating          Int?     @default(5)
+  notes           String?
+
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  items           StockItem[]
+  purchaseOrders  PurchaseOrder[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([organizationId])
+}
+
+// Minimal PurchaseOrder model referenced by Supplier
+model PurchaseOrder {
+  id             String   @id @default(cuid())
+  code           String?
+  supplierId     String
+  supplier       Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  totalAmount    Decimal? @db.Decimal(14, 2)
+  status         String?
+  items          Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([organizationId])
+  @@index([supplierId])
 }
 
 model StockTransaction {
-  id            String          @id @default(cuid())
-  stockItemId   String
-  type          TransactionType
-  quantity      Float
-  unitPrice     Float?
-  totalCost     Float?
-  referenceType String?
-  referenceId   String?
-  description   String?
-  performedBy   String?
-  supplier      String?
-  createdAt     DateTime        @default(now())
-  stockItem     StockItem       @relation(fields: [stockItemId], references: [id], onDelete: Cascade)
+  id              String   @id @default(cuid())
+
+  type            TransactionType
+  quantity        Decimal
+  unit            String
+
+  // Reference
+  referenceType   String?
+  referenceId     String?
+
+  notes           String?
+
+  // Who & When
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+
+  stockItemId     String
+  stockItem       StockItem @relation(fields: [stockItemId], references: [id], onDelete: Cascade)
+
+  organizationId  String
+
+  createdAt       DateTime @default(now())
 
   @@index([stockItemId])
-  @@index([type])
+  @@index([organizationId])
   @@index([createdAt])
 }
 
@@ -423,11 +529,10 @@ enum AllocationStatus {
 }
 
 enum TransactionType {
-  PURCHASE
-  SALE
-  ALLOCATION
+  IN
+  OUT
+  ADJUST
   RETURN
-  ADJUSTMENT
   TRANSFER
 }
 

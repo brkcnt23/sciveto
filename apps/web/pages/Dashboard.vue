@@ -1,25 +1,43 @@
 <template>
-  <!-- Welcome Banner -->
-  <div class="bg-gradient-to-r from-primary-500 to-primary-600 dark:from-primary-600 dark:to-primary-700 rounded-lg mb-6">
-    <div class="px-6 py-8">
-      <div class="flex items-center justify-between">
-        <div>
-          <h1 class="text-2xl font-bold text-white mb-1">
-            Hoş geldin, {{ authStore.fullName }}! 👋
-          </h1>
-          <p class="text-primary-100">
-            {{ authStore.orgName }} · {{ roleLabel }}
-          </p>
-        </div>
-        <div class="hidden md:flex items-center gap-3">
-          <span class="inline-flex items-center px-3 py-1.5 rounded-md bg-white/20 text-white text-sm font-medium">
-            <UIcon name="i-lucide-building-2" class="w-4 h-4 mr-1" />
-            {{ authStore.orgCode }}
-          </span>
+  <!-- Loading State -->
+  <div v-if="isLoading" class="space-y-6">
+    <!-- Welcome Banner Skeleton -->
+    <USkeleton class="h-32 rounded-lg" />
+    
+    <!-- Stats Cards Skeleton -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <USkeleton v-for="i in 4" :key="i" class="h-28 rounded-lg" />
+    </div>
+    
+    <!-- Content Skeleton -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <USkeleton class="h-64 rounded-lg" />
+      <USkeleton class="h-64 rounded-lg lg:col-span-2" />
+    </div>
+  </div>
+  
+  <div v-else>
+    <!-- Welcome Banner -->
+    <div class="bg-gradient-to-r from-primary-500 to-primary-600 dark:from-primary-600 dark:to-primary-700 rounded-lg mb-6">
+      <div class="px-6 py-8">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-2xl font-bold text-white mb-1">
+              Hoş geldin, {{ authStore.fullName }}! 👋
+            </h1>
+            <p class="text-primary-100">
+              {{ authStore.orgName }} · {{ roleLabel }}
+            </p>
+          </div>
+          <div class="hidden md:flex items-center gap-3">
+            <span class="inline-flex items-center px-3 py-1.5 rounded-md bg-white/20 text-white text-sm font-medium">
+              <UIcon name="i-lucide-building-2" class="w-4 h-4 mr-1" />
+              {{ authStore.orgCode }}
+            </span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
   <!-- Stats Cards -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
@@ -230,10 +248,11 @@
       </UCard>
     </div>
   </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '~/stores/auth'
 
 // Page meta
@@ -250,6 +269,34 @@ useSeoMeta({
 
 // Composables
 const authStore = useAuthStore()
+const toast = useToast()
+
+// Loading state
+const isLoading = ref(true)
+
+// Initialize on mount
+onMounted(async () => {
+  isLoading.value = true
+  
+  try {
+    // Ensure auth is initialized
+    await authStore.initializeAuth()
+    
+    // Simulate loading stats from API (replace with real API call later)
+    await new Promise(resolve => setTimeout(resolve, 500))
+    
+  } catch (error: any) {
+    console.error('Failed to load dashboard:', error)
+    toast.add({
+      title: 'Hata',
+      description: 'Dashboard verileri yüklenemedi',
+      color: 'error',
+      icon: 'i-lucide-alert-circle'
+    })
+  } finally {
+    isLoading.value = false
+  }
+})
 
 // Role labels in Turkish
 const roleLabels: Record<string, string> = {

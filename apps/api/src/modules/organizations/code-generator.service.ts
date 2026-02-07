@@ -17,22 +17,29 @@ export class CodeGeneratorService {
    * Generate unique organization code (ORG-001 format)
    * Global sequential across all organizations
    */
-  async generateOrgCode(): Promise<string> {
-    const lastOrg = await this.prisma.organization.findFirst({
-      orderBy: { createdAt: 'desc' },
-      select: { code: true },
+  async generateOrgCode(orgName: string): Promise<string> {
+    // Create a slug from the organization name (Turkish-safe)
+    const slug = orgName
+      .toLowerCase()
+      .trim()
+      .replace(/ı/g, 'i')
+      .replace(/ğ/g, 'g')
+      .replace(/ü/g, 'u')
+      .replace(/ş/g, 's')
+      .replace(/ö/g, 'o')
+      .replace(/ç/g, 'c')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
+    // Count existing org codes that start with this slug
+    const count = await this.prisma.organization.count({
+      where: {
+        code: { startsWith: `org-${slug}-` },
+      },
     });
 
-    if (!lastOrg || !lastOrg.code) {
-      return 'ORG-001';
-    }
-
-    const lastNumber = parseInt(lastOrg.code.split('-')[1], 10);
-    const nextNumber = lastNumber + 1;
-    
-    // Pad to at least 3 digits, but allow growth beyond 999
-    const padLength = Math.max(3, String(nextNumber).length);
-    return `ORG-${String(nextNumber).padStart(padLength, '0')}`;
+    const nextNumber = count + 1;
+    return `org-${slug}-${String(nextNumber).padStart(3, '0')}`;
   }
 
   /**

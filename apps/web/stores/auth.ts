@@ -176,7 +176,16 @@ export const useAuthStore = defineStore('auth', {
         }
       } catch (error: any) {
         console.error('Registration failed:', error)
-        throw error
+        
+        // Extract meaningful error message
+        const errorMessage = error.data?.message || 
+                            error.response?._data?.message ||
+                            error.message || 
+                            'Kayıt işlemi başarısız oldu'
+        
+        // Create a proper error with the message
+        const err = new Error(errorMessage)
+        throw err
       } finally {
         this.isLoading = false
       }
@@ -210,9 +219,16 @@ export const useAuthStore = defineStore('auth', {
         }
       } catch (error: any) {
         console.error('Login failed:', error)
+        
+        // Extract meaningful error message
+        const errorMessage = error.data?.message || 
+                            error.response?._data?.message ||
+                            error.message || 
+                            'Giriş başarısız oldu'
+        
         return { 
           success: false, 
-          error: error.data?.message || error.message || 'Giriş başarısız' 
+          error: errorMessage
         }
       } finally {
         this.isLoading = false

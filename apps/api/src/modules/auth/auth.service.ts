@@ -48,7 +48,7 @@ export class AuthService {
     
     if (organizationName && organizationName.trim()) {
       // Generate organization code and subdomain
-      const orgCode = await this.codeGenerator.generateOrgCode();
+      const orgCode = await this.codeGenerator.generateOrgCode(organizationName.trim());
       const subdomain = this.codeGenerator.generateSubdomain(organizationName);
       
       // Create new organization with code
@@ -76,7 +76,7 @@ export class AuthService {
       });
 
       if (!organization) {
-        const orgCode = await this.codeGenerator.generateOrgCode();
+        const orgCode = await this.codeGenerator.generateOrgCode('Default Organization');
         organization = await this.prisma.organization.create({
           data: {
             name: 'Default Organization',
@@ -282,6 +282,14 @@ export class AuthService {
       },
     });
     console.log('✅ Created default "Genel" category');
+
+    // Seed default stock categories for the organization
+    try {
+      await this.seedDefaultStockCategories(organizationId);
+      console.log('✅ Seeded default stock categories');
+    } catch (err) {
+      console.error('Failed to seed stock categories:', err);
+    }
   }
 
   private getColorForTemplate(name: string): string {
@@ -293,5 +301,38 @@ export class AuthService {
       'Mapa': '#EF4444',       // Red
     };
     return colors[name] || '#6B7280';
+  }
+
+  /**
+   * Seed default StockCategory entries for a new organization
+   */
+  private async seedDefaultStockCategories(organizationId: string) {
+    const defaults = [
+      { name: 'Sarf Malzemeler', slug: 'sarf', icon: 'i-lucide-package', color: '#3b82f6' },
+      { name: 'Çelik', slug: 'celik', icon: 'i-lucide-hammer', color: '#ef4444' },
+      { name: 'Membran', slug: 'membran', icon: 'i-lucide-file-text', color: '#10b981' },
+      { name: 'Halat', slug: 'halat', icon: 'i-lucide-link', color: '#f59e0b' },
+      { name: 'Fitil', slug: 'fitil', icon: 'i-lucide-scissors', color: '#8b5cf6' },
+      { name: 'Genel', slug: 'genel', icon: 'i-lucide-box', color: '#6b7280' },
+    ];
+
+    for (const cat of defaults) {
+      try {
+        await this.prisma.stockCategory.create({
+          data: {
+            name: cat.name,
+            slug: cat.slug,
+            icon: cat.icon,
+            color: cat.color,
+            description: `${cat.name} kategorisi`,
+            organizationId,
+          },
+        });
+      } catch (err: any) {
+        // ignore unique constraint errors
+        if (err.code === 'P2002') continue;
+        throw err;
+      }
+    }
   }
 }

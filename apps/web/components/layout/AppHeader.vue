@@ -1,19 +1,24 @@
-<!-- components/layout/AppHeader.vue - Organization & User Header -->
+<!-- components/layout/AppHeader.vue -->
 <template>
-  <header class="sticky top-0 z-50 h-16 border-b border-neutral-200 dark:border-neutral-800 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-sm">
-    <div class="h-full px-4 flex items-center justify-between">
+  <header 
+    class="fixed top-0 right-0 h-16 bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 z-20 transition-all duration-300"
+    :class="{
+      'left-0 lg:left-64': !collapsed,
+      'left-0 lg:left-16': collapsed
+    }"
+  >
+    <div class="h-full px-4 flex items-center justify-between gap-4">
+      <!-- Mobile Hamburger -->
+      <button
+        @click="emit('toggle-sidebar')"
+        class="lg:hidden p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+        aria-label="Menüyü aç"
+      >
+        <UIcon name="i-lucide-menu" class="w-6 h-6 text-neutral-600 dark:text-neutral-400" />
+      </button>
+
       <!-- Left: Organization Info -->
-      <div class="flex items-center gap-3">
-        <!-- Mobile Sidebar Toggle -->
-        <UButton
-          variant="ghost"
-          color="neutral"
-          size="sm"
-          class="lg:hidden"
-          icon="i-lucide-menu"
-          @click="$emit('toggle-sidebar')"
-        />
-        
+      <div class="flex items-center gap-3 flex-1">
         <!-- Organization Badge -->
         <div class="flex items-center gap-3">
           <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-white font-bold text-sm">
@@ -32,7 +37,7 @@
 
       <!-- Right: Actions & User -->
       <div class="flex items-center gap-2">
-        <!-- Search (placeholder) -->
+        <!-- Search -->
         <UButton
           variant="ghost"
           color="neutral"
@@ -100,29 +105,23 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import type { DropdownMenuItem } from '@nuxt/ui'
-import { useAuthStore } from '~/stores/auth'
 
-// Props
 defineProps<{
   notificationCount?: number
+  collapsed?: boolean
 }>()
 
-// Emits
-defineEmits<{
+const emit = defineEmits<{
   'toggle-sidebar': []
 }>()
 
-// Auth Store
 const authStore = useAuthStore()
 
-// Computed
 const orgInitial = computed(() => {
   return authStore.orgName?.charAt(0).toUpperCase() || 'S'
 })
 
-// User menu items for dropdown
 const userMenuItems = computed<DropdownMenuItem[][]>(() => [
   [
     {
@@ -157,33 +156,4 @@ const userMenuItems = computed<DropdownMenuItem[][]>(() => [
     },
   ],
 ])
-
-// Role helpers
-const getRoleLabel = (role: string) => {
-  const labels: Record<string, string> = {
-    'ORGANIZATION_OWNER': 'Yönetici',
-    'ORG_ADMIN': 'Yönetici',
-    'PROCUREMENT_MANAGER': 'Satın Alma',
-    'ACCOUNTANT': 'Muhasebe',
-    'PRODUCTION_MANAGER': 'Üretim Müd.',
-    'HR_MANAGER': 'İK Sorumlusu',
-    'WAREHOUSE_SUPERVISOR': 'Depo Sorumlusu',
-    'PRODUCTION_SUPERVISOR': 'İmalat Şefi'
-  }
-  return labels[role] || role
-}
-
-const getRoleBadgeColor = (role: string) => {
-  const colors: Record<string, 'primary' | 'success' | 'warning' | 'info' | 'error' | 'neutral'> = {
-    'ORGANIZATION_OWNER': 'primary',
-    'ORG_ADMIN': 'primary',
-    'PROCUREMENT_MANAGER': 'info',
-    'ACCOUNTANT': 'success',
-    'PRODUCTION_MANAGER': 'warning',
-    'HR_MANAGER': 'neutral',
-    'WAREHOUSE_SUPERVISOR': 'info',
-    'PRODUCTION_SUPERVISOR': 'warning'
-  }
-  return colors[role] || 'neutral'
-}
 </script>
