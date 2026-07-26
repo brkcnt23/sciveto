@@ -54,53 +54,44 @@ async function main() {
     console.error('⚠️ Şablon yükleme uyarısı:', e);
   }
 
-  // 4. Dual-Mode Test Data
-  console.log('⚙️  Dual-Mode Test Verileri oluşturuluyor...');
-  
-  // Item A: Factory Mode (Quick Add - Incomplete)
+  // 4. Test Data
+  console.log('Test Verileri olusturuluyor...');
+
   await prisma.stockItem.upsert({
-    where: { sku: 'BLT-20' },
+    where: { code: 'BLT-20' },
     update: {},
     create: {
       name: 'Raw Bolt 20mm',
-      sku: 'BLT-20',
-      currentStock: 500,
-      availableStock: 500,
+      code: 'BLT-20',
+      quantity: 500,
       unit: 'pcs',
-      entryMode: 'QUICK',
-      isComplete: false,
-      status: 'ACTIVE',
+      minQuantity: 10,
+      maxQuantity: 1000,
+      purchasePrice: 150.00,
+      sellingPrice: 250.00,
       organizationId: org.id,
-      userId: user.id
+      warehouseLocation: 'A-12',
     }
   });
-  console.log('✅ Quick Add test item oluşturuldu: BLT-20');
+  console.log('Test item olusturuldu: BLT-20');
 
-  // Item B: Office Mode (Detailed - Complete)
   await prisma.stockItem.upsert({
-    where: { sku: 'CSL-KG-01' },
+    where: { code: 'CSL-KG-01' },
     update: {},
     create: {
       name: 'King Size Duvet Set',
-      sku: 'CSL-KG-01',
-      currentStock: 25,
-      availableStock: 25,
+      code: 'CSL-KG-01',
+      quantity: 25,
       unit: 'pcs',
+      minQuantity: 5,
+      maxQuantity: 50,
       purchasePrice: 1500.00,
-      salePrice: 2500.00,
-      salePrice2: 2750.00,
-      shelfCode: 'A-12',
-      color: 'Gold',
-      brand: 'Premium Home',
-      vatRate: 20,
-      entryMode: 'DETAILED',
-      isComplete: true,
-      status: 'ACTIVE',
+      sellingPrice: 2500.00,
       organizationId: org.id,
-      userId: user.id
+      warehouseLocation: 'B-03',
     }
   });
-  console.log('✅ Detailed item oluşturuldu: CSL-KG-01');
+  console.log('Test item olusturuldu: CSL-KG-01');
   
   console.log('🚀 SİSTEM HAZIR! Giriş yapabilirsiniz.')
 }

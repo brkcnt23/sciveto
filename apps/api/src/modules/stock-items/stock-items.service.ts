@@ -1,8 +1,8 @@
-// @ts-nocheck
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { PrismaTenantRepository } from '../../prisma/prisma.repository.base';
 import { CreateStockItemDto, UpdateStockItemDto, StockItemQueryDto, StockStatus, QuickAddStockItemDto, EntryMode } from '@sciveto/shared-types';
+// @ts-nocheck — TODO: rewrite service to match current Prisma schema
 
 @Injectable()
 export class StockItemsService {

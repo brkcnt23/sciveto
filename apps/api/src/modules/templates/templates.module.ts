@@ -1,5 +1,3 @@
-// @ts-nocheck
-// @ts-nocheck
 import { Module } from '@nestjs/common';
 import { TemplatesController } from './templates.controller';
 import { TemplatesService } from './templates.service';

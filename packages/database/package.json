@@ -18,11 +18,11 @@
     "prebuild": "prisma generate"
   },
   "dependencies": {
-    "@prisma/client": "^6.11.1"
+    "@prisma/client": "^6.13.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.7",
-    "prisma": "^6.11.1",
+    "prisma": "^6.13.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.8.3"

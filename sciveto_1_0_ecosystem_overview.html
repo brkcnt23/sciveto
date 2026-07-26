@@ -1,0 +1,354 @@
+
+<div style="width: 100%; padding: 0; font-family: var(--font-sans);">
+  <style>
+    .eco-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .eco-section { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; }
+    .eco-title { font-size: 14px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.4px; margin: 0 0 0.75rem 0; }
+    .eco-row { display: grid; grid-template-columns: 160px 1fr; gap: 12px; margin-bottom: 12px; }
+    .eco-label { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+    .eco-value { font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; }
+    .layer-box { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 12px; margin-bottom: 10px; }
+    .layer-name { font-weight: 500; color: var(--color-text-primary); font-size: 13px; margin-bottom: 6px; }
+    .layer-items { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; }
+    .role-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+    .role-card { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 10px; text-align: center; font-size: 11px; font-weight: 500; }
+    .role-card.erp { border-left: 3px solid var(--color-text-info); }
+    .role-card.mes { border-left: 3px solid var(--color-text-success); }
+    .role-card.market { border-left: 3px solid var(--color-text-warning); }
+    .status-box { background: var(--color-background-warning); padding: 12px; border-radius: var(--border-radius-md); margin: 12px 0; font-size: 12px; color: var(--color-text-warning); }
+    .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
+    .stat-card { background: var(--color-background-secondary); padding: 12px; border-radius: var(--border-radius-md); }
+    .stat-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; }
+    .stat-value { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+    .timeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 10px; }
+    .timeline-item { background: var(--color-background-secondary); padding: 10px 8px; border-radius: var(--border-radius-md); text-align: center; font-size: 11px; border-left: 2px solid var(--color-border-secondary); }
+    .timeline-item.active { border-left: 2px solid var(--color-text-info); background: rgba(55, 138, 221, 0.08); }
+  </style>
+
+  <div class="eco-grid">
+    
+    <!-- ECOSYSTEM STATUS -->
+    <div class="eco-section">
+      <div class="eco-title">📊 SCIVETO 1.0 ECOSYSTEM - Status Overview</div>
+      <div class="status-box">
+        ⏸️ <strong>MVP Paused</strong> (pre-launch) | Full scope documented | Ready to resume when resources available
+      </div>
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-label">Architecture Layers</div>
+          <div class="stat-value">5</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">User Roles</div>
+          <div class="stat-value">10</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-label">Core Modules</div>
+          <div class="stat-value">14+</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Revenue Streams</div>
+          <div class="stat-value">3</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LAYER 1: ERP -->
+    <div class="eco-section">
+      <div class="eco-title">📦 Layer 1: ERP Core (Traditional)</div>
+      <div class="layer-box">
+        <div class="layer-name">Stock Module</div>
+        <div class="layer-items">Dynamic categories • User-defined fields • Reservations • Historical tracking • Real-time sync</div>
+      </div>
+      <div class="layer-box">
+        <div class="layer-name">Procurement Module</div>
+        <div class="layer-items">Multi-supplier quotes • Tiered approvals • Price history • KUL supplier scoring</div>
+      </div>
+      <div class="layer-box">
+        <div class="layer-name">Production Module</div>
+        <div class="layer-items">1D/2D/3D cutting optimization • Consumption tracking • Waste prediction • KUL scheduling</div>
+      </div>
+      <div class="layer-box">
+        <div class="layer-name">Projects Module</div>
+        <div class="layer-items">11-phase workflow • Dynamic stock linking • Project costing • AI quotations</div>
+      </div>
+      <div class="layer-box">
+        <div class="layer-name">Supporting</div>
+        <div class="layer-items">Costing • CRM • Document Management • Notifications</div>
+      </div>
+    </div>
+
+    <!-- LAYER 2: MES -->
+    <div class="eco-section">
+      <div class="eco-title">🏭 Layer 2: MES (Manufacturing Execution) [NEW]</div>
+      <div class="layer-box">
+        <div class="layer-name">Warehouse / Depo Management</div>
+        <div class="layer-items">In/Out tracking • Weight & dimensions • Rack/location management • Barcode/RFID • Batch/Serial tracking • QC inspection status</div>
+      </div>
+      <div class="layer-box">
+        <div class="layer-name">Production Floor Tracking</div>
+        <div class="layer-items">Real-time consumption by workstation • Equipment status • Worker clock-in/out • Task assignment • Performance KPIs</div>
+      </div>
+      <div class="layer-box">
+        <div class="layer-name">Shift Management</div>
+        <div class="layer-items">Crew scheduling • Worker productivity metrics • Usta Başı dashboard • KUL performance insights</div>
+      </div>
+    </div>
+
+    <!-- LAYER 3: MARKETPLACE -->
+    <div class="eco-section">
+      <div class="eco-title">🛍️ Layer 3: Marketplace Hub [NEW - Revenue Stream #1]</div>
+      <div class="layer-box">
+        <div class="layer-name">Inter-Factory Trading</div>
+        <div class="layer-items">Factories browse & buy from each other • Real-time inventory syndication • Price comparison • Lead time negotiation</div>
+      </div>
+      <div class="layer-box">
+        <div class="layer-name">Vendor Portal</div>
+        <div class="layer-items">List products • Set pricing & availability • Order dashboard • Customer reviews & ratings • Revenue tracking</div>
+      </div>
+      <div class="layer-box">
+        <div class="layer-name">Buyer Portal</div>
+        <div class="layer-items">Search Marketplace • Compare suppliers • Place orders • Auto-sync to Procurement module</div>
+      </div>
+      <div class="layer-box">
+        <div class="layer-name">Sciveto Commission Model</div>
+        <div class="layer-items">Platform takes X% per transaction • Escrow payment system • Dispute resolution • Annual recurring revenue</div>
+      </div>
+    </div>
+
+    <!-- LAYER 4: LOGISTICS -->
+    <div class="eco-section">
+      <div class="eco-title">🚚 Layer 4: Logistics Network [NEW - Revenue Stream #2]</div>
+      <div class="layer-box">
+        <div class="layer-name">Logistics Partner Portal</div>
+        <div class="layer-items">Register shipping company • View open shipments • Submit bids with rates • Track assigned jobs • Performance rating</div>
+      </div>
+      <div class="layer-box">
+        <div class="layer-name">Factory Shipping Dashboard</div>
+        <div class="layer-items">See shipping quotes from multiple carriers • Compare price & delivery time • Select preferred shipper • Real-time tracking</div>
+      </div>
+      <div class="layer-box">
+        <div class="layer-name">KUL Integration</div>
+        <div class="layer-items">AI recommends best shipper • Auto-assign if accepted • Rate shipper performance • Cost optimization</div>
+      </div>
+    </div>
+
+    <!-- LAYER 5: AI ENGINE -->
+    <div class="eco-section">
+      <div class="eco-title">🤖 Layer 5: KUL AI (Proprietary, Closed-Loop) [NEW]</div>
+      <div class="eco-row">
+        <div class="eco-label">Architecture</div>
+        <div class="eco-value"><strong>Proprietary</strong> — NOT GPT-4o, NOT Claude API. Independent model trained on manufacturing data.</div>
+      </div>
+      <div class="eco-row">
+        <div class="eco-label">Deployment</div>
+        <div class="eco-value"><strong>Hybrid:</strong> Cloud (SaaS shared model) + On-Premise (local fine-tuning with factory's own data)</div>
+      </div>
+      <div class="eco-row">
+        <div class="eco-label">Data Privacy</div>
+        <div class="eco-value"><strong>Zero Cloud Transmission</strong> in on-premise mode. Factory data stays within network. No external API calls.</div>
+      </div>
+      <div class="layer-box">
+        <div class="layer-name">Core Capabilities</div>
+        <div class="layer-items">
+          • Demand forecasting per category & time window<br>
+          • Supplier evaluation (cost, delivery, quality)<br>
+          • Project cost estimation & quote generation<br>
+          • Production scheduling & resource optimization<br>
+          • Risk detection (delays, bottlenecks, overruns)<br>
+          • Performance KPIs (worker, equipment, waste)<br>
+          • Anomaly detection (unusual patterns)<br>
+          • Custom fine-tuning on factory data
+        </div>
+      </div>
+    </div>
+
+    <!-- USER ROLES -->
+    <div class="eco-section">
+      <div class="eco-title">👥 10 User Roles with Role-Specific Screens</div>
+      <div style="margin-bottom: 10px;">
+        <div style="font-size: 11px; color: var(--color-text-secondary); margin-bottom: 8px; font-weight: 500;">🔵 ERP Users (Traditional)</div>
+        <div class="role-grid">
+          <div class="role-card erp">Admin<br>Full access</div>
+          <div class="role-card erp">Stock Manager<br>Inventory</div>
+          <div class="role-card erp">Procurement<br>Buying</div>
+          <div class="role-card erp">Production Mgr<br>Scheduling</div>
+        </div>
+      </div>
+      <div style="margin-bottom: 10px;">
+        <div style="font-size: 11px; color: var(--color-text-secondary); margin-bottom: 8px; font-weight: 500;">🟢 MES Users (New)</div>
+        <div class="role-grid">
+          <div class="role-card mes">Warehouse Mgr<br>In/Out tracking</div>
+          <div class="role-card mes">Usta Başı<br>Floor data</div>
+          <div class="role-card mes">Muhasebeci<br>Costs & budgets</div>
+          <div class="role-card mes">Viewer<br>Read-only</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size: 11px; color: var(--color-text-secondary); margin-bottom: 8px; font-weight: 500;">🟠 Marketplace & Logistics</div>
+        <div class="role-grid">
+          <div class="role-card market">Marketplace Vendor<br>Sell</div>
+          <div class="role-card market">Logistics Partner<br>Ship</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11-PHASE WORKFLOW -->
+    <div class="eco-section">
+      <div class="eco-title">🔄 11-Phase Project Workflow (Core Process)</div>
+      <div class="timeline">
+        <div class="timeline-item active">1. Quotation</div>
+        <div class="timeline-item">2. Follow-up</div>
+        <div class="timeline-item">3. Negotiation</div>
+        <div class="timeline-item">4. Planning</div>
+        <div class="timeline-item">5. Procurement</div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">6. Production</div>
+        <div class="timeline-item">7. Dispatch</div>
+        <div class="timeline-item">8. Assembly</div>
+        <div class="timeline-item">9. Temp Delivery</div>
+        <div class="timeline-item">10. Final Delivery</div>
+      </div>
+      <div style="padding: 10px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); margin-top: 8px; text-align: center; font-size: 12px; color: var(--color-text-secondary);">
+        11. Account Closure / Payment Collection
+      </div>
+    </div>
+
+    <!-- DATA MODEL -->
+    <div class="eco-section">
+      <div class="eco-title">🗂️ Data Model (Dynamic Schema Binding)</div>
+      <div class="eco-row">
+        <div class="eco-label">Categories</div>
+        <div class="eco-value">User-created (e.g. "Membran", "Çelik Halat", "Bant Saflama")</div>
+      </div>
+      <div class="eco-row">
+        <div class="eco-label">Fields (Per Category)</div>
+        <div class="eco-value">User-defined (marka, metraj, kalite, ağırlık, raf, batch, serial...)</div>
+      </div>
+      <div class="eco-row">
+        <div class="eco-label">Prisma Binding</div>
+        <div class="eco-value">Auto-generates PostgreSQL tables from user schema. No manual migrations.</div>
+      </div>
+      <div class="eco-row">
+        <div class="eco-label">Inventory States</div>
+        <div class="eco-value">Stok • Reserved • Used • Waste • Released</div>
+      </div>
+      <div class="eco-row">
+        <div class="eco-label">Warehouse Tracking</div>
+        <div class="eco-value">Barcode/RFID • Location/Rack • In/Out timestamp • Weight • Batch/Serial • QC status</div>
+      </div>
+      <div class="eco-row">
+        <div class="eco-label">Audit Trail</div>
+        <div class="eco-value">Every transaction logged (user, timestamp, action, before/after)</div>
+      </div>
+    </div>
+
+    <!-- DEPLOYMENT OPTIONS -->
+    <div class="eco-section">
+      <div class="eco-title">☁️ Deployment Models</div>
+      <div class="layer-box">
+        <div class="layer-name">Cloud SaaS Mode</div>
+        <div class="layer-items">Hosted on Sciveto servers • Shared KUL model • Standard encryption • Regular backups • Multi-tenant</div>
+      </div>
+      <div class="layer-box">
+        <div class="layer-name">On-Premise Mode (Self-Hosted)</div>
+        <div class="layer-items">Zero cloud dependency • Local KUL fine-tuning with factory data • No data sent externally • Full control • Premium option</div>
+      </div>
+      <div class="layer-box">
+        <div class="layer-name">Hybrid Option</div>
+        <div class="layer-items">Cloud API + local KUL instance • Best of both worlds • Factory data privacy + cloud benefits</div>
+      </div>
+    </div>
+
+    <!-- REVENUE STREAMS -->
+    <div class="eco-section">
+      <div class="eco-title">💰 3 Revenue Streams (Sciveto Business Model)</div>
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-label">Stream #1</div>
+          <div class="stat-value" style="font-size: 14px;">SaaS Fees</div>
+          <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 6px;">Monthly/annual per factory</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Stream #2</div>
+          <div class="stat-value" style="font-size: 14px;">Marketplace %</div>
+          <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 6px;">Commission on inter-factory trades</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-label">Stream #3</div>
+          <div class="stat-value" style="font-size: 14px;">Logistics %</div>
+          <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 6px;">Commission on shipment coordination</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Future</div>
+          <div class="stat-value" style="font-size: 14px;">Premium KUL</div>
+          <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 6px;">Advanced AI fine-tuning service</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROADMAP -->
+    <div class="eco-section">
+      <div class="eco-title">📈 Development Roadmap</div>
+      <div style="display: grid; gap: 12px;">
+        <div style="border-left: 3px solid var(--color-text-info); padding-left: 12px;">
+          <strong style="color: var(--color-text-primary); font-size: 13px;">Phase 0 (CURRENT - PAUSED):</strong>
+          <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">MVP Design & Specification ✅ | Code architecture prep ⏸️</div>
+        </div>
+        <div style="border-left: 3px solid var(--color-text-warning); padding-left: 12px;">
+          <strong style="color: var(--color-text-primary); font-size: 13px;">Phase 1 (RESUMPTION):</strong>
+          <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">ERP + MES core for Asma Germe (Stock, Procurement, Production, Warehouse, Usta Başı)</div>
+        </div>
+        <div style="border-left: 3px solid var(--color-text-success); padding-left: 12px;">
+          <strong style="color: var(--color-text-primary); font-size: 13px;">Phase 2:</strong>
+          <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">Marketplace launch + vendor onboarding</div>
+        </div>
+        <div style="border-left: 3px solid var(--color-text-success); padding-left: 12px;">
+          <strong style="color: var(--color-text-primary); font-size: 13px;">Phase 3:</strong>
+          <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">Logistics network integration</div>
+        </div>
+        <div style="border-left: 3px solid var(--color-text-success); padding-left: 12px;">
+          <strong style="color: var(--color-text-primary); font-size: 13px;">Phase 4+:</strong>
+          <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">Multi-tenant SaaS, vertical solutions, advanced KUL</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPETITIVE ADVANTAGES -->
+    <div class="eco-section">
+      <div class="eco-title">🎯 Competitive Advantages</div>
+      <div style="display: grid; gap: 10px;">
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 10px; font-size: 12px;">
+          <div style="color: var(--color-text-success);">✓</div>
+          <div><strong>KUL AI</strong> — Proprietary, not dependent on OpenAI/Anthropic</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 10px; font-size: 12px;">
+          <div style="color: var(--color-text-success);">✓</div>
+          <div><strong>Data Privacy</strong> — On-premise option with zero cloud transmission</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 10px; font-size: 12px;">
+          <div style="color: var(--color-text-success);">✓</div>
+          <div><strong>Marketplace Network</strong> — Creates ecosystem lock-in (supply chain effects)</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 10px; font-size: 12px;">
+          <div style="color: var(--color-text-success);">✓</div>
+          <div><strong>Dynamic Schema</strong> — Every factory creates own data model (no customization needed)</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 10px; font-size: 12px;">
+          <div style="color: var(--color-text-success);">✓</div>
+          <div><strong>MES + ERP Hybrid</strong> — Unlike traditional ERPs, real-time floor tracking built-in</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 10px; font-size: 12px;">
+          <div style="color: var(--color-text-success);">✓</div>
+          <div><strong>Multiple Revenue Streams</strong> — Not dependent on single SaaS fee</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

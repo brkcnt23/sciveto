@@ -9,11 +9,11 @@
     "clean": "rm -rf dist"
   },
   "devDependencies": {
-    "typescript": "^5.7.3",
+    "typescript": "^5.8.3",
     "@types/node": "^22.10.7"
   },
   "dependencies": {
-    "class-validator": "^0.14.2",
+    "class-validator": "^0.15.1",
     "class-transformer": "^0.5.1",
     "@nestjs/mapped-types": "^2.1.0"
   }

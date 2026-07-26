@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Injectable, NotFoundException, ForbiddenException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { PrismaTenantRepository } from '../../prisma/prisma.repository.base';
@@ -271,15 +270,12 @@ export class ProjectsService {
       },
     });
 
-    // Update stock item (move from reserved to used)
+    // Update stock item quantity
     if (usageDifference !== 0) {
       await this.prisma.stockItem.update({
         where: { id: allocation.stockItemId },
         data: {
-          currentStock: {
-            decrement: usageDifference,
-          },
-          reservedStock: {
+          quantity: {
             decrement: usageDifference,
           },
         },
@@ -289,14 +285,14 @@ export class ProjectsService {
       await this.prisma.stockTransaction.create({
         data: {
           stockItemId: allocation.stockItemId,
-          type: 'ALLOCATION',
-          quantity: -usageDifference,
-          unitPrice: allocation.allocatedPrice,
-          totalCost: usageDifference * allocation.allocatedPrice,
+          type: 'OUT',
+          quantity: usageDifference,
+          unit: allocation.stockItem.unit,
           referenceType: 'project',
           referenceId: allocation.projectId,
-          description: `Used in project: ${allocation.project.name}`,
-          performedBy: userId,
+          notes: `Used in project: ${allocation.project.name}`,
+          userId,
+          organizationId,
         },
       });
     }

@@ -1,0 +1,74 @@
+📄 SCIVETO 1.0 ECOSYSTEM — DETAYLÜ ÖZETİ
+Neden MVP Duraklamıştı?
+Mimariye baktığımızda, bu çok kapsamlı bir sistem:
+
+5 katman (ERP → MES → Marketplace → Logistics → AI)
+10 farklı user role (her birinin farklı screen set'i lazım)
+14+ modül (sadece MVP'de başlamak için çok şey)
+KUL AI (proprietary model, eğitim, fine-tuning, local deployment)
+3 revenue stream (SaaS + Marketplace % + Logistics %)
+
+Sonuç: Tek başına MVP'yi 4-6 ayda tamamlamak imkansız. O yüzden pause mantıklı.
+
+Resume Edilecek Zaman:
+Phase 1 (MVP) İçin Minimum Scope:
+
+✅ ERP Core (Stock + Procurement + Production + Projects)
+✅ MES Depo (In/Out, weight, rack, barcode)
+✅ 5 Ana Role (Admin, StockMgr, Satın Almacı, Üretim Müdürü, DepoGorevlisi, UstaBasi, Muhasebeci)
+✅ KUL AI (Demand forecasting, Supplier scoring, Cost estimation)
+✅ 11-Phase Workflow (End-to-end project tracking)
+✅ Audit & Logging (Full traceability)
+
+Marketplace & Logistics? → Phase 2-3'e kalsın (MVP'den sonra)
+
+KUL AI (Büyük Fark):
+Neden OpenAI/Anthropic API yerine KUL?
+
+Data Privacy — Gizli fabrika formülleri, maliyetleri, tarifi dışarı çıkmayacak
+Cost — Long-term API costs yerine bir kere model malı
+Customization — Fabrika kendi datasıyla fine-tune edebilsin (lokal)
+Offline — İnternet kesilse de sistem çalışsın
+Competitive Advantage — Sıfırdan eğitilmiş, manufaktur-specific model
+
+Dezavantajı: Kendin eğitmen (data labeling, training, evaluation)
+
+Marketplace = Network Effect:
+Sciveto'nun moat (rekabet avantajı):
+Factory A "50kg Membran bitti, stoktan çıkardım"
+    ↓
+Marketplace'e otomatik liste olur
+    ↓
+Factory B "Ah, bu bana lazım!" diye satın alır
+    ↓
+Logistics Partner "Teslim eteyim ben" diye teklif verir
+    ↓
+Sciveto %2 marketplace + %1 logistics komsiyon alır
+    ↓
+Network büyüdükçe, fabrikalar çıkamayacak
+Bu SAP/Oracle'ın yapamayacağı şey.
+
+On-Premise Seçeneği = Trust Multiplier:
+Türkiye'deki üretim şirketleri cloud'u sever misiniz? Hayır. Çünkü:
+
+Fabrika sırları (maliyetler, formüller)
+Muhasebe dataları (vergiler)
+Teklif stratejileri
+
+KUL + On-Premise = "Senin datanız hiç bulutla konuşmaz" → Massive trust advantage
+
+File Ready (Sundum)
+SCIVETO_1.0_ECOSYSTEM_SYSTEM_PROMPT.md dosyası oluşturdum. İçinde:
+
+✅ Tüm layerlar detaylı
+✅ 10 role tanımları
+✅ KUL AI capabilities
+✅ Marketplace + Logistics flows
+✅ Revenue model
+✅ Deployment options
+✅ Engineering standards
+
+Bu dosya proje repo'nuzun root'una gidebilir. Takım herkese okuyabilir.
+
+Sonuç: Sciveto Ne Olacak?
+BoyutCevapSistem TipiERP + MES + Marketplace Hub + Logistics NetworkAIKUL (proprietary, closed-loop, on-premise option)Hedef KullanıcıTensile/Steel/Composite fabrikalar + Logistics partnersMVPPhase 1'de 5 katman (marketplace/logistics hariç)ParaSaaS fees + Marketplace % + Logistics %MoatNetwork effect (fabrikalar birbirinden alır) + Data privacyDurum ŞimdiSpecification complete ✅

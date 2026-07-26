@@ -1,6 +1,9 @@
-// nuxt.config.ts - Optimized Nuxt UI v3 Configuration
+// nuxt.config.ts - Nuxt 4 + Nuxt UI v4 Configuration
+import { resolve } from 'path'
+import { pathToFileURL } from 'url'
+
 export default defineNuxtConfig({
-  compatibilityDate: '2025-05-15',
+  compatibilityDate: '2026-04-01',
   devtools: { enabled: true },
   ssr: false,
 
@@ -48,15 +51,23 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxt/ui',
     '@pinia/nuxt',
-    '@vueuse/nuxt'
-  ],
+    '@vueuse/nuxt',
+    // Workaround for Nuxt 4.4.4 ssr:false bug (#34957)
+    function spaDevWorkaround(_options: any, nuxt: any) {
+      nuxt.hook('nitro:config', (nitroConfig: any) => {
+        if (!nuxt.options.dev || nuxt.options.ssr) return
 
-  // Alias configuration
-  alias: {
-    '@/types': './types',
-    '@/': './',
-    '~/': './'
-  },
+        const clientManifestPath = pathToFileURL(
+          resolve(nuxt.options.buildDir, 'dist/server/client.manifest.mjs'),
+        ).href
+
+        nitroConfig.virtual ||= {}
+        nitroConfig.virtual['#build/dist/server/server.mjs'] = 'export default () => {}'
+        nitroConfig.virtual['#build/dist/server/client.manifest.mjs'] =
+          `export { default } from ${JSON.stringify(clientManifestPath)}`
+      })
+    },
+  ],
 
   // TypeScript configuration
   typescript: {
@@ -69,22 +80,10 @@ export default defineNuxtConfig({
     transpile: ['@headlessui/vue']
   },
 
-  // Vite configuration - Tailwind CSS v4 + Nuxt UI v3 Windows Fix
+  // Vite configuration
   vite: {
     define: {
       __VUE_OPTIONS_API__: false
-    },
-    optimizeDeps: {
-      include: ['vue', '@nuxt/ui', 'pinia'],
-      exclude: ['@tailwindcss/oxide', 'lightningcss']
-    },
-    ssr: {
-      noExternal: ['@nuxt/ui', 'tailwindcss']
-    },
-    build: {
-      rollupOptions: {
-        external: ['@tailwindcss/oxide-win32-x64-msvc', 'lightningcss/node']
-      }
     },
     server: {
       fs: {
@@ -93,25 +92,15 @@ export default defineNuxtConfig({
     }
   },
 
-  // Nitro configuration for Windows + Tailwind v4
-  nitro: {
-    experimental: {
-      wasm: true
-    },
-    rollupConfig: {
-      external: ['@tailwindcss/oxide', 'lightningcss']
-    }
-  },
-
   // Runtime configuration
   runtimeConfig: {
     public: {
-      apiBase: process.env.API_BASE_URL || 'http://localhost:3001/api'
+      apiBase: process.env.API_BASE_URL || 'http://localhost:8501/api'
     }
   },
 
   // Development server configuration
   devServer: {
-    port: 3000
+    port: 8500
   }
 })

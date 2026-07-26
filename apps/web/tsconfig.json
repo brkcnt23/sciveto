@@ -17,8 +17,8 @@
     "declarationMap": false,
     "sourceMap": false,
     "paths": {
-      "~/*": ["./*"],
-      "@/*": ["./*"],
+      "~/*": ["./app/*"],
+      "@/*": ["./app/*"],
       "~~/*": ["./*"],
       "@@/*": ["./*"],
       "#imports": ["./.nuxt/imports.d.ts"],
